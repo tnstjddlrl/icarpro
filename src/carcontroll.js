@@ -19,12 +19,12 @@ import axios from 'axios'
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
-const socket = new WebSocket('http://175.126.232.72','5000');
+const socket = new WebSocket('ws://175.126.232.72','5000');
 
 const Carcontroll = () => {
 
   useEffect(() => {
-    const socket = new WebSocket('http://175.126.232.72', '5000');
+    const socket = new WebSocket('ws://175.126.232.72','5000');
 
     socket.onopen = () => {
       // connection opened
