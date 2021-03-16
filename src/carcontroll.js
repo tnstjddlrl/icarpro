@@ -13,6 +13,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Toast from 'react-native-toast-message';
 import { event } from 'react-native-reanimated';
+import useSWR from 'swr'
 
 import axios from 'axios'
 
@@ -22,30 +23,35 @@ const chheight = Dimensions.get('window').height
 
 
 const Carcontroll = () => {
+  // const fetcher = () => axios.get('http://175.126.232.72:5000').then(res => res.data)
+  // const { data, error } = useSWR(null,fetcher)
+  
+  // console.log('데이터와 에러 : ' +data + error)
+  // Alert.alert(data + error)
 
-  useEffect(() => {
-    const socket = new WebSocket('ws://175.126.232.72','5000');
+  // useEffect(() => {
+  //   const socket = new WebSocket('ws://175.126.232.72','5000');
 
-    socket.onopen = () => {
-      // connection opened
-      socket.send('something'); // send a message
-      Alert.alert('전송')
-    };
+  //   socket.onopen = () => {
+  //     // connection opened
+  //     socket.send('something'); // send a message
+  //     Alert.alert('전송')
+  //   };
 
-    socket.addEventListener('open', function (event) {
-      socket.send('Hello Server!');
-    });
+  //   socket.addEventListener('open', function (event) {
+  //     socket.send('Hello Server!');
+  //   });
 
-    socket.addEventListener('message', function (event) {
-      console.log('Message from server ', event.data);
-      Alert.alert('전송' + event.data)
-    });
+  //   socket.addEventListener('message', function (event) {
+  //     console.log('Message from server ', event.data);
+  //     Alert.alert('전송' + event.data)
+  //   });
 
-    socket.onerror = (e) => {
-      // an error occurred
-      console.log('에러 : ' + e.message);
-    };
-  }, [])
+  //   socket.onerror = (e) => {
+  //     // an error occurred
+  //     console.log('에러 : ' + e.message);
+  //   };
+  // }, [])
 
   const [boot, setBoot] = useState(false)
   const [door, setDoor] = useState(true)
@@ -73,46 +79,42 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      const socket = new WebSocket('ws://175.126.232.72','5000');
+      // const socket = new WebSocket('ws://175.126.232.72','5000');
 
-      socket.onopen = () => {
-        // connection opened
-        socket.send('something'); // send a message
-        Alert.alert('전송')
-      };
+      // socket.onopen = () => {
+      //   // connection opened
+      //   socket.send('something'); // send a message
+      //   Alert.alert('전송')
+      // };
 
-      socket.addEventListener('open', function (event) {
-        socket.send('Hello Server!');
-      });
+      // socket.addEventListener('open', function (event) {
+      //   socket.send('Hello Server!');
+      // });
 
-      socket.addEventListener('message', function (event) {
-        console.log('Message from server ', event.data);
-        Alert.alert('전송' + event.data)
-      });
+      // socket.addEventListener('message', function (event) {
+      //   console.log('Message from server ', event.data);
+      //   Alert.alert('전송' + event.data)
+      // });
 
-      socket.onerror = (e) => {
-        // an error occurred
-        console.log('에러 : ' + e.message);
-      };
+      // socket.onerror = (e) => {
+      //   // an error occurred
+      //   console.log('에러 : ' + e.message);
+      // };
 
-      // axios.post('http://175.126.232.72:5000', {
-      //   command: 'door_0'
-      // })
-      //   .then(function (response) {
-      //     console.log('리스폰스 ', response);
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
-
-      axios.get('http://175.126.232.72:5000?commend=door_1')
+      axios.post('http://175.126.232.72:5000', {
+        userkey:'1234_user1',
+        carkey:'user1_10육1004',
+        command:'panic',
+        state: '1'
+      })
         .then(function (response) {
-          console.log(response);
+          console.log('리스폰스 ', response);
+          Alert.alert(response)
         })
         .catch(function (error) {
           console.log(error);
+          Alert.alert(error)
         });
-
 
     }
 
