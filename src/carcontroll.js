@@ -19,7 +19,7 @@ import axios from 'axios'
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
-const socket = new WebSocket('ws://175.126.232.72','5000');
+
 
 const Carcontroll = () => {
 
@@ -73,6 +73,8 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
+      const socket = new WebSocket('ws://175.126.232.72','5000');
+
       socket.onopen = () => {
         // connection opened
         socket.send('something'); // send a message
@@ -93,11 +95,19 @@ const Carcontroll = () => {
         console.log('에러 : ' + e.message);
       };
 
-      axios.post('http://175.126.232.72:5000', {
-        command: 'panic_0'
-      })
+      // axios.post('http://175.126.232.72:5000', {
+      //   command: 'door_0'
+      // })
+      //   .then(function (response) {
+      //     console.log('리스폰스 ', response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+
+      axios.get('http://175.126.232.72:5000?commend=door_1')
         .then(function (response) {
-          console.log('리스폰스 ', response);
+          console.log(response);
         })
         .catch(function (error) {
           console.log(error);
