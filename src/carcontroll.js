@@ -6,14 +6,11 @@ import {
   TouchableWithoutFeedback,
   Alert,
   TouchableOpacity,
-
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+
+import { useNavigation } from '@react-navigation/native';
 
 import Toast from 'react-native-toast-message';
-import { event } from 'react-native-reanimated';
-
 import axios from 'axios'
 
 const chwidth = Dimensions.get('window').width
@@ -22,6 +19,7 @@ const chheight = Dimensions.get('window').height
 
 
 const Carcontroll = () => {
+  const navigation = useNavigation()
 
   const [boot, setBoot] = useState(false)
   const [door, setDoor] = useState(true)
@@ -343,13 +341,17 @@ const Carcontroll = () => {
   return (
     <View>
       <View style={{ width: chwidth, height: chheight - 40 }}>
-        <TouchableWithoutFeedback >
           <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity onPress={(event) => ee(event)}>
               <Text>자동차 이미지</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('회원가입')}>
+              <Text>회원가입</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('간편비밀번호')}>
+              <Text>간편비밀번호</Text>
+            </TouchableOpacity>
           </View>
-        </TouchableWithoutFeedback>
 
 
         <TouchableWithoutFeedback onPress={() => { bootClick() }}>
