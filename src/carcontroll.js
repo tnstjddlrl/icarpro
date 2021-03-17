@@ -13,7 +13,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Toast from 'react-native-toast-message';
 import { event } from 'react-native-reanimated';
-import useSWR from 'swr'
 
 import axios from 'axios'
 
@@ -50,8 +49,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-
-      axios.post('http://175.126.232.72:5000', {
+      axios.post('http://175.126.232.72:3400', {
         userkey:'1234_user1',
         carkey:'user1_10육1004',
         command:'door',
@@ -59,11 +57,11 @@ const Carcontroll = () => {
       })
         .then(function (response) {
           console.log('리스폰스 ', response);
-          Alert.alert(response)
+          //Alert.alert(response)
         })
         .catch(function (error) {
           console.log(error);
-          Alert.alert(error)
+          //Alert.alert(error)
         });
 
     }
@@ -87,7 +85,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:5000', {
+      axios.post('http://175.126.232.72:3400', {
         userkey:'1234_user1',
         carkey:'user1_10육1004',
         command:'door',
@@ -95,11 +93,11 @@ const Carcontroll = () => {
       })
         .then(function (response) {
           console.log('리스폰스 ', response);
-          Alert.alert(response)
+          //Alert.alert(response)
         })
         .catch(function (error) {
           console.log(error);
-          Alert.alert(error)
+          //Alert.alert(error)
         });
     }
   }
@@ -123,7 +121,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:5000', {
+      axios.post('http://175.126.232.72:3400', {
         userkey:'1234_user1',
         carkey:'user1_10육1004',
         command:'panic',
@@ -131,11 +129,11 @@ const Carcontroll = () => {
       })
         .then(function (response) {
           console.log('리스폰스 ', response);
-          Alert.alert(response)
+          //Alert.alert(response)
         })
         .catch(function (error) {
           console.log(error);
-          Alert.alert(error)
+          //Alert.alert(error)
         });
     }
 
@@ -157,7 +155,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:5000', {
+      axios.post('http://175.126.232.72:3400', {
         userkey:'1234_user1',
         carkey:'user1_10육1004',
         command:'panic',
@@ -165,11 +163,11 @@ const Carcontroll = () => {
       })
         .then(function (response) {
           console.log('리스폰스 ', response);
-          Alert.alert(response)
+          //Alert.alert(response)
         })
         .catch(function (error) {
           console.log(error);
-          Alert.alert(error)
+          //Alert.alert(error)
         });
     }
   }
@@ -193,7 +191,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:5000', {
+      axios.post('http://175.126.232.72:3400', {
         userkey:'1234_user1',
         carkey:'user1_10육1004',
         command:'emergency',
@@ -201,11 +199,11 @@ const Carcontroll = () => {
       })
         .then(function (response) {
           console.log('리스폰스 ', response);
-          Alert.alert(response)
+          //Alert.alert(response)
         })
         .catch(function (error) {
           console.log(error);
-          Alert.alert(error)
+          //Alert.alert(error)
         });
     }
 
@@ -226,7 +224,7 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
-      axios.post('http://175.126.232.72:5000', {
+      axios.post('http://175.126.232.72:3400', {
       userkey:'1234_user1',
       carkey:'user1_10육1004',
       command:'emergency',
@@ -234,11 +232,11 @@ const Carcontroll = () => {
     })
       .then(function (response) {
         console.log('리스폰스 ', response);
-        Alert.alert(response)
+        //Alert.alert(response)
       })
       .catch(function (error) {
         console.log(error);
-        Alert.alert(error)
+        //Alert.alert(error)
       });
       
     }
@@ -264,7 +262,7 @@ const Carcontroll = () => {
       onPress: () => { }
     });
 
-    axios.post('http://175.126.232.72:5000', {
+    axios.post('http://175.126.232.72:3400', {
       userkey:'1234_user1',
       carkey:'user1_10육1004',
       command:'trunk',
@@ -272,11 +270,11 @@ const Carcontroll = () => {
     })
       .then(function (response) {
         console.log('리스폰스 ', response);
-        Alert.alert(response)
+        //Alert.alert(response)
       })
       .catch(function (error) {
         console.log(error);
-        Alert.alert(error)
+        //Alert.alert(error)
       });
 
     setTimeout(() => {
@@ -295,7 +293,7 @@ const Carcontroll = () => {
         ]
       );
 
-      axios.post('http://175.126.232.72:5000', {
+      axios.post('http://175.126.232.72:3400', {
       userkey:'1234_user1',
       carkey:'user1_10육1004',
       command:'boot',
@@ -303,11 +301,11 @@ const Carcontroll = () => {
     })
       .then(function (response) {
         console.log('리스폰스 ', response);
-        Alert.alert(response)
+        //Alert.alert(response)
       })
       .catch(function (error) {
         console.log(error);
-        Alert.alert(error)
+        //Alert.alert(error)
       });
 
     } else {
@@ -320,7 +318,7 @@ const Carcontroll = () => {
         ]
       );
 
-      axios.post('http://175.126.232.72:5000', {
+      axios.post('http://175.126.232.72:3400', {
       userkey:'1234_user1',
       carkey:'user1_10육1004',
       command:'emergency',
@@ -328,11 +326,11 @@ const Carcontroll = () => {
     })
       .then(function (response) {
         console.log('리스폰스 ', response);
-        Alert.alert(response)
+        //Alert.alert(response)
       })
       .catch(function (error) {
         console.log(error);
-        Alert.alert(error)
+        //Alert.alert(error)
       });
     }
   }
