@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -36,7 +36,7 @@ const EasyPwd = () => {
         {pwd.length >= 4 &&<Image source={oh} style={{height:100,width:100}}></Image>}
       </View>
 
-      <TextInput keyboardType={'number-pad'} onChangeText={text=>setPwd(text)} value={pwd} style={{width:chwidth,height:100,borderWidth:1}}></TextInput>
+      <TextInput autoFocus={true} keyboardType={'number-pad'} onChangeText={text=>setPwd(text)} value={pwd} style={{width:chwidth,height:100,borderWidth:1}}></TextInput>
     </View>
   )
 }
