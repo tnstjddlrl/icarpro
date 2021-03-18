@@ -15,6 +15,23 @@ import axios from 'axios'
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
+// const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
+//   // Write on the socket
+  
+//   console.log('연결됨')
+//   //client.write(json);
+//   // Close socket
+//   //client.destroy();
+// });
+
+// client.on('data', function(data) {
+//   console.log('message was received', data);
+// });
+
+// client.on('error', function(error) {
+//   console.error(error);
+// });
+
 const Register = () => {
   return (
     <View>

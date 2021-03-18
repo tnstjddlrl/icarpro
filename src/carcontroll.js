@@ -15,7 +15,6 @@ import axios from 'axios'
 
 import TcpSocket from 'react-native-tcp-socket';
 
-
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
@@ -40,35 +39,35 @@ trunk_0=JSON.stringify(trunk_0)
 
 
 
-// const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
-//   // Write on the socket
-//   Toast.show({
-//     type: 'success',
-//     position: 'top',
-//     text1: '서버연결',
-//     text2: '서버와 연결되었습니다..',
-//     visibilityTime: 2000,
-//     autoHide: true,
-//     topOffset: 30,
-//     bottomOffset: 40,
-//     onShow: () => { },
-//     onHide: () => { },
-//     onPress: () => { }
-//   });
+const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
+  // Write on the socket
+  Toast.show({
+    type: 'success',
+    position: 'top',
+    text1: '서버연결',
+    text2: '서버와 연결되었습니다..',
+    visibilityTime: 2000,
+    autoHide: true,
+    topOffset: 30,
+    bottomOffset: 40,
+    onShow: () => { },
+    onHide: () => { },
+    onPress: () => { }
+  });
   
-//   console.log('연결됨')
-//   //client.write(json);
-//   // Close socket
-//   //client.destroy();
-// });
+  console.log('연결됨')
+  //client.write(json);
+  // Close socket
+  //client.destroy();
+});
 
-// client.on('data', function(data) {
-//   console.log('message was received', data);
-// });
+client.on('data', function(data) {
+  console.log('message was received', data);
+});
 
-// client.on('error', function(error) {
-//   console.error(error);
-// });
+client.on('error', function(error) {
+  console.error(error);
+});
 
 
 
@@ -333,6 +332,10 @@ const Carcontroll = () => {
         onPress: () => { }
       });}}>
               <Text>토스트</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=>navigation.navigate('차량등록')}>
+              <Text>차량등록</Text>
             </TouchableOpacity>
           </View>
 

@@ -7,6 +7,7 @@ import Carcontroll from './src/carcontroll.js';
 import Load from './src/load.js';
 import Register from './src/register.js';
 import EasyPwd from './src/easyPwd.js';
+import CarRegister from './src/carRegister.js';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ function App() {
         <Stack.Screen name="차량제어" component={Carcontroll} />
         <Stack.Screen name="회원가입" component={Register} />
         <Stack.Screen name="간편비밀번호" component={EasyPwd} />
+        <Stack.Screen name="차량등록" component={CarRegister} />
       </Stack.Navigator>
     </NavigationContainer>
   );
