@@ -9,17 +9,89 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import Send from './Send'
+
 
 import Toast from 'react-native-toast-message';
 import axios from 'axios'
 
+import TcpSocket from 'react-native-tcp-socket';
+
+var Buffer = require('buffer/').Buffer
+
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
+
+var uint8 = new Uint8Array('1234_user1','user1_10육1004')
+uint8[0] = '1234_user1'
+uint8[1] = 'user1_10육1004'
+
+var params = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '1'}
+//{'1234_user1':'user1_10육1004','panic':'0'}
+
+var z = new Uint8Array([21,31]);
+
+const buf = Buffer.allocUnsafe(10);
+
+var json = JSON.stringify(params)
+
+const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
+  // Write on the socket
+  client.write(json);
+  console.log('연결됨')
+  // Close socket
+  client.destroy();
+});
+
+client.on('data', function(data) {
+  console.log('message was received', data);
+});
+
+client.on('error', function(error) {
+  console.error(error);
+});
+
+
+// const socket = new WebSocket('ws://175.126.232.72','3400')
+
+// socket.onopen = function(event) {
+//   console.log("WebSocket is open now." + event);
+// };
+
+// socket.onerror = function(event) {
+//   console.error("WebSocket error observed:", event);
+// };
+
+
+const ServerUrl = "http://175.126.232.72:3400/";
+
+// function getData() {
+//   return new Promise(async(resolve, reject) => {
+//       try {
+//         let data = await axios.post(ServerUrl, {
+//           userkey:'1234_user1',
+//           carkey:'user1_10육1004',
+//           command:'door',
+//           state: '0'
+//         });
+//         resolve(data);
+//         console.log(resolve(data))
+//         console.log(data)
+//       } catch(e) {
+//         reject(e);
+//       }
+//   })
+// }
+
 
 
 
 const Carcontroll = () => {
   const navigation = useNavigation()
+
+  // useEffect(()=>{
+  //   getData()
+  // },[])
 
   const [boot, setBoot] = useState(false)
   const [door, setDoor] = useState(true)
@@ -47,20 +119,29 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:3400', {
-        userkey:'1234_user1',
-        carkey:'user1_10육1004',
-        command:'door',
-        state: '0'
-      })
-        .then(function (response) {
-          console.log('리스폰스 ', response);
-          //Alert.alert(response)
-        })
-        .catch(function (error) {
-          console.log(error);
-          //Alert.alert(error)
-        });
+      // axios.post('http://175.126.232.72:3400/react.js', {
+      //   userkey:'1234_user1',
+      //   carkey:'user1_10육1004',
+      //   command:'door',
+      //   state: '0'
+      // })
+      //   .then(function (response) {
+      //     console.log('리스폰스 ', response);
+      //     //Alert.alert(response)
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //     //Alert.alert(error)
+      //   });
+
+      Send({
+        method: 'post',
+        url: '/react.js',
+        data: {
+          firstName: 'Fred',
+          lastName: 'Flintstone'
+        }
+      }).then(res=>console.log(res))
 
     }
 
@@ -119,12 +200,14 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:3400', {
+      var params = {
         userkey:'1234_user1',
         carkey:'user1_10육1004',
         command:'panic',
         state: '0'
-      })
+      }
+
+      axios.post('http://175.126.232.72:3400/react.js', params)
         .then(function (response) {
           console.log('리스폰스 ', response);
           //Alert.alert(response)

@@ -14,13 +14,16 @@
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
     "axios": "^0.21.1",
+    "buffer": "^6.0.3",
     "express": "^4.17.1",
     "react": "17.0.1",
     "react-native": "0.64.0",
+    "react-native-biometrics": "^2.1.4",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-reanimated": "^2.0.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.1",
+    "react-native-tcp-socket": "^5.2.0",
     "react-native-toast-message": "^1.4.9",
     "swr": "^0.5.3"
   },
@@ -36,5 +39,8 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "react-native": {
+    "net": "react-native-tcp-socket"
   }
 }
