@@ -7,6 +7,7 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
+  Image,
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -17,32 +18,25 @@ const chheight = Dimensions.get('window').height
 
 import ReactNativeBiometrics from 'react-native-biometrics'
  
-
+const oh = require('../img/oh.png')
 
 const EasyPwd = () => {
 
-  let epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString()
-  let payload = epochTimeSeconds + 'some message'
-   
-  ReactNativeBiometrics.createSignature({
-      promptMessage: 'Sign in',
-      payload: payload
-    })
-    .then((resultObject) => {
-      const { success, signature } = resultObject
-   
-      if (success) {
-        console.log(signature)
-        verifySignatureWithServer(signature, payload)
-      }
-    })
+  const [pwd,setPwd] = useState('');
 
-
+  console.log(pwd.length)
 
   return(
     <View>
       <Text>간편비밀번호</Text>
-      <TextInput keyboardType={'number-pad'} style={{width:chwidth,height:100,borderWidth:1}}></TextInput>
+      <View style={{flexDirection:"row"}}>
+        {pwd.length >= 1 &&<Image source={oh} style={{height:100,width:100}}></Image>}
+        {pwd.length >= 2 &&<Image source={oh} style={{height:100,width:100}}></Image>}
+        {pwd.length >= 3 &&<Image source={oh} style={{height:100,width:100}}></Image>}
+        {pwd.length >= 4 &&<Image source={oh} style={{height:100,width:100}}></Image>}
+      </View>
+
+      <TextInput keyboardType={'number-pad'} onChangeText={text=>setPwd(text)} value={pwd} style={{width:chwidth,height:100,borderWidth:1}}></TextInput>
     </View>
   )
 }
