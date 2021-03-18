@@ -15,7 +15,6 @@ import axios from 'axios'
 
 import TcpSocket from 'react-native-tcp-socket';
 
-var Buffer = require('buffer/').Buffer
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -23,37 +22,55 @@ const chheight = Dimensions.get('window').height
 var params = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '1'}
 var json = JSON.stringify(params)
 
+var door_0 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '0'}
+var door_1 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '1'}
+var panic_0 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'panic','state': '0'}
+var panic_1 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'panic','state': '1'}
+var warn_0 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'warn','state': '0'}
+var warn_1 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'warn','state': '1'}
+var trunk_0 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'trunk','state': '0'}
+
+door_0 =JSON.stringify(door_0)
+door_1=JSON.stringify(door_1)
+panic_0=JSON.stringify(panic_0)
+panic_1=JSON.stringify(panic_1)
+warn_0=JSON.stringify(warn_0)
+warn_1=JSON.stringify(warn_1)
+trunk_0=JSON.stringify(trunk_0)
 
 
-const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
-  // Write on the socket
-  Toast.show({
-    type: 'success',
-    position: 'top',
-    text1: '서버연결',
-    text2: '서버와 연결되었습니다..',
-    visibilityTime: 2000,
-    autoHide: true,
-    topOffset: 30,
-    bottomOffset: 40,
-    onShow: () => { },
-    onHide: () => { },
-    onPress: () => { }
-  });
+
+// const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
+//   // Write on the socket
+//   Toast.show({
+//     type: 'success',
+//     position: 'top',
+//     text1: '서버연결',
+//     text2: '서버와 연결되었습니다..',
+//     visibilityTime: 2000,
+//     autoHide: true,
+//     topOffset: 30,
+//     bottomOffset: 40,
+//     onShow: () => { },
+//     onHide: () => { },
+//     onPress: () => { }
+//   });
   
-  console.log('연결됨')
-  //client.write(json);
-  // Close socket
-  //client.destroy();
-});
+//   console.log('연결됨')
+//   //client.write(json);
+//   // Close socket
+//   //client.destroy();
+// });
 
-client.on('data', function(data) {
-  console.log('message was received', data);
-});
+// client.on('data', function(data) {
+//   console.log('message was received', data);
+// });
 
-client.on('error', function(error) {
-  console.error(error);
-});
+// client.on('error', function(error) {
+//   console.error(error);
+// });
+
+
 
 
 const Carcontroll = () => {
@@ -86,20 +103,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:3400/react.js', {
-        userkey:'1234_user1',
-        carkey:'user1_10육1004',
-        command:'door',
-        state: '0'
-      })
-        .then(function (response) {
-          console.log('리스폰스 ', response);
-          //Alert.alert(response)
-        })
-        .catch(function (error) {
-          console.log(error);
-          //Alert.alert(error)
-        });
+      client.write(door_0)
     }
 
 
@@ -121,20 +125,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:3400', {
-        userkey:'1234_user1',
-        carkey:'user1_10육1004',
-        command:'door',
-        state: '1'
-      })
-        .then(function (response) {
-          console.log('리스폰스 ', response);
-          //Alert.alert(response)
-        })
-        .catch(function (error) {
-          console.log(error);
-          //Alert.alert(error)
-        });
+      client.write(door_1)
     }
   }
 
@@ -157,22 +148,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      var params = {
-        userkey:'1234_user1',
-        carkey:'user1_10육1004',
-        command:'panic',
-        state: '0'
-      }
-
-      axios.post('http://175.126.232.72:3400/react.js', params)
-        .then(function (response) {
-          console.log('리스폰스 ', response);
-          //Alert.alert(response)
-        })
-        .catch(function (error) {
-          console.log(error);
-          //Alert.alert(error)
-        });
+      client.write(panic_0)
     }
 
     if (is == 'off') {
@@ -193,20 +169,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:3400', {
-        userkey:'1234_user1',
-        carkey:'user1_10육1004',
-        command:'panic',
-        state: '1'
-      })
-        .then(function (response) {
-          console.log('리스폰스 ', response);
-          //Alert.alert(response)
-        })
-        .catch(function (error) {
-          console.log(error);
-          //Alert.alert(error)
-        });
+      client.write(panic_1)
     }
   }
 
@@ -229,20 +192,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      axios.post('http://175.126.232.72:3400', {
-        userkey:'1234_user1',
-        carkey:'user1_10육1004',
-        command:'emergency',
-        state: '0'
-      })
-        .then(function (response) {
-          console.log('리스폰스 ', response);
-          //Alert.alert(response)
-        })
-        .catch(function (error) {
-          console.log(error);
-          //Alert.alert(error)
-        });
+      client.write(warn_0)
     }
 
     if (is == 'off') {
@@ -262,20 +212,7 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
-      axios.post('http://175.126.232.72:3400', {
-      userkey:'1234_user1',
-      carkey:'user1_10육1004',
-      command:'emergency',
-      state: '1'
-    })
-      .then(function (response) {
-        console.log('리스폰스 ', response);
-        //Alert.alert(response)
-      })
-      .catch(function (error) {
-        console.log(error);
-        //Alert.alert(error)
-      });
+      client.write(warn_1)
       
     }
 
@@ -300,20 +237,7 @@ const Carcontroll = () => {
       onPress: () => { }
     });
 
-    axios.post('http://175.126.232.72:3400', {
-      userkey:'1234_user1',
-      carkey:'user1_10육1004',
-      command:'trunk',
-      state: '1'
-    })
-      .then(function (response) {
-        console.log('리스폰스 ', response);
-        //Alert.alert(response)
-      })
-      .catch(function (error) {
-        console.log(error);
-        //Alert.alert(error)
-      });
+    client.write(trunk_0)
 
     setTimeout(() => {
       setTrunk(false)
@@ -394,6 +318,21 @@ const Carcontroll = () => {
 
             <TouchableOpacity onPress={()=>client.write(json)}>
               <Text>소켓통신</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>{ Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: '패닉 명령',
+        text2: '패닉 명령을 [ON]하였습니다.',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+        onShow: () => { },
+        onHide: () => { },
+        onPress: () => { }
+      });}}>
+              <Text>토스트</Text>
             </TouchableOpacity>
           </View>
 
