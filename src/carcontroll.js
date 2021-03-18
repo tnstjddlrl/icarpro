@@ -9,8 +9,6 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import Send from './Send'
-
 
 import Toast from 'react-native-toast-message';
 import axios from 'axios'
@@ -22,25 +20,29 @@ var Buffer = require('buffer/').Buffer
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
-var uint8 = new Uint8Array('1234_user1','user1_10육1004')
-uint8[0] = '1234_user1'
-uint8[1] = 'user1_10육1004'
-
 var params = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '1'}
-//{'1234_user1':'user1_10육1004','panic':'0'}
-
-var z = new Uint8Array([21,31]);
-
-const buf = Buffer.allocUnsafe(10);
-
 var json = JSON.stringify(params)
 
 const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
   // Write on the socket
-  client.write(json);
+  Toast.show({
+    type: 'success',
+    position: 'top',
+    text1: '서버연결',
+    text2: '서버와 연결되었습니다..',
+    visibilityTime: 2000,
+    autoHide: true,
+    topOffset: 30,
+    bottomOffset: 40,
+    onShow: () => { },
+    onHide: () => { },
+    onPress: () => { }
+  });
+  
   console.log('연결됨')
+  //client.write(json);
   // Close socket
-  client.destroy();
+  //client.destroy();
 });
 
 client.on('data', function(data) {
@@ -119,30 +121,20 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      // axios.post('http://175.126.232.72:3400/react.js', {
-      //   userkey:'1234_user1',
-      //   carkey:'user1_10육1004',
-      //   command:'door',
-      //   state: '0'
-      // })
-      //   .then(function (response) {
-      //     console.log('리스폰스 ', response);
-      //     //Alert.alert(response)
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //     //Alert.alert(error)
-      //   });
-
-      Send({
-        method: 'post',
-        url: '/react.js',
-        data: {
-          firstName: 'Fred',
-          lastName: 'Flintstone'
-        }
-      }).then(res=>console.log(res))
-
+      axios.post('http://175.126.232.72:3400/react.js', {
+        userkey:'1234_user1',
+        carkey:'user1_10육1004',
+        command:'door',
+        state: '0'
+      })
+        .then(function (response) {
+          console.log('리스폰스 ', response);
+          //Alert.alert(response)
+        })
+        .catch(function (error) {
+          console.log(error);
+          //Alert.alert(error)
+        });
     }
 
 
@@ -433,6 +425,10 @@ const Carcontroll = () => {
             </TouchableOpacity>
             <TouchableOpacity onPress={()=>navigation.navigate('간편비밀번호')}>
               <Text>간편비밀번호</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=>client.write(json)}>
+              <Text>소켓통신</Text>
             </TouchableOpacity>
           </View>
 
