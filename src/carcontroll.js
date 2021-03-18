@@ -23,6 +23,8 @@ const chheight = Dimensions.get('window').height
 var params = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '1'}
 var json = JSON.stringify(params)
 
+
+
 const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
   // Write on the socket
   Toast.show({
@@ -54,46 +56,9 @@ client.on('error', function(error) {
 });
 
 
-// const socket = new WebSocket('ws://175.126.232.72','3400')
-
-// socket.onopen = function(event) {
-//   console.log("WebSocket is open now." + event);
-// };
-
-// socket.onerror = function(event) {
-//   console.error("WebSocket error observed:", event);
-// };
-
-
-const ServerUrl = "http://175.126.232.72:3400/";
-
-// function getData() {
-//   return new Promise(async(resolve, reject) => {
-//       try {
-//         let data = await axios.post(ServerUrl, {
-//           userkey:'1234_user1',
-//           carkey:'user1_10육1004',
-//           command:'door',
-//           state: '0'
-//         });
-//         resolve(data);
-//         console.log(resolve(data))
-//         console.log(data)
-//       } catch(e) {
-//         reject(e);
-//       }
-//   })
-// }
-
-
-
-
 const Carcontroll = () => {
   const navigation = useNavigation()
 
-  // useEffect(()=>{
-  //   getData()
-  // },[])
 
   const [boot, setBoot] = useState(false)
   const [door, setDoor] = useState(true)
