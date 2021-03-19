@@ -11,7 +11,6 @@ import EasyPwd from './src/easyPwd.js';
 import CarRegister from './src/carRegister.js';
 import Test from './src/test.js';
 import Settings from './src/settings.js';
-import SomeComponent from './src/some.js';
 
 const Stack = createStackNavigator();
 
@@ -29,7 +28,6 @@ function App() {
         <Stack.Screen name="차량등록" component={CarRegister} />
         <Stack.Screen name="설정" component={Settings} />
         <Stack.Screen name="테스트" component={Test} />
-        <Stack.Screen name="테스트2" component={SomeComponent} />
       </Stack.Navigator>
     </NavigationContainer>
   );
