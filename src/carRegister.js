@@ -17,7 +17,7 @@ import {
 import client from './Client'
 
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios'
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -33,7 +33,14 @@ const radioSelect = require('../img/radioSelect.png')
 const sedan1img = require('../img/sedan1.png')
 const suv1img = require('../img/suv1.png')
 
+
+const config = {
+  velocityThreshold: 0.3,
+  directionalOffsetThreshold: 80
+};
+
 const CarRegister = () => {
+  const navigation = useNavigation()
 
   const [modemN, setModemN] = useState('')
   const [userN, setUserN] = useState('')
@@ -73,9 +80,34 @@ const CarRegister = () => {
     
   }
 
+  function onSwipeUp() {
+    console.log('위로 스와이프');
+  }
+
+  function onSwipeDown() {
+    console.log('아래로 스와이프');
+  }
+
+  function onSwipeLeft() {
+    console.log('왼쪽으로 스와이프');
+  }
+
+  function onSwipeRight() {
+    console.log('오른쪽으로 스와이프');
+  }
+
+
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
+      <GestureRecognizer
+        onSwipeUp={(state) => onSwipeUp()}
+        onSwipeDown={(state) => onSwipeDown()}
+        onSwipeLeft={(state) => onSwipeLeft()}
+        onSwipeRight={(state) => onSwipeRight()}
+        config={config}
+        style={{flex:1}}
+        >
       <View style={{ width: chwidth, height: chheight }}>
 
         {/* 헤더 */}
@@ -279,6 +311,7 @@ const CarRegister = () => {
         {/* 차량선택 모달 끝*/}
 
       </View>
+      </GestureRecognizer>
     </SafeAreaView>
   )
 }

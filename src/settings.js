@@ -17,8 +17,7 @@ const chheight = Dimensions.get('window').height
 const Settings = () => {
   return(
     <View>
-      <Text>회원가입</Text>
-      <TextInput style={{}}></TextInput>
+      <Text>설정</Text>
     </View>
   )
 }

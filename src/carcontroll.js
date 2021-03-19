@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 import Toast from 'react-native-toast-message';
 
@@ -259,10 +260,23 @@ const Carcontroll = () => {
     }
   }
 
+  function onSwipeUp() {
+    console.log('위로 스와이프');
+  }
+
+  function onSwipeDown() {
+    console.log('아래로 스와이프');
+  }
+
+  function onSwipeLeft() {
+    console.log('왼쪽으로 스와이프');
+  }
+
+  function onSwipeRight() {
+    console.log('오른쪽으로 스와이프');
+  }
+
   
-
-
-
   return (
     <SafeAreaView style={{backgroundColor:'white'}}>
       <View style={{ width: chwidth, height: chheight - 40 }}>
@@ -429,10 +443,25 @@ const Carcontroll = () => {
         </View>
 
       </View>
+
+      <GestureRecognizer
+        onSwipeUp={(state) => onSwipeUp()}
+        onSwipeDown={(state) => onSwipeDown()}
+        onSwipeLeft={(state) => onSwipeLeft()}
+        onSwipeRight={(state) => onSwipeRight()}
+        config={config}
+        style={{width:chwidth,height:chheight,position:"absolute"}}
+        ></GestureRecognizer>
+
       <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />
     </SafeAreaView>
   )
 }
+
+const config = {
+  velocityThreshold: 1,
+  directionalOffsetThreshold: 80
+};
 
 const styles = StyleSheet.create({
   starttxt : {

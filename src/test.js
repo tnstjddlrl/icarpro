@@ -54,6 +54,9 @@ const Test = () => {
             <TouchableOpacity onPress={()=>navigation.navigate('차량제어')}>
               <Text>차량제어</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('테스트2')}>
+              <Text>테스트2</Text>
+            </TouchableOpacity>
     </View>
   )
 }
