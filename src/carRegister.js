@@ -14,6 +14,8 @@ import {
   ScrollView
 } from 'react-native';
 
+import client from './Client'
+
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'
 
@@ -44,17 +46,23 @@ const CarRegister = () => {
 
   function iscar() {
     if (sedan1 == true) {
-      setRaceModal(false)
+      Alert.alert('차량이 변경되었습니다.')
       setCarRace('SEDAN')
     } else if (suv1 == true) {
-      setRaceModal(false)
+      Alert.alert('차량이 변경되었습니다.')
       setCarRace('SUV')
     }
   }
 
+  function registerClick() {
+    var txt = {"type":'R',"type_sub":'register',"data" : {'modem' : modemN , "user" : userN}}
+
+    client(txt)
+  }
+
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'rgb(247,247,247)' }}>
+    <SafeAreaView style={{ backgroundColor: 'white' }}>
       <View style={{ width: chwidth, height: chheight }}>
 
         {/* 헤더 */}
@@ -69,7 +77,7 @@ const CarRegister = () => {
         <View style={{ flex: 10, marginLeft: 16 }}>
           <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput placeholder='Modem Number' placeholderTextColor="gray" style={{ width: chwidth - 80, marginLeft: 16 }} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
+              <TextInput placeholder='모뎀 번호' placeholderTextColor="gray" style={{ width: chwidth - 80, marginLeft: 16 }} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
               {modemN != '' &&
                 <TouchableOpacity onPress={() => setModemN('')}>
                   <Image source={inputcls}></Image>
@@ -79,7 +87,7 @@ const CarRegister = () => {
           </View>
           <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput placeholder='User Number' placeholderTextColor="gray" style={{ width: chwidth - 80, marginLeft: 16 }} onChangeText={txt => setUserN(txt)} value={userN} keyboardType={"number-pad"}></TextInput>
+              <TextInput placeholder='휴대폰 번호' placeholderTextColor="gray" style={{ width: chwidth - 80, marginLeft: 16 }} onChangeText={txt => setUserN(txt)} value={userN} keyboardType={"number-pad"}></TextInput>
               {userN != '' &&
                 <TouchableOpacity onPress={() => setUserN('')}>
                   <Image source={inputcls}></Image>
@@ -114,7 +122,7 @@ const CarRegister = () => {
 
               <View style={{ flex: 0.05 }}></View>
 
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={()=>registerClick()}>
               <View style={{ borderRadius: 6, backgroundColor: "#f75929", height: 54, flex: 1, justifyContent: "center", alignItems: "center" }}>
                 <Text style={styles.registertxt}>등록</Text>
               </View>

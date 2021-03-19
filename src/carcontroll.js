@@ -14,7 +14,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import Toast from 'react-native-toast-message';
-import axios from 'axios'
 
 import client from './Client.js'
 
@@ -25,10 +24,19 @@ const chheight = Dimensions.get('window').height
 
 const smallLogo = require('../img/smallLogo.png')
 const startbtn = require('../img/startbtn.png')
+
 const lockSelect = require('../img/lockSelect.png')
+const lockNoSelect = require('../img/lockNoSelect.png')
+
 const panicSelect = require('../img/panicSelect.png')
+const panicNOSelect = require('../img/panicNoSelect.png')
+
 const warnSelect = require('../img/warnSelect.png')
+const warnNoSelect = require('../img/warnNoSelect.png')
+
+
 const trunkSelect = require('../img/trunkSelect.png')
+const trunkNoSelect = require('../img/trunkNoSelect.png')
 
 
 
@@ -84,7 +92,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(door_0)
+     // client(door_0)
     }
 
 
@@ -106,7 +114,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(door_1)
+      //client(door_1)
     }
   }
 
@@ -129,7 +137,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(panic_0)
+      //client(panic_0)
     }
 
     if (is == 'off') {
@@ -150,7 +158,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(panic_1)
+     // client(panic_1)
     }
   }
 
@@ -173,7 +181,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(warn_0)
+      //client(warn_0)
     }
 
     if (is == 'off') {
@@ -193,7 +201,7 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
-      client(warn_1)
+      //client(warn_1)
       
     }
 
@@ -218,7 +226,7 @@ const Carcontroll = () => {
       onPress: () => { }
     });
 
-    client(trunk_0)
+    //client(trunk_0)
 
     setTimeout(() => {
       setTrunk(false)
@@ -236,21 +244,6 @@ const Carcontroll = () => {
         ]
       );
 
-      axios.post('http://175.126.232.72:3400', {
-      userkey:'1234_user1',
-      carkey:'user1_10육1004',
-      command:'boot',
-      state: '1'
-    })
-      .then(function (response) {
-        console.log('리스폰스 ', response);
-        //Alert.alert(response)
-      })
-      .catch(function (error) {
-        console.log(error);
-        //Alert.alert(error)
-      });
-
     } else {
       setBoot(false)
       Alert.alert(
@@ -261,20 +254,6 @@ const Carcontroll = () => {
         ]
       );
 
-      axios.post('http://175.126.232.72:3400', {
-      userkey:'1234_user1',
-      carkey:'user1_10육1004',
-      command:'emergency',
-      state: '0'
-    })
-      .then(function (response) {
-        console.log('리스폰스 ', response);
-        //Alert.alert(response)
-      })
-      .catch(function (error) {
-        console.log(error);
-        //Alert.alert(error)
-      });
     }
   }
 
@@ -293,23 +272,31 @@ const Carcontroll = () => {
 
 
         <TouchableWithoutFeedback onPress={() => { bootClick() }}>
-          <View style={{ width: chwidth - 20, flex: 0.8, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10, justifyContent: 'center' }}>
-            <View style={{flexDirection:"row",alignItems:"center"}}>
+          <View style={{ width: chwidth - 32, flex: 0.8, backgroundColor: "#f0f1f5", marginLeft: 16, borderRadius: 10, justifyContent: 'center' }}>
+            <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
+
               <View style={{flexDirection:"row",alignItems:'center'}}>
-                <Image source={startbtn}></Image>
+                <Image source={startbtn} style={{marginLeft:26,marginRight:8}}></Image>
                 <Text style={styles.starttxt}>원격시동 켜기</Text>
               </View>
-              <Text>00:00</Text>
+
+              <Text style={styles.clocktxt}>00:00</Text>
+
             </View>
           </View>
         </TouchableWithoutFeedback>
 
         <View style={{ flex: 0.2 }}></View>
 
-        <View style={{ flex: 2, flexDirection: 'row', marginLeft: 10 }}>
-          <View style={{ width: chwidth / 2 - 15, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
+        <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16 }}>
+          <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
             <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              <Image source={lockSelect}></Image>
+              {door ? 
+               <Image source={lockSelect}></Image>
+              : 
+                <Image source={lockNoSelect}></Image>
+              }
+              
               <Text style={styles.titletxt}>도어</Text>
             </View>
 
@@ -327,7 +314,7 @@ const Carcontroll = () => {
               </TouchableWithoutFeedback>
             </View> : <View style={{ flex: 2, flexDirection: 'row' }}>
                 <TouchableWithoutFeedback onPress={() => doorClick('unlock')}>
-                  <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <View style={{ flex: 1, backgroundColor: "rgb(68,73,80)", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={styles.btntxt}>unlock</Text>
                   </View>
                 </TouchableWithoutFeedback>
@@ -340,9 +327,16 @@ const Carcontroll = () => {
               </View>}
 
           </View>
-          <View style={{ width: chwidth / 2 - 15, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
+
+          <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
             <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              <Image source={panicSelect}></Image>
+              {
+                panic ? 
+                <Image source={panicSelect}></Image>
+                :
+<Image source={panicNOSelect}></Image>
+              }
+              
               <Text style={styles.titletxt}>패닉</Text>
             </View>
             <View style={{ flex: 2, flexDirection: 'row' }}>
@@ -366,11 +360,19 @@ const Carcontroll = () => {
             </View>
           </View>
         </View>
+
         <View style={{ flex: 0.2 }}></View>
-        <View style={{ flex: 2, flexDirection: 'row', marginLeft: 10 }}>
-          <View style={{ width: chwidth / 2 - 15, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
+
+        <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16 }}>
+          <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
             <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              <Image source={warnSelect}></Image>
+              {
+                warnbim ?
+<Image source={warnSelect}></Image>
+                :
+<Image source={warnNoSelect}></Image>
+              }
+              
               <Text style={styles.titletxt}>비상등</Text>
             </View>
             <View style={{ flex: 2, flexDirection: 'row' }}>
@@ -392,9 +394,14 @@ const Carcontroll = () => {
                 </TouchableWithoutFeedback>}
             </View>
           </View>
-          <View style={{ width: chwidth / 2 - 15, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
+          <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
             <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
+              { trunk ? 
               <Image source={trunkSelect}></Image>
+            :
+            <Image source={trunkNoSelect}></Image>
+            }
+              
               <Text style={styles.titletxt}>트렁크</Text>
             </View>
             <View style={{ flex: 2, flexDirection: 'row' }}>
@@ -444,6 +451,17 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     letterSpacing: 0,
     color: "#4e535a"
+  },
+  clocktxt:{
+    opacity: 0.3,
+  fontFamily: "AppleSDGothicNeo",
+  fontSize: 14,
+  fontWeight: "bold",
+  fontStyle: "normal",
+  letterSpacing: 0,
+  textAlign: "right",
+  color: "#252525",
+  marginRight:24
   }
 })
 

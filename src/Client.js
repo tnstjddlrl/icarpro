@@ -4,7 +4,8 @@ const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeo
 });
 
 client.on('data', function(data) {
-  console.log('message was received', data);
+  console.log('message was received');
+  console.log(data)
 });
 
 client.on('error', function(error) {
@@ -12,7 +13,9 @@ client.on('error', function(error) {
 });
 
 function socketwrite (str){
-  client.write(str);
+  var txt = JSON.stringify(str)
+  client.write(txt);
+  console.log('전송!' + txt)
 }
 
 export default socketwrite;
