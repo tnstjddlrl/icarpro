@@ -15,8 +15,6 @@ import axios from 'axios'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
-
-import ReactNativeBiometrics from 'react-native-biometrics'
  
 const oh = require('../img/oh.png')
 

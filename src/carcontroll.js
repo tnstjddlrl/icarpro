@@ -6,6 +6,9 @@ import {
   TouchableWithoutFeedback,
   Alert,
   TouchableOpacity,
+  SafeAreaView,
+  Image,
+  StyleSheet
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -13,10 +16,21 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import axios from 'axios'
 
-import TcpSocket from 'react-native-tcp-socket';
+import client from './Client.js'
+
+
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
+
+const smallLogo = require('../img/smallLogo.png')
+const startbtn = require('../img/startbtn.png')
+const lockSelect = require('../img/lockSelect.png')
+const panicSelect = require('../img/panicSelect.png')
+const warnSelect = require('../img/warnSelect.png')
+const trunkSelect = require('../img/trunkSelect.png')
+
+
 
 var params = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '1'}
 var json = JSON.stringify(params)
@@ -36,38 +50,6 @@ panic_1=JSON.stringify(panic_1)
 warn_0=JSON.stringify(warn_0)
 warn_1=JSON.stringify(warn_1)
 trunk_0=JSON.stringify(trunk_0)
-
-
-
-const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
-  // Write on the socket
-  // Toast.show({
-  //   type: 'success',
-  //   position: 'top',
-  //   text1: '서버연결',
-  //   text2: '서버와 연결되었습니다..',
-  //   visibilityTime: 2000,
-  //   autoHide: true,
-  //   topOffset: 30,
-  //   bottomOffset: 40,
-  //   onShow: () => { },
-  //   onHide: () => { },
-  //   onPress: () => { }
-  // });
-  
-  console.log('연결됨')
-  //client.write(json);
-  // Close socket
-  //client.destroy();
-});
-
-client.on('data', function(data) {
-  console.log('message was received', data);
-});
-
-client.on('error', function(error) {
-  console.error(error);
-});
 
 
 
@@ -102,7 +84,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client.write(door_0)
+      client(door_0)
     }
 
 
@@ -124,7 +106,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client.write(door_1)
+      client(door_1)
     }
   }
 
@@ -147,7 +129,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client.write(panic_0)
+      client(panic_0)
     }
 
     if (is == 'off') {
@@ -168,7 +150,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client.write(panic_1)
+      client(panic_1)
     }
   }
 
@@ -191,7 +173,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client.write(warn_0)
+      client(warn_0)
     }
 
     if (is == 'off') {
@@ -211,7 +193,7 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
-      client.write(warn_1)
+      client(warn_1)
       
     }
 
@@ -236,7 +218,7 @@ const Carcontroll = () => {
       onPress: () => { }
     });
 
-    client.write(trunk_0)
+    client(trunk_0)
 
     setTimeout(() => {
       setTrunk(false)
@@ -296,110 +278,88 @@ const Carcontroll = () => {
     }
   }
 
-  function ee(event) {
-    console.log(event.nativeEvent)
-  }
+  
+
 
 
   return (
-    <View>
+    <SafeAreaView style={{backgroundColor:'white'}}>
       <View style={{ width: chwidth, height: chheight - 40 }}>
           <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity onPress={(event) => ee(event)}>
               <Text>자동차 이미지</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigation.navigate('회원가입')}>
-              <Text>회원가입</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigation.navigate('간편비밀번호')}>
-              <Text>간편비밀번호</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={()=>client.write(json)}>
-              <Text>소켓통신</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{ Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '패닉 명령',
-        text2: '패닉 명령을 [ON]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });}}>
-              <Text>토스트</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={()=>navigation.navigate('차량등록')}>
-              <Text>차량등록</Text>
-            </TouchableOpacity>
           </View>
 
 
         <TouchableWithoutFeedback onPress={() => { bootClick() }}>
-          <View style={{ width: chwidth - 20, flex: 0.8, backgroundColor: '#cccccc', marginLeft: 10, borderRadius: 10, justifyContent: 'center' }}>
-            {boot ? <Text style={{ marginLeft: 10, color: '#ff5c33' }}>원격시동 끄기</Text> : <Text style={{ marginLeft: 10, color: 'black' }}>원격시동 켜기</Text>}
+          <View style={{ width: chwidth - 20, flex: 0.8, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10, justifyContent: 'center' }}>
+            <View style={{flexDirection:"row",alignItems:"center"}}>
+              <View style={{flexDirection:"row",alignItems:'center'}}>
+                <Image source={startbtn}></Image>
+                <Text style={styles.starttxt}>원격시동 켜기</Text>
+              </View>
+              <Text>00:00</Text>
+            </View>
           </View>
         </TouchableWithoutFeedback>
 
         <View style={{ flex: 0.2 }}></View>
 
         <View style={{ flex: 2, flexDirection: 'row', marginLeft: 10 }}>
-          <View style={{ width: chwidth / 2 - 15, backgroundColor: '#cccccc', borderRadius: 10 }}>
+          <View style={{ width: chwidth / 2 - 15, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
             <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              <Text>도어</Text>
+              <Image source={lockSelect}></Image>
+              <Text style={styles.titletxt}>도어</Text>
             </View>
 
             {door ? <View style={{ flex: 2, flexDirection: 'row' }}>
               <TouchableWithoutFeedback onPress={() => doorClick('unlock')}>
-                <View style={{ flex: 1, backgroundColor: '#999999', borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text>unlock</Text>
+                <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={styles.btntxt}>unlock</Text>
                 </View>
               </TouchableWithoutFeedback>
               <View style={{ flex: 0.02 }}></View>
               <TouchableWithoutFeedback onPress={() => doorClick('lock')}>
-                <View style={{ flex: 1, backgroundColor: '#ff5c33', borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text>lock</Text>
+                <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={styles.btntxt}>lock</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View> : <View style={{ flex: 2, flexDirection: 'row' }}>
                 <TouchableWithoutFeedback onPress={() => doorClick('unlock')}>
-                  <View style={{ flex: 1, backgroundColor: '#ff5c33', borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>unlock</Text>
+                  <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.btntxt}>unlock</Text>
                   </View>
                 </TouchableWithoutFeedback>
                 <View style={{ flex: 0.02 }}></View>
                 <TouchableWithoutFeedback onPress={() => doorClick('lock')}>
-                  <View style={{ flex: 1, backgroundColor: '#999999', borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>lock</Text>
+                  <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.btntxt}>lock</Text>
                   </View>
                 </TouchableWithoutFeedback>
               </View>}
 
           </View>
-          <View style={{ width: chwidth / 2 - 15, backgroundColor: '#cccccc', marginLeft: 10, borderRadius: 10 }}>
+          <View style={{ width: chwidth / 2 - 15, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
             <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              <Text>패닉</Text>
+              <Image source={panicSelect}></Image>
+              <Text style={styles.titletxt}>패닉</Text>
             </View>
             <View style={{ flex: 2, flexDirection: 'row' }}>
               <TouchableWithoutFeedback onPress={() => panicClick('off')}>
-                <View style={{ flex: 1, backgroundColor: '#999999', borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text>off</Text>
+                <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={styles.btntxt}>off</Text>
                 </View>
               </TouchableWithoutFeedback>
               <View style={{ flex: 0.02 }}></View>
 
               {panic ? <TouchableWithoutFeedback onPress={() => panicClick('on')}>
-                <View style={{ flex: 1, backgroundColor: '#ff5c33', borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text>on</Text>
+                <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={styles.btntxt}>on</Text>
                 </View>
               </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => panicClick('on')}>
-                  <View style={{ flex: 1, backgroundColor: '#999999', borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>on</Text>
+                  <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.btntxt}>on</Text>
                   </View>
                 </TouchableWithoutFeedback>}
 
@@ -408,42 +368,44 @@ const Carcontroll = () => {
         </View>
         <View style={{ flex: 0.2 }}></View>
         <View style={{ flex: 2, flexDirection: 'row', marginLeft: 10 }}>
-          <View style={{ width: chwidth / 2 - 15, backgroundColor: '#cccccc', borderRadius: 10 }}>
+          <View style={{ width: chwidth / 2 - 15, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
             <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              <Text>비상등</Text>
+              <Image source={warnSelect}></Image>
+              <Text style={styles.titletxt}>비상등</Text>
             </View>
             <View style={{ flex: 2, flexDirection: 'row' }}>
               <TouchableWithoutFeedback onPress={() => warnClick('off')}>
-                <View style={{ flex: 1, backgroundColor: '#999999', borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text>off</Text>
+                <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={styles.btntxt}>off</Text>
                 </View>
               </TouchableWithoutFeedback>
               <View style={{ flex: 0.01 }}></View>
 
               {warnbim ? <TouchableWithoutFeedback onPress={() => warnClick('on')}>
-                <View style={{ flex: 1, backgroundColor: '#ff5c33', borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text>on</Text>
+                <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={styles.btntxt}>on</Text>
                 </View>
               </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => warnClick('on')}>
-                  <View style={{ flex: 1, backgroundColor: '#999999', borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>on</Text>
+                  <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.btntxt}>on</Text>
                   </View>
                 </TouchableWithoutFeedback>}
             </View>
           </View>
-          <View style={{ width: chwidth / 2 - 15, backgroundColor: '#cccccc', marginLeft: 10, borderRadius: 10 }}>
+          <View style={{ width: chwidth / 2 - 15, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
             <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              <Text>트렁크</Text>
+              <Image source={trunkSelect}></Image>
+              <Text style={styles.titletxt}>트렁크</Text>
             </View>
             <View style={{ flex: 2, flexDirection: 'row' }}>
 
               {trunk ? <TouchableWithoutFeedback onPress={() => trunkClick()}>
-                <View style={{ flex: 1, backgroundColor: '#ff5c33', borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text>open</Text>
+                <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={styles.btntxt}>open</Text>
                 </View>
               </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => trunkClick()}>
-                  <View style={{ flex: 1, backgroundColor: '#999999', borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>open</Text>
+                  <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.btntxt}>open</Text>
                   </View>
                 </TouchableWithoutFeedback>}
             </View>
@@ -452,8 +414,37 @@ const Carcontroll = () => {
 
       </View>
       <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />
-    </View>
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  starttxt : {
+    fontFamily: "AppleSDGothicNeo",
+    fontSize: 18,
+    fontWeight: "600",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    color: "#4e535a"
+  },
+  btntxt : {
+    fontFamily: "AppleSDGothicNeo",
+    fontSize: 18,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    lineHeight: 20,
+    letterSpacing: 0,
+    textAlign: "center",
+    color: "#f8f8f8"
+  },
+  titletxt : {
+    fontFamily: "AppleSDGothicNeo",
+    fontSize: 18,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    color: "#4e535a"
+  }
+})
 
 export default Carcontroll

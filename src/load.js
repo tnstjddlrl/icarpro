@@ -22,7 +22,7 @@ const Load = () => {
 
   useEffect(()=>{
     setTimeout(() => {
-      navigation.navigate('차량제어')
+      navigation.navigate('테스트')
     }, 1000);
   },[])
 
