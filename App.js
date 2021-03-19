@@ -10,6 +10,7 @@ import Register from './src/register.js';
 import EasyPwd from './src/easyPwd.js';
 import CarRegister from './src/carRegister.js';
 import Test from './src/test.js';
+import Settings from './src/settings.js';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ function App() {
         <Stack.Screen name="회원가입" component={Register} />
         <Stack.Screen name="간편비밀번호" component={EasyPwd} />
         <Stack.Screen name="차량등록" component={CarRegister} />
+        <Stack.Screen name="설정" component={Settings} />
         <Stack.Screen name="테스트" component={Test} />
       </Stack.Navigator>
     </NavigationContainer>

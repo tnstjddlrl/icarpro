@@ -55,9 +55,22 @@ const CarRegister = () => {
   }
 
   function registerClick() {
-    var txt = {"type":'R',"type_sub":'register',"data" : {'modem' : modemN , "user" : userN}}
+    var txt = {"type":"R","type_sub":"register","data" : {"modem" : modemN , "user" : userN}}
+    
+    txt=JSON.stringify(txt)
 
-    client(txt)
+
+    var res = client(txt)
+    
+    console.log(res)
+
+
+    if(res == 'okay'){
+      Alert.alert('등록되었습니다.')
+    }else{
+      Alert.alert('등록에 실패하였습니다.')
+    }
+    
   }
 
 

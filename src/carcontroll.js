@@ -22,6 +22,8 @@ import client from './Client.js'
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
+const sedan1_big = require('../img/sedan1_big.png')
+
 const smallLogo = require('../img/smallLogo.png')
 const startbtn = require('../img/startbtn.png')
 
@@ -92,7 +94,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-     // client(door_0)
+      client(door_0)
     }
 
 
@@ -114,7 +116,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      //client(door_1)
+      client(door_1)
     }
   }
 
@@ -137,7 +139,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      //client(panic_0)
+      client(panic_0)
     }
 
     if (is == 'off') {
@@ -158,7 +160,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-     // client(panic_1)
+      client(panic_1)
     }
   }
 
@@ -181,7 +183,7 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      //client(warn_0)
+      client(warn_0)
     }
 
     if (is == 'off') {
@@ -201,7 +203,7 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
-      //client(warn_1)
+      client(warn_1)
       
     }
 
@@ -226,7 +228,7 @@ const Carcontroll = () => {
       onPress: () => { }
     });
 
-    //client(trunk_0)
+    client(trunk_0)
 
     setTimeout(() => {
       setTrunk(false)
@@ -264,10 +266,17 @@ const Carcontroll = () => {
   return (
     <SafeAreaView style={{backgroundColor:'white'}}>
       <View style={{ width: chwidth, height: chheight - 40 }}>
-          <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
-            <TouchableOpacity onPress={(event) => ee(event)}>
-              <Text>자동차 이미지</Text>
-            </TouchableOpacity>
+          <View style={{ flex: 3 }}>
+            <View style={{flex:0.8}}></View>
+            <View style={{flex:1,flexDirection:"row",justifyContent:"flex-start"}}>
+              <Image source={smallLogo} style={{marginLeft:15}}></Image>
+            </View>
+            <View style={{flex:4}}>
+              <Text style={styles.carnum}>12기 3456</Text>
+              <View style={{justifyContent:"center",alignItems:"center"}}>
+              <Image source={sedan1_big} style={{marginTop:-30}}></Image>
+              </View>
+            </View>
           </View>
 
 
@@ -462,6 +471,16 @@ const styles = StyleSheet.create({
   textAlign: "right",
   color: "#252525",
   marginRight:24
+  },
+  carnum : {
+    opacity: 0.4,
+  fontFamily: "AppleSDGothicNeo",
+  fontSize: 18,
+  fontWeight: "bold",
+  fontStyle: "normal",
+  letterSpacing: 0,
+  color: "#040404",
+  marginLeft:16
   }
 })
 
