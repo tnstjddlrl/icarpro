@@ -41,19 +41,19 @@ trunk_0=JSON.stringify(trunk_0)
 
 const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
   // Write on the socket
-  Toast.show({
-    type: 'success',
-    position: 'top',
-    text1: '서버연결',
-    text2: '서버와 연결되었습니다..',
-    visibilityTime: 2000,
-    autoHide: true,
-    topOffset: 30,
-    bottomOffset: 40,
-    onShow: () => { },
-    onHide: () => { },
-    onPress: () => { }
-  });
+  // Toast.show({
+  //   type: 'success',
+  //   position: 'top',
+  //   text1: '서버연결',
+  //   text2: '서버와 연결되었습니다..',
+  //   visibilityTime: 2000,
+  //   autoHide: true,
+  //   topOffset: 30,
+  //   bottomOffset: 40,
+  //   onShow: () => { },
+  //   onHide: () => { },
+  //   onPress: () => { }
+  // });
   
   console.log('연결됨')
   //client.write(json);
