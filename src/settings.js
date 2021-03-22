@@ -42,15 +42,9 @@ const Settings = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{marginTop:60}}>
       <View style={{ width: chwidth }}>
-        {/* 헤더 */}
-        <View style={{ height:60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 32, marginLeft: 16 }}>
-          <View><TouchableWithoutFeedback onPress={()=>navigation.goBack()}><Image source={back}></Image></TouchableWithoutFeedback></View>
-          <Text style={styles.maintxt}>설정</Text>
-          <Text style={styles.savetxt}>저장</Text>
-        </View>
-        {/* 헤더 끝 */}
+        
 
         {/* 본문 */}
         <View style={{ marginLeft: 16 }}>
@@ -273,6 +267,14 @@ const Settings = () => {
 
       </View>
       </ScrollView>
+
+      {/* 헤더 */}
+      <View style={{ height:60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 32, marginLeft: 16,position:"absolute",top:0 }}>
+          <View><TouchableWithoutFeedback onPress={()=>navigation.goBack()}><Image source={back}></Image></TouchableWithoutFeedback></View>
+          <Text style={styles.maintxt}>설정</Text>
+          <Text style={styles.savetxt}>저장</Text>
+        </View>
+        {/* 헤더 끝 */}
     </SafeAreaView>
   )
 }
