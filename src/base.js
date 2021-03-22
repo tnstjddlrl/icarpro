@@ -21,6 +21,8 @@ const chheight = Dimensions.get('window').height
 const back = require('../img/backbtn.png')
 
 const CarState = () => {
+  const navigation = useNavigation()
+  
   return(
     <SafeAreaView>
       <View style={{width:chwidth,height:chheight}}>

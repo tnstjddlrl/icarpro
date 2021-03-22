@@ -25,6 +25,8 @@ const ready = require('../img/pwd/ready.png')
 const off = require('../img/pwd/off.png')
 
 const CarState = () => {
+  const navigation = useNavigation()
+
   const [pwd, setpwd] = useState('')
   const inputRef = useRef(<TextInput></TextInput>)
 
@@ -39,9 +41,15 @@ const CarState = () => {
       <View style={{ width: chwidth, height: chheight }}>
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <View><Image source={back}></Image></View>
+          <TouchableOpacity onPress={()=>navigation.goBack()}>
+          <View>
+            <Image source={back}></Image>
+          </View>
+          </TouchableOpacity>
           <Text style={styles.maintxt}>i도어 비밀번호</Text>
+          <TouchableOpacity onPress={()=>navigation.goBack()}>
           <Text style={styles.savetxt}>저장</Text>
+          </TouchableOpacity>
         </View>
         {/* 헤더 끝 */}
 
@@ -76,12 +84,11 @@ const CarState = () => {
           <View style={{ flex: 4 }}>
 
           </View>
-
-
+          
         </View>
         {/* 본문 끝 */}
       </View>
-      <TextInput style={{ position: 'absolute', width: chwidth, height: chheight * 4 }} keyboardType={'number-pad'}
+      <TextInput style={{ position: 'absolute', width: chwidth, height: chheight * 4,marginTop:60 }} keyboardType={'number-pad'}
         onChangeText={(txt) => setpwd(txt)} value={pwd} maxLength={4} ref={inputRef}
       ></TextInput>
     </SafeAreaView>
