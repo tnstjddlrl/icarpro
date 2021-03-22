@@ -255,7 +255,6 @@ const Carcontroll = () => {
       //     { text: "확인" }
       //   ]
       // );
-
     }
   }
   
