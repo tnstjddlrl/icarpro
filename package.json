@@ -25,7 +25,8 @@
     "react-native-screens": "^2.18.1",
     "react-native-tcp-socket": "^5.2.0",
     "react-native-toast-message": "^1.4.9",
-    "swr": "^0.5.3"
+    "swr": "^0.5.3",
+    "toggle-switch-react-native": "^3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
