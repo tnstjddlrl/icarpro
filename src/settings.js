@@ -30,13 +30,15 @@ const soundIcon = require('../img/setImg/soundIcon.png')
 const voltIcon = require('../img/setImg/voltIcon.png')
 const startIcon = require('../img/setImg/startIcon.png')
 
+const rightArr = require('../img/setImg/rightArr.png')
+
 
 const Settings = () => {
   return(
     <SafeAreaView style={{backgroundColor:'white'}}>
       <View style={{width:chwidth,height:chheight}}>
         {/* 헤더 */}
-          <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
+          <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 32, marginLeft: 16 }}>
             <View><Image source={back}></Image></View>
             <Text style={styles.maintxt}>설정</Text>
               <Text style={styles.savetxt}>저장</Text>
