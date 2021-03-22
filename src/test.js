@@ -43,9 +43,6 @@ const Test = () => {
 
   return (
     <View>
-      <TouchableOpacity onPress={() => navigation.navigate('회원가입')}>
-        <Text>회원가입</Text>
-      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('간편비밀번호')}>
         <Text>간편비밀번호</Text>
       </TouchableOpacity>

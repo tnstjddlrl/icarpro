@@ -88,7 +88,9 @@ const CarRegister = () => {
 
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
+          <TouchableWithoutFeedback onPress={()=>navigation.goBack()}>
           <View><Image source={back}></Image></View>
+          </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>
           <View><Image source={close}></Image></View>
         </View>
@@ -98,7 +100,7 @@ const CarRegister = () => {
         <View style={{ flex: 10, marginLeft: 16 }}>
           <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput placeholder='모뎀 번호' placeholderTextColor="gray" style={{ width: chwidth - 80, marginLeft: 16 }} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
+              <TextInput placeholder='모뎀 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
               {modemN != '' &&
                 <TouchableOpacity onPress={() => setModemN('')}>
                   <Image source={inputcls}></Image>
@@ -108,7 +110,7 @@ const CarRegister = () => {
           </View>
           <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput placeholder='휴대폰 번호' placeholderTextColor="gray" style={{ width: chwidth - 80, marginLeft: 16 }} onChangeText={txt => setUserN(txt)} value={userN} keyboardType={"number-pad"}></TextInput>
+              <TextInput placeholder='휴대폰 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setUserN(txt)} value={userN} keyboardType={"number-pad"}></TextInput>
               {userN != '' &&
                 <TouchableOpacity onPress={() => setUserN('')}>
                   <Image source={inputcls}></Image>
@@ -364,11 +366,11 @@ const styles = StyleSheet.create({
   carResist: {
     fontFamily: "AppleSDGothicNeo",
     fontSize: 17,
-    fontWeight: "600",
+    fontWeight: "bold",
     fontStyle: "normal",
     lineHeight: 20,
     letterSpacing: 0,
-    color: "#4e535a",
+    color: 'rgb(68,73,80)',
     marginLeft: 16
   },
   race: {
@@ -425,6 +427,17 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     letterSpacing: -0.24,
     color: "#393e46"
+  },
+  inputtxt:{
+    fontFamily: "AppleSDGothicNeo",
+    fontSize: 17,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    lineHeight: 20,
+    letterSpacing: 0,
+    color: 'rgb(68,73,80)',
+    width: chwidth - 80,
+    marginLeft: 16,
   }
 })
 

@@ -6,7 +6,6 @@ import Toast from 'react-native-toast-message';
 
 import Carcontroll from './src/carcontroll.js';
 import Load from './src/load.js';
-import Register from './src/register.js';
 import EasyPwd from './src/easyPwd.js';
 import CarRegister from './src/carRegister.js';
 import Test from './src/test.js';
@@ -26,7 +25,6 @@ function App() {
       <Stack.Navigator initialRouteName="home" headerMode={'none'}>
         <Stack.Screen name="인트로" component={Load} />
         <Stack.Screen name="차량제어" component={Carcontroll} />
-        <Stack.Screen name="회원가입" component={Register} />
         <Stack.Screen name="간편비밀번호" component={EasyPwd} />
         <Stack.Screen name="차량등록" component={CarRegister} />
         <Stack.Screen name="설정" component={Settings} />
