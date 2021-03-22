@@ -9,7 +9,8 @@ import {
   TextInput,
   SafeAreaView,
   Image,
-  StyleSheet
+  StyleSheet,
+  Switch
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +20,16 @@ const chheight = Dimensions.get('window').height
 
 
 const back = require('../img/backbtn.png')
+const icarIcon = require('../img/setImg/icarIcon.png')
+const carhitIcon = require('../img/setImg/carhitIcon.png')
+const coliIcon = require('../img/setImg/coliIcon.png')
+const idoorIcon = require('../img/setImg/idoorIcon.png')
+const lockIcon = require('../img/setImg/lockIcon.png')
+const powerIcon = require('../img/setImg/powerIcon.png')
+const soundIcon = require('../img/setImg/soundIcon.png')
+const voltIcon = require('../img/setImg/voltIcon.png')
+const startIcon = require('../img/setImg/startIcon.png')
+
 
 const Settings = () => {
   return(
@@ -36,8 +47,12 @@ const Settings = () => {
         <View style={{flex:10,marginLeft:16}}>
           <View style={{marginTop:10}}></View>
           <View style={styles.oneFrame}>
-            <View style={{marginLeft:11,marginRight:16,flexDirection:"row",alignItems:"center"}}>
-              
+            <View style={{marginLeft:11,marginRight:16,flexDirection:"row",justifyContent:"space-between"}}>
+              <View style={{flexDirection:"row"}}>
+              <Image source={icarIcon}></Image>
+              <Text style={styles.frameTitle}>iCar</Text>
+              </View>
+              <Switch></Switch>
             </View>
           </View>
           
@@ -73,7 +88,17 @@ const styles = StyleSheet.create({
     width:chwidth-32,
     height: 56,
     borderRadius: 6,
-    backgroundColor: "#f0f1f5"
+    backgroundColor: "#f0f1f5",
+    justifyContent:"center"
+  },
+  frameTitle : {
+    fontFamily: "AppleSDGothicNeo",
+  fontSize: 16,
+  fontWeight: "bold",
+  fontStyle: "normal",
+  letterSpacing: 0,
+  color: "#4e535a",
+  marginLeft:8
   }
 })
 
