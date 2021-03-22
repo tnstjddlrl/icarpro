@@ -63,6 +63,9 @@ const Test = () => {
             <TouchableOpacity onPress={()=>navigation.navigate('설정')}>
               <Text>설정</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('스크롤베이스')}>
+              <Text>스크롤베이스</Text>
+            </TouchableOpacity>
     </View>
   )
 }

@@ -13,6 +13,7 @@ import Test from './src/test.js';
 import Settings from './src/settings.js';
 import CarState from './src/carState.js';
 import SwipeTest from './src/swipeTest.js';
+import ScrollBase from './src/scrollBase.js';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,7 @@ function App() {
 
         <Stack.Screen name="테스트" component={Test} />
         <Stack.Screen name="스와이프테스트" component={SwipeTest} />
+        <Stack.Screen name="스크롤베이스" component={ScrollBase} />
         
       </Stack.Navigator>
     </NavigationContainer>
