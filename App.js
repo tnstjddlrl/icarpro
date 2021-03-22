@@ -12,6 +12,7 @@ import CarRegister from './src/carRegister.js';
 import Test from './src/test.js';
 import Settings from './src/settings.js';
 import CarState from './src/carState.js';
+import SwipeTest from './src/swipeTest.js';
 
 const Stack = createStackNavigator();
 
@@ -28,8 +29,11 @@ function App() {
         <Stack.Screen name="간편비밀번호" component={EasyPwd} />
         <Stack.Screen name="차량등록" component={CarRegister} />
         <Stack.Screen name="설정" component={Settings} />
-        <Stack.Screen name="테스트" component={Test} />
         <Stack.Screen name="차량상태" component={CarState} />
+
+        <Stack.Screen name="테스트" component={Test} />
+        <Stack.Screen name="스와이프테스트" component={SwipeTest} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
