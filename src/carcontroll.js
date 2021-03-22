@@ -17,7 +17,7 @@ import Toast from 'react-native-toast-message';
 
 import client from './Client.js'
 
-
+import { FlingGestureHandler,Directions,State } from 'react-native-gesture-handler'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -78,7 +78,7 @@ const Carcontroll = () => {
   function doorClick(is) {
     if (is == 'lock') {
       setDoor(true)
-      Alert.alert('door_0')
+      //Alert.alert('door_0')
 
       Toast.show({
         type: 'success',
@@ -100,7 +100,7 @@ const Carcontroll = () => {
 
     if (is == 'unlock') {
       setDoor(false)
-      Alert.alert('door_1')
+     // Alert.alert('door_1')
 
       Toast.show({
         type: 'success',
@@ -123,7 +123,7 @@ const Carcontroll = () => {
   function panicClick(is) {
     if (is == 'on') {
       setPanic(true)
-      Alert.alert('panic_0')
+      //Alert.alert('panic_0')
 
       Toast.show({
         type: 'success',
@@ -167,7 +167,7 @@ const Carcontroll = () => {
   function warnClick(is) {
     if (is == 'on') {
       setWarnbim(true)
-      Alert.alert('emergency_0')
+      //Alert.alert('emergency_0')
 
       Toast.show({
         type: 'success',
@@ -188,7 +188,7 @@ const Carcontroll = () => {
 
     if (is == 'off') {
       setWarnbim(false)
-      Alert.alert('emergency_1')
+     // Alert.alert('emergency_1')
 
       Toast.show({
         type: 'success',
@@ -211,7 +211,7 @@ const Carcontroll = () => {
   }
 
   function trunkClick() {
-    Alert.alert('trunk_0')
+    //Alert.alert('trunk_0')
     setTrunk(true)
 
     Toast.show({
@@ -238,46 +238,43 @@ const Carcontroll = () => {
   function bootClick() {
     if (boot == false) {
       setBoot(true)
-      Alert.alert(
-        "boot_0",
-        "",
-        [
-          { text: "확인" }
-        ]
-      );
+      // Alert.alert(
+      //   "boot_0",
+      //   "",
+      //   [
+      //     { text: "확인" }
+      //   ]
+      // );
 
     } else {
       setBoot(false)
-      Alert.alert(
-        "boot_1",
-        "",
-        [
-          { text: "확인" }
-        ]
-      );
+      // Alert.alert(
+      //   "boot_1",
+      //   "",
+      //   [
+      //     { text: "확인" }
+      //   ]
+      // );
 
     }
   }
-
-  function onSwipeUp() {
-    console.log('위로 스와이프');
-  }
-
-  function onSwipeDown() {
-    console.log('아래로 스와이프');
-  }
-
-  function onSwipeLeft() {
-    console.log('왼쪽으로 스와이프');
-  }
-
-  function onSwipeRight() {
-    console.log('오른쪽으로 스와이프');
-  }
-
   
   return (
     <SafeAreaView style={{backgroundColor:'white'}}>
+      <FlingGestureHandler
+            direction={Directions.LEFT}
+            onHandlerStateChange={({ nativeEvent }) => {
+              if (nativeEvent.state === State.ACTIVE) {
+                navigation.navigate('설정')
+              }
+            }}>
+      <FlingGestureHandler
+            direction={Directions.DOWN}
+            onHandlerStateChange={({ nativeEvent }) => {
+              if (nativeEvent.state === State.ACTIVE) {
+                navigation.navigate('차량상태')
+              }
+            }}>
       <View style={{ width: chwidth, height: chheight - 40 }}>
           <View style={{ flex: 3 }}>
             <View style={{flex:0.8}}></View>
@@ -443,9 +440,11 @@ const Carcontroll = () => {
 
       </View>
 
-   
+      </FlingGestureHandler>
+      </FlingGestureHandler>
 
       <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />
+     
     </SafeAreaView>
   )
 }
