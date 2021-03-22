@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -26,6 +26,13 @@ const off = require('../img/pwd/off.png')
 
 const CarState = () => {
   const [pwd, setpwd] = useState('')
+  const inputRef = useRef(<TextInput></TextInput>)
+
+  useEffect(()=>{
+    inputRef.current.focus()
+  },[])
+  
+
   console.log(pwd)
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
@@ -75,7 +82,7 @@ const CarState = () => {
         {/* 본문 끝 */}
       </View>
       <TextInput style={{ position: 'absolute', width: chwidth, height: chheight * 4 }} keyboardType={'number-pad'}
-        onChangeText={(txt) => setpwd(txt)} value={pwd} maxLength={4}
+        onChangeText={(txt) => setpwd(txt)} value={pwd} maxLength={4} ref={inputRef}
       ></TextInput>
     </SafeAreaView>
   )
