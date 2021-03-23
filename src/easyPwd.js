@@ -14,6 +14,8 @@ import {
 
 import { useNavigation } from '@react-navigation/native';
 
+import client from './Client'
+
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app'
 
@@ -76,7 +78,7 @@ const CarState = () => {
   },[pwd])
 
   function registerClick() {
-    var txt = {type:"R",type_sub:"easyPwd", data : {pwd : pwd}}
+    var txt = {type:"R",type_sub:"easy_pwd", data : {pwd : pwd , token : pushToken}}
     
     var res = client(txt)
     
@@ -86,9 +88,7 @@ const CarState = () => {
     if(res == 'ok'){
       Alert.alert('등록되었습니다.')
     }else{
-
     }
-    
   }
   
 
@@ -104,7 +104,7 @@ const CarState = () => {
           </View>
           </TouchableOpacity>
           <Text style={styles.maintxt}>i도어 비밀번호</Text>
-          <TouchableOpacity onPress={()=>navigation.goBack()}>
+          <TouchableOpacity onPress={()=>registerClick()}>
           <Text style={styles.savetxt}>저장</Text>
           </TouchableOpacity>
         </View>

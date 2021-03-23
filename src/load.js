@@ -12,6 +12,8 @@ import {
 
 import {useNavigation} from '@react-navigation/native'
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
@@ -20,11 +22,31 @@ const logo = require('../img/icarlogo.png')
 const Load = () => {
   const navigation = useNavigation()
 
-  useEffect(()=>{
-    setTimeout(() => {
-      navigation.navigate('테스트')
-    }, 1000);
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key')
+      return value
+    } catch(e) {
+      console.log(e)
+    }
+  }
+  
+
+  useEffect(() => {
+   getData().then((res)=>{
+     if(res!=null){
+      setTimeout(() => {
+        navigation.navigate('테스트')
+      }, 1000);
+     }else{
+      setTimeout(() => {
+        navigation.navigate('테스트')
+      }, 1000);
+     }
+   })
   },[])
+
+  
 
   return(
     <SafeAreaView>
