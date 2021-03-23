@@ -8,7 +8,7 @@ const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeo
 client.on('data', function(data) {
   console.log('message was received');
   console.log(data)
-  //console.log(Buffer.from(data.data,'base64').toString('utf-8'))
+  // console.log(Buffer.from(data.data,'base64').toString('utf-8'))
 });
 
 client.on('error', function(error) {

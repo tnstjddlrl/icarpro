@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		56DAD3988EDE845B1D21C535 /* libPods-icar-icarTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF32551400E3B4EAC6FF3EB1 /* libPods-icar-icarTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8542D1642609DB2100703635 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8542D1632609DB2100703635 /* GoogleService-Info.plist */; };
 		C5F62C4572E1E6997B7F9D49 /* libPods-icar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC43B5C00EB9B870C2DD7C18 /* libPods-icar.a */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = icar/main.m; sourceTree = "<group>"; };
 		186DD4FA502C58FE753B0F6A /* Pods-icar-icarTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-icar-icarTests.release.xcconfig"; path = "Target Support Files/Pods-icar-icarTests/Pods-icar-icarTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = icar/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8542D1632609DB2100703635 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BC43B5C00EB9B870C2DD7C18 /* libPods-icar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-icar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A68862E98ED183B34F3FDE /* Pods-icar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-icar.release.xcconfig"; path = "Target Support Files/Pods-icar/Pods-icar.release.xcconfig"; sourceTree = "<group>"; };
 		CF32551400E3B4EAC6FF3EB1 /* libPods-icar-icarTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-icar-icarTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +88,7 @@
 		13B07FAE1A68108700A75B9A /* icar */ = {
 			isa = PBXGroup;
 			children = (
+				8542D1632609DB2100703635 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -145,7 +148,6 @@
 				E2F5A58D20B6A947C0C14DE6 /* Pods-icar-icarTests.debug.xcconfig */,
 				186DD4FA502C58FE753B0F6A /* Pods-icar-icarTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -246,6 +248,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				8542D1642609DB2100703635 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
