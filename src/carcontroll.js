@@ -17,49 +17,57 @@ import Toast from 'react-native-toast-message';
 
 import client from './Client.js'
 
-import { FlingGestureHandler,Directions,State } from 'react-native-gesture-handler'
+import { FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
 const sedan1_big = require('../img/sedan1_big.png')
 
-const smallLogo = require('../img/smallLogo.png')
-const startbtn = require('../img/startbtn.png')
+const smallLogo = require('../img/controll/smallLogo.png')
+const startbtn = require('../img/controll/startbtn.png')
 
-const lockSelect = require('../img/lockSelect.png')
-const lockNoSelect = require('../img/lockNoSelect.png')
+const lockSelect = require('../img/controll/lockSelect.png')
+const lockNoSelect = require('../img/controll/lockNoSelect.png')
+const lockgray = require('../img/controll/lockgray.png')
 
-const panicSelect = require('../img/panicSelect.png')
-const panicNOSelect = require('../img/panicNoSelect.png')
+const panicSelect = require('../img/controll/panicSelect.png')
+const panicNOSelect = require('../img/controll/panicNoSelect.png')
+const panicgray = require('../img/controll/panicgray.png')
 
-const warnSelect = require('../img/warnSelect.png')
-const warnNoSelect = require('../img/warnNoSelect.png')
-
-
-const trunkSelect = require('../img/trunkSelect.png')
-const trunkNoSelect = require('../img/trunkNoSelect.png')
-
+const warnSelect = require('../img/controll/warnSelect.png')
+const warnNoSelect = require('../img/controll/warnNoSelect.png')
+const warngray = require('../img/controll/warngray.png')
 
 
-var params = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '1'}
+const trunkSelect = require('../img/controll/trunkSelect.png')
+const trunkNoSelect = require('../img/controll/trunkNoSelect.png')
+const trunkgray = require('../img/controll/trunkgray.png')
+
+const dooron = require('../img/controll/carstate/dooron.png')
+const panicon = require('../img/controll/carstate/panicon.png')
+const trunkon = require('../img/controll/carstate/trunkon.png')
+
+
+
+var params = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'door', 'state': '1' }
 var json = JSON.stringify(params)
 
-var door_0 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '0'}
-var door_1 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'door','state': '1'}
-var panic_0 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'panic','state': '0'}
-var panic_1 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'panic','state': '1'}
-var warn_0 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'warn','state': '0'}
-var warn_1 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'warn','state': '1'}
-var trunk_0 = {'userkey':'1234_user1','carkey':'user1_10육1004','command':'trunk','state': '0'}
+var door_0 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'door', 'state': '0' }
+var door_1 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'door', 'state': '1' }
+var panic_0 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'panic', 'state': '0' }
+var panic_1 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'panic', 'state': '1' }
+var warn_0 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'warn', 'state': '0' }
+var warn_1 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'warn', 'state': '1' }
+var trunk_0 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'trunk', 'state': '0' }
 
-door_0 =JSON.stringify(door_0)
-door_1=JSON.stringify(door_1)
-panic_0=JSON.stringify(panic_0)
-panic_1=JSON.stringify(panic_1)
-warn_0=JSON.stringify(warn_0)
-warn_1=JSON.stringify(warn_1)
-trunk_0=JSON.stringify(trunk_0)
+door_0 = JSON.stringify(door_0)
+door_1 = JSON.stringify(door_1)
+panic_0 = JSON.stringify(panic_0)
+panic_1 = JSON.stringify(panic_1)
+warn_0 = JSON.stringify(warn_0)
+warn_1 = JSON.stringify(warn_1)
+trunk_0 = JSON.stringify(trunk_0)
 
 
 
@@ -69,15 +77,15 @@ const Carcontroll = () => {
 
 
   const [boot, setBoot] = useState(false)
-  const [door, setDoor] = useState(true)
-  const [panic, setPanic] = useState(false)
-  const [warnbim, setWarnbim] = useState(false)
+  const [door, setDoor] = useState('no')
+  const [panic, setPanic] = useState('no')
+  const [warnbim, setWarnbim] = useState('no')
   const [trunk, setTrunk] = useState(false)
 
 
   function doorClick(is) {
     if (is == 'lock') {
-      setDoor(true)
+      setDoor('on')
       //Alert.alert('door_0')
 
       Toast.show({
@@ -94,13 +102,18 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(door_0)
+      //client(door_0)
+
+      setTimeout(() => {
+        setDoor('no')
+      }, 1500);
+
     }
 
 
     if (is == 'unlock') {
-      setDoor(false)
-     // Alert.alert('door_1')
+      setDoor('off')
+      // Alert.alert('door_1')
 
       Toast.show({
         type: 'success',
@@ -116,13 +129,17 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(door_1)
+      //client(door_1)
+
+      setTimeout(() => {
+        setDoor('no')
+      }, 1500);
     }
   }
 
   function panicClick(is) {
     if (is == 'on') {
-      setPanic(true)
+      setPanic('on')
       //Alert.alert('panic_0')
 
       Toast.show({
@@ -139,12 +156,15 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(panic_0)
+      //client(panic_0)
+
+      setTimeout(() => {
+        setPanic('no')
+      }, 1500);
     }
 
     if (is == 'off') {
-      setPanic(false)
-      Alert.alert('panic_1')
+      setPanic('off')
 
       Toast.show({
         type: 'success',
@@ -160,13 +180,17 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(panic_1)
+      // client(panic_1)
+
+      setTimeout(() => {
+        setPanic('no')
+      }, 1500);
     }
   }
 
   function warnClick(is) {
     if (is == 'on') {
-      setWarnbim(true)
+      setWarnbim('on')
       //Alert.alert('emergency_0')
 
       Toast.show({
@@ -183,12 +207,16 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      client(warn_0)
+      // client(warn_0)
+
+      setTimeout(() => {
+        setWarnbim('no')
+      }, 1500);
     }
 
     if (is == 'off') {
-      setWarnbim(false)
-     // Alert.alert('emergency_1')
+      setWarnbim('off')
+      // Alert.alert('emergency_1')
 
       Toast.show({
         type: 'success',
@@ -203,11 +231,15 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
-      client(warn_1)
-      
+      // client(warn_1)
+
+      setTimeout(() => {
+        setWarnbim('no')
+      }, 1500);
+
     }
 
-    
+
   }
 
   function trunkClick() {
@@ -228,7 +260,7 @@ const Carcontroll = () => {
       onPress: () => { }
     });
 
-    client(trunk_0)
+    //client(trunk_0)
 
     setTimeout(() => {
       setTrunk(false)
@@ -257,199 +289,287 @@ const Carcontroll = () => {
       // );
     }
   }
-  
+
   return (
-    <SafeAreaView style={{backgroundColor:'white'}}>
+    <SafeAreaView style={{ backgroundColor: 'white' }}>
       <FlingGestureHandler
-            direction={Directions.LEFT}
-            onHandlerStateChange={({ nativeEvent }) => {
-              if (nativeEvent.state === State.ACTIVE) {
-                navigation.navigate('설정')
-              }
-            }}>
-      <FlingGestureHandler
-            direction={Directions.DOWN}
-            onHandlerStateChange={({ nativeEvent }) => {
-              if (nativeEvent.state === State.ACTIVE) {
-                navigation.navigate('차량상태')
-              }
-            }}>
-      <View style={{ width: chwidth, height: chheight - 40 }}>
-          <View style={{ flex: 3 }}>
-            <View style={{flex:0.8}}></View>
-            <View style={{flex:1,flexDirection:"row",justifyContent:"flex-start"}}>
-              <Image source={smallLogo} style={{marginLeft:15}}></Image>
-            </View>
-            <View style={{flex:4}}>
-              <Text style={styles.carnum}>12기 3456</Text>
-              <View style={{justifyContent:"center",alignItems:"center"}}>
-              <Image source={sedan1_big} style={{marginTop:-30}}></Image>
-              </View>
-            </View>
-          </View>
-
-
-        <TouchableWithoutFeedback onPress={() => { bootClick() }}>
-          <View style={{ width: chwidth - 32, flex: 0.8, backgroundColor: "#f0f1f5", marginLeft: 16, borderRadius: 10, justifyContent: 'center' }}>
-            <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-
-              <View style={{flexDirection:"row",alignItems:'center'}}>
-                <Image source={startbtn} style={{marginLeft:26,marginRight:8}}></Image>
-                <Text style={styles.starttxt}>원격시동 켜기</Text>
-              </View>
-
-              <Text style={styles.clocktxt}>00:00</Text>
-
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-
-        <View style={{ flex: 0.2 }}></View>
-
-        <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16 }}>
-          <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
-            <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              {door ? 
-               <Image source={lockSelect}></Image>
-              : 
-                <Image source={lockNoSelect}></Image>
-              }
-              
-              <Text style={styles.titletxt}>도어</Text>
-            </View>
-
-            {door ? <View style={{ flex: 2, flexDirection: 'row' }}>
-              <TouchableWithoutFeedback onPress={() => doorClick('unlock')}>
-                <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={styles.btntxt}>unlock</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <View style={{ flex: 0.02 }}></View>
-              <TouchableWithoutFeedback onPress={() => doorClick('lock')}>
-                <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={styles.btntxt}>lock</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View> : <View style={{ flex: 2, flexDirection: 'row' }}>
-                <TouchableWithoutFeedback onPress={() => doorClick('unlock')}>
-                  <View style={{ flex: 1, backgroundColor: "rgb(68,73,80)", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.btntxt}>unlock</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-                <View style={{ flex: 0.02 }}></View>
-                <TouchableWithoutFeedback onPress={() => doorClick('lock')}>
-                  <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.btntxt}>lock</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              </View>}
-
-          </View>
-
-          <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
-            <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              {
-                panic ? 
-                <Image source={panicSelect}></Image>
-                :
-<Image source={panicNOSelect}></Image>
-              }
-              
-              <Text style={styles.titletxt}>패닉</Text>
-            </View>
-            <View style={{ flex: 2, flexDirection: 'row' }}>
-              <TouchableWithoutFeedback onPress={() => panicClick('off')}>
-                <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={styles.btntxt}>off</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <View style={{ flex: 0.02 }}></View>
-
-              {panic ? <TouchableWithoutFeedback onPress={() => panicClick('on')}>
-                <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={styles.btntxt}>on</Text>
-                </View>
-              </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => panicClick('on')}>
-                  <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.btntxt}>on</Text>
-                  </View>
-                </TouchableWithoutFeedback>}
-
-            </View>
-          </View>
-        </View>
-
-        <View style={{ flex: 0.2 }}></View>
-
-        <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16 }}>
-          <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
-            <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              {
-                warnbim ?
-<Image source={warnSelect}></Image>
-                :
-<Image source={warnNoSelect}></Image>
-              }
-              
-              <Text style={styles.titletxt}>비상등</Text>
-            </View>
-            <View style={{ flex: 2, flexDirection: 'row' }}>
-              <TouchableWithoutFeedback onPress={() => warnClick('off')}>
-                <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={styles.btntxt}>off</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <View style={{ flex: 0.01 }}></View>
-
-              {warnbim ? <TouchableWithoutFeedback onPress={() => warnClick('on')}>
-                <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={styles.btntxt}>on</Text>
-                </View>
-              </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => warnClick('on')}>
-                  <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.btntxt}>on</Text>
-                  </View>
-                </TouchableWithoutFeedback>}
-            </View>
-          </View>
-          <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
-            <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
-              { trunk ? 
-              <Image source={trunkSelect}></Image>
-            :
-            <Image source={trunkNoSelect}></Image>
+        direction={Directions.LEFT}
+        onHandlerStateChange={({ nativeEvent }) => {
+          if (nativeEvent.state === State.ACTIVE) {
+            navigation.navigate('설정')
+          }
+        }}>
+        <FlingGestureHandler
+          direction={Directions.DOWN}
+          onHandlerStateChange={({ nativeEvent }) => {
+            if (nativeEvent.state === State.ACTIVE) {
+              navigation.navigate('차량상태')
             }
-              
-              <Text style={styles.titletxt}>트렁크</Text>
-            </View>
-            <View style={{ flex: 2, flexDirection: 'row' }}>
-
-              {trunk ? <TouchableWithoutFeedback onPress={() => trunkClick()}>
-                <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={styles.btntxt}>open</Text>
+          }}>
+          <View style={{ width: chwidth, height: chheight - 40 }}>
+            <View style={{ flex: 3 }}>
+              <View style={{ flex: 0.8 }}></View>
+              <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
+                <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
+              </View>
+              <View style={{ flex: 4 }}>
+                <Text style={styles.carnum}>12기 3456</Text>
+                <View style={{ justifyContent: "center", alignItems: "center" }}>
+                  {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
+                    <Image source={sedan1_big} style={{ marginTop: -30 }}></Image>  
+                  }
+                  {door == 'on' &&
+                    <Image source={dooron} style={{ marginTop: -30 }}></Image>  
+                  }
+                  {(panic == 'on' || warnbim == 'on') &&
+                    <Image source={panicon} style={{ marginTop: -30 }}></Image>  
+                  }
+                  {trunk== true &&
+                    <Image source={trunkon} style={{ marginTop: -30 }}></Image>  
+                  }
+                  
                 </View>
-              </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => trunkClick()}>
-                  <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.btntxt}>open</Text>
-                  </View>
-                </TouchableWithoutFeedback>}
+              </View>
             </View>
+
+
+            <TouchableWithoutFeedback onPress={() => { bootClick() }}>
+              <View style={{ width: chwidth - 32, flex: 0.8, backgroundColor: "#f0f1f5", marginLeft: 16, borderRadius: 10, justifyContent: 'center' }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+
+                  <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                    <Image source={startbtn} style={{ marginLeft: 26, marginRight: 8 }}></Image>
+                    <Text style={styles.starttxt}>원격시동 켜기</Text>
+                  </View>
+
+                  <Text style={styles.clocktxt}>00:00</Text>
+
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+
+            <View style={{ flex: 0.2 }}></View>
+
+            <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16 }}>
+              <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
+                <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
+                  {door == 'no' && <Image source={lockgray}></Image>}
+                  {door == 'off' && <Image source={lockNoSelect}></Image>}
+                  {door == 'on' && <Image source={lockSelect}></Image>}
+
+                  <Text style={styles.titletxt}>도어</Text>
+                </View>
+
+                {door == 'no' &&
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <TouchableWithoutFeedback onPress={() => doorClick('unlock')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>unlock</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flex: 0.02 }}></View>
+                    <TouchableWithoutFeedback onPress={() => doorClick('lock')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>lock</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+
+                {door == 'off' &&
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <TouchableWithoutFeedback onPress={() => doorClick('unlock')}>
+                      <View style={{ flex: 1, backgroundColor: "rgb(68,73,80)", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>unlock</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flex: 0.02 }}></View>
+                    <TouchableWithoutFeedback onPress={() => doorClick('lock')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>lock</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+                {door == 'on' &&
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <TouchableWithoutFeedback onPress={() => doorClick('unlock')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>unlock</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flex: 0.02 }}></View>
+                    <TouchableWithoutFeedback onPress={() => doorClick('lock')}>
+                      <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>lock</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+
+
+              </View>
+
+              <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
+                <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
+                  {panic == 'no' && <Image source={panicgray}></Image>}
+                  {panic == 'off' && <Image source={panicNOSelect}></Image>}
+                  {panic == 'on' && <Image source={panicSelect}></Image>}
+
+                  <Text style={styles.titletxt}>패닉</Text>
+                </View>
+
+                {panic == 'no' &&
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <TouchableWithoutFeedback onPress={() => panicClick('off')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>off</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flex: 0.02 }}></View>
+                    <TouchableWithoutFeedback onPress={() => panicClick('on')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>on</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+
+                {panic == 'off' &&
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <TouchableWithoutFeedback onPress={() => panicClick('off')}>
+                      <View style={{ flex: 1, backgroundColor: "rgb(68,73,80)", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>off</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flex: 0.02 }}></View>
+                    <TouchableWithoutFeedback onPress={() => panicClick('on')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>on</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+
+                {panic == 'on' &&
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <TouchableWithoutFeedback onPress={() => panicClick('off')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>off</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flex: 0.02 }}></View>
+                    <TouchableWithoutFeedback onPress={() => panicClick('on')}>
+                      <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>on</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+
+
+              </View>
+            </View>
+
+            <View style={{ flex: 0.2 }}></View>
+
+            <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16 }}>
+              <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
+                <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
+                  {warnbim == 'no' && <Image source={warngray}></Image>}
+                  {warnbim == 'off' && <Image source={warnNoSelect}></Image>}
+                  {warnbim == 'on' && <Image source={warnSelect}></Image>}
+
+                  <Text style={styles.titletxt}>비상등</Text>
+                </View>
+
+                {warnbim == 'no' &&
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <TouchableWithoutFeedback onPress={() => warnClick('off')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>off</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flex: 0.02 }}></View>
+                    <TouchableWithoutFeedback onPress={() => warnClick('on')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>on</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+
+                {warnbim == 'off' &&
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <TouchableWithoutFeedback onPress={() => warnClick('off')}>
+                      <View style={{ flex: 1, backgroundColor: "rgb(68,73,80)", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>off</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flex: 0.02 }}></View>
+                    <TouchableWithoutFeedback onPress={() => warnClick('on')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>on</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+
+                {warnbim == 'on' &&
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <TouchableWithoutFeedback onPress={() => warnClick('off')}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>off</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flex: 0.02 }}></View>
+                    <TouchableWithoutFeedback onPress={() => warnClick('on')}>
+                      <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>on</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                }
+
+              </View>
+              <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", marginLeft: 10, borderRadius: 10 }}>
+                <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
+                  {trunk ?
+                    <Image source={trunkSelect}></Image>
+                    :
+                    <Image source={trunkgray}></Image>
+                  }
+
+                  <Text style={styles.titletxt}>트렁크</Text>
+                </View>
+                <View style={{ flex: 2, flexDirection: 'row' }}>
+
+                  {trunk ? <TouchableWithoutFeedback onPress={() => trunkClick()}>
+                    <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Text style={styles.btntxt}>open</Text>
+                    </View>
+                  </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => trunkClick()}>
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>open</Text>
+                      </View>
+                    </TouchableWithoutFeedback>}
+                </View>
+              </View>
+            </View>
+
           </View>
-        </View>
 
-      </View>
-
-      </FlingGestureHandler>
+        </FlingGestureHandler>
       </FlingGestureHandler>
 
       <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />
-     
+
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  starttxt : {
+  starttxt: {
     fontFamily: "AppleSDGothicNeo",
     fontSize: 18,
     fontWeight: "600",
@@ -457,7 +577,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     color: "#4e535a"
   },
-  btntxt : {
+  btntxt: {
     fontFamily: "AppleSDGothicNeo",
     fontSize: 18,
     fontWeight: "bold",
@@ -467,7 +587,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#f8f8f8"
   },
-  titletxt : {
+  titletxt: {
     fontFamily: "AppleSDGothicNeo",
     fontSize: 18,
     fontWeight: "bold",
@@ -475,26 +595,26 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     color: "#4e535a"
   },
-  clocktxt:{
+  clocktxt: {
     opacity: 0.3,
-  fontFamily: "AppleSDGothicNeo",
-  fontSize: 14,
-  fontWeight: "bold",
-  fontStyle: "normal",
-  letterSpacing: 0,
-  textAlign: "right",
-  color: "#252525",
-  marginRight:24
+    fontFamily: "AppleSDGothicNeo",
+    fontSize: 14,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    textAlign: "right",
+    color: "#252525",
+    marginRight: 24
   },
-  carnum : {
+  carnum: {
     opacity: 0.4,
-  fontFamily: "AppleSDGothicNeo",
-  fontSize: 18,
-  fontWeight: "bold",
-  fontStyle: "normal",
-  letterSpacing: 0,
-  color: "#040404",
-  marginLeft:16
+    fontFamily: "AppleSDGothicNeo",
+    fontSize: 18,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    color: "#040404",
+    marginLeft: 16
   }
 })
 
