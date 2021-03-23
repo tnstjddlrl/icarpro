@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,9 @@ import {
 import client from './Client'
 
 import { useNavigation } from '@react-navigation/native';
+
+import messaging from '@react-native-firebase/messaging';
+import firebase from '@react-native-firebase/app'
 
 
 const chwidth = Dimensions.get('window').width
@@ -37,6 +40,43 @@ const suv1img = require('../img/suv1.png')
 
 
 const CarRegister = () => {
+
+  const [pushToken, setPushToken] = useState(null)
+  const [isAuthorized, setIsAuthorized] = useState(false)
+
+  const handlePushToken = useCallback(async () => {
+    const enabled = await messaging().hasPermission()
+    if (enabled) {
+      const fcmToken = await messaging().getToken()
+      if (fcmToken) setPushToken(fcmToken)
+    } else {
+      const authorized = await messaging.requestPermission()
+      if (authorized) setIsAuthorized(true)
+    }
+  }, [])
+
+  const saveTokenToDatabase = useCallback(async (token) => {
+    const { error } = await setFcmToken(token)
+    if (error) throw Error(error)
+  }, [])
+
+  const saveDeviceToken = useCallback(async () => {
+    if (isAuthorized) {
+      const currentFcmToken = await firebase.messaging().getToken()
+      if (currentFcmToken !== pushToken) {
+        return saveTokenToDatabase(currentFcmToken)
+      }
+
+      return messaging().onTokenRefresh((token) => saveTokenToDatabase(token))
+    }
+  }, [pushToken, isAuthorized])
+
+  useEffect(()=>{
+    handlePushToken()
+    saveDeviceToken()
+    console.log(pushToken)
+  },[])
+
   const navigation = useNavigation()
 
   const [modemN, setModemN] = useState('')
@@ -51,18 +91,16 @@ const CarRegister = () => {
   function iscar() {
     if (sedan1 == true) {
       Alert.alert('차량이 변경되었습니다.')
-      setCarRace('SEDAN')
+      setCarRace('SEDAN1')
     } else if (suv1 == true) {
       Alert.alert('차량이 변경되었습니다.')
-      setCarRace('SUV')
+      setCarRace('SUV1')
     }
   }
 
   function registerClick() {
-    var txt = {"type":"R","type_sub":"register","data" : {"modem" : modemN , "user" : userN}}
+    var txt = {type:"R",type_sub:"register", data : {modem : modemN , user : userN , carRace : carRace , token : pushToken}}
     
-    txt=JSON.stringify(txt)
-
 
     var res = client(txt)
     

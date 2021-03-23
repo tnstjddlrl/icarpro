@@ -21,12 +21,8 @@ function socketwrite (str){
   client.write(txt);
   console.log('전송!' + txt)
 
-  var res = 'no'
-  client.on('data', function(data) {
-    res = 'okay'
-  });
+  return 'ok'
 
-  return res
 }
 
 export default socketwrite;

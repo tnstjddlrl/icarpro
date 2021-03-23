@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useCallback } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+
+import messaging from '@react-native-firebase/messaging';
+import firebase from '@react-native-firebase/app'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -30,9 +33,63 @@ const CarState = () => {
   const [pwd, setpwd] = useState('')
   const inputRef = useRef(<TextInput></TextInput>)
 
+  const [pushToken, setPushToken] = useState(null)
+  const [isAuthorized, setIsAuthorized] = useState(false)
+
+  const handlePushToken = useCallback(async () => {
+    const enabled = await messaging().hasPermission()
+    if (enabled) {
+      const fcmToken = await messaging().getToken()
+      if (fcmToken) setPushToken(fcmToken)
+    } else {
+      const authorized = await messaging.requestPermission()
+      if (authorized) setIsAuthorized(true)
+    }
+  }, [])
+
+  const saveTokenToDatabase = useCallback(async (token) => {
+    const { error } = await setFcmToken(token)
+    if (error) throw Error(error)
+  }, [])
+
+  const saveDeviceToken = useCallback(async () => {
+    if (isAuthorized) {
+      const currentFcmToken = await firebase.messaging().getToken()
+      if (currentFcmToken !== pushToken) {
+        return saveTokenToDatabase(currentFcmToken)
+      }
+      return messaging().onTokenRefresh((token) => saveTokenToDatabase(token))
+    }
+  }, [pushToken, isAuthorized])
+
   useEffect(()=>{
+    handlePushToken()
+    saveDeviceToken()
     inputRef.current.focus()
   },[])
+
+  useEffect(()=>{
+    if(pwd.match(/^[0-9]+$/) == null && pwd !=''){
+      Alert.alert('숫자만 입력가능합니다!')
+      setpwd('')
+    }
+  },[pwd])
+
+  function registerClick() {
+    var txt = {type:"R",type_sub:"easyPwd", data : {pwd : pwd}}
+    
+    var res = client(txt)
+    
+    console.log(res)
+
+
+    if(res == 'ok'){
+      Alert.alert('등록되었습니다.')
+    }else{
+
+    }
+    
+  }
   
 
   console.log(pwd)
