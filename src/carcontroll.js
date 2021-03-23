@@ -343,14 +343,11 @@ const Carcontroll = () => {
             <TouchableWithoutFeedback onPress={() => { bootClick() }}>
               <View style={{ width: chwidth - 32, flex: 0.8, backgroundColor: "#f0f1f5", marginLeft: 16, borderRadius: 10, justifyContent: 'center' }}>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-
                   <View style={{ flexDirection: "row", alignItems: 'center' }}>
                     <Image source={startbtn} style={{ marginLeft: 26, marginRight: 8 }}></Image>
                     <Text style={styles.starttxt}>원격시동 켜기</Text>
                   </View>
-
                   <Text style={styles.clocktxt}>00:00</Text>
-
                 </View>
               </View>
             </TouchableWithoutFeedback>
@@ -580,7 +577,7 @@ const styles = StyleSheet.create({
   starttxt: {
     fontFamily: "AppleSDGothicNeo",
     fontSize: 18,
-    fontWeight: "600",
+    fontWeight: "bold",
     fontStyle: "normal",
     letterSpacing: 0,
     color: "#4e535a"
