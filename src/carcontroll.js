@@ -306,6 +306,13 @@ const Carcontroll = () => {
               navigation.navigate('차량상태')
             }
           }}>
+        <FlingGestureHandler
+          direction={Directions.RIGHT}
+          onHandlerStateChange={({ nativeEvent }) => {
+            if (nativeEvent.state === State.ACTIVE) {
+              navigation.navigate('차량등록')
+            }
+          }}>
           <View style={{ width: chwidth, height: chheight - 40 }}>
             <View style={{ flex: 3 }}>
               <View style={{ flex: 0.8 }}></View>
@@ -560,6 +567,7 @@ const Carcontroll = () => {
           </View>
 
         </FlingGestureHandler>
+      </FlingGestureHandler>
       </FlingGestureHandler>
 
       <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />

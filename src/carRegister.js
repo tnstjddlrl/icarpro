@@ -167,7 +167,6 @@ const CarRegister = () => {
               </View>
 
             </View>
-
           }
 
 
