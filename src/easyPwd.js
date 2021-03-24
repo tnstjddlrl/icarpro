@@ -82,12 +82,13 @@ const CarState = () => {
     
     var res = client(txt)
     
-    console.log(res)
+    console.log( '넘어오는 리턴값 : '+res)
 
 
-    if(res == 'ok'){
-      Alert.alert('등록되었습니다.')
+    if(res == 'pwd_suc'){
+      Alert.alert('확인되었습니다.')
     }else{
+
     }
   }
   

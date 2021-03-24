@@ -37,8 +37,7 @@ const voltIcon = require('../img/state/voltIcon.png')
 const CarState = () => {
   const navigation = useNavigation()
   return (
-    <SafeAreaView style={{ backgroundColor: 'white' }}>
-      <View style={{ width: chwidth, height: chheight }}>
+      <SafeAreaView style={{ width: chwidth, height: chheight,backgroundColor:'white' }}>
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
           <TouchableWithoutFeedback onPress={()=>navigation.goBack()}>
@@ -200,8 +199,7 @@ const CarState = () => {
         {/* 본문 끝 */}
 
 
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
   )
 }
 

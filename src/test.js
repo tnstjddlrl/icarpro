@@ -7,7 +7,8 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  BackHandler
+  BackHandler,
+  SafeAreaView
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -43,6 +44,7 @@ const Test = () => {
 
   return (
     <View>
+      <SafeAreaView>
       <TouchableOpacity onPress={() => navigation.navigate('간편비밀번호')}>
         <Text>간편비밀번호</Text>
       </TouchableOpacity>
@@ -87,6 +89,7 @@ const Test = () => {
       <TouchableOpacity onPress={() => navigation.navigate('스크롤베이스')}>
         <Text>스크롤베이스</Text>
       </TouchableOpacity>
+      </SafeAreaView>
     </View>
   )
 }

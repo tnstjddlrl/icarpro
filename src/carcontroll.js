@@ -26,6 +26,7 @@ const sedan1_big = require('../img/sedan1_big.png')
 
 const smallLogo = require('../img/controll/smallLogo.png')
 const startbtn = require('../img/controll/startbtn.png')
+const startoffbtn = require('../img/controll/startoffbtn.png')
 
 const lockSelect = require('../img/controll/lockSelect.png')
 const lockNoSelect = require('../img/controll/lockNoSelect.png')
@@ -47,6 +48,7 @@ const trunkgray = require('../img/controll/trunkgray.png')
 const dooron = require('../img/controll/carstate/dooron.png')
 const panicon = require('../img/controll/carstate/panicon.png')
 const trunkon = require('../img/controll/carstate/trunkon.png')
+const booton = require('../img/controll/carstate/booton.png')
 
 
 
@@ -291,7 +293,7 @@ const Carcontroll = () => {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'white' }}>
+    <View style={{ backgroundColor: 'white' }}>
       <FlingGestureHandler
         direction={Directions.LEFT}
         onHandlerStateChange={({ nativeEvent }) => {
@@ -313,7 +315,7 @@ const Carcontroll = () => {
               navigation.navigate('차량등록')
             }
           }}>
-          <View style={{ width: chwidth, height: chheight - 40 }}>
+          <View style={{ width: chwidth, height: chheight }}>
             <View style={{ flex: 3 }}>
               <View style={{ flex: 0.8 }}></View>
               <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
@@ -322,7 +324,7 @@ const Carcontroll = () => {
               <View style={{ flex: 4 }}>
                 <Text style={styles.carnum}>12기 3456</Text>
                 <View style={{ justifyContent: "center", alignItems: "center" }}>
-                  {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
+                  {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot !=true) &&
                     <Image source={sedan1_big} style={{ marginTop: -30 }}></Image>  
                   }
                   {door == 'on' &&
@@ -334,6 +336,9 @@ const Carcontroll = () => {
                   {trunk== true &&
                     <Image source={trunkon} style={{ marginTop: -30 }}></Image>  
                   }
+                  {boot== true &&
+                    <Image source={booton} style={{ marginTop: -30 }}></Image>  
+                  }
                   
                 </View>
               </View>
@@ -341,8 +346,23 @@ const Carcontroll = () => {
 
 
             <TouchableWithoutFeedback onPress={() => { bootClick() }}>
-              <View style={{ width: chwidth - 32, flex: 0.8, backgroundColor: "#f0f1f5", marginLeft: 16, borderRadius: 10, justifyContent: 'center' }}>
+              {
+                boot ? 
+                <View style={{ width: chwidth - 32, flex: 0.8, backgroundColor: "#f0f1f5",borderStyle: "solid",borderWidth: 2,borderColor: "#f75929", marginLeft: 16, borderRadius: 10, justifyContent: 'center' }}>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+
+                  <View style={{ flexDirection: "row", alignItems: 'center' }}>
+                    <Image source={startoffbtn} style={{ marginLeft: 26, marginRight: 8 }}></Image>
+                    <Text style={styles.starttxt}>원격시동 끄기</Text>
+                  </View>
+                  <Text style={styles.Onclocktxt}>00:00</Text>
+                </View>
+              </View>
+
+                :
+                <View style={{ width: chwidth - 32, flex: 0.8, backgroundColor: "#f0f1f5",borderStyle: "solid",borderWidth: 2,borderColor: "#f0f1f5", marginLeft: 16, borderRadius: 10, justifyContent: 'center' }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+
                   <View style={{ flexDirection: "row", alignItems: 'center' }}>
                     <Image source={startbtn} style={{ marginLeft: 26, marginRight: 8 }}></Image>
                     <Text style={styles.starttxt}>원격시동 켜기</Text>
@@ -350,6 +370,8 @@ const Carcontroll = () => {
                   <Text style={styles.clocktxt}>00:00</Text>
                 </View>
               </View>
+
+              }
             </TouchableWithoutFeedback>
 
             <View style={{ flex: 0.2 }}></View>
@@ -477,7 +499,7 @@ const Carcontroll = () => {
 
             <View style={{ flex: 0.2 }}></View>
 
-            <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16 }}>
+            <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16,marginBottom:40 }}>
               <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
                 <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
                   {warnbim == 'no' && <Image source={warngray}></Image>}
@@ -569,7 +591,7 @@ const Carcontroll = () => {
 
       <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />
 
-    </SafeAreaView>
+    </View>
   )
 }
 
@@ -620,6 +642,16 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     color: "#040404",
     marginLeft: 16
+  },
+  Onclocktxt : {
+    fontFamily: "AppleSDGothicNeo",
+  fontSize: 14,
+  fontWeight: "bold",
+  fontStyle: "normal",
+  letterSpacing: 0,
+  textAlign: "right",
+  color: "#f75929",
+  marginRight:24
   }
 })
 

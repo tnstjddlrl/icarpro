@@ -1,15 +1,14 @@
 import TcpSocket from 'react-native-tcp-socket';
-import {Buffer} from 'buffer'
 
 const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
   console.log('연결됨')
 });
 
-client.on('data', function(data) {
-  console.log('message was received');
-  console.log(data)
-  // console.log(Buffer.from(data.data,'base64').toString('utf-8'))
-});
+// client.on('data', function(data) {
+//   pwdstate = ''+data
+//   console.log('message was received' + pwdstate);
+//   console.log(pwdstate)
+// });
 
 client.on('error', function(error) {
   console.error(error);
@@ -17,12 +16,19 @@ client.on('error', function(error) {
 
 function socketwrite (str){
   var txt = JSON.stringify(str)
+  var state = 'nostate'
 
   client.write(txt);
   console.log('전송!' + txt)
 
-  return 'ok'
+  client.on('data', function(data) {
+    state = ''+data
+    console.log('message was received' + state);
+    console.log(state)
+  });
 
+
+  return state
 }
 
 export default socketwrite;
