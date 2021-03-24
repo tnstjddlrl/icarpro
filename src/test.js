@@ -11,15 +11,32 @@ import {
   SafeAreaView
 } from 'react-native';
 
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
+
+import { networkState,newState } from './atom/atoms'
+
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'
 import Toast from 'react-native-toast-message';
+import MySqlConnection from 'react-native-my-sql-connection';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
 const Test = () => {
   const navigation = useNavigation()
+
+  const state = useRecoilValue(networkState)
+  const [neww,setneww] = useRecoilState(newState)
+
+  console.log(state)
+  console.log(neww)
 
   useEffect(() => {
     const backAction = () => {
@@ -41,6 +58,31 @@ const Test = () => {
 
     return () => backHandler.remove();
   }, []);
+
+  
+
+let config = {
+  host:'175.126.232.72/pma',
+  database:'icar',
+  user:'root',
+  password:'ip01442162',
+  port:3400
+  };
+  const sendVerificationEmail = async () =>{
+    try{
+      const connection = await MySqlConnection.createConnection(config);
+      let res = await connection.executeQuery('SELECT * FROM modem');
+      console.log(res)
+      connection.close();
+    }catch(err){
+        console.log('mysql err : ' + err)
+    }
+  }
+
+  useEffect(()=>{
+    sendVerificationEmail()
+  },[])
+  
 
   return (
     <View>

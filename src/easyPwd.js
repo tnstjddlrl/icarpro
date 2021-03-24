@@ -29,6 +29,8 @@ const on = require('../img/pwd/on.png')
 const ready = require('../img/pwd/ready.png')
 const off = require('../img/pwd/off.png')
 
+
+
 const CarState = () => {
   const navigation = useNavigation()
 
@@ -77,20 +79,40 @@ const CarState = () => {
     }
   },[pwd])
 
+  var times
+
   function registerClick() {
     var txt = {type:"R",type_sub:"easy_pwd", data : {pwd : pwd , token : pushToken}}
+    txt = JSON.stringify(txt)
+
+    var res = client.write(txt)
     
-    var res = client(txt)
-    
-    console.log( '넘어오는 리턴값 : '+res)
+    times = setTimeout(() => {
+      Alert.alert('서버와 통신을 실패하였습니다.')
+    }, 1500);
 
-
-    if(res == 'pwd_suc'){
-      Alert.alert('확인되었습니다.')
-    }else{
-
-    }
   }
+  const [ispwd,setIspwd] = useState(false)
+
+  
+    client.on('data', function(data) {
+      if(''+data =='pwd_suc'){
+        clearTimeout(times)
+        if(ispwd == false){
+          navigation.navigate('테스트')
+          setIspwd(true)
+        }
+      }else{
+        clearTimeout(times)
+        //Alert.alert('비밀번호가 틀렸습니다.')
+      }
+      console.log('앱내에서 받기 ' + data);
+    });
+ 
+  
+  
+
+  
   
 
   console.log(pwd)

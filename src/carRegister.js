@@ -98,22 +98,33 @@ const CarRegister = () => {
     }
   }
 
+  var times
   function registerClick() {
     var txt = {type:"R",type_sub:"register", data : {modem : modemN , user : userN , carRace : carRace , token : pushToken}}
-    
+    txt = JSON.stringify(txt)
 
-    var res = client(txt)
-    
-    console.log(res)
+    var res = client.write(txt)
 
-
-    if(res == 'okay'){
-      Alert.alert('등록되었습니다.')
-    }else{
-      Alert.alert('등록에 실패하였습니다.')
-    }
-    
+    times = setTimeout(() => {
+      Alert.alert('서버와 통신을 실패하였습니다.')
+    }, 2000);
   }
+
+  client.on('data', function(data) {
+    if(''+data =='pwd_suc'){
+      clearTimeout(times)
+      if(ispwd == false){
+        navigation.navigate('테스트')
+        setIspwd(true)
+      }
+    }else{
+      clearTimeout(times)
+      //Alert.alert('비밀번호가 틀렸습니다.')
+    }
+    console.log('앱내에서 받기 ' + data);
+  });
+
+
 
   
 
