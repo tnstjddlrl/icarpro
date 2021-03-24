@@ -19,12 +19,11 @@ import {
   useRecoilValue,
 } from 'recoil';
 
-import { networkState,newState } from './atom/atoms'
+import { networkState,newState,fcmToken } from './atom/atoms'
 
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'
 import Toast from 'react-native-toast-message';
-import MySqlConnection from 'react-native-my-sql-connection';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -33,10 +32,12 @@ const Test = () => {
   const navigation = useNavigation()
 
   const state = useRecoilValue(networkState)
+  const token = useRecoilValue(fcmToken)
   const [neww,setneww] = useRecoilState(newState)
 
   console.log(state)
   console.log(neww)
+  console.log(token)
 
   useEffect(() => {
     const backAction = () => {
@@ -61,27 +62,26 @@ const Test = () => {
 
   
 
-let config = {
-  host:'175.126.232.72/pma',
-  database:'icar',
-  user:'root',
-  password:'ip01442162',
-  port:3400
-  };
-  const sendVerificationEmail = async () =>{
-    try{
-      const connection = await MySqlConnection.createConnection(config);
-      let res = await connection.executeQuery('SELECT * FROM modem');
-      console.log(res)
-      connection.close();
-    }catch(err){
-        console.log('mysql err : ' + err)
-    }
-  }
+// let config = {
+//   host:'175.126.232.72',
+//   database:'icar',
+//   user:'ip0144_user',
+//   password:'ip01442162'
+//   };
+//   const sendVerificationEmail = async () =>{
+//     try{
+//       const connection = await MySqlConnection.createConnection(config);
+//       let res = await connection.executeQuery('SELECT * FROM modem');
+//       console.log(res)
+//       connection.close();
+//     }catch(err){
+//         console.log('mysql err : ' + err)
+//     }
+//   }
 
-  useEffect(()=>{
-    sendVerificationEmail()
-  },[])
+//   useEffect(()=>{
+//     sendVerificationEmail()
+//   },[])
   
 
   return (

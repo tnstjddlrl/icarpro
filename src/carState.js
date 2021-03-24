@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,11 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+
+import messaging from '@react-native-firebase/messaging';
+import firebase from '@react-native-firebase/app'
+
+import client from './Client'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -35,6 +40,53 @@ const bootIcon = require('../img/state/bootIcon.png')
 const voltIcon = require('../img/state/voltIcon.png')
 
 const CarState = () => {
+
+  const [pushToken, setPushToken] = useState(null)
+  const [isAuthorized, setIsAuthorized] = useState(false)
+
+  const handlePushToken = useCallback(async () => {
+    const enabled = await messaging().hasPermission()
+    if (enabled) {
+      const fcmToken = await messaging().getToken()
+      if (fcmToken) setPushToken(fcmToken)
+    } else {
+      const authorized = await messaging.requestPermission()
+      if (authorized) setIsAuthorized(true)
+    }
+  }, [])
+
+  const saveTokenToDatabase = useCallback(async (token) => {
+    const { error } = await setFcmToken(token)
+    if (error) throw Error(error)
+  }, [])
+
+  const saveDeviceToken = useCallback(async () => {
+    if (isAuthorized) {
+      const currentFcmToken = await firebase.messaging().getToken()
+      if (currentFcmToken !== pushToken) {
+        return saveTokenToDatabase(currentFcmToken)
+      }
+      return messaging().onTokenRefresh((token) => saveTokenToDatabase(token))
+    }
+  }, [pushToken, isAuthorized])
+
+  useEffect(()=>{
+    handlePushToken()
+    saveDeviceToken()
+  },[])
+
+  function registerClick() {
+    var txt = {type:"R",type_sub:"req_state", data : { token : pushToken}}
+    txt = JSON.stringify(txt)
+
+    var res = client.write(txt)
+    console.log('전송 : ' + txt)
+  }
+    
+
+
+
+
   const navigation = useNavigation()
   return (
       <SafeAreaView style={{ width: chwidth, height: chheight,backgroundColor:'white' }}>
@@ -52,7 +104,9 @@ const CarState = () => {
         <View style={{ flex: 10 }}>
           {/* 차량 이미지 */}
           <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
+            <TouchableOpacity onPress={()=>registerClick()}>
             <Image source={warnOn}></Image>
+            </TouchableOpacity>
           </View>
           {/* 차량 이미지 끝 */}
 

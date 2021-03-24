@@ -16,3 +16,8 @@ export const newState = atom({
   key: 'newState', // unique ID (with respect to other atoms/selectors)
   default: 'nwe', // default value (aka initial value)
 })
+
+export const fcmToken = atom({
+  key: 'fcmToken', // unique ID (with respect to other atoms/selectors)
+  default: 'notoken', // default value (aka initial value)
+})

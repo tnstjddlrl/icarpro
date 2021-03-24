@@ -18,8 +18,16 @@ import client from './Client'
 
 import { useNavigation } from '@react-navigation/native';
 
-import messaging from '@react-native-firebase/messaging';
-import firebase from '@react-native-firebase/app'
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
+import { networkState,newState,fcmToken } from './atom/atoms'
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const chwidth = Dimensions.get('window').width
@@ -41,41 +49,9 @@ const suv1img = require('../img/suv1.png')
 
 const CarRegister = () => {
 
-  const [pushToken, setPushToken] = useState(null)
-  const [isAuthorized, setIsAuthorized] = useState(false)
-
-  const handlePushToken = useCallback(async () => {
-    const enabled = await messaging().hasPermission()
-    if (enabled) {
-      const fcmToken = await messaging().getToken()
-      if (fcmToken) setPushToken(fcmToken)
-    } else {
-      const authorized = await messaging.requestPermission()
-      if (authorized) setIsAuthorized(true)
-    }
-  }, [])
-
-  const saveTokenToDatabase = useCallback(async (token) => {
-    const { error } = await setFcmToken(token)
-    if (error) throw Error(error)
-  }, [])
-
-  const saveDeviceToken = useCallback(async () => {
-    if (isAuthorized) {
-      const currentFcmToken = await firebase.messaging().getToken()
-      if (currentFcmToken !== pushToken) {
-        return saveTokenToDatabase(currentFcmToken)
-      }
-
-      return messaging().onTokenRefresh((token) => saveTokenToDatabase(token))
-    }
-  }, [pushToken, isAuthorized])
-
-  useEffect(()=>{
-    handlePushToken()
-    saveDeviceToken()
-    console.log(pushToken)
-  },[])
+  const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  console.log('차등록 : ' + pushToken)
+  
 
   const navigation = useNavigation()
 
@@ -113,10 +89,12 @@ const CarRegister = () => {
   client.on('data', function(data) {
     if(''+data =='pwd_suc'){
       clearTimeout(times)
-      if(ispwd == false){
-        navigation.navigate('테스트')
-        setIspwd(true)
-      }
+      navigation.navigate('테스트')
+      setIspwd(true)
+      AsyncStorage.setItem("@modem_N",modemN)
+      AsyncStorage.setItem("@user_N",userN)
+      AsyncStorage.setItem("@car_Race",carRace)
+      AsyncStorage.setItem("@is_first",'notfirst')
     }else{
       clearTimeout(times)
       //Alert.alert('비밀번호가 틀렸습니다.')

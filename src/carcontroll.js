@@ -19,6 +19,15 @@ import client from './Client.js'
 
 import { FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
 
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
+import { networkState,newState,fcmToken } from './atom/atoms'
+
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
@@ -75,6 +84,10 @@ trunk_0 = JSON.stringify(trunk_0)
 
 
 const Carcontroll = () => {
+  const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  console.log('제어 : '+pushToken)
+
+  
   const navigation = useNavigation()
 
 

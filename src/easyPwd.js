@@ -16,8 +16,14 @@ import { useNavigation } from '@react-navigation/native';
 
 import client from './Client'
 
-import messaging from '@react-native-firebase/messaging';
-import firebase from '@react-native-firebase/app'
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
+import { networkState,newState,fcmToken } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -37,38 +43,13 @@ const CarState = () => {
   const [pwd, setpwd] = useState('')
   const inputRef = useRef(<TextInput></TextInput>)
 
-  const [pushToken, setPushToken] = useState(null)
-  const [isAuthorized, setIsAuthorized] = useState(false)
+  const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
-  const handlePushToken = useCallback(async () => {
-    const enabled = await messaging().hasPermission()
-    if (enabled) {
-      const fcmToken = await messaging().getToken()
-      if (fcmToken) setPushToken(fcmToken)
-    } else {
-      const authorized = await messaging.requestPermission()
-      if (authorized) setIsAuthorized(true)
-    }
-  }, [])
+  console.log('간편 : '+pushToken)
 
-  const saveTokenToDatabase = useCallback(async (token) => {
-    const { error } = await setFcmToken(token)
-    if (error) throw Error(error)
-  }, [])
-
-  const saveDeviceToken = useCallback(async () => {
-    if (isAuthorized) {
-      const currentFcmToken = await firebase.messaging().getToken()
-      if (currentFcmToken !== pushToken) {
-        return saveTokenToDatabase(currentFcmToken)
-      }
-      return messaging().onTokenRefresh((token) => saveTokenToDatabase(token))
-    }
-  }, [pushToken, isAuthorized])
+  
 
   useEffect(()=>{
-    handlePushToken()
-    saveDeviceToken()
     inputRef.current.focus()
   },[])
 
