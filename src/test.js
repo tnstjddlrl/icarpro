@@ -21,9 +21,12 @@ import {
 
 import { networkState,newState,fcmToken } from './atom/atoms'
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'
 import Toast from 'react-native-toast-message';
+import { color } from 'react-native-reanimated';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -130,6 +133,9 @@ const Test = () => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('스크롤베이스')}>
         <Text>스크롤베이스</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {AsyncStorage.setItem("@is_first",'notfirst'),console.log('어싱크 테스트')}}>
+        <Text>어싱크 테스트</Text>
       </TouchableOpacity>
       </SafeAreaView>
     </View>

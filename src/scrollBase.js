@@ -9,10 +9,14 @@ import {
   TextInput,
   SafeAreaView,
   Image,
-  StyleSheet
+  StyleSheet,
+  ScrollView
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+
+import Picker from '@gregfrench/react-native-wheel-picker'
+var PickerItem = Picker.Item;
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -22,6 +26,11 @@ const back = require('../img/backbtn.png')
 
 const ScrollBase = () => {
   const navigation = useNavigation()
+
+  const [selectedItem, setSelectedItem ] = useState(2);
+  const [itemList , setItemList ] = useState(['3', '5', '10']);
+
+
   return(
     <SafeAreaView>
       <View style={{width:chwidth,height:chheight}}>
@@ -37,10 +46,29 @@ const ScrollBase = () => {
 
         {/* 본문 */}
         <View style={{flex:10}}>
-          <View>
-
+          <View style={{flex:3,justifyContent:"center",alignItems:"center"}}>
+            <View style={{flexDirection:"row",alignItems:"center"}}>
+              <View style={styles.mask}>
+                <Text>{itemList[selectedItem]}</Text>
+              </View>
+              <Text style={styles.masktxt2}>분</Text>
+              <Text style={styles.masktxt}>으로 설정됩니다.</Text>
+            </View>
           </View>
-          <View>
+          <View style={{flex:7}}>
+
+          <Picker style={{width: 100, height: 200}}
+          
+          lineColor="#979797" 
+          lineGradientColorFrom="#979797" 
+          lineGradientColorTo="#979797" 
+          selectedValue={selectedItem}
+          itemStyle={styles.selecttxt}
+          onValueChange={(index) => setSelectedItem(index) }>
+          {itemList.map((value, i) => (
+            <PickerItem label={value} value={i} key={i} />
+          ))}
+        </Picker>
 
           </View>
 
@@ -70,6 +98,51 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     textAlign: "right",
     color: "#f75929"
+  },
+  mask : {
+    width: 75,
+  height: 36,
+  borderRadius: 8,
+  borderStyle: "solid",
+  borderWidth: 2,
+  borderColor: "#bec0c2"
+  },
+  masktxt:{
+    fontFamily: "AppleSDGothicNeo",
+  fontSize: 22,
+  fontWeight: "normal",
+  fontStyle: "normal",
+  letterSpacing: -0.29,
+  textAlign: "center",
+  color: "#393e46"
+  },
+  masktxt2:{
+    fontFamily: "AppleSDGothicNeo",
+  fontSize: 22,
+  fontWeight: "bold",
+  fontStyle: 'normal',
+  letterSpacing: -0.29,
+  textAlign: "center",
+  color: "#393e46"
+  },
+  selecttxt:{
+    fontFamily: "Metropolis-SemiBold",
+  fontSize: 50,
+  fontWeight: "bold",
+  fontStyle: "normal",
+  letterSpacing: -0.67,
+  textAlign: "center",
+  color: 'rgb(49,54,61)',
+  },
+  noselecttxt:{
+    opacity: 0.3,
+  fontFamily: "Metropolis-SemiBold",
+  fontSize: 40,
+  fontWeight: "normal",
+  fontStyle: "normal",
+  letterSpacing: -0.53,
+  textAlign: "center",
+  color: 'rgb(49,54,61)'
   }
 })
 

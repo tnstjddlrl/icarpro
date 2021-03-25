@@ -84,12 +84,12 @@ const Load = () => {
      if(res!=null){
       setTimeout(() => {
         navigation.navigate('테스트')
-        console.log('첫사용자')
+        console.log('구사용자 : ' + res)
       }, 1000);
      }else{
       setTimeout(() => {
         navigation.navigate('테스트')
-        console.log('구사용자')
+        console.log('첫사용자 : ' + res)
       }, 1000);
      }
    })

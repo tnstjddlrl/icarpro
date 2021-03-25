@@ -64,21 +64,15 @@ const booton = require('../img/controll/carstate/booton.png')
 var params = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'door', 'state': '1' }
 var json = JSON.stringify(params)
 
-var door_0 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'door', 'state': '0' }
-var door_1 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'door', 'state': '1' }
-var panic_0 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'panic', 'state': '0' }
-var panic_1 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'panic', 'state': '1' }
-var warn_0 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'warn', 'state': '0' }
-var warn_1 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'warn', 'state': '1' }
-var trunk_0 = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'trunk', 'state': '0' }
 
-door_0 = JSON.stringify(door_0)
-door_1 = JSON.stringify(door_1)
-panic_0 = JSON.stringify(panic_0)
-panic_1 = JSON.stringify(panic_1)
-warn_0 = JSON.stringify(warn_0)
-warn_1 = JSON.stringify(warn_1)
-trunk_0 = JSON.stringify(trunk_0)
+
+
+
+// panic_0 = JSON.stringify(panic_0)
+// panic_1 = JSON.stringify(panic_1)
+// warn_0 = JSON.stringify(warn_0)
+// warn_1 = JSON.stringify(warn_1)
+// trunk_0 = JSON.stringify(trunk_0)
 
 
 
@@ -86,6 +80,14 @@ trunk_0 = JSON.stringify(trunk_0)
 const Carcontroll = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   console.log('제어 : '+pushToken)
+
+  var door_0 = {type:"R",type_sub:"car_controll", data : {command : 'door', state: '0' , token : pushToken}}
+  var door_1 = {type:"R",type_sub:"car_controll", data : {command : 'door', state: '1' , token : pushToken}}
+  var panic_0 = {type:"R",type_sub:"car_controll", data : {command : 'panic', state: '0' , token : pushToken}}
+  var panic_1 = {type:"R",type_sub:"car_controll", data : {command : 'panic', state: '1' , token : pushToken}}
+  var warn_0 = {type:"R",type_sub:"car_controll", data : {command : 'warn', state: '0' , token : pushToken}}
+  var warn_1 = {type:"R",type_sub:"car_controll", data : {command : 'warn', state: '1' , token : pushToken}}
+  var trunk_0 = {type:"R",type_sub:"car_controll", data : {command : 'trunk', state: '1' , token : pushToken}}
 
   
   const navigation = useNavigation()
@@ -116,8 +118,10 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
-
-      //client(door_0)
+      
+      door_0 = JSON.stringify(door_0)
+      client.write(door_0)
+      console.log('전송 : ' + door_0)
 
       setTimeout(() => {
         setDoor('no')
@@ -144,7 +148,9 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      //client(door_1)
+      door_1 = JSON.stringify(door_1)
+      client.write(door_1)
+      console.log('전송 : ' + door_1)
 
       setTimeout(() => {
         setDoor('no')

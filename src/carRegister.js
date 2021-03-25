@@ -90,7 +90,7 @@ const CarRegister = () => {
     if(''+data =='pwd_suc'){
       clearTimeout(times)
       navigation.navigate('테스트')
-      setIspwd(true)
+      
       AsyncStorage.setItem("@modem_N",modemN)
       AsyncStorage.setItem("@user_N",userN)
       AsyncStorage.setItem("@car_Race",carRace)

@@ -18,6 +18,12 @@ import { useNavigation } from '@react-navigation/native';
 
 import ToggleSwitch from 'toggle-switch-react-native'
 
+import {
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
+import { fcmToken,actionSound,alertSound,icarSwitch,idoorSwitch,lowvoltBoot,lowvoltAlert } from './atom/atoms'
+
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
@@ -39,6 +45,16 @@ const rightArr = require('../img/setImg/rightArr.png')
 const Settings = () => {
   const navigation = useNavigation()
 
+  const [icarswitch,seticarswitch] = useRecoilState(icarSwitch)
+  const [idoorswitch,setidoorswitch] = useRecoilState(idoorSwitch)
+  const [lowboltBoot,setlowboltBoot] = useRecoilState(lowvoltBoot)
+  const [lowboltAlert,setlowboltAlert] = useRecoilState(lowvoltAlert)
+  const [actionsound,setactionsound] = useRecoilState(actionSound)
+  const [alertsound,setalertsound] = useRecoilState(alertSound)
+  
+
+
+
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
@@ -59,10 +75,10 @@ const Settings = () => {
                 <Text style={styles.frameTitle}>iCar</Text>
               </View>
               <ToggleSwitch
-                isOn={true}
+                isOn={icarswitch}
                 onColor="#f75929"
                 offColor="#d1d2d6"
-                onToggle={isOn => console.log("changed to : ", isOn)}
+                onToggle={isOn => seticarswitch(isOn)}
               />
             </View>
           </View>
@@ -79,10 +95,10 @@ const Settings = () => {
                 <Text style={styles.frameTitle}>i 도어</Text>
               </View>
               <ToggleSwitch
-                isOn={false}
+                isOn={idoorswitch}
                 onColor="#f75929"
                 offColor="#d1d2d6"
-                onToggle={isOn => console.log("changed to : ", isOn)}
+                onToggle={isOn => setidoorswitch(isOn)}
               />
             </View>
           </View>
@@ -109,10 +125,10 @@ const Settings = () => {
                 <Text style={styles.framecon}>저전압 시동</Text>
               </View>
               <ToggleSwitch
-                isOn={false}
+                isOn={lowboltBoot}
                 onColor="#f75929"
                 offColor="#d1d2d6"
-                onToggle={isOn => console.log("changed to : ", isOn)}
+                onToggle={isOn => setlowboltBoot(isOn)}
               />
             </View>
             <View style={{width:chwidth-32,flexDirection:"row",justifyContent:'flex-end'}}>
@@ -125,10 +141,10 @@ const Settings = () => {
                 <Text style={styles.framecon}>저전압 알림</Text>
               </View>
               <ToggleSwitch
-                isOn={false}
+                isOn={lowboltAlert}
                 onColor="#f75929"
                 offColor="#d1d2d6"
-                onToggle={isOn => console.log("changed to : ", isOn)}
+                onToggle={isOn => setlowboltAlert(isOn)}
               />
             </View>
             <View style={{width:chwidth-32,flexDirection:"row",justifyContent:'flex-end'}}>
@@ -168,10 +184,10 @@ const Settings = () => {
                 <Text style={styles.framecon}>동작음 무음</Text>
               </View>
               <ToggleSwitch
-                isOn={false}
+                isOn={actionsound}
                 onColor="#f75929"
                 offColor="#d1d2d6"
-                onToggle={isOn => console.log("changed to : ", isOn)}
+                onToggle={isOn => setactionsound(isOn)}
               />
             </View>
             <View style={{width:chwidth-32,flexDirection:"row",justifyContent:'flex-end'}}>
@@ -184,10 +200,10 @@ const Settings = () => {
                 <Text style={styles.framecon}>경계음 무음</Text>
               </View>
               <ToggleSwitch
-                isOn={false}
+                isOn={alertsound}
                 onColor="#f75929"
                 offColor="#d1d2d6"
-                onToggle={isOn => console.log("changed to : ", isOn)}
+                onToggle={isOn => setalertsound(isOn)}
               />
             </View>
 
