@@ -94,6 +94,12 @@ const Test = () => {
       <TouchableOpacity onPress={() => {AsyncStorage.setItem("@is_first",'notfirst'),console.log('어싱크 테스트')}}>
         <Text>어싱크 테스트</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => client.destroy()}>
+        <Text>소켓 연결 끊기</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => client.write('test')}>
+        <Text>소켓 전송</Text>
+      </TouchableOpacity>
       </SafeAreaView>
     </View>
   )

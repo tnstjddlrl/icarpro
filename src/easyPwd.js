@@ -88,6 +88,7 @@ const CarState = () => {
         //Alert.alert('비밀번호가 틀렸습니다.')
       }
       console.log('앱내에서 받기 ' + data);
+      Alert.alert('서버에서 보내온 메시지 ','' + data)
     });
  
   
