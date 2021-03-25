@@ -64,29 +64,6 @@ const Test = () => {
 
     return () => backHandler.remove();
   }, []);
-
-  
-
-// let config = {
-//   host:'175.126.232.72',
-//   database:'icar',
-//   user:'ip0144_user',
-//   password:'ip01442162'
-//   };
-//   const sendVerificationEmail = async () =>{
-//     try{
-//       const connection = await MySqlConnection.createConnection(config);
-//       let res = await connection.executeQuery('SELECT * FROM modem');
-//       console.log(res)
-//       connection.close();
-//     }catch(err){
-//         console.log('mysql err : ' + err)
-//     }
-//   }
-
-//   useEffect(()=>{
-//     sendVerificationEmail()
-//   },[])
   
 
   return (
@@ -96,31 +73,9 @@ const Test = () => {
         <Text>간편비밀번호</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => client.write(json)}>
-        <Text>소켓통신</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => {
-        Toast.show({
-          type: 'success',
-          position: 'top',
-          text1: '패닉 명령',
-          text2: '패닉 명령을 [ON]하였습니다.',
-          visibilityTime: 2000,
-          autoHide: true,
-          topOffset: 30,
-          bottomOffset: 40,
-          onShow: () => { },
-          onHide: () => { },
-          onPress: () => { }
-        });
-      }}>
-        <Text>토스트</Text>
-      </TouchableOpacity>
-
       <TouchableOpacity onPress={() => navigation.navigate('차량등록')}>
         <Text>차량등록</Text>
-      </TouchableOpacity><Text>회원가입</Text>
-
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('차량제어')}>
         <Text>차량제어</Text>
       </TouchableOpacity>
