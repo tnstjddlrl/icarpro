@@ -24,9 +24,11 @@ import { networkState,newState,fcmToken } from './atom/atoms'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios'
+
+
 import Toast from 'react-native-toast-message';
-import { color } from 'react-native-reanimated';
+import client from './Client.js'
+
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -50,7 +52,7 @@ const Test = () => {
           onPress: () => null,
           style: "cancel"
         },
-        { text: "예", onPress: () => BackHandler.exitApp() }
+        { text: "예", onPress: () => {client.destroy();BackHandler.exitApp()} }
       ]);
       return true;
     };

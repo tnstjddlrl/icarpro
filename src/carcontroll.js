@@ -57,6 +57,7 @@ const trunkgray = require('../img/controll/trunkgray.png')
 const dooron = require('../img/controll/carstate/dooron.png')
 const panicon = require('../img/controll/carstate/panicon.png')
 const trunkon = require('../img/controll/carstate/trunkon.png')
+const bimon = require('../img/controll/carstate/bimon.png')
 const booton = require('../img/controll/carstate/booton.png')
 
 
@@ -361,8 +362,11 @@ const Carcontroll = () => {
                   {door == 'on' &&
                     <Image source={dooron} style={{ marginTop: -30 }}></Image>  
                   }
-                  {(panic == 'on' || warnbim == 'on') &&
+                  {(panic == 'on') &&
                     <Image source={panicon} style={{ marginTop: -30 }}></Image>  
+                  }
+                  {(warnbim == 'on') &&
+                    <Image source={bimon} style={{ marginTop: -30 }}></Image>  
                   }
                   {trunk== true &&
                     <Image source={trunkon} style={{ marginTop: -30 }}></Image>  

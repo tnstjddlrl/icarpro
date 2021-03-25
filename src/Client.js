@@ -6,6 +6,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
+import { Alert, BackHandler } from 'react-native';
 
 
 
@@ -13,14 +14,14 @@ const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeo
   console.log('연결됨')
 });
 
-// client.on('data', function(data) {
-//   //const nstate = useRecoilValue(newState)
-//   //console.log(nstate)
-//   console.log('message was received' + data);
-// });
+
 
 client.on('error', function(error) {
-  console.error(error);
+  Alert.alert('서버와의 통신을 실패하였습니다.','앱을 종료합니다.')
+  console.error(error)
+  setTimeout(() => {
+    BackHandler.exitApp()
+  }, 1500);
 });
 
 
