@@ -25,12 +25,5 @@ client.on('error', function(error) {
 });
 
 
-function socketwrite (str){
-  var txt = JSON.stringify(str)
-
-  client.write(txt);
-  console.log('전송!' + txt)
-
-}
 
 export default client;

@@ -61,23 +61,6 @@ const bimon = require('../img/controll/carstate/bimon.png')
 const booton = require('../img/controll/carstate/booton.png')
 
 
-
-// var params = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'door', 'state': '1' }
-// var json = JSON.stringify(params)
-
-
-
-
-
-// 
-// panic_1 = JSON.stringify(panic_1)
-// warn_0 = JSON.stringify(warn_0)
-// warn_1 = JSON.stringify(warn_1)
-// trunk_0 = JSON.stringify(trunk_0)
-
-
-
-
 const Carcontroll = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
@@ -89,7 +72,9 @@ const Carcontroll = () => {
   var panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '1', token: pushToken } }
   var warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '0', token: pushToken } }
   var warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '1', token: pushToken } }
-  var trunk_0 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
+  var trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
+  var boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
+  var boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
 
 
   const navigation = useNavigation()
@@ -121,9 +106,10 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      door_0 = JSON.stringify(door_0)
-      client.write(door_0)
-      console.log('전송 : ' + door_0)
+
+      door_1 = JSON.stringify(door_1)
+      client.write(door_1)
+      console.log('전송 : ' + door_1)
 
       setTimeout(() => {
         setDoor('no')
@@ -150,9 +136,10 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      door_1 = JSON.stringify(door_1)
-      client.write(door_1)
-      console.log('전송 : ' + door_1)
+      door_0 = JSON.stringify(door_0)
+      client.write(door_0)
+      console.log('전송 : ' + door_0)
+
 
       setTimeout(() => {
         setDoor('no')
@@ -179,9 +166,10 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      panic_0 = JSON.stringify(panic_0)
-      client.write(panic_0)
-      console.log('전송 : ' + panic_0)
+
+      panic_1 = JSON.stringify(panic_1)
+      client.write(panic_1)
+      console.log('전송 : ' + panic_1)
 
       setTimeout(() => {
         setPanic('no')
@@ -205,9 +193,9 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      panic_1 = JSON.stringify(panic_1)
-      client.write(panic_1)
-      console.log('전송 : ' + panic_1)
+      panic_0 = JSON.stringify(panic_0)
+      client.write(panic_0)
+      console.log('전송 : ' + panic_0)
 
       setTimeout(() => {
         setPanic('no')
@@ -234,9 +222,9 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      warn_0 = JSON.stringify(warn_0)
-      client.write(warn_0)
-      console.log('전송 : ' + warn_0)
+      warn_1 = JSON.stringify(warn_1)
+      client.write(warn_1)
+      console.log('전송 : ' + warn_1)
 
       setTimeout(() => {
         setWarnbim('no')
@@ -261,17 +249,16 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      warn_1 = JSON.stringify(warn_1)
-      client.write(warn_1)
-      console.log('전송 : ' + warn_1)
+      warn_0 = JSON.stringify(warn_0)
+      client.write(warn_0)
+      console.log('전송 : ' + warn_0)
+
 
       setTimeout(() => {
         setWarnbim('no')
       }, 1500);
 
     }
-
-
   }
 
   function trunkClick() {
@@ -292,9 +279,9 @@ const Carcontroll = () => {
       onPress: () => { }
     });
 
-    trunk_0 = JSON.stringify(trunk_0)
-    client.write(trunk_0)
-    console.log('전송 : ' + trunk_0)
+    trunk_1 = JSON.stringify(trunk_1)
+    client.write(trunk_1)
+    console.log('전송 : ' + trunk_1)
 
     setTimeout(() => {
       setTrunk(false)
@@ -304,23 +291,44 @@ const Carcontroll = () => {
   function bootClick() {
     if (boot == false) {
       setBoot(true)
-      // Alert.alert(
-      //   "boot_0",
-      //   "",
-      //   [
-      //     { text: "확인" }
-      //   ]
-      // );
+      Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: '원격시동 명령',
+        text2: '원격시동 명령을 [ON]하였습니다.',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+        onShow: () => { },
+        onHide: () => { },
+        onPress: () => { }
+      });
+
+    boot_1 = JSON.stringify(boot_1)
+    client.write(boot_1)
+    console.log('전송 : ' + boot_1)
 
     } else {
       setBoot(false)
-      // Alert.alert(
-      //   "boot_1",
-      //   "",
-      //   [
-      //     { text: "확인" }
-      //   ]
-      // );
+      Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: '원격시동 명령',
+        text2: '원격시동 명령을 [OFF]하였습니다.',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+        onShow: () => { },
+        onHide: () => { },
+        onPress: () => { }
+      });
+
+      boot_0 = JSON.stringify(boot_0)
+    client.write(boot_0)
+    console.log('전송 : ' + boot_0)
+
     }
   }
 
