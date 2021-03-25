@@ -15,9 +15,6 @@ import {
 
 import { useNavigation } from '@react-navigation/native';
 
-import Picker from '@gregfrench/react-native-wheel-picker'
-var PickerItem = Picker.Item;
-
 // import ScrollPicker from "react-native-wheel-scroll-picker";
 
 const chwidth = Dimensions.get('window').width
@@ -58,20 +55,6 @@ const ScrollBase = () => {
             </View>
           </View>
           <View style={{flex:7}}>
-
-          <Picker style={{width: 100, height: 200}}
-          
-          lineColor="#979797" 
-          lineGradientColorFrom="#979797" 
-          lineGradientColorTo="#979797" 
-          selectedValue={selectedItem}
-          itemStyle={styles.selecttxt}
-          onValueChange={(index) => setSelectedItem(index) }>
-          {itemList.map((value, i) => (
-            <PickerItem label={value} value={i} key={i} />
-          ))}
-        </Picker>
-
           </View>
 
         </View>
