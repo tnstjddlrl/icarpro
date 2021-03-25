@@ -61,14 +61,14 @@ const booton = require('../img/controll/carstate/booton.png')
 
 
 
-var params = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'door', 'state': '1' }
-var json = JSON.stringify(params)
+// var params = { 'userkey': '1234_user1', 'carkey': 'user1_10육1004', 'command': 'door', 'state': '1' }
+// var json = JSON.stringify(params)
 
 
 
 
 
-// panic_0 = JSON.stringify(panic_0)
+// 
 // panic_1 = JSON.stringify(panic_1)
 // warn_0 = JSON.stringify(warn_0)
 // warn_1 = JSON.stringify(warn_1)
@@ -79,7 +79,8 @@ var json = JSON.stringify(params)
 
 const Carcontroll = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
-  console.log('제어 : '+pushToken)
+
+  //console.log('제어 : '+pushToken)
 
   var door_0 = {type:"R",type_sub:"car_controll", data : {command : 'door', state: '0' , token : pushToken}}
   var door_1 = {type:"R",type_sub:"car_controll", data : {command : 'door', state: '1' , token : pushToken}}
@@ -177,7 +178,9 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      //client(panic_0)
+      panic_0 = JSON.stringify(panic_0)
+      client.write(panic_0)
+      console.log('전송 : ' +panic_0)
 
       setTimeout(() => {
         setPanic('no')
@@ -201,7 +204,9 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      // client(panic_1)
+      panic_1 = JSON.stringify(panic_1)
+      client.write(panic_1)
+      console.log('전송 : ' +panic_1)
 
       setTimeout(() => {
         setPanic('no')
@@ -228,7 +233,9 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-      // client(warn_0)
+      warn_0 = JSON.stringify(warn_0)
+      client.write(warn_0)
+      console.log('전송 : ' +warn_0)
 
       setTimeout(() => {
         setWarnbim('no')
@@ -252,7 +259,10 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
-      // client(warn_1)
+      
+      warn_1 = JSON.stringify(warn_1)
+      client.write(warn_1)
+      console.log('전송 : ' +warn_1)
 
       setTimeout(() => {
         setWarnbim('no')
@@ -281,7 +291,9 @@ const Carcontroll = () => {
       onPress: () => { }
     });
 
-    //client(trunk_0)
+      trunk_0 = JSON.stringify(trunk_0)
+      client.write(trunk_0)
+      console.log('전송 : ' +trunk_0)
 
     setTimeout(() => {
       setTrunk(false)
