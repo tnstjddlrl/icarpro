@@ -50,7 +50,7 @@ const suv1img = require('../img/suv1.png')
 const CarRegister = () => {
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
-  console.log('차등록 : ' + pushToken)
+  // console.log('차등록 : ' + pushToken)
   
 
   const navigation = useNavigation()
@@ -68,9 +68,11 @@ const CarRegister = () => {
     if (sedan1 == true) {
       Alert.alert('차량이 변경되었습니다.')
       setCarRace('SEDAN1')
+      setRaceModal(false)
     } else if (suv1 == true) {
       Alert.alert('차량이 변경되었습니다.')
       setCarRace('SUV1')
+      setRaceModal(false)
     }
   }
 
@@ -80,6 +82,7 @@ const CarRegister = () => {
     txt = JSON.stringify(txt)
 
     var res = client.write(txt)
+    console.log('전송 : ' + txt)
 
     times = setTimeout(() => {
       Alert.alert('서버와 통신을 실패하였습니다.')
@@ -90,7 +93,7 @@ const CarRegister = () => {
     if(''+data =='pwd_suc'){
       clearTimeout(times)
       navigation.navigate('테스트')
-      
+
       AsyncStorage.setItem("@modem_N",modemN)
       AsyncStorage.setItem("@user_N",userN)
       AsyncStorage.setItem("@car_Race",carRace)
@@ -201,7 +204,7 @@ const CarRegister = () => {
         {/* 본문 */}
 
         {/* 차량선택 모달 */}
-        <Modal visible={raceModal}>
+        <Modal visible={raceModal} transparent={true}>
           <SafeAreaView style={{ backgroundColor: 'rgb(247,247,247)' }}>
             <View style={{ width: chwidth, height: chheight }}>
               {/* 모달헤더 */}

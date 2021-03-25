@@ -5760,6 +5760,11 @@ react-native-toast-message@^1.4.9:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-wheel-scrollview-picker@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-wheel-scrollview-picker/-/react-native-wheel-scrollview-picker-1.0.1.tgz#be2d1d9b398565c82f4e4fbeafb109950420a0d0"
+  integrity sha512-cKlcTc6/esq+3Rcsvh9hTTnjNpvO1JUc9sP/NgN/iO/wXOHdvy0X4Nc7URO31c//pmdkc5OgnVmM6E6RfuCogA==
+
 react-native@0.64.0:
   version "0.64.0"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.64.0.tgz"

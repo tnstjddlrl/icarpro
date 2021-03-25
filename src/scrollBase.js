@@ -18,6 +18,8 @@ import { useNavigation } from '@react-navigation/native';
 import Picker from '@gregfrench/react-native-wheel-picker'
 var PickerItem = Picker.Item;
 
+// import ScrollPicker from "react-native-wheel-scroll-picker";
+
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 

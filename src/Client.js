@@ -8,9 +8,6 @@ import {
 } from 'recoil';
 
 
-import { networkState,newState } from './atom/atoms'
-
-
 
 const client = TcpSocket.createConnection({port:3400,host:"175.126.232.72",timeout:1000}, () => {
   console.log('연결됨')
