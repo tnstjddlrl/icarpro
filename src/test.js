@@ -19,7 +19,7 @@ import {
   useRecoilValue,
 } from 'recoil';
 
-import { networkState,newState,fcmToken } from './atom/atoms'
+import { modemNumber,userNumber,fcmToken,isCarRace,bootRestTime } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -33,16 +33,21 @@ import client from './Client.js'
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
+
+
 const Test = () => {
   const navigation = useNavigation()
 
-  const state = useRecoilValue(networkState)
+  const state = useRecoilValue(modemNumber)
   const token = useRecoilValue(fcmToken)
-  const [neww,setneww] = useRecoilState(newState)
+  const [neww,setneww] = useRecoilState(userNumber)
+  const atcarrace = useRecoilValue(isCarRace)
 
-  console.log(state)
-  console.log(neww)
+
+  console.log('모뎀 넘버 : '+state)
+  console.log('유저 넘버 : '+neww)
   console.log(token)
+  console.log(atcarrace)
 
   useEffect(() => {
     const backAction = () => {

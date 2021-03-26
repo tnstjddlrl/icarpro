@@ -26,12 +26,13 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState, newState, fcmToken } from './atom/atoms'
+import { networkState, newState, fcmToken,isCarRace,bootRestTime } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
 const sedan1_big = require('../img/sedan1_big.png')
+const suv1_big = require('../img/suv1_big.png')
 
 const smallLogo = require('../img/controll/smallLogo.png')
 const startbtn = require('../img/controll/startbtn.png')
@@ -60,11 +61,30 @@ const trunkon = require('../img/controll/carstate/trunkon.png')
 const bimon = require('../img/controll/carstate/bimon.png')
 const booton = require('../img/controll/carstate/booton.png')
 
+const suvdooron = require('../img/controll/carstate/suvdooron.png')
+const suvpanicon = require('../img/controll/carstate/suvpanicon.png')
+const suvtrunkon = require('../img/controll/carstate/suvtrunkon.png')
+const suvbimon = require('../img/controll/carstate/suvbimon.png')
+const suvbooton = require('../img/controll/carstate/suvbooton.png')
+
+var interval;
 
 const Carcontroll = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  const [carRace,setcarRace] = useRecoilState(isCarRace)
+  const [bootrest,setBootrest] = useRecoilState(bootRestTime)
 
   //console.log('제어 : '+pushToken)
+
+  function timecalcul(time){
+    var min = parseInt((time%3600)/60);
+    var sec = time%60;
+
+    setBootrest(min+':'+sec)
+    console.log(time + ' : ' + bootrest)
+  }
+  
+  const [boottime,setboottime] = useState(600)
 
   var door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
   var door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
@@ -309,6 +329,13 @@ const Carcontroll = () => {
     client.write(boot_1)
     console.log('전송 : ' + boot_1)
 
+    console.log('시간 : ' + boottime)
+
+    interval = setInterval(() => {
+      timecalcul(boottime)
+      setboottime(boottime-1)
+    }, 1000);
+
     } else {
       setBoot(false)
       Toast.show({
@@ -324,6 +351,10 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
+
+      clearInterval(interval)
+      setBootrest('00:00')
+      setboottime(600)
 
       boot_0 = JSON.stringify(boot_0)
     client.write(boot_0)
@@ -363,7 +394,36 @@ const Carcontroll = () => {
                 </View>
                 <View style={{ flex: 4 }}>
                   <Text style={styles.carnum}>12기 3456</Text>
-                  <View style={{ justifyContent: "center", alignItems: "center" }}>
+                  {
+                    carRace =="SUV1" &&
+                    <TouchableWithoutFeedback onPress={()=>setcarRace('SEDAN1')}>
+                    <View style={{ justifyContent: "center", alignItems: "center" }}>
+                    {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
+                      <Image source={suv1_big} style={{ marginTop: -30 }}></Image>
+                    }
+                    {door == 'on' &&
+                      <Image source={suvdooron} style={{ marginTop: -30 }}></Image>
+                    }
+                    {(panic == 'on') &&
+                      <Image source={suvpanicon} style={{ marginTop: -30 }}></Image>
+                    }
+                    {(warnbim == 'on') &&
+                      <Image source={suvbimon} style={{ marginTop: -30 }}></Image>
+                    }
+                    {trunk == true &&
+                      <Image source={suvtrunkon} style={{ marginTop: -30 }}></Image>
+                    }
+                    {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
+                      <Image source={suvbooton} style={{ marginTop: -30 }}></Image>
+                    }
+                    </View>
+                    </TouchableWithoutFeedback>
+                  }
+
+                    {
+                    carRace =="SEDAN1" &&
+                    <TouchableWithoutFeedback onPress={()=>setcarRace('SUV1')}>
+                    <View style={{ justifyContent: "center", alignItems: "center" }}>
                     {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
                       <Image source={sedan1_big} style={{ marginTop: -30 }}></Image>
                     }
@@ -379,11 +439,13 @@ const Carcontroll = () => {
                     {trunk == true &&
                       <Image source={trunkon} style={{ marginTop: -30 }}></Image>
                     }
-                    {boot == true &&
+                    {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
                       <Image source={booton} style={{ marginTop: -30 }}></Image>
                     }
-
-                  </View>
+                    </View>
+                    </TouchableWithoutFeedback>
+                  }
+                  
                 </View>
               </View>
 
@@ -398,7 +460,7 @@ const Carcontroll = () => {
                           <Image source={startoffbtn} style={{ marginLeft: 26, marginRight: 8 }}></Image>
                           <Text style={styles.starttxt}>원격시동 끄기</Text>
                         </View>
-                        <Text style={styles.Onclocktxt}>00:00</Text>
+                        <Text style={styles.Onclocktxt}>{bootrest}</Text>
                       </View>
                     </View>
 

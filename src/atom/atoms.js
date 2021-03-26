@@ -7,14 +7,14 @@ import {
 } from 'recoil';
 
 
-export const networkState = atom({
-  key: 'networkState', // unique ID (with respect to other atoms/selectors)
-  default: 'hiRecoil', // default value (aka initial value)
+export const modemNumber = atom({
+  key: 'modemNumber', // unique ID (with respect to other atoms/selectors)
+  default: '', // default value (aka initial value)
 });
 
-export const newState = atom({
-  key: 'newState', // unique ID (with respect to other atoms/selectors)
-  default: 'nwe', // default value (aka initial value)
+export const userNumber = atom({
+  key: 'userNumber', // unique ID (with respect to other atoms/selectors)
+  default: '', // default value (aka initial value)
 })
 
 export const fcmToken = atom({
@@ -24,9 +24,13 @@ export const fcmToken = atom({
 
 export const isCarRace = atom({
   key: 'isCarRace', // unique ID (with respect to other atoms/selectors)
-  default: 'nocar', // default value (aka initial value)
+  default: 'SEDAN1', // default value (aka initial value)
 })
 
+export const bootRestTime = atom({
+  key: 'bootRestTime', // unique ID (with respect to other atoms/selectors)
+  default: 0, // default value (aka initial value)
+})
 
 //설정
 export const icarSwitch = atom({

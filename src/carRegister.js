@@ -25,7 +25,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState,newState,fcmToken } from './atom/atoms'
+import { modemNumber,userNumber,fcmToken,isCarRace } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -60,6 +60,11 @@ const CarRegister = () => {
   const [carRace, setCarRace] = useState('')
   const [raceModal, setRaceModal] = useState(false)
 
+  const [atModemn,setAtModemn] = useRecoilState(modemNumber)
+  const [atUserNumber,setatUserNumber] = useRecoilState(userNumber)
+  const [atIsCarRace,setatIsCarRace] = useRecoilState(isCarRace)
+  
+
 
   const [sedan1, setSedan1] = useState(false)
   const [suv1, setSuv1] = useState(false)
@@ -69,10 +74,12 @@ const CarRegister = () => {
       Alert.alert('차량이 변경되었습니다.')
       setCarRace('SEDAN1')
       setRaceModal(false)
+      setatIsCarRace('SEDAN1')
     } else if (suv1 == true) {
       Alert.alert('차량이 변경되었습니다.')
       setCarRace('SUV1')
       setRaceModal(false)
+      setatIsCarRace('SUV1')
     }
   }
 
@@ -87,20 +94,34 @@ const CarRegister = () => {
     times = setTimeout(() => {
       Alert.alert('서버와 통신을 실패하였습니다.')
     }, 2000);
-  }
 
-  client.on('data', function(data) {
-    if(''+data =='pwd_suc'){
-      clearTimeout(times)
-      navigation.navigate('테스트')
+    navigation.navigate('간편비밀번호')
 
       AsyncStorage.setItem("@modem_N",modemN)
       AsyncStorage.setItem("@user_N",userN)
       AsyncStorage.setItem("@car_Race",carRace)
       AsyncStorage.setItem("@is_first",'notfirst')
+
+      setAtModemn(modemN)
+      setatUserNumber(userN)
+      setatIsCarRace(carRace)
+  }
+
+  client.on('data', function(data) {
+    if(''+data =='pwd_suc'){
+      clearTimeout(times)
+      navigation.navigate('간편비밀번호')
+
+      AsyncStorage.setItem("@modem_N",modemN)
+      AsyncStorage.setItem("@user_N",userN)
+      AsyncStorage.setItem("@car_Race",carRace)
+      AsyncStorage.setItem("@is_first",'notfirst')
+
+      setAtModemn(modemN)
+      setatUserNumber(userN)
+      setatIsCarRace(carRace)
     }else{
       clearTimeout(times)
-      //Alert.alert('비밀번호가 틀렸습니다.')
     }
     console.log('앱내에서 받기 ' + data);
   });

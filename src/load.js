@@ -17,7 +17,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState,newState,fcmToken } from './atom/atoms'
+import { modemNumber,userNumber,fcmToken,isCarRace } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app'
@@ -44,7 +44,37 @@ const Load = () => {
     }
   }
 
+  const getmodem = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@modem_N')
+      return value
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  const getuser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@user_N')
+      return value
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  const getcar = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@car_Race')
+      return value
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  const [atModemn,setAtModemn] = useRecoilState(modemNumber)
+  const [atUserNumber,setatUserNumber] = useRecoilState(userNumber)
+  const [atIsCarRace,setatIsCarRace] = useRecoilState(isCarRace)
   const [isAuthorized, setIsAuthorized] = useState(false)
 
   const handlePushToken = useCallback(async () => {
@@ -82,6 +112,11 @@ const Load = () => {
   useEffect(() => {
    getData().then((res)=>{
      if(res!=null){
+
+      getmodem().then(res=>setAtModemn(res))
+      getuser().then(res=>setatUserNumber(res))
+      getcar().then(res=>setatIsCarRace(res))
+
       setTimeout(() => {
         navigation.navigate('테스트')
         console.log('구사용자 : ' + res)
