@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ToggleSwitch from 'toggle-switch-react-native'
 
@@ -44,23 +45,42 @@ const rightArr = require('../img/setImg/rightArr.png')
 
 const Settings = () => {
   const navigation = useNavigation()
-  
-  const [icarswitch,seticarswitch] = useRecoilState(icarSwitch)
-  const [idoorswitch,setidoorswitch] = useRecoilState(idoorSwitch)
-  const [lowboltBoot,setlowboltBoot] = useRecoilState(lowvoltBoot)
-  const [lowboltAlert,setlowboltAlert] = useRecoilState(lowvoltAlert)
-  const [actionsound,setactionsound] = useRecoilState(actionSound)
-  const [alertsound,setalertsound] = useRecoilState(alertSound)
+
+  const [aticarswitch,setaticarswitch] = useRecoilState(icarSwitch)
+  const [atidoorswitch,setatidoorswitch] = useRecoilState(idoorSwitch)
+  const [atlowboltBoot,setatlowboltBoot] = useRecoilState(lowvoltBoot)
+  const [atlowboltAlert,setatlowboltAlert] = useRecoilState(lowvoltAlert)
+  const [atactionsound,setatactionsound] = useRecoilState(actionSound)
+  const [atalertsound,setatalertsound] = useRecoilState(alertSound)
+
+
+  const [icarswitch,seticarswitch] = useState(aticarswitch)
+  const [idoorswitch,setidoorswitch] = useState(atidoorswitch)
+  const [lowboltBoot,setlowboltBoot] = useState(atlowboltBoot)
+  const [lowboltAlert,setlowboltAlert] = useState(atlowboltAlert)
+  const [actionsound,setactionsound] = useState(atactionsound)
+  const [alertsound,setalertsound] = useState(atalertsound)
+
+
+
 
   
   
   function savebtnclick(){
+    // AsyncStorage.setItem("@icarswitch",icarswitch)
+    // AsyncStorage.setItem("@idoorswitch",idoorswitch)
+    // AsyncStorage.setItem("@lowboltBoot",lowboltBoot)
+    // AsyncStorage.setItem("@lowboltAlert",lowboltAlert)
+    // AsyncStorage.setItem("@actionsound",actionsound)
+    // AsyncStorage.setItem("@alertsound",alertsound)
 
+    setaticarswitch(icarswitch)
+    setatidoorswitch(idoorswitch)
+    setatlowboltBoot(lowboltBoot)
+    setatlowboltAlert(lowboltAlert)
+    setatactionsound(actionsound)
+    setatalertsound(alertsound)
   }
-  
-
-
-
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
@@ -294,7 +314,9 @@ const Settings = () => {
       <View style={{ height:60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 32, marginLeft: 16,position:"absolute",top:0 }}>
           <View><TouchableWithoutFeedback onPress={()=>navigation.goBack()}><Image source={back}></Image></TouchableWithoutFeedback></View>
           <Text style={styles.maintxt}>설정</Text>
+          <TouchableWithoutFeedback onPress={()=>savebtnclick()}>
           <Text style={styles.savetxt}>저장</Text>
+          </TouchableWithoutFeedback>
         </View>
         {/* 헤더 끝 */}
     </SafeAreaView>

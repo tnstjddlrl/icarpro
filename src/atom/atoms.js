@@ -1,9 +1,5 @@
 import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
+  atom
 } from 'recoil';
 
 
@@ -62,3 +58,27 @@ export const alertSound = atom({
   key: 'alertSound', // unique ID (with respect to other atoms/selectors)
   default: false, // default value (aka initial value)
 })
+
+//설정 상세 값
+export const voltValue = atom({
+  key: 'voltValue', // unique ID (with respect to other atoms/selectors)
+  default: 0, // default value (aka initial value)
+})
+export const bootTimeValue = atom({
+  key: 'bootTimeValue', // unique ID (with respect to other atoms/selectors)
+  default: 0, // default value (aka initial value)
+})
+export const lastHeatTimeValue = atom({
+  key: 'lastHeatTimeValue', // unique ID (with respect to other atoms/selectors)
+  default: 0, // default value (aka initial value)
+})
+export const preHeatTimeValue = atom({
+  key: 'preHeatTimeValue', // unique ID (with respect to other atoms/selectors)
+  default: 0, // default value (aka initial value)
+})
+export const startTimeValue = atom({
+  key: 'startTimeValue', // unique ID (with respect to other atoms/selectors)
+  default: 0, // default value (aka initial value)
+})
+
+
