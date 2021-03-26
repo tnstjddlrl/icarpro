@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -17,13 +17,13 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { modemNumber,userNumber,fcmToken,isCarRace } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app'
 
 
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -39,7 +39,7 @@ const Load = () => {
     try {
       const value = await AsyncStorage.getItem('@is_first')
       return value
-    } catch(e) {
+    } catch (e) {
       console.log(e)
     }
   }
@@ -48,7 +48,7 @@ const Load = () => {
     try {
       const value = await AsyncStorage.getItem('@modem_N')
       return value
-    } catch(e) {
+    } catch (e) {
       console.log(e)
     }
   }
@@ -57,7 +57,7 @@ const Load = () => {
     try {
       const value = await AsyncStorage.getItem('@user_N')
       return value
-    } catch(e) {
+    } catch (e) {
       console.log(e)
     }
   }
@@ -66,15 +66,15 @@ const Load = () => {
     try {
       const value = await AsyncStorage.getItem('@car_Race')
       return value
-    } catch(e) {
+    } catch (e) {
       console.log(e)
     }
   }
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
-  const [atModemn,setAtModemn] = useRecoilState(modemNumber)
-  const [atUserNumber,setatUserNumber] = useRecoilState(userNumber)
-  const [atIsCarRace,setatIsCarRace] = useRecoilState(isCarRace)
+  const [atModemn, setAtModemn] = useRecoilState(modemNumber)
+  const [atUserNumber, setatUserNumber] = useRecoilState(userNumber)
+  const [atIsCarRace, setatIsCarRace] = useRecoilState(isCarRace)
   const [isAuthorized, setIsAuthorized] = useState(false)
 
   const handlePushToken = useCallback(async () => {
@@ -103,44 +103,44 @@ const Load = () => {
     }
   }, [pushToken, isAuthorized])
 
-  useEffect(()=>{
+  useEffect(() => {
     handlePushToken()
     saveDeviceToken()
-  },[])
-  
+  }, [])
+
 
   useEffect(() => {
-   getData().then((res)=>{
-     if(res!=null){
+    getData().then((res) => {
+      if (res != null) {
 
-      getmodem().then(res=>setAtModemn(res))
-      getuser().then(res=>setatUserNumber(res))
-      getcar().then(res=>setatIsCarRace(res))
+        getmodem().then(res => setAtModemn(res))
+        getuser().then(res => setatUserNumber(res))
+        getcar().then(res => setatIsCarRace(res))
 
-      setTimeout(() => {
-        navigation.navigate('테스트')
-        console.log('구사용자 : ' + res)
-      }, 1000);
-     }else{
-      setTimeout(() => {
-        navigation.navigate('테스트')
-        console.log('첫사용자 : ' + res)
-      }, 1000);
-     }
-   })
-  },[])
+        setTimeout(() => {
+          navigation.navigate('테스트')
+          console.log('구사용자 : ' + res)
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          navigation.navigate('테스트')
+          console.log('첫사용자 : ' + res)
+        }, 1000);
+      }
+    })
+  }, [])
 
-  
 
-  return(
+
+  return (
     <SafeAreaView>
-      <View style={{width:chwidth,height:chheight,justifyContent:"center",alignItems:"center"}}>
-        <View style={{flex:3}}></View>
-        <View style={{flex:2}}>
-          <Image source={logo} style={{maxWidth:chwidth/1.5,maxHeight:chheight/8}}></Image>
+      <View style={{ width: chwidth, height: chheight, justifyContent: "center", alignItems: "center" }}>
+        <View style={{ flex: 3 }}></View>
+        <View style={{ flex: 2 }}>
+          <Image source={logo} style={{ maxWidth: chwidth / 1.5, maxHeight: chheight / 8 }}></Image>
         </View>
-        <View style={{flex:2}}></View>
-        <View style={{flex:3}}></View>
+        <View style={{ flex: 2 }}></View>
+        <View style={{ flex: 3 }}></View>
       </View>
     </SafeAreaView>
   )

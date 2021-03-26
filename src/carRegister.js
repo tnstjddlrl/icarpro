@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -25,7 +25,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { modemNumber,userNumber,fcmToken,isCarRace } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -51,7 +51,7 @@ const CarRegister = () => {
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   // console.log('차등록 : ' + pushToken)
-  
+
 
   const navigation = useNavigation()
 
@@ -60,22 +60,22 @@ const CarRegister = () => {
   const [carRace, setCarRace] = useState('')
   const [raceModal, setRaceModal] = useState(false)
 
-  const [atModemn,setAtModemn] = useRecoilState(modemNumber)
-  const [atUserNumber,setatUserNumber] = useRecoilState(userNumber)
-  const [atIsCarRace,setatIsCarRace] = useRecoilState(isCarRace)
+  const [atModemn, setAtModemn] = useRecoilState(modemNumber)
+  const [atUserNumber, setatUserNumber] = useRecoilState(userNumber)
+  const [atIsCarRace, setatIsCarRace] = useRecoilState(isCarRace)
 
-  useEffect(()=>{
+  useEffect(() => {
     setModemN(atModemn)
     setUserN(atUserNumber)
     setCarRace(atIsCarRace)
-    if(atIsCarRace == 'SEDAN1'){
+    if (atIsCarRace == 'SEDAN1') {
       setSedan1(true)
-    }else if(atIsCarRace == 'SUV1'){
+    } else if (atIsCarRace == 'SUV1') {
       setSuv1(true)
-    }else{
+    } else {
 
     }
-  },[])
+  }, [])
 
 
   const [sedan1, setSedan1] = useState(false)
@@ -97,7 +97,7 @@ const CarRegister = () => {
 
   var times
   function registerClick() {
-    var txt = {type:"R",type_sub:"register", data : {modem : modemN , user : userN , carRace : carRace , token : pushToken}}
+    var txt = { type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
     txt = JSON.stringify(txt)
 
     var res = client.write(txt)
@@ -109,20 +109,20 @@ const CarRegister = () => {
 
     navigation.navigate('간편비밀번호')
 
-      AsyncStorage.setItem("@modem_N",modemN)
-      AsyncStorage.setItem("@user_N",userN)
-      AsyncStorage.setItem("@car_Race",carRace)
-      AsyncStorage.setItem("@is_first",'notfirst')
+    AsyncStorage.setItem("@modem_N", modemN)
+    AsyncStorage.setItem("@user_N", userN)
+    AsyncStorage.setItem("@car_Race", carRace)
+    AsyncStorage.setItem("@is_first", 'notfirst')
 
-      setAtModemn(modemN)
-      setatUserNumber(userN)
-      setatIsCarRace(carRace)
+    setAtModemn(modemN)
+    setatUserNumber(userN)
+    setatIsCarRace(carRace)
   }
 
   const delModem = async () => {
     try {
       await AsyncStorage.removeItem('@modem_N')
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
@@ -130,15 +130,15 @@ const CarRegister = () => {
   const delUser = async () => {
     try {
       await AsyncStorage.removeItem('@user_N')
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
-  
+
   const delcarRace = async () => {
     try {
       await AsyncStorage.removeItem('@car_Race')
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
@@ -146,14 +146,14 @@ const CarRegister = () => {
   const delFirst = async () => {
     try {
       await AsyncStorage.removeItem('@is_first')
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
 
   var times2
   function registerDel() {
-    var txt = {type:"R",type_sub:"register_del", data : {modem : modemN}}
+    var txt = { type: "R", type_sub: "register_del", data: { modem: modemN } }
     txt = JSON.stringify(txt)
 
     var res = client.write(txt)
@@ -166,20 +166,20 @@ const CarRegister = () => {
     Alert.alert('삭제')
   }
 
-  client.on('data', function(data) {
-    if(''+data =='register_suc'){
+  client.on('data', function (data) {
+    if ('' + data == 'register_suc') {
       clearTimeout(times)
       navigation.navigate('간편비밀번호')
 
-      AsyncStorage.setItem("@modem_N",modemN)
-      AsyncStorage.setItem("@user_N",userN)
-      AsyncStorage.setItem("@car_Race",carRace)
-      AsyncStorage.setItem("@is_first",'notfirst')
+      AsyncStorage.setItem("@modem_N", modemN)
+      AsyncStorage.setItem("@user_N", userN)
+      AsyncStorage.setItem("@car_Race", carRace)
+      AsyncStorage.setItem("@is_first", 'notfirst')
 
       setAtModemn(modemN)
       setatUserNumber(userN)
       setatIsCarRace(carRace)
-    }else if(''+data =='registerDel_suc'){
+    } else if ('' + data == 'registerDel_suc') {
       clearTimeout(times2)
       delFirst()
       delModem()
@@ -189,7 +189,7 @@ const CarRegister = () => {
       setAtModemn('')
       setatUserNumber('')
       setatIsCarRace('')
-    }else{
+    } else {
       clearTimeout(times)
       clearTimeout(times2)
     }
@@ -198,19 +198,19 @@ const CarRegister = () => {
 
 
 
-  
+
 
 
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
-      
+
       <View style={{ width: chwidth, height: chheight }}>
 
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={()=>navigation.goBack()}>
-          <View><Image source={back}></Image></View>
+          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+            <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>
           <View><Image source={close}></Image></View>
@@ -257,19 +257,19 @@ const CarRegister = () => {
 
           {(modemN != '' && userN != '' && carRace != '') ?
             <View style={{ flexDirection: "row", width: chwidth - 32, marginTop: 16 }}>
-              
-              <TouchableWithoutFeedback  onPress={()=>registerDel()}>
-              <View style={{ borderStyle: "solid", borderWidth: 1.5, borderColor: "#a6a9ac", height: 54, flex: 1, borderRadius: 6, justifyContent: "center", alignItems: "center" }}>
-                <Text style={styles.canceltxt2}>삭제</Text>
-              </View>
+
+              <TouchableWithoutFeedback onPress={() => registerDel()}>
+                <View style={{ borderStyle: "solid", borderWidth: 1.5, borderColor: "#a6a9ac", height: 54, flex: 1, borderRadius: 6, justifyContent: "center", alignItems: "center" }}>
+                  <Text style={styles.canceltxt2}>삭제</Text>
+                </View>
               </TouchableWithoutFeedback>
 
               <View style={{ flex: 0.05 }}></View>
 
-              <TouchableWithoutFeedback onPress={()=>registerClick()}>
-              <View style={{ borderRadius: 6, backgroundColor: "#f75929", height: 54, flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <Text style={styles.registertxt}>등록</Text>
-              </View>
+              <TouchableWithoutFeedback onPress={() => registerClick()}>
+                <View style={{ borderRadius: 6, backgroundColor: "#f75929", height: 54, flex: 1, justifyContent: "center", alignItems: "center" }}>
+                  <Text style={styles.registertxt}>등록</Text>
+                </View>
               </TouchableWithoutFeedback>
 
             </View>
@@ -548,7 +548,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.24,
     color: "#393e46"
   },
-  inputtxt:{
+  inputtxt: {
     fontFamily: "AppleSDGothicNeo",
     fontSize: 17,
     fontWeight: "bold",

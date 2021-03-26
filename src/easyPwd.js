@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef,useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -23,7 +23,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState,newState,fcmToken } from './atom/atoms'
+import { networkState, newState, fcmToken } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -45,52 +45,52 @@ const CarState = () => {
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
-  console.log('간편 : '+pushToken)
+  console.log('간편 : ' + pushToken)
 
-  
 
-  useEffect(()=>{
+
+  useEffect(() => {
     inputRef.current.focus()
-  },[])
+  }, [])
 
-  useEffect(()=>{
-    if(pwd.match(/^[0-9]+$/) == null && pwd !=''){
+  useEffect(() => {
+    if (pwd.match(/^[0-9]+$/) == null && pwd != '') {
       Alert.alert('숫자만 입력가능합니다!')
       setpwd('')
     }
-  },[pwd])
+  }, [pwd])
 
   var times
 
   function registerClick() {
-    var txt = {type:"R",type_sub:"easy_pwd", data : {pwd : pwd , token : pushToken}}
+    var txt = { type: "R", type_sub: "easy_pwd", data: { pwd: pwd, token: pushToken } }
     txt = JSON.stringify(txt)
 
     var res = client.write(txt)
-    
+
     times = setTimeout(() => {
       Alert.alert('서버와 통신을 실패하였습니다.')
     }, 1500);
 
   }
 
-  const [ispwd,setIspwd] = useState(false)
+  const [ispwd, setIspwd] = useState(false)
 
-  
-    client.on('data', function(data) {
-      if(''+data =='pwd_suc'){
-        clearTimeout(times)
-        if(ispwd == false){
-          navigation.navigate('테스트')
-          setIspwd(true)
-        }
-      }else{
-        clearTimeout(times)
-        //Alert.alert('비밀번호가 틀렸습니다.')
+
+  client.on('data', function (data) {
+    if ('' + data == 'pwd_suc') {
+      clearTimeout(times)
+      if (ispwd == false) {
+        navigation.navigate('테스트')
+        setIspwd(true)
       }
-      console.log('간편 비밀번호 내에서 받기 ' + data);
-      Alert.alert('서버에서 보내온 메시지 ','' + data)
-    });
+    } else {
+      clearTimeout(times)
+      //Alert.alert('비밀번호가 틀렸습니다.')
+    }
+    console.log('간편 비밀번호 내에서 받기 ' + data);
+    Alert.alert('서버에서 보내온 메시지 ', '' + data)
+  });
 
 
   console.log(pwd)
@@ -99,14 +99,14 @@ const CarState = () => {
       <View style={{ width: chwidth, height: chheight }}>
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableOpacity onPress={()=>navigation.goBack()}>
-          <View>
-            <Image source={back}></Image>
-          </View>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View>
+              <Image source={back}></Image>
+            </View>
           </TouchableOpacity>
           <Text style={styles.maintxt}>i도어 비밀번호</Text>
-          <TouchableOpacity onPress={()=>registerClick()}>
-          <Text style={styles.savetxt}>저장</Text>
+          <TouchableOpacity onPress={() => registerClick()}>
+            <Text style={styles.savetxt}>저장</Text>
           </TouchableOpacity>
         </View>
         {/* 헤더 끝 */}
@@ -142,11 +142,11 @@ const CarState = () => {
           <View style={{ flex: 4 }}>
 
           </View>
-          
+
         </View>
         {/* 본문 끝 */}
       </View>
-      <TextInput style={{ position: 'absolute', width: chwidth, height: chheight * 4,marginTop:60 }} keyboardType={'number-pad'}
+      <TextInput style={{ position: 'absolute', width: chwidth, height: chheight * 4, marginTop: 60 }} keyboardType={'number-pad'}
         onChangeText={(txt) => setpwd(txt)} value={pwd} maxLength={4} ref={inputRef}
       ></TextInput>
     </SafeAreaView>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -21,7 +21,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState,newState,fcmToken,bootRestTime,isBootOn } from './atom/atoms'
+import { networkState, newState, fcmToken, bootRestTime, isBootOn } from './atom/atoms'
 
 import client from './Client'
 
@@ -52,191 +52,191 @@ const CarState = () => {
   const boottime = useRecoilValue(bootRestTime)
 
   function registerClick() {
-    var txt = {type:"R",type_sub:"req_state", data : { token : pushToken}}
+    var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
     txt = JSON.stringify(txt)
 
     var res = client.write(txt)
     console.log('전송 : ' + txt)
   }
-    
+
 
 
 
 
   const navigation = useNavigation()
   return (
-      <SafeAreaView style={{ width: chwidth, height: chheight,backgroundColor:'white' }}>
-        {/* 헤더 */}
-        <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={()=>navigation.goBack()}>
-            <View><Image source={back}></Image></View>
-          </TouchableWithoutFeedback>
-          <Text style={styles.maintxt}>차량 상태</Text>
-          <View style={{ width: 30 }}></View>
-        </View>
-        {/* 헤더 끝 */}
+    <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'white' }}>
+      {/* 헤더 */}
+      <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
+        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <View><Image source={back}></Image></View>
+        </TouchableWithoutFeedback>
+        <Text style={styles.maintxt}>차량 상태</Text>
+        <View style={{ width: 30 }}></View>
+      </View>
+      {/* 헤더 끝 */}
 
-        {/* 본문 */}
-        <View style={{ flex: 10 }}>
-          {/* 차량 이미지 */}
-          <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
-            <TouchableOpacity onPress={()=>registerClick()}>
+      {/* 본문 */}
+      <View style={{ flex: 10 }}>
+        {/* 차량 이미지 */}
+        <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
+          <TouchableOpacity onPress={() => registerClick()}>
             <Image source={warnOn}></Image>
-            </TouchableOpacity>
-          </View>
-          {/* 차량 이미지 끝 */}
+          </TouchableOpacity>
+        </View>
+        {/* 차량 이미지 끝 */}
 
 
 
-          {/* 상태 부분 */}
+        {/* 상태 부분 */}
 
-          {/* 차량경계 도어락 */}
-          <View style={{ flex: 1, width: chwidth - 32, marginLeft: 16, flexDirection: "row" }}>
+        {/* 차량경계 도어락 */}
+        <View style={{ flex: 1, width: chwidth - 32, marginLeft: 16, flexDirection: "row" }}>
 
-            <View style={styles.frame}>
-              <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={warnIcon}></Image>
-                  <Text style={styles.frametxt}>차량 경계</Text>
-                </View>
-                <View>
-                  <Text style={styles.ontxt}>ON</Text>
-                </View>
+          <View style={styles.frame}>
+            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
+              <View style={{ flexDirection: "row" }}>
+                <Image source={warnIcon}></Image>
+                <Text style={styles.frametxt}>차량 경계</Text>
               </View>
-            </View>
-
-            <View style={{ flex: 0.05 }}></View>
-
-            <View style={styles.frame}>
-              <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={lockIcon}></Image>
-                  <Text style={styles.frametxt}>도어락</Text>
-                </View>
-                <View>
-                  <Text style={styles.offtxt}>OFF</Text>
-                </View>
-              </View>
-            </View>
-
-          </View>
-
-          {/* 차량경계 도어락  끝*/}
-
-          {/* 도어 트렁크 */}
-          <View style={{ flex: 1, width: chwidth - 32, marginLeft: 16, flexDirection: "row" }}>
-
-            <View style={styles.frame}>
-              <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={doorIcon}></Image>
-                  <Text style={styles.frametxt}>도어</Text>
-                </View>
-                <View>
-                  <Text style={styles.offtxt}>OFF</Text>
-                </View>
-              </View>
-            </View>
-
-            <View style={{ flex: 0.05 }}></View>
-
-            <View style={styles.frame}>
-              <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={trunkIcon}></Image>
-                  <Text style={styles.frametxt}>트렁크</Text>
-                </View>
-                <View>
-                  <Text style={styles.offtxt}>OFF</Text>
-                </View>
-              </View>
-            </View>
-
-          </View>
-          {/* 도어 트렁크 끝 */}
-
-
-          {/* 엔진후드 엔진상태 */}
-          <View style={{ flex: 1, width: chwidth - 32, marginLeft: 16, flexDirection: "row" }}>
-
-            <View style={styles.frame}>
-              <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={hoodIcon}></Image>
-                  <Text style={styles.frametxt}>엔진 후드</Text>
-                </View>
-                <View>
-                  <Text style={styles.offtxt}>OFF</Text>
-                </View>
-              </View>
-            </View>
-
-            <View style={{ flex: 0.05 }}></View>
-
-            <View style={styles.frame}>
-              <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={stateIcon}></Image>
-                  <Text style={styles.frametxt}>엔진 상태</Text>
-                </View>
-                <View>
-                  <Text style={styles.offtxt}>OFF</Text>
-                </View>
-              </View>
-            </View>
-
-          </View>
-          {/* 엔진후드 엔진상태 끝*/}
-
-
-
-          <View style={{flex:1, width: chwidth - 32, marginLeft: 16, flexDirection: "row"}}>
-            <View style={styles.frame}>
-              <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={bootIcon}></Image>
-                  <Text style={styles.frametxt}>원격 시동</Text>
-                  <Text style={styles.spacetime}>남은 시간 : </Text>
-                  {isbooton && <Text style={styles.spacetime2}>{boottime}</Text>}
-                  
-                </View>
-                <View>
-                  {isbooton ? 
-                    <Text style={styles.ontxt}>ON</Text>
-                  :
-                    <Text style={styles.offtxt}>OFF</Text>
-                  }
-                  
-                </View>
+              <View>
+                <Text style={styles.ontxt}>ON</Text>
               </View>
             </View>
           </View>
 
+          <View style={{ flex: 0.05 }}></View>
 
-          <View style={{flex:1, width: chwidth - 32, marginLeft: 16, flexDirection: "row"}}>
-            <View style={styles.frame}>
-              <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={bootIcon}></Image>
-                  <Text style={styles.frametxt}>차량 전압</Text>
-                </View>
-                <View>
-                  <Text style={styles.volttxt}>00.0V</Text>
-                </View>
+          <View style={styles.frame}>
+            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
+              <View style={{ flexDirection: "row" }}>
+                <Image source={lockIcon}></Image>
+                <Text style={styles.frametxt}>도어락</Text>
+              </View>
+              <View>
+                <Text style={styles.offtxt}>OFF</Text>
               </View>
             </View>
           </View>
-
-          <View style={{flex:0.4}}></View>
-
-
-          {/* 상태 부분 끝 */}
 
         </View>
-        {/* 본문 끝 */}
+
+        {/* 차량경계 도어락  끝*/}
+
+        {/* 도어 트렁크 */}
+        <View style={{ flex: 1, width: chwidth - 32, marginLeft: 16, flexDirection: "row" }}>
+
+          <View style={styles.frame}>
+            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
+              <View style={{ flexDirection: "row" }}>
+                <Image source={doorIcon}></Image>
+                <Text style={styles.frametxt}>도어</Text>
+              </View>
+              <View>
+                <Text style={styles.offtxt}>OFF</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={{ flex: 0.05 }}></View>
+
+          <View style={styles.frame}>
+            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
+              <View style={{ flexDirection: "row" }}>
+                <Image source={trunkIcon}></Image>
+                <Text style={styles.frametxt}>트렁크</Text>
+              </View>
+              <View>
+                <Text style={styles.offtxt}>OFF</Text>
+              </View>
+            </View>
+          </View>
+
+        </View>
+        {/* 도어 트렁크 끝 */}
 
 
-      </SafeAreaView>
+        {/* 엔진후드 엔진상태 */}
+        <View style={{ flex: 1, width: chwidth - 32, marginLeft: 16, flexDirection: "row" }}>
+
+          <View style={styles.frame}>
+            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
+              <View style={{ flexDirection: "row" }}>
+                <Image source={hoodIcon}></Image>
+                <Text style={styles.frametxt}>엔진 후드</Text>
+              </View>
+              <View>
+                <Text style={styles.offtxt}>OFF</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={{ flex: 0.05 }}></View>
+
+          <View style={styles.frame}>
+            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
+              <View style={{ flexDirection: "row" }}>
+                <Image source={stateIcon}></Image>
+                <Text style={styles.frametxt}>엔진 상태</Text>
+              </View>
+              <View>
+                <Text style={styles.offtxt}>OFF</Text>
+              </View>
+            </View>
+          </View>
+
+        </View>
+        {/* 엔진후드 엔진상태 끝*/}
+
+
+
+        <View style={{ flex: 1, width: chwidth - 32, marginLeft: 16, flexDirection: "row" }}>
+          <View style={styles.frame}>
+            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
+              <View style={{ flexDirection: "row" }}>
+                <Image source={bootIcon}></Image>
+                <Text style={styles.frametxt}>원격 시동</Text>
+                <Text style={styles.spacetime}>남은 시간 : </Text>
+                {isbooton && <Text style={styles.spacetime2}>{boottime}</Text>}
+
+              </View>
+              <View>
+                {isbooton ?
+                  <Text style={styles.ontxt}>ON</Text>
+                  :
+                  <Text style={styles.offtxt}>OFF</Text>
+                }
+
+              </View>
+            </View>
+          </View>
+        </View>
+
+
+        <View style={{ flex: 1, width: chwidth - 32, marginLeft: 16, flexDirection: "row" }}>
+          <View style={styles.frame}>
+            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
+              <View style={{ flexDirection: "row" }}>
+                <Image source={bootIcon}></Image>
+                <Text style={styles.frametxt}>차량 전압</Text>
+              </View>
+              <View>
+                <Text style={styles.volttxt}>00.0V</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <View style={{ flex: 0.4 }}></View>
+
+
+        {/* 상태 부분 끝 */}
+
+      </View>
+      {/* 본문 끝 */}
+
+
+    </SafeAreaView>
   )
 }
 
@@ -284,36 +284,36 @@ const styles = StyleSheet.create({
     textAlign: "right",
     color: "#4e535a"
   },
-  volttxt:{
+  volttxt: {
     fontFamily: "AppleSDGothicNeo",
-  fontSize: 15,
-  fontWeight: "600",
-  fontStyle: "normal",
-  letterSpacing: 0,
-  textAlign: "right",
-  color: "#4c5158"
+    fontSize: 15,
+    fontWeight: "600",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    textAlign: "right",
+    color: "#4c5158"
   },
-  spacetime:{
+  spacetime: {
     opacity: 0.5,
-  fontFamily: "AppleSDGothicNeo",
-  fontSize: 13,
-  fontWeight: "600",
-  fontStyle: "normal",
-  letterSpacing: -0.5,
-  textAlign: "right",
-  color: "#4e535a",
-  marginLeft:8,
-  marginTop:2
-  },
-  spacetime2:{
     fontFamily: "AppleSDGothicNeo",
-  fontSize: 13,
-  fontWeight: "600",
-  fontStyle: "normal",
-  letterSpacing: -0.5,
-  textAlign: "right",
-  color: "#f75929",
-  marginTop:2
+    fontSize: 13,
+    fontWeight: "600",
+    fontStyle: "normal",
+    letterSpacing: -0.5,
+    textAlign: "right",
+    color: "#4e535a",
+    marginLeft: 8,
+    marginTop: 2
+  },
+  spacetime2: {
+    fontFamily: "AppleSDGothicNeo",
+    fontSize: 13,
+    fontWeight: "600",
+    fontStyle: "normal",
+    letterSpacing: -0.5,
+    textAlign: "right",
+    color: "#f75929",
+    marginTop: 2
   },
 })
 

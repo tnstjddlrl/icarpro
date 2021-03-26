@@ -26,7 +26,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState, newState, fcmToken,isCarRace,bootRestTime,isBootOn } from './atom/atoms'
+import { networkState, newState, fcmToken, isCarRace, bootRestTime, isBootOn } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -72,14 +72,14 @@ var rrtime = 600;
 
 const Carcontroll = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
-  const [carRace,setcarRace] = useRecoilState(isCarRace)
-  const [bootrest,setBootrest] = useRecoilState(bootRestTime)
-  const [atIsboot,setAtIsboot] = useRecoilState(isBootOn)
+  const [carRace, setcarRace] = useRecoilState(isCarRace)
+  const [bootrest, setBootrest] = useRecoilState(bootRestTime)
+  const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
 
   //console.log('제어 : '+pushToken)
 
-  function timecalcul(time){
-    if(time==0){
+  function timecalcul(time) {
+    if (time == 0) {
       setBoot(false)
       clearInterval(interval)
       setBootrest('00:00')
@@ -105,20 +105,20 @@ const Carcontroll = () => {
       });
     }
 
-    var min = parseInt((time%3600)/60);
-    var sec = time%60;
-    if(String(sec).length == 1){
+    var min = parseInt((time % 3600) / 60);
+    var sec = time % 60;
+    if (String(sec).length == 1) {
       console.log(String(sec).length)
-      setBootrest(min+':0'+sec)
-    }else{
+      setBootrest(min + ':0' + sec)
+    } else {
       console.log(String(sec).length)
-      setBootrest(min+':'+sec)
+      setBootrest(min + ':' + sec)
     }
-    
+
     console.log(time + ' : ' + bootrest)
   }
-  
-  const [boottime,setboottime] = useState(600)
+
+  const [boottime, setboottime] = useState(600)
 
   var door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
   var door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
@@ -373,7 +373,7 @@ const Carcontroll = () => {
       }, 1000);
 
     } else {
-      
+
       Toast.show({
         type: 'success',
         position: 'top',
@@ -394,8 +394,8 @@ const Carcontroll = () => {
       setAtIsboot(false)
 
       boot_0 = JSON.stringify(boot_0)
-    client.write(boot_0)
-    console.log('전송 : ' + boot_0)
+      client.write(boot_0)
+      console.log('전송 : ' + boot_0)
 
     }
   }
@@ -432,57 +432,57 @@ const Carcontroll = () => {
                 <View style={{ flex: 4 }}>
                   <Text style={styles.carnum}>12기 3456</Text>
                   {
-                    carRace =="SUV1" &&
-                    <TouchableWithoutFeedback onPress={()=>setcarRace('SEDAN1')}>
-                    <View style={{ justifyContent: "center", alignItems: "center" }}>
-                    {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
-                      <Image source={suv1_big} style={{ marginTop: -30 }}></Image>
-                    }
-                    {door == 'on' &&
-                      <Image source={suvdooron} style={{ marginTop: -30 }}></Image>
-                    }
-                    {(panic == 'on') &&
-                      <Image source={suvpanicon} style={{ marginTop: -30 }}></Image>
-                    }
-                    {(warnbim == 'on') &&
-                      <Image source={suvbimon} style={{ marginTop: -30 }}></Image>
-                    }
-                    {trunk == true &&
-                      <Image source={suvtrunkon} style={{ marginTop: -30 }}></Image>
-                    }
-                    {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
-                      <Image source={suvbooton} style={{ marginTop: -30 }}></Image>
-                    }
-                    </View>
+                    carRace == "SUV1" &&
+                    <TouchableWithoutFeedback onPress={() => setcarRace('SEDAN1')}>
+                      <View style={{ justifyContent: "center", alignItems: "center" }}>
+                        {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
+                          <Image source={suv1_big} style={{ marginTop: -30 }}></Image>
+                        }
+                        {door == 'on' &&
+                          <Image source={suvdooron} style={{ marginTop: -30 }}></Image>
+                        }
+                        {(panic == 'on') &&
+                          <Image source={suvpanicon} style={{ marginTop: -30 }}></Image>
+                        }
+                        {(warnbim == 'on') &&
+                          <Image source={suvbimon} style={{ marginTop: -30 }}></Image>
+                        }
+                        {trunk == true &&
+                          <Image source={suvtrunkon} style={{ marginTop: -30 }}></Image>
+                        }
+                        {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
+                          <Image source={suvbooton} style={{ marginTop: -30 }}></Image>
+                        }
+                      </View>
                     </TouchableWithoutFeedback>
                   }
 
-                    {
-                    carRace =="SEDAN1" &&
-                    <TouchableWithoutFeedback onPress={()=>setcarRace('SUV1')}>
-                    <View style={{ justifyContent: "center", alignItems: "center" }}>
-                    {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
-                      <Image source={sedan1_big} style={{ marginTop: -30 }}></Image>
-                    }
-                    {door == 'on' &&
-                      <Image source={dooron} style={{ marginTop: -30 }}></Image>
-                    }
-                    {(panic == 'on') &&
-                      <Image source={panicon} style={{ marginTop: -30 }}></Image>
-                    }
-                    {(warnbim == 'on') &&
-                      <Image source={bimon} style={{ marginTop: -30 }}></Image>
-                    }
-                    {trunk == true &&
-                      <Image source={trunkon} style={{ marginTop: -30 }}></Image>
-                    }
-                    {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
-                      <Image source={booton} style={{ marginTop: -30 }}></Image>
-                    }
-                    </View>
+                  {
+                    carRace == "SEDAN1" &&
+                    <TouchableWithoutFeedback onPress={() => setcarRace('SUV1')}>
+                      <View style={{ justifyContent: "center", alignItems: "center" }}>
+                        {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
+                          <Image source={sedan1_big} style={{ marginTop: -30 }}></Image>
+                        }
+                        {door == 'on' &&
+                          <Image source={dooron} style={{ marginTop: -30 }}></Image>
+                        }
+                        {(panic == 'on') &&
+                          <Image source={panicon} style={{ marginTop: -30 }}></Image>
+                        }
+                        {(warnbim == 'on') &&
+                          <Image source={bimon} style={{ marginTop: -30 }}></Image>
+                        }
+                        {trunk == true &&
+                          <Image source={trunkon} style={{ marginTop: -30 }}></Image>
+                        }
+                        {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
+                          <Image source={booton} style={{ marginTop: -30 }}></Image>
+                        }
+                      </View>
                     </TouchableWithoutFeedback>
                   }
-                  
+
                 </View>
               </View>
 
