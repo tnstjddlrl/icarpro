@@ -29,7 +29,12 @@ export const isCarRace = atom({
 
 export const bootRestTime = atom({
   key: 'bootRestTime', // unique ID (with respect to other atoms/selectors)
-  default: 0, // default value (aka initial value)
+  default: '', // default value (aka initial value)
+})
+
+export const isBootOn = atom({
+  key: 'isBootOn', // unique ID (with respect to other atoms/selectors)
+  default: false, // default value (aka initial value)
 })
 
 //설정

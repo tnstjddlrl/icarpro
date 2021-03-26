@@ -26,7 +26,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState, newState, fcmToken,isCarRace,bootRestTime } from './atom/atoms'
+import { networkState, newState, fcmToken,isCarRace,bootRestTime,isBootOn } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -68,19 +68,53 @@ const suvbimon = require('../img/controll/carstate/suvbimon.png')
 const suvbooton = require('../img/controll/carstate/suvbooton.png')
 
 var interval;
+var rrtime = 600;
 
 const Carcontroll = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [carRace,setcarRace] = useRecoilState(isCarRace)
   const [bootrest,setBootrest] = useRecoilState(bootRestTime)
+  const [atIsboot,setAtIsboot] = useRecoilState(isBootOn)
 
   //console.log('제어 : '+pushToken)
 
   function timecalcul(time){
+    if(time==0){
+      setBoot(false)
+      clearInterval(interval)
+      setBootrest('00:00')
+      rrtime = 600
+      setAtIsboot(false)
+
+      boot_0 = JSON.stringify(boot_0)
+      client.write(boot_0)
+      console.log('전송 : ' + boot_0)
+
+      Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: '원격시동 명령',
+        text2: '원격시동 명령을 [OFF]하였습니다.',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+        onShow: () => { },
+        onHide: () => { },
+        onPress: () => { }
+      });
+    }
+
     var min = parseInt((time%3600)/60);
     var sec = time%60;
-
-    setBootrest(min+':'+sec)
+    if(String(sec).length == 1){
+      console.log(String(sec).length)
+      setBootrest(min+':0'+sec)
+    }else{
+      console.log(String(sec).length)
+      setBootrest(min+':'+sec)
+    }
+    
     console.log(time + ' : ' + bootrest)
   }
   
@@ -325,19 +359,21 @@ const Carcontroll = () => {
         onPress: () => { }
       });
 
-    boot_1 = JSON.stringify(boot_1)
-    client.write(boot_1)
-    console.log('전송 : ' + boot_1)
+      boot_1 = JSON.stringify(boot_1)
+      client.write(boot_1)
+      console.log('전송 : ' + boot_1)
 
-    console.log('시간 : ' + boottime)
+      console.log('시간 : ' + boottime)
 
-    interval = setInterval(() => {
-      timecalcul(boottime)
-      setboottime(boottime-1)
-    }, 1000);
+      setAtIsboot(true)
+
+      interval = setInterval(() => {
+        timecalcul(rrtime)
+        rrtime -= 1
+      }, 1000);
 
     } else {
-      setBoot(false)
+      
       Toast.show({
         type: 'success',
         position: 'top',
@@ -351,10 +387,11 @@ const Carcontroll = () => {
         onHide: () => { },
         onPress: () => { }
       });
-
+      setBoot(false)
       clearInterval(interval)
       setBootrest('00:00')
-      setboottime(600)
+      rrtime = 600
+      setAtIsboot(false)
 
       boot_0 = JSON.stringify(boot_0)
     client.write(boot_0)

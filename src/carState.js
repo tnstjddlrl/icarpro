@@ -21,7 +21,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState,newState,fcmToken } from './atom/atoms'
+import { networkState,newState,fcmToken,bootRestTime,isBootOn } from './atom/atoms'
 
 import client from './Client'
 
@@ -48,6 +48,8 @@ const voltIcon = require('../img/state/voltIcon.png')
 const CarState = () => {
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  const isbooton = useRecoilValue(isBootOn)
+  const boottime = useRecoilValue(bootRestTime)
 
   function registerClick() {
     var txt = {type:"R",type_sub:"req_state", data : { token : pushToken}}
@@ -194,10 +196,17 @@ const CarState = () => {
                 <View style={{ flexDirection: "row" }}>
                   <Image source={bootIcon}></Image>
                   <Text style={styles.frametxt}>원격 시동</Text>
-                  <Text style={styles.spacetime}>남은 시간 :</Text>
+                  <Text style={styles.spacetime}>남은 시간 : </Text>
+                  {isbooton && <Text style={styles.spacetime2}>{boottime}</Text>}
+                  
                 </View>
                 <View>
-                  <Text style={styles.offtxt}>OFF</Text>
+                  {isbooton ? 
+                    <Text style={styles.ontxt}>ON</Text>
+                  :
+                    <Text style={styles.offtxt}>OFF</Text>
+                  }
+                  
                 </View>
               </View>
             </View>
@@ -295,7 +304,17 @@ const styles = StyleSheet.create({
   color: "#4e535a",
   marginLeft:8,
   marginTop:2
-  }
+  },
+  spacetime2:{
+    fontFamily: "AppleSDGothicNeo",
+  fontSize: 13,
+  fontWeight: "600",
+  fontStyle: "normal",
+  letterSpacing: -0.5,
+  textAlign: "right",
+  color: "#f75929",
+  marginTop:2
+  },
 })
 
 export default CarState
