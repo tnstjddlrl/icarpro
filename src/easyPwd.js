@@ -73,6 +73,7 @@ const CarState = () => {
     }, 1500);
 
   }
+
   const [ispwd,setIspwd] = useState(false)
 
   
@@ -90,12 +91,7 @@ const CarState = () => {
       console.log('간편 비밀번호 내에서 받기 ' + data);
       Alert.alert('서버에서 보내온 메시지 ','' + data)
     });
- 
-  
-  
 
-  
-  
 
   console.log(pwd)
   return (

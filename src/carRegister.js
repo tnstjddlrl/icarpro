@@ -63,7 +63,19 @@ const CarRegister = () => {
   const [atModemn,setAtModemn] = useRecoilState(modemNumber)
   const [atUserNumber,setatUserNumber] = useRecoilState(userNumber)
   const [atIsCarRace,setatIsCarRace] = useRecoilState(isCarRace)
-  
+
+  useEffect(()=>{
+    setModemN(atModemn)
+    setUserN(atUserNumber)
+    setCarRace(atIsCarRace)
+    if(atIsCarRace == 'SEDAN1'){
+      setSedan1(true)
+    }else if(atIsCarRace == 'SUV1'){
+      setSuv1(true)
+    }else{
+
+    }
+  },[])
 
 
   const [sedan1, setSedan1] = useState(false)
@@ -107,8 +119,56 @@ const CarRegister = () => {
       setatIsCarRace(carRace)
   }
 
+  const delModem = async () => {
+    try {
+      await AsyncStorage.removeItem('@modem_N')
+    } catch(e) {
+      console.error(e)
+    }
+  }
+
+  const delUser = async () => {
+    try {
+      await AsyncStorage.removeItem('@user_N')
+    } catch(e) {
+      console.error(e)
+    }
+  }
+  
+  const delcarRace = async () => {
+    try {
+      await AsyncStorage.removeItem('@car_Race')
+    } catch(e) {
+      console.error(e)
+    }
+  }
+
+  const delFirst = async () => {
+    try {
+      await AsyncStorage.removeItem('@is_first')
+    } catch(e) {
+      console.error(e)
+    }
+  }
+
+  var times2
+  function registerDel() {
+    var txt = {type:"R",type_sub:"register_del", data : {modem : modemN}}
+    txt = JSON.stringify(txt)
+
+    var res = client.write(txt)
+    console.log('전송 : ' + txt)
+
+    times2 = setTimeout(() => {
+      Alert.alert('서버와 통신을 실패하였습니다.')
+    }, 2000);
+
+    Alert.alert('삭제')
+
+  }
+
   client.on('data', function(data) {
-    if(''+data =='pwd_suc'){
+    if(''+data =='register_suc'){
       clearTimeout(times)
       navigation.navigate('간편비밀번호')
 
@@ -120,10 +180,17 @@ const CarRegister = () => {
       setAtModemn(modemN)
       setatUserNumber(userN)
       setatIsCarRace(carRace)
+    }else if(''+data =='registerDel_suc'){
+      clearTimeout(times2)
+      delFirst()
+      delModem()
+      delUser()
+      delcarRace()
     }else{
       clearTimeout(times)
+      clearTimeout(times2)
     }
-    console.log('앱내에서 받기 ' + data);
+    console.log('차량 등록 내에서 받기 ' + data);
   });
 
 
@@ -188,7 +255,7 @@ const CarRegister = () => {
           {(modemN != '' && userN != '' && carRace != '') ?
             <View style={{ flexDirection: "row", width: chwidth - 32, marginTop: 16 }}>
               
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback  onPress={()=>registerDel()}>
               <View style={{ borderStyle: "solid", borderWidth: 1.5, borderColor: "#a6a9ac", height: 54, flex: 1, borderRadius: 6, justifyContent: "center", alignItems: "center" }}>
                 <Text style={styles.canceltxt2}>삭제</Text>
               </View>
