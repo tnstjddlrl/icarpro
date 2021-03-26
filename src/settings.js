@@ -44,13 +44,19 @@ const rightArr = require('../img/setImg/rightArr.png')
 
 const Settings = () => {
   const navigation = useNavigation()
-
+  
   const [icarswitch,seticarswitch] = useRecoilState(icarSwitch)
   const [idoorswitch,setidoorswitch] = useRecoilState(idoorSwitch)
   const [lowboltBoot,setlowboltBoot] = useRecoilState(lowvoltBoot)
   const [lowboltAlert,setlowboltAlert] = useRecoilState(lowvoltAlert)
   const [actionsound,setactionsound] = useRecoilState(actionSound)
   const [alertsound,setalertsound] = useRecoilState(alertSound)
+
+  
+  
+  function savebtnclick(){
+
+  }
   
 
 

@@ -164,7 +164,6 @@ const CarRegister = () => {
     }, 2000);
 
     Alert.alert('삭제')
-
   }
 
   client.on('data', function(data) {
@@ -186,6 +185,10 @@ const CarRegister = () => {
       delModem()
       delUser()
       delcarRace()
+
+      setAtModemn('')
+      setatUserNumber('')
+      setatIsCarRace('')
     }else{
       clearTimeout(times)
       clearTimeout(times2)
