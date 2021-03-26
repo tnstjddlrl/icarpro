@@ -46,6 +46,7 @@ const rightArr = require('../img/setImg/rightArr.png')
 const Settings = () => {
   const navigation = useNavigation()
 
+
   const [aticarswitch,setaticarswitch] = useRecoilState(icarSwitch)
   const [atidoorswitch,setatidoorswitch] = useRecoilState(idoorSwitch)
   const [atlowboltBoot,setatlowboltBoot] = useRecoilState(lowvoltBoot)
@@ -61,18 +62,27 @@ const Settings = () => {
   const [actionsound,setactionsound] = useState(atactionsound)
   const [alertsound,setalertsound] = useState(atalertsound)
 
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@icarswitch')
+      return value
+    } catch(e) {
+      console.log(e)
+    }
+  }
 
+  getData().then(res=>console.log('어싱크 불린 '+JSON.parse(res)))
 
 
   
   
   function savebtnclick(){
-    // AsyncStorage.setItem("@icarswitch",icarswitch)
-    // AsyncStorage.setItem("@idoorswitch",idoorswitch)
-    // AsyncStorage.setItem("@lowboltBoot",lowboltBoot)
-    // AsyncStorage.setItem("@lowboltAlert",lowboltAlert)
-    // AsyncStorage.setItem("@actionsound",actionsound)
-    // AsyncStorage.setItem("@alertsound",alertsound)
+    AsyncStorage.setItem("@icarswitch",JSON.stringify(icarswitch))
+    AsyncStorage.setItem("@idoorswitch",JSON.stringify(idoorswitch))
+    AsyncStorage.setItem("@lowboltBoot",JSON.stringify(lowboltBoot))
+    AsyncStorage.setItem("@lowboltAlert",JSON.stringify(lowboltAlert))
+    AsyncStorage.setItem("@actionsound",JSON.stringify(actionsound))
+    AsyncStorage.setItem("@alertsound",JSON.stringify(alertsound))
 
     setaticarswitch(icarswitch)
     setatidoorswitch(idoorswitch)
