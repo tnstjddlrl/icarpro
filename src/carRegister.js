@@ -95,29 +95,7 @@ const CarRegister = () => {
     }
   }
 
-  var times
-  function registerClick() {
-    var txt = { type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
-    txt = JSON.stringify(txt)
 
-    var res = client.write(txt)
-    console.log('전송 : ' + txt)
-
-    times = setTimeout(() => {
-      Alert.alert('서버와 통신을 실패하였습니다.')
-    }, 2000);
-
-    navigation.navigate('간편비밀번호')
-
-    AsyncStorage.setItem("@modem_N", modemN)
-    AsyncStorage.setItem("@user_N", userN)
-    AsyncStorage.setItem("@car_Race", carRace)
-    AsyncStorage.setItem("@is_first", 'notfirst')
-
-    setAtModemn(modemN)
-    setatUserNumber(userN)
-    setatIsCarRace(carRace)
-  }
 
   const delModem = async () => {
     try {
@@ -151,12 +129,36 @@ const CarRegister = () => {
     }
   }
 
-  var times2
-  function registerDel() {
-    var txt = { type: "R", type_sub: "register_del", data: { modem: modemN } }
+  var times
+  function registerClick() {
+    var txt = { type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
     txt = JSON.stringify(txt)
 
-    var res = client.write(txt)
+    client.write(txt)
+    console.log('전송 : ' + txt)
+
+    times = setTimeout(() => {
+      Alert.alert('서버와 통신을 실패하였습니다.')
+    }, 2000);
+
+    // navigation.navigate('간편비밀번호')
+
+    // AsyncStorage.setItem("@modem_N", modemN)
+    // AsyncStorage.setItem("@user_N", userN)
+    // AsyncStorage.setItem("@car_Race", carRace)
+    // AsyncStorage.setItem("@is_first", 'notfirst')
+
+    // setAtModemn(modemN)
+    // setatUserNumber(userN)
+    // setatIsCarRace(carRace)
+  }
+
+  var times2
+  function registerDel() {
+    var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN } }
+    txt = JSON.stringify(txt)
+
+    client.write(txt)
     console.log('전송 : ' + txt)
 
     times2 = setTimeout(() => {
@@ -166,10 +168,26 @@ const CarRegister = () => {
     Alert.alert('삭제')
   }
 
+  var times3
+  function registerUpdate() {
+    var txt = { type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
+    txt = JSON.stringify(txt)
+
+    client.write(txt)
+    console.log('전송 : ' + txt)
+
+    times3 = setTimeout(() => {
+      Alert.alert('서버와 통신을 실패하였습니다.')
+    }, 2000);
+  }
+
+
+
   client.on('data', function (data) {
-    if ('' + data == 'register_suc') {
+    if ('' + data == 'reg_suc') {
       clearTimeout(times)
-      navigation.navigate('간편비밀번호')
+      Alert.alert('등록이 완료되었습니다')
+      navigation.navigate('차량제어')
 
       AsyncStorage.setItem("@modem_N", modemN)
       AsyncStorage.setItem("@user_N", userN)
@@ -189,6 +207,16 @@ const CarRegister = () => {
       setAtModemn('')
       setatUserNumber('')
       setatIsCarRace('')
+    } else if('' + data == 'reg_fail'){
+      Alert.alert("이미 등록된 사용자입니다.", "계속 진행 하시겠습니까?", [
+        {
+          text: "아니요",
+          onPress: () => Alert.alert('등록을 취소합니다.'),
+          style: "cancel"
+        },
+        { text: "예", onPress: () => {registerUpdate(),Alert.alert('등록이 완료되었습니다.')} }
+      ]);
+
     } else {
       clearTimeout(times)
       clearTimeout(times2)

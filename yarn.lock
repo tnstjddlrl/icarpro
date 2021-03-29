@@ -5026,6 +5026,11 @@ mockdate@^3.0.2:
   resolved "https://registry.npmjs.org/mockdate/-/mockdate-3.0.3.tgz"
   integrity sha512-4h01Zjz0Cm57mQsEzaoZtjGzqZk15YS4yujc5k4xGGNQYaxlaJSaNZ20FkFhFWjv6YB7ZyU8+UioB8l6Fw892Q==
 
+moment@^2.22.0:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
@@ -5739,6 +5744,13 @@ react-native-toast-message@^1.4.9:
   integrity sha512-QhHzzsiymKpHEWz2nUKQjQMRuGN+/a8cOwDXJcz3TQFY03p20f6sJW9JKw3KkMfvWiUhGbApCPpNU6tHaAZ32w==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-wheel-picker-android@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-wheel-picker-android/-/react-native-wheel-picker-android-2.0.6.tgz#e6698cc67e9ba3882b1138c0b1626daf7a512646"
+  integrity sha512-gwstWymEZUmSokWKDQufD3t/alSRkYDTSEe3YrtsDtpcKM55t9BeAPdKzYURTVRUGCYeoOy4nyxKBYkMnqbvlQ==
+  dependencies:
+    moment "^2.22.0"
 
 react-native-wheel-scrollview-picker@^1.0.1:
   version "1.0.1"

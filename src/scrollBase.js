@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -15,7 +15,6 @@ import {
 
 import { useNavigation } from '@react-navigation/native';
 
-// import ScrollPicker from "react-native-wheel-scroll-picker";
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -23,12 +22,29 @@ const chheight = Dimensions.get('window').height
 
 const back = require('../img/backbtn.png')
 
+
+
 const ScrollBase = () => {
   const navigation = useNavigation()
 
   const [selectedItem, setSelectedItem ] = useState(2);
   const [itemList , setItemList ] = useState(['3', '5', '10']);
+  const [checkitem, setChechkitem] = useState('3')
+  var ii = useRef()
 
+  const [isy,setisy] = useState(0)
+
+  useEffect(()=>{
+    if(isy < 70){
+      setChechkitem('3')
+    }else if(70 < isy  && isy < 130){
+      setChechkitem('5')
+    }else if(130 < isy){
+      setChechkitem('10')
+    }
+  },[isy])
+
+  
 
   return(
     <SafeAreaView>
@@ -48,17 +64,41 @@ const ScrollBase = () => {
           <View style={{flex:3,justifyContent:"center",alignItems:"center"}}>
             <View style={{flexDirection:"row",alignItems:"center"}}>
               <View style={styles.mask}>
-                <Text>{itemList[selectedItem]}</Text>
+                <Text>{checkitem}</Text>
               </View>
               <Text style={styles.masktxt2}>분</Text>
               <Text style={styles.masktxt}>으로 설정됩니다.</Text>
             </View>
           </View>
           <View style={{flex:7}}>
+
+            <View style={{height:200,width:97}}>
+            <ScrollView onScroll={(res)=>{setisy(res.nativeEvent.contentOffset.y)}} showsVerticalScrollIndicator={false}>
+              <Text style={styles.noselecttxt}> </Text>
+              <Text style={isy < 70 ? styles.selecttxt : styles.noselecttxt}>3</Text>
+              <Text style={(70 < isy  && isy < 130) ? styles.selecttxt : styles.noselecttxt}>5</Text>
+              <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>10</Text>
+              <Text style={styles.noselecttxt}> </Text>
+            </ScrollView>
+            <View style={styles.indicator1}></View>
+            <View style={styles.indicator2}></View>
+            </View>
+            
+            
+            {/* <View style={{height:60}}>
+            <ScrollView ref={ii} onScroll={(res)=>console.log(res.nativeEvent.contentOffset)} scrollEnabled={false}>
+            <Text style={styles.selecttxt}>3</Text>
+              <Text style={styles.selecttxt}>5</Text>
+              <Text style={styles.selecttxt}>10</Text>
+            </ScrollView>
+            </View> */}
+
           </View>
 
         </View>
         {/* 본문 끝 */}
+
+
 
       
       </View>
@@ -118,6 +158,7 @@ const styles = StyleSheet.create({
   letterSpacing: -0.67,
   textAlign: "center",
   color: 'rgb(49,54,61)',
+  marginBottom:20
   },
   noselecttxt:{
     opacity: 0.3,
@@ -127,7 +168,28 @@ const styles = StyleSheet.create({
   fontStyle: "normal",
   letterSpacing: -0.53,
   textAlign: "center",
-  color: 'rgb(49,54,61)'
+  color: 'rgb(49,54,61)',
+  marginBottom:20
+  },
+  indicator1 : {
+    width: 97,
+  height: 1,
+  opacity: 0.3,
+  borderStyle: "solid",
+  borderWidth: 2,
+  borderColor: "#979797",
+  position:"absolute",
+  top:'20%'
+  },
+  indicator2 : {
+    width: 97,
+  height: 1,
+  opacity: 0.3,
+  borderStyle: "solid",
+  borderWidth: 2,
+  borderColor: "#979797",
+  position:"absolute",
+  top:'50%'
   }
 })
 
