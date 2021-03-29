@@ -57,7 +57,7 @@ const Test = () => {
           onPress: () => null,
           style: "cancel"
         },
-        { text: "예", onPress: () => {client.destroy();BackHandler.exitApp()} }
+        { text: "예", onPress: () => {client.destroy();BackHandler.exitApp();} }
       ]);
       return true;
     };
@@ -96,14 +96,20 @@ const Test = () => {
       <TouchableOpacity onPress={() => navigation.navigate('스크롤베이스')}>
         <Text>스크롤베이스</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => {AsyncStorage.setItem("@is_first",'notfirst'),console.log('어싱크 테스트')}}>
+      {/* <TouchableOpacity onPress={() => {AsyncStorage.setItem("@is_first",'notfirst'),console.log('어싱크 테스트')}}>
         <Text>어싱크 테스트</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity onPress={() => client.destroy()}>
         <Text>소켓 연결 끊기</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => client.connect({port:3400,host:"175.126.232.72",timeout:1000})}>
+        <Text>소켓 연결</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => client.write('test')}>
         <Text>소켓 전송</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => exit(0)}>
+        <Text>앱종료</Text>
       </TouchableOpacity>
       </SafeAreaView>
     </View>

@@ -34,7 +34,7 @@ const vwheight = Dimensions.get('screen').height
 
 const back = require('../img/backbtn.png')
 
-const warnOn = require('../img/state/warnOn.png')
+const warnOn = require('../img/topviewstate/warnOn.png')
 const warnIcon = require('../img/state/warnIcon.png')
 
 const lockIcon = require('../img/state/lockIcon.png')
