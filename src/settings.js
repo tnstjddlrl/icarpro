@@ -90,6 +90,8 @@ const Settings = () => {
     setatlowboltAlert(lowboltAlert)
     setatactionsound(actionsound)
     setatalertsound(alertsound)
+
+    Alert.alert('설정이 저장되었습니다.')
   }
 
   return (
