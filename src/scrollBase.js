@@ -32,7 +32,7 @@ const ScrollBase = () => {
   const [checkitem, setChechkitem] = useState('3')
   var ii = useRef()
 
-  const [isy,setisy] = useState(0)
+  const [isy,setisy] = useState(36)
 
   useEffect(()=>{
     if(isy < 70){
@@ -73,7 +73,7 @@ const ScrollBase = () => {
           <View style={{flex:7}}>
 
             <View style={{height:200,width:97}}>
-            <ScrollView onScroll={(res)=>{setisy(res.nativeEvent.contentOffset.y)}} showsVerticalScrollIndicator={false}>
+            <ScrollView onScroll={(res)=>{setisy(res.nativeEvent.contentOffset.y),console.log(res.nativeEvent.contentOffset.y)}} showsVerticalScrollIndicator={false}>
               <Text style={styles.noselecttxt}> </Text>
               <Text style={isy < 70 ? styles.selecttxt : styles.noselecttxt}>3</Text>
               <Text style={(70 < isy  && isy < 130) ? styles.selecttxt : styles.noselecttxt}>5</Text>
