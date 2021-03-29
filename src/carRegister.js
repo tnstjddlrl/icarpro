@@ -196,6 +196,11 @@ const CarRegister = () => {
     console.log('차량 등록 내에서 받기 ' + data);
   });
 
+  function searchUser () {
+    var txt = { type: "R", type_sub: "user_search", data: { modem: modemN } }
+    txt = JSON.stringify(txt)
+    client.write(txt)
+  }
 
 
 
@@ -221,7 +226,7 @@ const CarRegister = () => {
         <View style={{ flex: 10, marginLeft: 16 }}>
           <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput placeholder='모뎀 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
+              <TextInput onBlur={()=>Alert.alert('사용자 검색')} placeholder='모뎀 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
               {modemN != '' &&
                 <TouchableOpacity onPress={() => setModemN('')}>
                   <Image source={inputcls}></Image>

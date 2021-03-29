@@ -25,6 +25,10 @@ client.on('error', function(error) {
   }, 1500);
 });
 
+client.on('data',function(data){
+  console.log('묘듈에서 데이터 받기 : ' + data)
+})
+
 
 
 export default client;
