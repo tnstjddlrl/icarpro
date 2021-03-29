@@ -28,13 +28,19 @@ import client from './Client'
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
-const vwwidth = Dimensions.get('screen').width
-const vwheight = Dimensions.get('screen').height
-
 
 const back = require('../img/backbtn.png')
 
 const warnOn = require('../img/topviewstate/warnOn.png')
+const bootOn = require('../img/topviewstate/bootOn.png')
+const doorlockOn = require('../img/topviewstate/doorlockOn.png')
+const doorOn = require('../img/topviewstate/doorOn.png')
+const enginestateOn = require('../img/topviewstate/enginestateOn.png')
+const enginehoodOn = require('../img/topviewstate/enginehoodOn.png')
+const trunkOn = require('../img/topviewstate/trunkOn.png')
+
+
+
 const warnIcon = require('../img/state/warnIcon.png')
 
 const lockIcon = require('../img/state/lockIcon.png')
@@ -217,7 +223,7 @@ const CarState = () => {
           <View style={styles.frame}>
             <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between" }}>
               <View style={{ flexDirection: "row" }}>
-                <Image source={bootIcon}></Image>
+                <Image source={voltIcon}></Image>
                 <Text style={styles.frametxt}>차량 전압</Text>
               </View>
               <View>

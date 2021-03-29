@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
-import { Alert } from 'react-native'
+import { Alert,BackHandler } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import messaging from '@react-native-firebase/messaging';
 
-import Toast from 'react-native-toast-message';
-
 import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
+  RecoilRoot
 } from 'recoil';
+
+import RNExitApp from 'react-native-kill-app';
 
 import Carcontroll from './src/carcontroll.js';
 import Load from './src/load.js';
@@ -37,6 +33,27 @@ function App() {
     });
 
     return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("종료", "앱을 종료하시겠습니까?", [
+        {
+          text: "아니요",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "예", onPress: () => {RNExitApp.exitApp()} }
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
   }, []);
 
 

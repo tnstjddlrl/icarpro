@@ -25,6 +25,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useNavigation } from '@react-navigation/native';
 
+import RNExitApp from 'react-native-kill-app';
+
 
 import Toast from 'react-native-toast-message';
 import client from './Client.js'
@@ -48,28 +50,6 @@ const Test = () => {
   console.log('유저 넘버 : '+neww)
   console.log(token)
   console.log(atcarrace)
-
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert("종료", "앱을 종료하시겠습니까?", [
-        {
-          text: "아니요",
-          onPress: () => null,
-          style: "cancel"
-        },
-        { text: "예", onPress: () => {client.destroy();BackHandler.exitApp();} }
-      ]);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-
-    return () => backHandler.remove();
-  }, []);
-  
 
   return (
     <View>
@@ -108,7 +88,7 @@ const Test = () => {
       <TouchableOpacity onPress={() => client.write('test')}>
         <Text>소켓 전송</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => exit(0)}>
+      <TouchableOpacity onPress={() => RNExitApp.exitApp()}>
         <Text>앱종료</Text>
       </TouchableOpacity>
       </SafeAreaView>

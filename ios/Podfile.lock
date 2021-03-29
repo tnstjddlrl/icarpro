@@ -334,7 +334,7 @@ PODS:
   - React-jsinspector (0.64.0)
   - react-native-biometrics (2.1.4):
     - React
-  - react-native-my-sql-connection (1.0.4):
+  - react-native-kill-app (1.0.4):
     - React
   - react-native-safe-area-context (3.2.0):
     - React-Core
@@ -492,7 +492,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-biometrics (from `../node_modules/react-native-biometrics`)
-  - react-native-my-sql-connection (from `../node_modules/react-native-my-sql-connection`)
+  - react-native-kill-app (from `../node_modules/react-native-kill-app`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-tcp-socket (from `../node_modules/react-native-tcp-socket`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -576,8 +576,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-biometrics:
     :path: "../node_modules/react-native-biometrics"
-  react-native-my-sql-connection:
-    :path: "../node_modules/react-native-my-sql-connection"
+  react-native-kill-app:
+    :path: "../node_modules/react-native-kill-app"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-tcp-socket:
@@ -663,7 +663,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 06a9c77b56902ae7ffcdd7a4905f664adc5d237b
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
   react-native-biometrics: 9d3306e5d29c3bc4e6a3c912d759a94e76a2f683
-  react-native-my-sql-connection: 4fe00988b21ad212227c6770a31ada48e980d680
+  react-native-kill-app: ccfc7722345b53a3c6abf8e78c800b79a387135d
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-tcp-socket: c752d16fd5300dc96fc4a749c4db7c2a3886cd52
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
