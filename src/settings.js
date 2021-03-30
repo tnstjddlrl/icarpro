@@ -189,6 +189,7 @@ const Settings = () => {
                 <View style={{ height: 1, backgroundColor: "#e1e1e3", width: chwidth - 80, marginTop: 17 }}></View>
               </View>
 
+              <TouchableWithoutFeedback onPress={()=>navigation.navigate('저전압설정')}>
               <View style={{ marginLeft: 11, marginRight: 16, marginTop: 19, flexDirection: "row", justifyContent: "space-between" }}>
                 <View style={{ flexDirection: "row" }}>
                   <View style={{ width: 24, height: 24 }}></View>
@@ -196,6 +197,7 @@ const Settings = () => {
                 </View>
                 <Image source={rightArr}></Image>
               </View>
+              </TouchableWithoutFeedback>
 
 
             </View>
