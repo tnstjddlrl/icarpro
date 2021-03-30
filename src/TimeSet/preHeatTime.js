@@ -71,6 +71,7 @@ const PreHeatTime = () => {
           </View>
           <View style={{flex:7}}>
             <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center"}}>
+
             <View style={{height:200,width:97}}>
             <ScrollView ref={ii} onScroll={(res)=>{setisy(res.nativeEvent.contentOffset.y),console.log(res.nativeEvent.contentOffset.y)}} showsVerticalScrollIndicator={false}>
               <Text style={styles.noselecttxt2}> </Text>
@@ -80,9 +81,12 @@ const PreHeatTime = () => {
               <Text style={styles.noselecttxt}> </Text>
             </ScrollView>
             </View>
+
             <Text style={styles.sec}>min</Text>
+
             <View style={styles.indicator1}></View>
             <View style={styles.indicator2}></View>
+            
             </View>
 
           </View>

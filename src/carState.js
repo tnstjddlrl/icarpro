@@ -21,7 +21,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState, newState, fcmToken, bootRestTime, isBootOn } from './atom/atoms'
+import {fcmToken, bootRestTime, isBootOn } from './atom/atoms'
 
 import client from './Client'
 
@@ -61,7 +61,7 @@ const CarState = () => {
     var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
     txt = JSON.stringify(txt)
 
-    var res = client.write(txt)
+    client.write(txt)
     console.log('전송 : ' + txt)
   }
 

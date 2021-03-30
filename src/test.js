@@ -35,6 +35,16 @@ import client from './Client.js'
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
+function testModem() {
+  var txt = { type: "R", type_sub: "conntest" }
+  txt = JSON.stringify(txt)
+
+  client.write(txt)
+  Alert.alert('전송 : ' + txt)
+}
+
+
+
 
 
 const Test = () => {
@@ -88,9 +98,15 @@ const Test = () => {
       <TouchableOpacity onPress={() => client.write('test')}>
         <Text>소켓 전송</Text>
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => RNExitApp.exitApp()}>
         <Text>앱종료</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => testModem()}>
+        <Text>모뎀접속테스트</Text>
+      </TouchableOpacity>
+
       </SafeAreaView>
     </View>
   )

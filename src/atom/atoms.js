@@ -4,81 +4,115 @@ import {
 
 
 export const modemNumber = atom({
-  key: 'modemNumber', // unique ID (with respect to other atoms/selectors)
-  default: '', // default value (aka initial value)
+  key: 'modemNumber',
+  default: '',
 });
 
 export const userNumber = atom({
-  key: 'userNumber', // unique ID (with respect to other atoms/selectors)
-  default: '', // default value (aka initial value)
+  key: 'userNumber',
+  default: '',
 })
 
 export const fcmToken = atom({
-  key: 'fcmToken', // unique ID (with respect to other atoms/selectors)
-  default: 'notoken', // default value (aka initial value)
+  key: 'fcmToken',
+  default: 'notoken',
 })
 
 export const isCarRace = atom({
-  key: 'isCarRace', // unique ID (with respect to other atoms/selectors)
-  default: 'SEDAN1', // default value (aka initial value)
+  key: 'isCarRace',
+  default: 'SEDAN1',
 })
 
 export const bootRestTime = atom({
-  key: 'bootRestTime', // unique ID (with respect to other atoms/selectors)
-  default: '', // default value (aka initial value)
+  key: 'bootRestTime',
+  default: '',
 })
 
 export const isBootOn = atom({
-  key: 'isBootOn', // unique ID (with respect to other atoms/selectors)
-  default: false, // default value (aka initial value)
+  key: 'isBootOn',
+  default: false,
 })
 
 //설정
 export const icarSwitch = atom({
-  key: 'icarSwitch', // unique ID (with respect to other atoms/selectors)
-  default: true, // default value (aka initial value)
+  key: 'icarSwitch',
+  default: true,
 })
 export const idoorSwitch = atom({
-  key: 'idoorSwitch', // unique ID (with respect to other atoms/selectors)
-  default: true, // default value (aka initial value)
+  key: 'idoorSwitch',
+  default: true,
 })
 export const lowvoltBoot = atom({
-  key: 'lowvoltBoot', // unique ID (with respect to other atoms/selectors)
-  default: false, // default value (aka initial value)
+  key: 'lowvoltBoot',
+  default: false,
 })
 export const lowvoltAlert = atom({
-  key: 'lowvoltAlert', // unique ID (with respect to other atoms/selectors)
-  default: false, // default value (aka initial value)
+  key: 'lowvoltAlert',
+  default: false,
 })
 export const actionSound = atom({
-  key: 'actionSound', // unique ID (with respect to other atoms/selectors)
-  default: false, // default value (aka initial value)
+  key: 'actionSound',
+  default: false,
 })
 export const alertSound = atom({
-  key: 'alertSound', // unique ID (with respect to other atoms/selectors)
-  default: false, // default value (aka initial value)
+  key: 'alertSound',
+  default: false,
 })
 
 //설정 상세 값
 export const voltValue = atom({
-  key: 'voltValue', // unique ID (with respect to other atoms/selectors)
-  default: 0, // default value (aka initial value)
+  key: 'voltValue',
+  default: 0,
 })
 export const bootTimeValue = atom({
-  key: 'bootTimeValue', // unique ID (with respect to other atoms/selectors)
-  default: 0, // default value (aka initial value)
+  key: 'bootTimeValue',
+  default: 0,
 })
 export const lastHeatTimeValue = atom({
-  key: 'lastHeatTimeValue', // unique ID (with respect to other atoms/selectors)
-  default: 0, // default value (aka initial value)
+  key: 'lastHeatTimeValue',
+  default: 0,
 })
 export const preHeatTimeValue = atom({
-  key: 'preHeatTimeValue', // unique ID (with respect to other atoms/selectors)
-  default: 0, // default value (aka initial value)
+  key: 'preHeatTimeValue',
+  default: 0,
 })
 export const startTimeValue = atom({
-  key: 'startTimeValue', // unique ID (with respect to other atoms/selectors)
-  default: 0, // default value (aka initial value)
+  key: 'startTimeValue',
+  default: 0,
 })
 
+//차량 상태 값(서버와 연동된 값이 계속 여기에 저장되어야 함)
+export const StateCarAlert = atom({
+  key: 'StateCarAlert',
+  default: 'ON',
+})
 
+export const StateDoorLock = atom({
+  key: 'StateDoorLock',
+  default: 'OFF',
+})
+
+export const StateDoor = atom({
+  key: 'StateDoor',
+  default: 'OFF',
+})
+
+export const StateTrunk = atom({
+  key: 'StateTrunk',
+  default: 'OFF',
+})
+
+export const StateEngineHood = atom({
+  key: 'StateEngineHood',
+  default: 'OFF',
+})
+
+export const StateEngineState = atom({
+  key: 'StateEngineState',
+  default: 'OFF',
+})
+
+export const StateCarVolt = atom({
+  key: 'StateCarVolt',
+  default: 0,
+})
