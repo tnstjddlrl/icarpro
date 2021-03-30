@@ -62,8 +62,13 @@ export const alertSound = atom({
 //설정 상세 값
 export const voltValue = atom({
   key: 'voltValue',
-  default: 0,
+  default: '12.0',
 })
+export const voltValueSC = atom({
+  key: 'voltValueSC',
+  default: '151',
+})
+
 export const bootTimeValue = atom({
   key: 'bootTimeValue',
   default: 0,

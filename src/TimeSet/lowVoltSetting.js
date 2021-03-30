@@ -12,8 +12,15 @@ import {
   StyleSheet,
   ScrollView
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
+import { voltValue,voltValueSC } from '../atom/atoms'
 
 
 const chwidth = Dimensions.get('window').width
@@ -22,10 +29,15 @@ const chheight = Dimensions.get('window').height
 
 const LowVoltSetting = () => {
   const navigation = useNavigation()
+  const [lowvoltValue,setLowvoltValue] = useRecoilState(voltValue)
+  const [lowvoltSCValue,setLowvoltSCValue] = useRecoilState(voltValueSC)
+  console.log(lowvoltValue)
+  console.log(lowvoltSCValue)
 
-  const [checkitem, setChechkitem] = useState('12.0')
 
-  const [isy,setisy] = useState(150)
+  const [checkitem, setChechkitem] = useState(lowvoltValue)
+
+  const [isy,setisy] = useState(151)
 
   const ii = useRef()
 
@@ -47,6 +59,29 @@ const LowVoltSetting = () => {
     }
   },[isy])
 
+
+
+  function saveBtnClick(){
+    AsyncStorage.setItem("@lowvolt_Value", checkitem)
+
+    setLowvoltValue(checkitem)
+    setLowvoltSCValue(isy)
+
+    Toast.show({
+      type: 'success',
+      position: 'bottom',
+      text1: '설정',
+      text2: '설정한 내용이 저장되었습니다.',
+      visibilityTime: 2000,
+      autoHide: true,
+      topOffset: 60,
+      bottomOffset: 150,
+      onShow: () => { },
+      onHide: () => { },
+      onPress: () => { }
+    });
+  }
+
   
 
   return(
@@ -58,7 +93,9 @@ const LowVoltSetting = () => {
               <Text style={styles.savetxt}>취소</Text>
             </TouchableWithoutFeedback>
             <Text style={styles.maintxt}>저전압 설정</Text>
+            <TouchableWithoutFeedback onPress={()=>saveBtnClick()}>
             <Text style={styles.savetxt}>저장</Text>
+            </TouchableWithoutFeedback>
           </View>
         {/* 헤더 끝 */}
 
@@ -98,7 +135,7 @@ const LowVoltSetting = () => {
 
 
 
-      
+        <Toast ref={(ref) => Toast.setRef(ref)} />
       </View>
     </SafeAreaView>
   )

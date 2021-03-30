@@ -14,6 +14,11 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
 
 
 const chwidth = Dimensions.get('window').width
@@ -86,7 +91,7 @@ const PreHeatTime = () => {
 
             <View style={styles.indicator1}></View>
             <View style={styles.indicator2}></View>
-            
+
             </View>
 
           </View>
