@@ -24,6 +24,7 @@ import RemoteBootTime from './src/TimeSet/remoteBootTime.js';
 import LastHeatTime from './src/TimeSet/lastHeatTime.js';
 import StartTime from './src/TimeSet/startTime.js';
 import LowVoltSetting from './src/TimeSet/lowVoltSetting.js';
+import PreHeatTime from './src/TimeSet/preHeatTime.js';
 
 
 const Stack = createStackNavigator();
@@ -77,6 +78,7 @@ function App() {
           <Stack.Screen name="후열시간" component={LastHeatTime} />
           <Stack.Screen name="스타트시간" component={StartTime} />
           <Stack.Screen name="저전압설정" component={LowVoltSetting} />
+          <Stack.Screen name="예열시동시간" component={PreHeatTime} />
 
           <Stack.Screen name="테스트" component={Test} />
           <Stack.Screen name="스와이프테스트" component={SwipeTest} />

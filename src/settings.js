@@ -281,6 +281,7 @@ const Settings = () => {
 
             {/* 예열시동 시간 설정 */}
             <View style={{ marginTop: 8 }}></View>
+            <TouchableWithoutFeedback onPress={()=>navigation.navigate('예열시동시간')}>
             <View style={styles.oneFrame}>
               <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
                 <View style={{ flexDirection: "row" }}>
@@ -290,6 +291,7 @@ const Settings = () => {
                 <Image source={rightArr}></Image>
               </View>
             </View>
+            </TouchableWithoutFeedback>
 
 
             {/* 스타트 시간설정 */}
