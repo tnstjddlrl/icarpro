@@ -37,7 +37,7 @@ const LowVoltSetting = () => {
 
   const [checkitem, setChechkitem] = useState(lowvoltValue)
 
-  const [isy,setisy] = useState(151)
+  const [isy,setisy] = useState(lowvoltSCValue)
 
   const ii = useRef()
 
