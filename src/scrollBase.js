@@ -30,14 +30,13 @@ const ScrollBase = () => {
   const [selectedItem, setSelectedItem ] = useState(2);
   const [itemList , setItemList ] = useState(['3', '5', '10']);
   const [checkitem, setChechkitem] = useState('3')
-  var ii = useRef()
 
   const [isy,setisy] = useState(36)
 
   useEffect(()=>{
-    if(isy < 70){
+    if(isy < 50){
       setChechkitem('3')
-    }else if(70 < isy  && isy < 130){
+    }else if(50 < isy  && isy < 130){
       setChechkitem('5')
     }else if(130 < isy){
       setChechkitem('10')
@@ -64,22 +63,24 @@ const ScrollBase = () => {
           <View style={{flex:3,justifyContent:"center",alignItems:"center"}}>
             <View style={{flexDirection:"row",alignItems:"center"}}>
               <View style={styles.mask}>
-                <Text>{checkitem}</Text>
+                <Text style={styles.topchechktxt}>{checkitem}</Text>
               </View>
               <Text style={styles.masktxt2}>분</Text>
               <Text style={styles.masktxt}>으로 설정됩니다.</Text>
             </View>
           </View>
           <View style={{flex:7}}>
-
+            <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center"}}>
             <View style={{height:200,width:97}}>
             <ScrollView onScroll={(res)=>{setisy(res.nativeEvent.contentOffset.y),console.log(res.nativeEvent.contentOffset.y)}} showsVerticalScrollIndicator={false}>
-              <Text style={styles.noselecttxt}> </Text>
-              <Text style={isy < 70 ? styles.selecttxt : styles.noselecttxt}>3</Text>
-              <Text style={(70 < isy  && isy < 130) ? styles.selecttxt : styles.noselecttxt}>5</Text>
+              <Text style={styles.noselecttxt2}> </Text>
+              <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>3</Text>
+              <Text style={(50 < isy  && isy < 130) ? styles.selecttxt : styles.noselecttxt}>5</Text>
               <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>10</Text>
               <Text style={styles.noselecttxt}> </Text>
             </ScrollView>
+            </View>
+            <Text style={styles.sec}>min</Text>
             <View style={styles.indicator1}></View>
             <View style={styles.indicator2}></View>
             </View>
@@ -171,6 +172,16 @@ const styles = StyleSheet.create({
   color: 'rgb(49,54,61)',
   marginBottom:20
   },
+  noselecttxt2:{
+    opacity: 0.3,
+  fontFamily: "Metropolis-SemiBold",
+  fontSize: 40,
+  fontWeight: "normal",
+  fontStyle: "normal",
+  letterSpacing: -0.53,
+  textAlign: "center",
+  color: 'rgb(49,54,61)',
+  },
   indicator1 : {
     width: 97,
   height: 1,
@@ -179,7 +190,7 @@ const styles = StyleSheet.create({
   borderWidth: 2,
   borderColor: "#979797",
   position:"absolute",
-  top:'20%'
+  top:'18%'
   },
   indicator2 : {
     width: 97,
@@ -189,7 +200,28 @@ const styles = StyleSheet.create({
   borderWidth: 2,
   borderColor: "#979797",
   position:"absolute",
-  top:'50%'
+  top:'60%'
+  },
+  topchechktxt:{
+    fontFamily: "AppleSDGothicNeo",
+  fontSize: 22,
+  fontWeight: "bold",
+  fontStyle: "normal",
+  letterSpacing: -1,
+  textAlign: "center",
+  color: 'rgb(49,54,61)'
+  },
+  sec : {
+    fontFamily: "AppleSDGothicNeo",
+    fontSize: 40,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: -0.53,
+    textAlign: "right",
+    color: 'rgb(49,54,61)',
+    position:"absolute",
+    right:'15%',
+    bottom:'40%'
   }
 })
 
