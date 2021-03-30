@@ -20,7 +20,7 @@ const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
 
-const ScrollBase = () => {
+const RemoteBootTime = () => {
   const navigation = useNavigation()
 
   const [checkitem, setChechkitem] = useState('3')
@@ -84,6 +84,7 @@ const ScrollBase = () => {
             <View style={styles.indicator1}></View>
             <View style={styles.indicator2}></View>
             </View>
+            
 
           </View>
 
@@ -216,4 +217,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ScrollBase
+export default RemoteBootTime

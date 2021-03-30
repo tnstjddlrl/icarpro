@@ -20,6 +20,8 @@ import Settings from './src/settings.js';
 import CarState from './src/carState.js';
 import SwipeTest from './src/swipeTest.js';
 import ScrollBase from './src/scrollBase.js';
+import RemoteBootTime from './src/TimeSet/remoteBootTime.js';
+import LastHeatTime from './src/TimeSet/lastHeatTime.js';
 
 
 const Stack = createStackNavigator();
@@ -68,6 +70,10 @@ function App() {
           <Stack.Screen name="차량등록" component={CarRegister} />
           <Stack.Screen name="설정" component={Settings} />
           <Stack.Screen name="차량상태" component={CarState} />
+
+          <Stack.Screen name="원격시동시간" component={RemoteBootTime} />
+          <Stack.Screen name="후열시간" component={LastHeatTime} />
+
           <Stack.Screen name="테스트" component={Test} />
           <Stack.Screen name="스와이프테스트" component={SwipeTest} />
           <Stack.Screen name="스크롤베이스" component={ScrollBase} />

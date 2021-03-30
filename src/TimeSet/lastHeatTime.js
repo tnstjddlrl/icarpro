@@ -20,12 +20,12 @@ const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
 
-const ScrollBase = () => {
+const LastHeatTime = () => {
   const navigation = useNavigation()
 
-  const [checkitem, setChechkitem] = useState('3')
+  const [checkitem, setChechkitem] = useState('1:30')
 
-  const [isy,setisy] = useState(150)
+  const [isy,setisy] = useState(10)
 
   const ii = useRef()
 
@@ -35,11 +35,11 @@ const ScrollBase = () => {
 
   useEffect(()=>{
     if(isy < 50){
-      setChechkitem('3')
+      setChechkitem('1:30')
     }else if(50 < isy  && isy < 130){
-      setChechkitem('5')
+      setChechkitem('3:00')
     }else if(130 < isy){
-      setChechkitem('10')
+      setChechkitem('5:00')
     }
   },[isy])
 
@@ -53,7 +53,7 @@ const ScrollBase = () => {
             <TouchableWithoutFeedback onPress={()=>navigation.goBack()}>
               <Text style={styles.savetxt}>취소</Text>
             </TouchableWithoutFeedback>
-            <Text style={styles.maintxt}>원격시동 시간</Text>
+            <Text style={styles.maintxt}>후열 시간</Text>
             <Text style={styles.savetxt}>저장</Text>
           </View>
         {/* 헤더 끝 */}
@@ -65,22 +65,22 @@ const ScrollBase = () => {
               <View style={styles.mask}>
                 <Text style={styles.topchechktxt}>{checkitem}</Text>
               </View>
-              <Text style={styles.masktxt2}>분</Text>
-              <Text style={styles.masktxt}>으로 설정됩니다.</Text>
+              <Text style={styles.masktxt2}>초</Text>
+              <Text style={styles.masktxt}>로 설정됩니다.</Text>
             </View>
           </View>
           <View style={{flex:7}}>
             <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center"}}>
-            <View style={{height:200,width:97}}>
+            <View style={{height:200,width:100}}>
             <ScrollView ref={ii} onScroll={(res)=>{setisy(res.nativeEvent.contentOffset.y),console.log(res.nativeEvent.contentOffset.y)}} showsVerticalScrollIndicator={false}>
               <Text style={styles.noselecttxt2}> </Text>
-              <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>3</Text>
-              <Text style={(50 < isy  && isy < 130) ? styles.selecttxt : styles.noselecttxt}>5</Text>
-              <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>10</Text>
+              <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>1:30</Text>
+              <Text style={(50 < isy  && isy < 130) ? styles.selecttxt : styles.noselecttxt}>3:00</Text>
+              <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>5:00</Text>
               <Text style={styles.noselecttxt}> </Text>
             </ScrollView>
             </View>
-            <Text style={styles.sec}>min</Text>
+            <Text style={styles.sec}>sec</Text>
             <View style={styles.indicator1}></View>
             <View style={styles.indicator2}></View>
             </View>
@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
   fontStyle: 'normal',
   letterSpacing: -0.29,
   textAlign: "center",
-  color: "#393e46"
+  color: "#393e46",
+  marginLeft:5
   },
   selecttxt:{
     fontFamily: "Metropolis-SemiBold",
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
   height: 1,
   opacity: 0.3,
   borderStyle: "solid",
-  borderWidth: 2,
+  borderWidth: 1.5,
   borderColor: "#979797",
   position:"absolute",
   top:'18%'
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
   height: 1,
   opacity: 0.3,
   borderStyle: "solid",
-  borderWidth: 2,
+  borderWidth: 1.5,
   borderColor: "#979797",
   position:"absolute",
   top:'60%'
@@ -216,4 +217,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ScrollBase
+export default LastHeatTime
