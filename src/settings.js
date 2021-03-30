@@ -253,6 +253,7 @@ const Settings = () => {
 
             {/* 원격시동 시간설정 */}
             <View style={{ marginTop: 24 }}></View>
+            <TouchableWithoutFeedback onPress={()=>navigation.navigate('원격시동시간')}>
             <View style={styles.oneFrame}>
               <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
                 <View style={{ flexDirection: "row" }}>
@@ -262,6 +263,7 @@ const Settings = () => {
                 <Image source={rightArr}></Image>
               </View>
             </View>
+            </TouchableWithoutFeedback>
 
 
             {/* 후열시간 설정 */}

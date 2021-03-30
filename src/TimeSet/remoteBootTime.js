@@ -13,12 +13,14 @@ import {
   ScrollView
 } from 'react-native';
 
+import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
+import { bootTimeValue, bootTimeValueSC } from '../atom/atoms';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -26,10 +28,12 @@ const chheight = Dimensions.get('window').height
 
 const RemoteBootTime = () => {
   const navigation = useNavigation()
+  const [atBootTime,setAtBootTime] = useRecoilState(bootTimeValue)
+  const [atBootTimeSC,setAtBootTimeSC] = useRecoilState(bootTimeValueSC)
 
-  const [checkitem, setChechkitem] = useState('3')
+  const [checkitem, setChechkitem] = useState(atBootTime)
 
-  const [isy, setisy] = useState(150)
+  const [isy, setisy] = useState(atBootTimeSC)
 
   const ii = useRef()
 
@@ -47,6 +51,26 @@ const RemoteBootTime = () => {
     }
   }, [isy])
 
+  function saveBtnClick () {
+    setAtBootTimeSC(isy)
+    setAtBootTime(checkitem)
+    AsyncStorage.setItem("@bootTime_Value", checkitem)
+
+    Toast.show({
+      type: 'success',
+      position: 'bottom',
+      text1: '설정',
+      text2: '설정한 내용이 저장되었습니다.',
+      visibilityTime: 2000,
+      autoHide: true,
+      topOffset: 60,
+      bottomOffset: 150,
+      onShow: () => { },
+      onHide: () => { },
+      onPress: () => { }
+    });
+  }
+
 
 
   return (
@@ -58,7 +82,9 @@ const RemoteBootTime = () => {
             <Text style={styles.savetxt}>취소</Text>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>원격시동 시간</Text>
+          <TouchableWithoutFeedback onPress={()=>saveBtnClick()}>
           <Text style={styles.savetxt}>저장</Text>
+          </TouchableWithoutFeedback>
         </View>
         {/* 헤더 끝 */}
 
@@ -96,7 +122,7 @@ const RemoteBootTime = () => {
         {/* 본문 끝 */}
 
 
-
+        <Toast ref={(ref) => Toast.setRef(ref)} />
 
       </View>
     </SafeAreaView>
