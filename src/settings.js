@@ -292,6 +292,7 @@ const Settings = () => {
 
             {/* 스타트 시간설정 */}
             <View style={{ marginTop: 8 }}></View>
+            <TouchableWithoutFeedback onPress={()=>navigation.navigate('스타트시간')}>
             <View style={styles.oneFrame}>
               <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
                 <View style={{ flexDirection: "row" }}>
@@ -301,6 +302,7 @@ const Settings = () => {
                 <Image source={rightArr}></Image>
               </View>
             </View>
+            </TouchableWithoutFeedback>
 
 
             {/* i도어 비밀번호설정 */}
