@@ -21,7 +21,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import {fcmToken, bootRestTime, isBootOn } from './atom/atoms'
+import { fcmToken, bootRestTime, isBootOn } from './atom/atoms'
 
 import client from './Client'
 

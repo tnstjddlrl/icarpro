@@ -189,14 +189,14 @@ const Settings = () => {
                 <View style={{ height: 1, backgroundColor: "#e1e1e3", width: chwidth - 80, marginTop: 17 }}></View>
               </View>
 
-              <TouchableWithoutFeedback onPress={()=>navigation.navigate('저전압설정')}>
-              <View style={{ marginLeft: 11, marginRight: 16, marginTop: 19, flexDirection: "row", justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <View style={{ width: 24, height: 24 }}></View>
-                  <Text style={styles.framecon}>저전압 설정</Text>
+              <TouchableWithoutFeedback onPress={() => navigation.navigate('저전압설정')}>
+                <View style={{ marginLeft: 11, marginRight: 16, marginTop: 19, flexDirection: "row", justifyContent: "space-between" }}>
+                  <View style={{ flexDirection: "row" }}>
+                    <View style={{ width: 24, height: 24 }}></View>
+                    <Text style={styles.framecon}>저전압 설정</Text>
+                  </View>
+                  <Image source={rightArr}></Image>
                 </View>
-                <Image source={rightArr}></Image>
-              </View>
               </TouchableWithoutFeedback>
 
 
@@ -266,46 +266,46 @@ const Settings = () => {
 
             {/* 후열시간 설정 */}
             <View style={{ marginTop: 8 }}></View>
-            <TouchableWithoutFeedback onPress={()=>navigation.navigate('후열시간')}>
-            <View style={styles.oneFrame}>
-              <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={coliIcon}></Image>
-                  <Text style={styles.frameTitle}>후열시간 설정</Text>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('후열시간')}>
+              <View style={styles.oneFrame}>
+                <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Image source={coliIcon}></Image>
+                    <Text style={styles.frameTitle}>후열시간 설정</Text>
+                  </View>
+                  <Image source={rightArr}></Image>
                 </View>
-                <Image source={rightArr}></Image>
               </View>
-            </View>
             </TouchableWithoutFeedback>
 
 
             {/* 예열시동 시간 설정 */}
             <View style={{ marginTop: 8 }}></View>
-            <TouchableWithoutFeedback onPress={()=>navigation.navigate('예열시동시간')}>
-            <View style={styles.oneFrame}>
-              <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={carhitIcon}></Image>
-                  <Text style={styles.frameTitle}>예열시동 시간설정</Text>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('예열시동시간')}>
+              <View style={styles.oneFrame}>
+                <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Image source={carhitIcon}></Image>
+                    <Text style={styles.frameTitle}>예열시동 시간설정</Text>
+                  </View>
+                  <Image source={rightArr}></Image>
                 </View>
-                <Image source={rightArr}></Image>
               </View>
-            </View>
             </TouchableWithoutFeedback>
 
 
             {/* 스타트 시간설정 */}
             <View style={{ marginTop: 8 }}></View>
-            <TouchableWithoutFeedback onPress={()=>navigation.navigate('스타트시간')}>
-            <View style={styles.oneFrame}>
-              <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={startIcon}></Image>
-                  <Text style={styles.frameTitle}>스타트 시간설정</Text>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('스타트시간')}>
+              <View style={styles.oneFrame}>
+                <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Image source={startIcon}></Image>
+                    <Text style={styles.frameTitle}>스타트 시간설정</Text>
+                  </View>
+                  <Image source={rightArr}></Image>
                 </View>
-                <Image source={rightArr}></Image>
               </View>
-            </View>
             </TouchableWithoutFeedback>
 
 

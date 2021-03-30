@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Alert,BackHandler } from 'react-native'
+import { Alert, BackHandler } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -48,7 +48,7 @@ function App() {
           onPress: () => null,
           style: "cancel"
         },
-        { text: "예", onPress: () => {RNExitApp.exitApp()} }
+        { text: "예", onPress: () => { RNExitApp.exitApp() } }
       ]);
       return true;
     };

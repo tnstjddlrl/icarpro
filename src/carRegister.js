@@ -207,14 +207,14 @@ const CarRegister = () => {
       setAtModemn('')
       setatUserNumber('')
       setatIsCarRace('')
-    } else if('' + data == 'reg_fail'){
+    } else if ('' + data == 'reg_fail') {
       Alert.alert("이미 등록된 사용자입니다.", "계속 진행 하시겠습니까?", [
         {
           text: "아니요",
           onPress: () => Alert.alert('등록을 취소합니다.'),
           style: "cancel"
         },
-        { text: "예", onPress: () => {registerUpdate(),Alert.alert('등록이 완료되었습니다.')} }
+        { text: "예", onPress: () => { registerUpdate(), Alert.alert('등록이 완료되었습니다.') } }
       ]);
 
     } else {
@@ -224,7 +224,7 @@ const CarRegister = () => {
     console.log('차량 등록 내에서 받기 ' + data);
   });
 
-  function searchUser () {
+  function searchUser() {
     var txt = { type: "R", type_sub: "user_search", data: { modem: modemN } }
     txt = JSON.stringify(txt)
     client.write(txt)
@@ -254,7 +254,7 @@ const CarRegister = () => {
         <View style={{ flex: 10, marginLeft: 16 }}>
           <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput onBlur={()=>Alert.alert('사용자 검색')} placeholder='모뎀 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
+              <TextInput onBlur={() => Alert.alert('사용자 검색')} placeholder='모뎀 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
               {modemN != '' &&
                 <TouchableOpacity onPress={() => setModemN('')}>
                   <Image source={inputcls}></Image>

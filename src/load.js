@@ -17,7 +17,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { modemNumber, userNumber, fcmToken, isCarRace,voltValue, voltValueSC } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace, voltValue, voltValueSC } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app'
@@ -87,8 +87,8 @@ const Load = () => {
   const [isAuthorized, setIsAuthorized] = useState(false)
 
 
-  const [lowVoltValue,setLowVoltValue] = useRecoilState(voltValue)
-  const [lowVoltValuesc,setLowVoltValuesc] = useRecoilState(voltValueSC)
+  const [lowVoltValue, setLowVoltValue] = useRecoilState(voltValue)
+  const [lowVoltValuesc, setLowVoltValuesc] = useRecoilState(voltValueSC)
 
   const handlePushToken = useCallback(async () => {
     const enabled = await messaging().hasPermission()
@@ -129,25 +129,27 @@ const Load = () => {
         getmodem().then(res => setAtModemn(res))
         getuser().then(res => setatUserNumber(res))
         getcar().then(res => setatIsCarRace(res))
-        
+
         getLowVoltValue().then(res => {
-          if(res == '11.8'){
+          if (res == '11.8') {
             setLowVoltValue('11.8')
             setLowVoltValuesc(5)
-          }else if(res == '11.9'){
+          } else if (res == '11.9') {
             setLowVoltValue('11.9')
             setLowVoltValuesc(80)
-          }else if(res == '12.0'){
+          } else if (res == '12.0') {
             setLowVoltValue('12.0')
             setLowVoltValuesc(151)
-          }else if(res == '12.1'){
+          } else if (res == '12.1') {
             setLowVoltValue('12.1')
             setLowVoltValuesc(220)
-          }else if(res == '12.2'){
+          } else if (res == '12.2') {
             setLowVoltValue('12.2')
             setLowVoltValuesc(292)
           }
         })
+
+
 
         setTimeout(() => {
           navigation.navigate('테스트')
