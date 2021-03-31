@@ -21,7 +21,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken, bootRestTime, isBootOn } from './atom/atoms'
+import { fcmToken, bootRestTime, isBootOn, StateCarAlert, StateDoorLock, StateDoor, StateTrunk, StateEngineHood, StateEngineState, StateCarVolt } from './atom/atoms'
 
 import client from './Client'
 
@@ -53,6 +53,15 @@ const voltIcon = require('../img/state/voltIcon.png')
 
 const CarState = () => {
 
+  const [atStateCarAlert,setAtStateCarAlert] = useRecoilState(StateCarAlert)
+  const [atStateDoorLock,setAtStateDoorLock] = useRecoilState(StateDoorLock)
+  const [atStateDoor,setAtStateDoor] = useRecoilState(StateDoor)
+  const [atStateTrunk,setAtStateTrunk] = useRecoilState(StateTrunk)
+  const [atStateEngineHood,setAtStateEngineHood] = useRecoilState(StateEngineHood)
+  const [atStateEngineState,setAtStateEngineState] = useRecoilState(StateEngineState)
+  const [atStateCarVolt,setAtStateCarVolt] = useRecoilState(StateCarVolt)
+
+
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const isbooton = useRecoilValue(isBootOn)
   const boottime = useRecoilValue(bootRestTime)
@@ -63,6 +72,7 @@ const CarState = () => {
 
     client.write(txt)
     console.log('전송 : ' + txt)
+    
   }
 
 

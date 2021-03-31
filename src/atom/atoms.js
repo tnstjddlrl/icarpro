@@ -1,5 +1,5 @@
 import {
-  atom
+  atom, selector
 } from 'recoil';
 
 import {client} from '../Client'
@@ -105,6 +105,7 @@ export const startTimeValueSC = atom({
 })
 
 //차량 상태 값(서버와 연동된 값이 계속 여기에 저장되어야 함)
+
 export const StateCarAlert = atom({
   key: 'StateCarAlert',
   default: 'ON',
