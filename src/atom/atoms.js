@@ -81,15 +81,25 @@ export const bootTimeValueSC = atom({
 
 export const lastHeatTimeValue = atom({
   key: 'lastHeatTimeValue',
-  default: 0,
+  default: '1:30',
 })
+export const lastHeatTimeValueSC = atom({
+  key: 'lastHeatTimeValueSC',
+  default: 7,
+})
+
 export const preHeatTimeValue = atom({
   key: 'preHeatTimeValue',
   default: 0,
 })
+
 export const startTimeValue = atom({
   key: 'startTimeValue',
-  default: 0,
+  default: '1',
+})
+export const startTimeValueSC = atom({
+  key: 'startTimeValueSC',
+  default: 3,
 })
 
 //차량 상태 값(서버와 연동된 값이 계속 여기에 저장되어야 함)

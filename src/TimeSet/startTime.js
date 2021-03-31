@@ -19,7 +19,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-
+import { startTimeValue,startTimeValueSC } from '../atom/atoms';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -28,9 +28,11 @@ const chheight = Dimensions.get('window').height
 const StartTime = () => {
   const navigation = useNavigation()
 
-  const [checkitem, setChechkitem] = useState('3')
+  const [startTime,setStartTime] = useRecoilState(startTimeValue)
+  const [startTimeSC,setStartTimeSC] = useRecoilState(startTimeValueSC)
 
-  const [isy, setisy] = useState(0)
+  const [checkitem, setChechkitem] = useState(startTime)
+  const [isy, setisy] = useState(startTimeSC)
 
   const ii = useRef()
 
@@ -48,6 +50,16 @@ const StartTime = () => {
     }
   }, [isy])
 
+  function saveBtnClick(){
+    setStartTime(checkitem)
+    setStartTimeSC(isy)
+
+    AsyncStorage.setItem('@startTime_value',checkitem)
+
+    Alert.alert('설정이 저장되었습니다.')
+  }
+
+
 
 
   return (
@@ -59,7 +71,9 @@ const StartTime = () => {
             <Text style={styles.savetxt}>취소</Text>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>스타트 시간</Text>
+          <TouchableWithoutFeedback onPress={()=>saveBtnClick()}>
           <Text style={styles.savetxt}>저장</Text>
+          </TouchableWithoutFeedback>
         </View>
         {/* 헤더 끝 */}
 

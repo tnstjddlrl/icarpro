@@ -17,7 +17,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { modemNumber, userNumber, fcmToken, isCarRace, voltValue, voltValueSC } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace, voltValue, voltValueSC,bootTimeValue, bootTimeValueSC, lastHeatTimeValue, lastHeatTimeValueSC, startTimeValue, startTimeValueSC } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app'
@@ -26,6 +26,7 @@ import firebase from '@react-native-firebase/app'
 import { useNavigation } from '@react-navigation/native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LastHeatTime from './TimeSet/lastHeatTime';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -80,6 +81,35 @@ const Load = () => {
     }
   }
 
+  const getBootTimeValue = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@bootTime_Value')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const getLastHeatValue = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@lastHeat_value')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const getStartTimeValue = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@startTime_value')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  
+
+  
+
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [atModemn, setAtModemn] = useRecoilState(modemNumber)
   const [atUserNumber, setatUserNumber] = useRecoilState(userNumber)
@@ -89,6 +119,12 @@ const Load = () => {
 
   const [lowVoltValue, setLowVoltValue] = useRecoilState(voltValue)
   const [lowVoltValuesc, setLowVoltValuesc] = useRecoilState(voltValueSC)
+  const [atbootTimeValue,setatBootTimeValue] = useRecoilState(bootTimeValue)
+  const [atbootTimeValueSC,setatBootTimeValueSC] =useRecoilState(bootTimeValueSC)
+  const [atLastHeatvalue,setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
+  const [atLastHeatvalueSC,setAtLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
+  const [atStartTimeValue,setAtStartTimeValue] = useRecoilState(startTimeValue)
+  const [atStartTimeValueSC,setAtStartTimeValueSC] = useRecoilState(startTimeValueSC)
 
   const handlePushToken = useCallback(async () => {
     const enabled = await messaging().hasPermission()
@@ -146,6 +182,44 @@ const Load = () => {
           } else if (res == '12.2') {
             setLowVoltValue('12.2')
             setLowVoltValuesc(292)
+          }
+        })
+
+        getBootTimeValue().then(res=>{
+          if(res=='3'){
+            setatBootTimeValue('3')
+            setatBootTimeValueSC(5)
+          }else if(res=='5'){
+            setatBootTimeValue('5')
+            setatBootTimeValueSC(73)
+          }else if(res=='10'){
+            setatBootTimeValue('10')
+            setatBootTimeValueSC(150)
+          }
+        })
+
+        getLastHeatValue().then(res=>{
+          if(res=='1:30'){
+            setAtLastHeatValue('1:30')
+            setAtLastHeatValueSC(10)
+          }else if(res=='3:00'){
+            setAtLastHeatValue('3:00')
+            setAtLastHeatValueSC(74)
+          }else if(res=='5:00'){
+            setAtLastHeatValue('5:00')
+            setAtLastHeatValueSC(144)
+          }
+        })
+        getStartTimeValue().then(res=>{
+          if(res=='1'){
+            setAtStartTimeValue('1')
+            setAtStartTimeValueSC(0)
+          }else if(res=='2'){
+            setAtStartTimeValue('2')
+            setAtStartTimeValueSC(73)
+          }else if(res=='3'){
+            setAtStartTimeValue('3')
+            setAtStartTimeValueSC(148)
           }
         })
 

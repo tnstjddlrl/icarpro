@@ -19,6 +19,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
+import { lastHeatTimeValue, lastHeatTimeValueSC } from '../atom/atoms';
 
 
 const chwidth = Dimensions.get('window').width
@@ -28,9 +29,11 @@ const chheight = Dimensions.get('window').height
 const LastHeatTime = () => {
   const navigation = useNavigation()
 
-  const [checkitem, setChechkitem] = useState('1:30')
+  const [lastHeatValue,setLastHeatValue] = useRecoilState(lastHeatTimeValue)
+  const [lastHeatValueSC,setLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
 
-  const [isy, setisy] = useState(10)
+  const [checkitem, setChechkitem] = useState(lastHeatValue)
+  const [isy, setisy] = useState(lastHeatValueSC)
 
   const ii = useRef()
 
@@ -48,7 +51,14 @@ const LastHeatTime = () => {
     }
   }, [isy])
 
+  function saveBtnClick(){
+    setLastHeatValue(checkitem)
+    setLastHeatValueSC(isy)
 
+    AsyncStorage.setItem('@lastHeat_value',checkitem)
+
+    Alert.alert('설정이 저장되었습니다.')
+  }
 
   return (
     <SafeAreaView>
@@ -59,7 +69,9 @@ const LastHeatTime = () => {
             <Text style={styles.savetxt}>취소</Text>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>후열 시간</Text>
+          <TouchableWithoutFeedback onPress={()=>saveBtnClick()}>
           <Text style={styles.savetxt}>저장</Text>
+          </TouchableWithoutFeedback>
         </View>
         {/* 헤더 끝 */}
 
