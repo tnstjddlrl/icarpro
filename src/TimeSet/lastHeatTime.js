@@ -13,6 +13,7 @@ import {
   ScrollView
 } from 'react-native';
 
+import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -29,8 +30,8 @@ const chheight = Dimensions.get('window').height
 const LastHeatTime = () => {
   const navigation = useNavigation()
 
-  const [lastHeatValue,setLastHeatValue] = useRecoilState(lastHeatTimeValue)
-  const [lastHeatValueSC,setLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
+  const [lastHeatValue, setLastHeatValue] = useRecoilState(lastHeatTimeValue)
+  const [lastHeatValueSC, setLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
 
   const [checkitem, setChechkitem] = useState(lastHeatValue)
   const [isy, setisy] = useState(lastHeatValueSC)
@@ -51,13 +52,25 @@ const LastHeatTime = () => {
     }
   }, [isy])
 
-  function saveBtnClick(){
+  function saveBtnClick() {
     setLastHeatValue(checkitem)
     setLastHeatValueSC(isy)
 
-    AsyncStorage.setItem('@lastHeat_value',checkitem)
+    AsyncStorage.setItem('@lastHeat_value', checkitem)
 
-    Alert.alert('설정이 저장되었습니다.')
+    Toast.show({
+      type: 'success',
+      position: 'bottom',
+      text1: '설정',
+      text2: '설정한 내용이 저장되었습니다.',
+      visibilityTime: 2000,
+      autoHide: true,
+      topOffset: 60,
+      bottomOffset: 150,
+      onShow: () => { },
+      onHide: () => { },
+      onPress: () => { }
+    });
   }
 
   return (
@@ -69,8 +82,8 @@ const LastHeatTime = () => {
             <Text style={styles.savetxt}>취소</Text>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>후열 시간</Text>
-          <TouchableWithoutFeedback onPress={()=>saveBtnClick()}>
-          <Text style={styles.savetxt}>저장</Text>
+          <TouchableWithoutFeedback onPress={() => saveBtnClick()}>
+            <Text style={styles.savetxt}>저장</Text>
           </TouchableWithoutFeedback>
         </View>
         {/* 헤더 끝 */}

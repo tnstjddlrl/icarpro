@@ -12,6 +12,7 @@ import {
   StyleSheet,
   ScrollView
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,7 +20,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { startTimeValue,startTimeValueSC } from '../atom/atoms';
+import { startTimeValue, startTimeValueSC } from '../atom/atoms';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -28,8 +29,8 @@ const chheight = Dimensions.get('window').height
 const StartTime = () => {
   const navigation = useNavigation()
 
-  const [startTime,setStartTime] = useRecoilState(startTimeValue)
-  const [startTimeSC,setStartTimeSC] = useRecoilState(startTimeValueSC)
+  const [startTime, setStartTime] = useRecoilState(startTimeValue)
+  const [startTimeSC, setStartTimeSC] = useRecoilState(startTimeValueSC)
 
   const [checkitem, setChechkitem] = useState(startTime)
   const [isy, setisy] = useState(startTimeSC)
@@ -50,13 +51,25 @@ const StartTime = () => {
     }
   }, [isy])
 
-  function saveBtnClick(){
+  function saveBtnClick() {
     setStartTime(checkitem)
     setStartTimeSC(isy)
 
-    AsyncStorage.setItem('@startTime_value',checkitem)
+    AsyncStorage.setItem('@startTime_value', checkitem)
 
-    Alert.alert('설정이 저장되었습니다.')
+    Toast.show({
+      type: 'success',
+      position: 'bottom',
+      text1: '설정',
+      text2: '설정한 내용이 저장되었습니다.',
+      visibilityTime: 2000,
+      autoHide: true,
+      topOffset: 60,
+      bottomOffset: 150,
+      onShow: () => { },
+      onHide: () => { },
+      onPress: () => { }
+    });
   }
 
 
@@ -71,8 +84,8 @@ const StartTime = () => {
             <Text style={styles.savetxt}>취소</Text>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>스타트 시간</Text>
-          <TouchableWithoutFeedback onPress={()=>saveBtnClick()}>
-          <Text style={styles.savetxt}>저장</Text>
+          <TouchableWithoutFeedback onPress={() => saveBtnClick()}>
+            <Text style={styles.savetxt}>저장</Text>
           </TouchableWithoutFeedback>
         </View>
         {/* 헤더 끝 */}

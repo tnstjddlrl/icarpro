@@ -28,8 +28,8 @@ const chheight = Dimensions.get('window').height
 
 const RemoteBootTime = () => {
   const navigation = useNavigation()
-  const [atBootTime,setAtBootTime] = useRecoilState(bootTimeValue)
-  const [atBootTimeSC,setAtBootTimeSC] = useRecoilState(bootTimeValueSC)
+  const [atBootTime, setAtBootTime] = useRecoilState(bootTimeValue)
+  const [atBootTimeSC, setAtBootTimeSC] = useRecoilState(bootTimeValueSC)
 
   const [checkitem, setChechkitem] = useState(atBootTime)
 
@@ -51,7 +51,7 @@ const RemoteBootTime = () => {
     }
   }, [isy])
 
-  function saveBtnClick () {
+  function saveBtnClick() {
     setAtBootTimeSC(isy)
     setAtBootTime(checkitem)
     AsyncStorage.setItem("@bootTime_Value", checkitem)
@@ -82,8 +82,8 @@ const RemoteBootTime = () => {
             <Text style={styles.savetxt}>취소</Text>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>원격시동 시간</Text>
-          <TouchableWithoutFeedback onPress={()=>saveBtnClick()}>
-          <Text style={styles.savetxt}>저장</Text>
+          <TouchableWithoutFeedback onPress={() => saveBtnClick()}>
+            <Text style={styles.savetxt}>저장</Text>
           </TouchableWithoutFeedback>
         </View>
         {/* 헤더 끝 */}
