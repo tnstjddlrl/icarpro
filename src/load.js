@@ -17,7 +17,21 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { modemNumber, userNumber, fcmToken, isCarRace, voltValue, voltValueSC,bootTimeValue, bootTimeValueSC, lastHeatTimeValue, lastHeatTimeValueSC, startTimeValue, startTimeValueSC } from './atom/atoms'
+import { 
+  modemNumber, 
+  userNumber, 
+  fcmToken, 
+  isCarRace, 
+  voltValue, 
+  voltValueSC,
+  bootTimeValue, 
+  bootTimeValueSC, 
+  lastHeatTimeValue, 
+  lastHeatTimeValueSC, 
+  startTimeValue, 
+  startTimeValueSC,
+  actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert
+} from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app'
@@ -106,6 +120,59 @@ const Load = () => {
     }
   }
 
+  const getIcarSwitch = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@icarswitch')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const getidoorswitch = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@idoorswitch')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const getlowboltBoot = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@lowboltBoot')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const getlowboltAlert = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@lowboltAlert')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const getactionsound = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@actionsound')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const getalertsound = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@alertsound')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  
+
+
+
+
   
 
   
@@ -125,6 +192,13 @@ const Load = () => {
   const [atLastHeatvalueSC,setAtLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
   const [atStartTimeValue,setAtStartTimeValue] = useRecoilState(startTimeValue)
   const [atStartTimeValueSC,setAtStartTimeValueSC] = useRecoilState(startTimeValueSC)
+
+  const [atIcarSwitch,setAticarswitch] = useRecoilState(icarSwitch)
+  const [atidoorswitch,setAtidoorswitch] = useRecoilState(idoorSwitch)
+  const [atlowvoltBoot,setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
+  const [atlowvoltAlert,setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
+  const [atactionSound,setAtactionSound] = useRecoilState(actionSound)
+  const [atalertSound,setAtalertSound] = useRecoilState(alertSound)
 
   const handlePushToken = useCallback(async () => {
     const enabled = await messaging().hasPermission()
@@ -161,6 +235,14 @@ const Load = () => {
   useEffect(() => {
     getData().then((res) => {
       if (res != null) {
+        
+        getIcarSwitch().then(res=>setAticarswitch(JSON.parse(res)))
+        getidoorswitch().then(res=>setAtidoorswitch(JSON.parse(res)))
+        getlowboltBoot().then(res=>setAtlowvoltBoot(JSON.parse(res)))
+        getlowboltAlert().then(res=>setAtlowvoltAlert(JSON.parse(res)))
+        getactionsound().then(res=>setAtactionSound(JSON.parse(res)))
+        getalertsound().then(res=>setAtalertSound(JSON.parse(res)))
+
 
         getmodem().then(res => setAtModemn(res))
         getuser().then(res => setatUserNumber(res))
