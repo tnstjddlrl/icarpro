@@ -42,6 +42,9 @@ import moduleclient from './ModuleClient'
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
+
+import TcpSocket from 'react-native-tcp-socket';
+
 function testModem() {
   var txt = { type: "R", type_sub: "conntest" }
   txt = JSON.stringify(txt)
@@ -54,16 +57,33 @@ client.on('data',function(data){
   console.log('테스트에서 데이터 받기 : ' + data)
   // console.log(data)
   var ee = ''+data
-  ee = ee.split(',')
-  
-  console.log(ee[0].split(':')[1])
-  console.log(ee[1].split(':')[1])
+  if(ee == '송신 완료'){
+    Alert.alert('송신완료! 서버와 이중 연결 성공')
+  }else{
+    ee = ee.replace(/'/gi,"").split(',')
 
   if(ee[0].split(':')[0] == 'conn_ip'){
-    // Alert.alert('아이피 수신')
-    moduleclient.write('hello')
+    var port = Number(ee[1].split(':')[1])
+    console.log(port)
+    console.log(ee[0].split(':')[1])
+
+    // const moduleclient = TcpSocket.createConnection({ port: port, host: ee[0].split(':')[1], timeout: 1000 }, () => {
+    //   console.log('모듈연결됨')
+    //   Alert.alert('모듈 연결되었습니다.')
+    //   moduleclient.write('hello, module?')
+    // });
+    moduleclient.connect({ port: port, host: ee[0].split(':')[1]},()=>{
+      Alert.alert('모듈과 연결됨')
+      moduleclient.write('test conntest2.');
+      // client.write(JSON.stringify({ type: "R", type_sub: "conntest2" }))
+      // Alert.alert('서버에 conntest2 전송')
+      // moduleclient.destroy()
+    })
+  }
   }
 })
+
+
 
 
 
