@@ -16,6 +16,7 @@
 		852A5E6C260AC04C001A4349 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 852A5E6B260AC04C001A4349 /* fonts */; };
 		852A5EFA260AC79C001A4349 /* AppleSDGothicNeo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 852A5EF9260AC79C001A4349 /* AppleSDGothicNeo.ttf */; };
 		8542D1642609DB2100703635 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8542D1632609DB2100703635 /* GoogleService-Info.plist */; };
+		854F70E026155E6C003BA402 /* bbibb3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 854F70DF26155E6C003BA402 /* bbibb3.mp3 */; };
 		C5F62C4572E1E6997B7F9D49 /* libPods-icar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC43B5C00EB9B870C2DD7C18 /* libPods-icar.a */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		852A5E6B260AC04C001A4349 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		852A5EF9260AC79C001A4349 /* AppleSDGothicNeo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AppleSDGothicNeo.ttf; path = "../../../../Downloads/Apple 산돌고딕 Neo/AppleSDGothicNeo.ttf"; sourceTree = "<group>"; };
 		8542D1632609DB2100703635 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		854F70DF26155E6C003BA402 /* bbibb3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bbibb3.mp3; path = ../../../../Downloads/bbibb3.mp3; sourceTree = "<group>"; };
 		BC43B5C00EB9B870C2DD7C18 /* libPods-icar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-icar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A68862E98ED183B34F3FDE /* Pods-icar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-icar.release.xcconfig"; path = "Target Support Files/Pods-icar/Pods-icar.release.xcconfig"; sourceTree = "<group>"; };
 		CF32551400E3B4EAC6FF3EB1 /* libPods-icar-icarTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-icar-icarTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,7 @@
 		13B07FAE1A68108700A75B9A /* icar */ = {
 			isa = PBXGroup;
 			children = (
+				854F70DF26155E6C003BA402 /* bbibb3.mp3 */,
 				8542D1632609DB2100703635 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -254,6 +257,7 @@
 			files = (
 				852A5EFA260AC79C001A4349 /* AppleSDGothicNeo.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				854F70E026155E6C003BA402 /* bbibb3.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				8542D1642609DB2100703635 /* GoogleService-Info.plist in Resources */,
 				852A5E6C260AC04C001A4349 /* fonts in Resources */,

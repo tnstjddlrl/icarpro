@@ -12,6 +12,8 @@ target 'icar' do
     :hermes_enabled => false
   )
 
+  pod 'ReactNativeAudioToolkit', :path => '../node_modules/@react-native-community/audio-toolkit'
+
   target 'icarTests' do
     inherit! :complete
     # Pods for testing

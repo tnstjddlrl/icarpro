@@ -19,6 +19,12 @@ import {
   useRecoilValue,
 } from 'recoil';
 
+import {
+  Player,
+  Recorder,
+  MediaStates
+} from '@react-native-community/audio-toolkit';
+
 import { modemNumber, userNumber, fcmToken, isCarRace, bootRestTime } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -101,6 +107,10 @@ const Test = () => {
 
         <TouchableOpacity onPress={() => RNExitApp.exitApp()}>
           <Text>앱종료</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => new Player('bbibb3.mp3').play(err=>console.log(err))}>
+          <Text>사운드 플레이</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => testModem()}>
