@@ -36,6 +36,7 @@ import RNExitApp from 'react-native-kill-app';
 
 import Toast from 'react-native-toast-message';
 import client from './Client.js'
+import moduleclient from './ModuleClient'
 
 
 const chwidth = Dimensions.get('window').width
@@ -48,6 +49,21 @@ function testModem() {
   client.write(txt)
   Alert.alert('전송 : ' + txt)
 }
+
+client.on('data',function(data){
+  console.log('테스트에서 데이터 받기 : ' + data)
+  // console.log(data)
+  var ee = ''+data
+  ee = ee.split(',')
+  
+  console.log(ee[0].split(':')[1])
+  console.log(ee[1].split(':')[1])
+
+  if(ee[0].split(':')[0] == 'conn_ip'){
+    // Alert.alert('아이피 수신')
+    moduleclient.write('hello')
+  }
+})
 
 
 
