@@ -16,6 +16,7 @@ client.on('error', function (error) {
   Alert.alert('서버와의 통신을 실패하였습니다.', '앱을 종료합니다.')
   console.error(error)
   setTimeout(() => {
+    client.destroy()
     RNExitApp.exitApp()
   }, 1500);
 });
