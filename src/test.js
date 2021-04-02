@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   TextInput,
   BackHandler,
-  SafeAreaView
+  SafeAreaView,
+  Vibration
 } from 'react-native';
 
 import {
@@ -147,6 +148,10 @@ const Test = () => {
 
         <TouchableOpacity onPress={() => new Player('bbibb3.mp3').play(err=>console.log(err))}>
           <Text>사운드 플레이</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => Vibration.vibrate(1000)}>
+          <Text>진동 테스트</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => testModem()}>

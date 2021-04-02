@@ -5,7 +5,7 @@ import RNExitApp from 'react-native-kill-app';
 
 
 
-const client = TcpSocket.createConnection({ port: 3400, host: "175.126.232.72", timeout: 1000 }, () => {
+const client = TcpSocket.createConnection({ port: 3600, host: "175.126.232.72", timeout: 1000 }, () => {
   console.log('연결됨')
   Alert.alert('서버와 연결되었습니다.')
 });
@@ -17,7 +17,7 @@ client.on('error', function (error) {
   console.error(error)
   setTimeout(() => {
     client.destroy()
-    RNExitApp.exitApp()
+    // RNExitApp.exitApp()
   }, 1500);
 });
 
