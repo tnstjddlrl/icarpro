@@ -594,4 +594,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default CarRegister
+export default React.memo(CarRegister)
