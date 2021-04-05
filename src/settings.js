@@ -166,7 +166,7 @@ const Settings = () => {
                   isOn={lowboltBoot}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => setlowboltBoot(isOn)}
+                  onToggle={isOn => {setlowboltAlert(false),setlowboltBoot(isOn)}}
                 />
               </View>
               <View style={{ width: chwidth - 32, flexDirection: "row", justifyContent: 'flex-end' }}>
@@ -182,7 +182,7 @@ const Settings = () => {
                   isOn={lowboltAlert}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => setlowboltAlert(isOn)}
+                  onToggle={isOn => {setlowboltAlert(isOn),setlowboltBoot(false)}}
                 />
               </View>
               <View style={{ width: chwidth - 32, flexDirection: "row", justifyContent: 'flex-end' }}>
@@ -412,4 +412,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Settings
+export default React.memo(Settings)
