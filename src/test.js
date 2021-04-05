@@ -46,8 +46,8 @@ const chheight = Dimensions.get('window').height
 
 import TcpSocket from 'react-native-tcp-socket';
 
-function testModem() {
-  var txt = { type: "R", type_sub: "conntest" }
+function testModem(modem) {
+  var txt = { type: "R", type_sub: "conntest",data:{ modem : modem } }
   txt = JSON.stringify(txt)
 
   client.write(txt)
@@ -97,6 +97,7 @@ const Test = () => {
   const token = useRecoilValue(fcmToken)
   const [neww, setneww] = useRecoilState(userNumber)
   const atcarrace = useRecoilValue(isCarRace)
+  
 
 
   console.log('모뎀 넘버 : ' + state)
@@ -154,7 +155,7 @@ const Test = () => {
           <Text>진동 테스트</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => testModem()}>
+        <TouchableOpacity onPress={() => testModem(state)}>
           <Text>모뎀접속테스트</Text>
         </TouchableOpacity>
 
