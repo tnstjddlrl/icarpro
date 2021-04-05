@@ -446,43 +446,6 @@ const CarRegister = () => {
   )
 }
 
-const CarItem = (prop) => {
-  const [isClick, setIsClick] = useState(false)
-  return (
-    <View>
-      {isClick ?
-        <TouchableWithoutFeedback onPress={() => setIsClick(true)}>
-          <View style={{ height: 128, flex: 1, backgroundColor: "#f0f1f5", borderRadius: 6, }}>
-            <View style={{ flex: 2, justifyContent: "flex-end" }}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <View style={{ width: 20, height: 20, borderStyle: 'solid', borderWidth: 1, borderColor: "red", borderRadius: 20, marginLeft: 17, marginRight: 8 }}></View>
-                <Text style={styles.cartext}>{prop.nn} {prop.num}</Text>
-              </View>
-            </View>
-            <View style={{ flex: 4, flexDirection: "row", justifyContent: "flex-end", alignItems: "center" }}>
-              <Image source={prop.img} style={{ marginRight: 13 }}></Image>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-        :
-        <TouchableWithoutFeedback onPress={() => setIsClick(false)}>
-          <View style={{ height: 128, flex: 1, backgroundColor: "#f0f1f5", borderRadius: 6, }}>
-            <View style={{ flex: 2, justifyContent: "flex-end" }}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <View style={{ width: 20, height: 20, borderStyle: 'solid', borderWidth: 1, borderColor: "#bababa", borderRadius: 20, marginLeft: 17, marginRight: 8 }}></View>
-                <Text style={styles.cartext}>{prop.nn} {prop.num}</Text>
-              </View>
-            </View>
-            <View style={{ flex: 4, flexDirection: "row", justifyContent: "flex-end", alignItems: "center" }}>
-              <Image source={prop.img} style={{ marginRight: 13 }}></Image>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      }
-
-    </View>
-  )
-}
 
 const styles = StyleSheet.create({
   canceltxt: {
