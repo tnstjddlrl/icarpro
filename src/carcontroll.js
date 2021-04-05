@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -739,7 +740,7 @@ const Carcontroll = () => {
 
 const styles = StyleSheet.create({
   starttxt: {
-    fontFamily: "AppleSDGothicNeo",
+    // fontFamily: "AppleSDGothicNeo",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -747,7 +748,7 @@ const styles = StyleSheet.create({
     color: "#4e535a"
   },
   btntxt: {
-    fontFamily: "AppleSDGothicNeo",
+    // fontFamily: "AppleSDGothicNeo",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -757,7 +758,7 @@ const styles = StyleSheet.create({
     color: "#f8f8f8"
   },
   titletxt: {
-    fontFamily: "AppleSDGothicNeo",
+    // fontFamily: "AppleSDGothicNeo",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -766,7 +767,7 @@ const styles = StyleSheet.create({
   },
   clocktxt: {
     opacity: 0.3,
-    fontFamily: "AppleSDGothicNeo",
+    // fontFamily: "AppleSDGothicNeo",
     fontSize: 14,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -777,7 +778,7 @@ const styles = StyleSheet.create({
   },
   carnum: {
     opacity: 0.4,
-    fontFamily: "AppleSDGothicNeo",
+    // fontFamily: "AppleSDGothicNeo",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -786,7 +787,7 @@ const styles = StyleSheet.create({
     marginLeft: 16
   },
   Onclocktxt: {
-    fontFamily: "AppleSDGothicNeo",
+    // fontFamily: "AppleSDGothicNeo",
     fontSize: 14,
     fontWeight: "bold",
     fontStyle: "normal",

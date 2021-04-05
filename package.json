@@ -48,5 +48,10 @@
   },
   "react-native": {
     "net": "react-native-tcp-socket"
+  },
+  "rnpm": {
+    "assets": [
+	  "./assets/fonts/"
+    ]
   }
 }

@@ -47,7 +47,7 @@ const chheight = Dimensions.get('window').height
 import TcpSocket from 'react-native-tcp-socket';
 
 function testModem(modem) {
-  var txt = { type: "R", type_sub: "conntest",data:{ modem : modem } }
+  var txt = { type: "R", type_sub: "conntest",data: { modem : modem } }
   txt = JSON.stringify(txt)
 
   client.write(txt)
@@ -108,55 +108,56 @@ const Test = () => {
   return (
     <View>
       <SafeAreaView>
+        <Text style={{fontFamily:'AppleSDGothicNeo'}}>아이카</Text>
         <TouchableOpacity onPress={() => navigation.navigate('간편비밀번호')}>
-          <Text>간편비밀번호</Text>
+          <Text style={{fontSize:18,margin:10}}>간편비밀번호</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate('차량등록')}>
-          <Text>차량등록</Text>
+          <Text style={{fontSize:18,margin:10}}>차량등록</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('차량제어')}>
-          <Text>차량제어</Text>
+          <Text style={{fontSize:18,margin:10}}>차량제어</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('차량상태')}>
-          <Text>차량상태</Text>
+          <Text style={{fontSize:18,margin:10}}>차량상태</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('스와이프테스트')}>
-          <Text>스와이프테스트</Text>
+          <Text style={{fontSize:18,margin:10}}>스와이프테스트</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('설정')}>
-          <Text>설정</Text>
+          <Text style={{fontSize:18,margin:10}}>설정</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('스크롤베이스')}>
-          <Text>스크롤베이스</Text>
+          <Text style={{fontSize:18,margin:10}}>스크롤베이스</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity onPress={() => {AsyncStorage.setItem("@is_first",'notfirst'),console.log('어싱크 테스트')}}>
         <Text>어싱크 테스트</Text>
       </TouchableOpacity> */}
         <TouchableOpacity onPress={() => client.destroy()}>
-          <Text>소켓 연결 끊기</Text>
+          <Text style={{fontSize:18,margin:10}}>소켓 연결 끊기</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => client.connect({ port: 3400, host: "175.126.232.72", timeout: 1000 })}>
-          <Text>소켓 연결</Text>
+          <Text style={{fontSize:18,margin:10}}>소켓 연결</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => client.write('test')}>
-          <Text>소켓 전송</Text>
+          <Text style={{fontSize:18,margin:10}}>소켓 전송</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => RNExitApp.exitApp()}>
-          <Text>앱종료</Text>
+          <Text style={{fontSize:18,margin:10}}>앱종료</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => new Player('bbibb3.mp3').play(err=>console.log(err))}>
-          <Text>사운드 플레이</Text>
+          <Text style={{fontSize:18,margin:10}}>사운드 플레이</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => Vibration.vibrate(1000)}>
-          <Text>진동 테스트</Text>
+          <Text style={{fontSize:18,margin:10}}>진동 테스트</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => testModem(state)}>
-          <Text>모뎀접속테스트</Text>
+          <Text style={{fontSize:18,margin:10}}>모뎀접속테스트</Text>
         </TouchableOpacity>
 
       </SafeAreaView>

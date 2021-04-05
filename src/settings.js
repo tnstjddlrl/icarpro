@@ -71,7 +71,7 @@ const Settings = () => {
     }
   }
 
-  getData().then(res => console.log('어싱크 불린 ' + JSON.parse(res)))
+  // getData().then(res => console.log('어싱크 불린 ' + JSON.parse(res)))
 
 
 
@@ -96,7 +96,18 @@ const Settings = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 60 }}>
+       {/* 헤더 */}
+       <View style={{ height:60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 32, marginLeft: 16,}}>
+        <View><TouchableWithoutFeedback onPress={() => navigation.goBack()}><Image source={back}></Image></TouchableWithoutFeedback></View>
+        <Text style={styles.maintxt}>설정</Text>
+        <TouchableWithoutFeedback onPress={() => savebtnclick()}>
+          <Text style={styles.savetxt}>저장</Text>
+        </TouchableWithoutFeedback>
+      </View>
+      {/* 헤더 끝 */}
+
+
+      <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 0 }}>
         <View style={{ width: chwidth }}>
 
 
@@ -323,7 +334,7 @@ const Settings = () => {
               </View>
             </View>
           </View>
-          <View style={{ marginTop: 60 }}></View>
+          <View style={{ marginTop: 60,marginBottom:20 }}></View>
 
 
           {/* 본문 끝 */}
@@ -332,15 +343,7 @@ const Settings = () => {
         </View>
       </ScrollView>
 
-      {/* 헤더 */}
-      <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 32, marginLeft: 16, position: "absolute", top: 0 }}>
-        <View><TouchableWithoutFeedback onPress={() => navigation.goBack()}><Image source={back}></Image></TouchableWithoutFeedback></View>
-        <Text style={styles.maintxt}>설정</Text>
-        <TouchableWithoutFeedback onPress={() => savebtnclick()}>
-          <Text style={styles.savetxt}>저장</Text>
-        </TouchableWithoutFeedback>
-      </View>
-      {/* 헤더 끝 */}
+     
     </SafeAreaView>
   )
 }

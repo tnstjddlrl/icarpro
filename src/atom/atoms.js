@@ -22,7 +22,7 @@ export const fcmToken = atom({
 
 export const isCarRace = atom({
   key: 'isCarRace',
-  default: 'SEDAN1',
+  default: '',
 })
 
 export const bootRestTime = atom({

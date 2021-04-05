@@ -44,7 +44,7 @@ const radioSelect = require('../img/radioSelect.png')
 const sedan1img = require('../img/sedan1.png')
 const suv1img = require('../img/suv1.png')
 
-
+let updateCount = 0
 
 
 const CarRegister = () => {
@@ -55,19 +55,17 @@ const CarRegister = () => {
 
   const navigation = useNavigation()
 
-  const [modemN, setModemN] = useState('')
-  const [userN, setUserN] = useState('')
-  const [carRace, setCarRace] = useState('')
-  const [raceModal, setRaceModal] = useState(false)
-
   const [atModemn, setAtModemn] = useRecoilState(modemNumber)
   const [atUserNumber, setatUserNumber] = useRecoilState(userNumber)
   const [atIsCarRace, setatIsCarRace] = useRecoilState(isCarRace)
 
+  const [modemN, setModemN] = useState(atModemn)
+  const [userN, setUserN] = useState(atUserNumber)
+  const [carRace, setCarRace] = useState(atIsCarRace)
+  const [raceModal, setRaceModal] = useState(false)
+
+
   useEffect(() => {
-    setModemN(atModemn)
-    setUserN(atUserNumber)
-    setCarRace(atIsCarRace)
     if (atIsCarRace == 'SEDAN1') {
       setSedan1(true)
     } else if (atIsCarRace == 'SUV1') {
@@ -129,7 +127,6 @@ const CarRegister = () => {
     }
   }
 
-  var times
   function registerClick() {
     var txt = { type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
     txt = JSON.stringify(txt)
@@ -137,9 +134,7 @@ const CarRegister = () => {
     client.write(txt)
     console.log('전송 : ' + txt)
 
-    times = setTimeout(() => {
-      Alert.alert('서버와 통신을 실패하였습니다.')
-    }, 2000);
+
 
     // navigation.navigate('간편비밀번호')
 
@@ -153,7 +148,6 @@ const CarRegister = () => {
     // setatIsCarRace(carRace)
   }
 
-  var times2
   function registerDel() {
     var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN } }
     txt = JSON.stringify(txt)
@@ -161,32 +155,19 @@ const CarRegister = () => {
     client.write(txt)
     console.log('전송 : ' + txt)
 
-    times2 = setTimeout(() => {
-      Alert.alert('서버와 통신을 실패하였습니다.')
-    }, 2000);
-
     Alert.alert('삭제')
   }
-
-  var times3
+  console.log('모뎀 : ' +modemN+ '유저:' + userN)
   function registerUpdate() {
-    var txt = { type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
-    txt = JSON.stringify(txt)
-
-    client.write(txt)
-    console.log('전송 : ' + txt)
-
-    times3 = setTimeout(() => {
-      Alert.alert('서버와 통신을 실패하였습니다.')
-    }, 2000);
+    client.write(JSON.stringify({ type: "R", type_sub: "register_update", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+    console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register_update", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
   }
 
 
 
   client.on('data', function (data) {
     if ('' + data == 'reg_suc') {
-      clearTimeout(times)
-      Alert.alert('등록이 완료되었습니다')
+      // Alert.alert('등록이 완료되었습니다')
       navigation.navigate('차량제어')
 
       AsyncStorage.setItem("@modem_N", modemN)
@@ -198,7 +179,6 @@ const CarRegister = () => {
       setatUserNumber(userN)
       setatIsCarRace(carRace)
     } else if ('' + data == 'registerDel_suc') {
-      clearTimeout(times2)
       delFirst()
       delModem()
       delUser()
@@ -207,19 +187,26 @@ const CarRegister = () => {
       setAtModemn('')
       setatUserNumber('')
       setatIsCarRace('')
-    } else if ('' + data == 'reg_fail') {
-      Alert.alert("이미 등록된 사용자입니다.", "계속 진행 하시겠습니까?", [
-        {
-          text: "아니요",
-          onPress: () => Alert.alert('등록을 취소합니다.'),
-          style: "cancel"
-        },
-        { text: "예", onPress: () => { registerUpdate(), Alert.alert('등록이 완료되었습니다.') } }
-      ]);
 
+      setModemN('')
+      setUserN('')
+      setCarRace('')
+    } else if ('' + data == 'reg_fail') {
+      if(updateCount === 0){
+        updateCount = 1
+        Alert.alert("이미 등록된 사용자입니다.", "계속 진행 하시겠습니까?", [
+          {
+            text: "아니요",
+            onPress: () => Alert.alert('등록을 취소합니다.'),
+            style: "cancel"
+          },
+          { text: "예", onPress: () => { registerUpdate(), Alert.alert('등록이 완료되었습니다.'),updateCount = 0} }
+        ]);
+      }else{
+
+      }
     } else {
-      clearTimeout(times)
-      clearTimeout(times2)
+
     }
     console.log('차량 등록 내에서 받기 ' + data);
   });
@@ -254,7 +241,7 @@ const CarRegister = () => {
         <View style={{ flex: 10, marginLeft: 16 }}>
           <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput onBlur={() => Alert.alert('사용자 검색')} placeholder='모뎀 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
+              <TextInput placeholder='모뎀 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setModemN(txt)} value={modemN} keyboardType={"number-pad"}></TextInput>
               {modemN != '' &&
                 <TouchableOpacity onPress={() => setModemN('')}>
                   <Image source={inputcls}></Image>
@@ -557,4 +544,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(CarRegister)
+export default CarRegister
