@@ -80,6 +80,8 @@ const Carcontroll = () => {
   const [bootrest, setBootrest] = useRecoilState(bootRestTime)
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
 
+  const [loadModal,setLoadModal] = useState(false)
+
   //console.log('제어 : '+pushToken)
 
   function timecalcul(time) {
@@ -433,7 +435,11 @@ const Carcontroll = () => {
               <View style={{ flex: 3 }}>
                 <View style={{ flex: 0.8 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
-                  <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
+                  <TouchableWithoutFeedback onPress={()=>{setLoadModal(true),setTimeout(() => {
+                    setLoadModal(false)
+                  }, 1000);}}>
+                    <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
+                  </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flex: 4 }}>
                   <Text style={styles.carnum}>12기 3456</Text>
@@ -739,7 +745,7 @@ const Carcontroll = () => {
 
       <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />
 
-      <Modal visible={true} transparent={true}>
+      <Modal visible={loadModal} transparent={true} animationType={'fade'}>
         <SafeAreaView style={{width:chwidth,height:chheight,backgroundColor: 'rgba(0, 0, 0, 0.7)',justifyContent:'center',alignItems:'center'}}>
           <View style={{width:chwidth-80,height:80,backgroundColor:'white',marginTop:-300,borderRadius:10,justifyContent:'center',alignItems:'center'}}>
             <Text style={styles.modaltxt}>원격 시동 끄기 명령을</Text>
