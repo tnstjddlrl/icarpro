@@ -158,6 +158,7 @@ const CarRegister = () => {
     Alert.alert('삭제')
   }
   console.log('모뎀 : ' +modemN+ '유저:' + userN)
+  
   function registerUpdate() {
     client.write(JSON.stringify({ type: "R", type_sub: "register_update", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
     console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register_update", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
