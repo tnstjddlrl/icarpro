@@ -9,7 +9,8 @@ import {
   SafeAreaView,
   Image,
   StyleSheet,
-  Platform
+  Platform,
+  Modal
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -28,6 +29,8 @@ import {
   useRecoilValue,
 } from 'recoil';
 import { networkState, newState, fcmToken, isCarRace, bootRestTime, isBootOn } from './atom/atoms'
+
+import AutoHeightImage from 'react-native-auto-height-image';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -424,6 +427,8 @@ const Carcontroll = () => {
                 navigation.navigate('차량등록')
               }
             }}>
+
+
             <View style={{ width: chwidth, height: chheight }}>
               <View style={{ flex: 3 }}>
                 <View style={{ flex: 0.8 }}></View>
@@ -437,22 +442,22 @@ const Carcontroll = () => {
                     <TouchableWithoutFeedback onPress={() => setcarRace('SEDAN1')}>
                       <View style={{ justifyContent: "center", alignItems: "center" }}>
                         {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
-                          <Image source={suv1_big} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={suv1_big} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {door == 'on' &&
-                          <Image source={suvdooron} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={suvdooron} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(panic == 'on') &&
-                          <Image source={suvpanicon} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={suvpanicon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(warnbim == 'on') &&
-                          <Image source={suvbimon} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={suvbimon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {trunk == true &&
-                          <Image source={suvtrunkon} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={suvtrunkon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
-                          <Image source={suvbooton} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={suvbooton} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                       </View>
                     </TouchableWithoutFeedback>
@@ -463,22 +468,22 @@ const Carcontroll = () => {
                     <TouchableWithoutFeedback onPress={() => setcarRace('SUV1')}>
                       <View style={{ justifyContent: "center", alignItems: "center" }}>
                         {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
-                          <Image source={sedan1_big} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={sedan1_big} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {door == 'on' &&
-                          <Image source={dooron} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={dooron} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(panic == 'on') &&
-                          <Image source={panicon} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={panicon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(warnbim == 'on') &&
-                          <Image source={bimon} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={bimon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {trunk == true &&
-                          <Image source={trunkon} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={trunkon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
-                          <Image source={booton} style={{ marginTop: -30 }}></Image>
+                          <AutoHeightImage source={booton} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                       </View>
                     </TouchableWithoutFeedback>
@@ -734,6 +739,15 @@ const Carcontroll = () => {
 
       <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />
 
+      <Modal visible={true} transparent={true}>
+        <SafeAreaView style={{width:chwidth,height:chheight,backgroundColor: 'rgba(0, 0, 0, 0.7)',justifyContent:'center',alignItems:'center'}}>
+          <View style={{width:chwidth-80,height:80,backgroundColor:'white',marginTop:-300,borderRadius:10,justifyContent:'center',alignItems:'center'}}>
+            <Text style={styles.modaltxt}>원격 시동 끄기 명령을</Text>
+            <Text style={styles.modaltxt}>실행 중 입니다.</Text>
+          </View>
+        </SafeAreaView>
+      </Modal>
+
     </View>
   )
 }
@@ -795,6 +809,16 @@ const styles = StyleSheet.create({
     textAlign: "right",
     color: "#f75929",
     marginRight: 24
+  },
+  modaltxt:{
+    // fontFamily: "AppleSDGothicNeo",
+    fontSize: 16,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    color: "black",
+    width:chwidth-80,
+    textAlign:'center'
   }
 })
 
