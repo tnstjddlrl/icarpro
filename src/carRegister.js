@@ -49,6 +49,8 @@ let updateCount = 0
 
 const CarRegister = () => {
 
+  const [loadModal,setLoadModal] = useState(false)
+
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   // console.log('차등록 : ' + pushToken)
 
@@ -59,13 +61,16 @@ const CarRegister = () => {
   const [atUserNumber, setatUserNumber] = useRecoilState(userNumber)
   const [atIsCarRace, setatIsCarRace] = useRecoilState(isCarRace)
 
-  const [modemN, setModemN] = useState(atModemn)
-  const [userN, setUserN] = useState(atUserNumber)
-  const [carRace, setCarRace] = useState(atIsCarRace)
+  const [modemN, setModemN] = useState('')
+  const [userN, setUserN] = useState('')
+  const [carRace, setCarRace] = useState('')
   const [raceModal, setRaceModal] = useState(false)
 
 
   useEffect(() => {
+    setModemN(atModemn)
+    setUserN(atUserNumber)
+    setCarRace(atIsCarRace)
     if (atIsCarRace == 'SEDAN1') {
       setSedan1(true)
     } else if (atIsCarRace == 'SUV1') {
@@ -127,8 +132,8 @@ const CarRegister = () => {
     }
   }
 
-  function registerClick() {
-    var txt = { type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
+  function registerClick(sub) {
+    var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
     txt = JSON.stringify(txt)
 
     client.write(txt)
@@ -158,10 +163,13 @@ const CarRegister = () => {
     Alert.alert('삭제')
   }
   console.log('모뎀 : ' +modemN+ '유저:' + userN)
-  
-  function registerUpdate() {
-    client.write(JSON.stringify({ type: "R", type_sub: "register_update", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-    console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register_update", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+
+  function registerUpdate(modem,user) {
+    var txt = { type: "R", type_sub: "register_update", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
+    txt = JSON.stringify(txt)
+
+    client.write(txt)
+    console.log('전송 : ' + txt)
   }
 
 
@@ -195,14 +203,7 @@ const CarRegister = () => {
     } else if ('' + data == 'reg_fail') {
       if(updateCount === 0){
         updateCount = 1
-        Alert.alert("이미 등록된 사용자입니다.", "계속 진행 하시겠습니까?", [
-          {
-            text: "아니요",
-            onPress: () => Alert.alert('등록을 취소합니다.'),
-            style: "cancel"
-          },
-          { text: "예", onPress: () => { registerUpdate(), Alert.alert('등록이 완료되었습니다.'),updateCount = 0} }
-        ]);
+        setLoadModal(true)
       }else{
 
       }
@@ -287,7 +288,7 @@ const CarRegister = () => {
 
               <View style={{ flex: 0.05 }}></View>
 
-              <TouchableWithoutFeedback onPress={() => registerClick()}>
+              <TouchableWithoutFeedback onPress={() => registerClick('register')}>
                 <View style={{ borderRadius: 6, backgroundColor: "#f75929", height: 54, flex: 1, justifyContent: "center", alignItems: "center" }}>
                   <Text style={styles.registertxt}>등록</Text>
                 </View>
@@ -429,6 +430,36 @@ const CarRegister = () => {
         </Modal>
         {/* 차량선택 모달 끝*/}
 
+        <Modal visible={loadModal} transparent={true} animationType={'fade'}>
+        <SafeAreaView style={{width:chwidth,height:chheight,backgroundColor: 'rgba(0, 0, 0, 0.7)',justifyContent:'center',alignItems:'center'}}>
+          <View style={{width:chwidth-80,height:160,backgroundColor:'white',marginTop:-150,borderRadius:10}}>
+            <View style={{marginTop:20,alignItems:'center'}}>
+            <Text style={styles.modalTitle}>주의!</Text>
+            <Text style={styles.modaltxt}>이미 등록된 사용자입니다.</Text>
+            <Text style={styles.modaltxt}>계속 진행하시겠습니까?</Text>
+            </View>
+            <View style={{flex:1,justifyContent:'flex-end'}}>
+              <View style={{width:chwidth-80,borderWidth:0.5}}></View>
+              <View style={{flexDirection:'row',width:chwidth-80,height:50}}>
+                <TouchableWithoutFeedback onPress={()=>{setLoadModal(false),updateCount=0}}>
+                  <View style={{flex:1,borderBottomLeftRadius:10,justifyContent:'center',alignItems:'center'}}>
+                    <Text>취소</Text>
+                  </View>
+                  </TouchableWithoutFeedback>
+                  <View style={{height:50,borderWidth:0.5}}></View>
+                  <TouchableWithoutFeedback onPress={()=>{registerClick('register_update'),setLoadModal(false),navigation.navigate('차량제어'),updateCount=0}}>
+                  <View style={{flex:1,borderBottomLeftRadius:10,justifyContent:'center',alignItems:'center'}}>
+                    <Text>확인</Text>
+                  </View>
+                  </TouchableWithoutFeedback>
+                  
+              </View>
+            </View>
+          </View>
+          
+        </SafeAreaView>
+      </Modal>
+
       </View>
     </SafeAreaView>
   )
@@ -436,6 +467,27 @@ const CarRegister = () => {
 
 
 const styles = StyleSheet.create({
+  modaltxt:{
+    // fontFamily: "AppleSDGothicNeo",
+    fontSize: 16,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    color: "black",
+    width:chwidth-80,
+    textAlign:'center'
+  },
+  modalTitle:{
+    // fontFamily: "AppleSDGothicNeo",
+    fontSize: 20,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    color: "black",
+    width:chwidth-80,
+    textAlign:'center',
+    marginBottom:5
+  },
   canceltxt: {
     opacity: 0.3,
     fontFamily: "AppleSDGothicNeo",
