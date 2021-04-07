@@ -17,18 +17,18 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { 
-  modemNumber, 
-  userNumber, 
-  fcmToken, 
-  isCarRace, 
-  voltValue, 
+import {
+  modemNumber,
+  userNumber,
+  fcmToken,
+  isCarRace,
+  voltValue,
   voltValueSC,
-  bootTimeValue, 
-  bootTimeValueSC, 
-  lastHeatTimeValue, 
-  lastHeatTimeValueSC, 
-  startTimeValue, 
+  bootTimeValue,
+  bootTimeValueSC,
+  lastHeatTimeValue,
+  lastHeatTimeValueSC,
+  startTimeValue,
   startTimeValueSC,
   actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert
 } from './atom/atoms'
@@ -168,14 +168,14 @@ const Load = () => {
       console.log(e)
     }
   }
-  
 
 
 
 
-  
 
-  
+
+
+
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [atModemn, setAtModemn] = useRecoilState(modemNumber)
@@ -186,19 +186,19 @@ const Load = () => {
 
   const [lowVoltValue, setLowVoltValue] = useRecoilState(voltValue)
   const [lowVoltValuesc, setLowVoltValuesc] = useRecoilState(voltValueSC)
-  const [atbootTimeValue,setatBootTimeValue] = useRecoilState(bootTimeValue)
-  const [atbootTimeValueSC,setatBootTimeValueSC] =useRecoilState(bootTimeValueSC)
-  const [atLastHeatvalue,setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
-  const [atLastHeatvalueSC,setAtLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
-  const [atStartTimeValue,setAtStartTimeValue] = useRecoilState(startTimeValue)
-  const [atStartTimeValueSC,setAtStartTimeValueSC] = useRecoilState(startTimeValueSC)
+  const [atbootTimeValue, setatBootTimeValue] = useRecoilState(bootTimeValue)
+  const [atbootTimeValueSC, setatBootTimeValueSC] = useRecoilState(bootTimeValueSC)
+  const [atLastHeatvalue, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
+  const [atLastHeatvalueSC, setAtLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
+  const [atStartTimeValue, setAtStartTimeValue] = useRecoilState(startTimeValue)
+  const [atStartTimeValueSC, setAtStartTimeValueSC] = useRecoilState(startTimeValueSC)
 
-  const [atIcarSwitch,setAticarswitch] = useRecoilState(icarSwitch)
-  const [atidoorswitch,setAtidoorswitch] = useRecoilState(idoorSwitch)
-  const [atlowvoltBoot,setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
-  const [atlowvoltAlert,setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
-  const [atactionSound,setAtactionSound] = useRecoilState(actionSound)
-  const [atalertSound,setAtalertSound] = useRecoilState(alertSound)
+  const [atIcarSwitch, setAticarswitch] = useRecoilState(icarSwitch)
+  const [atidoorswitch, setAtidoorswitch] = useRecoilState(idoorSwitch)
+  const [atlowvoltBoot, setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
+  const [atlowvoltAlert, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
+  const [atactionSound, setAtactionSound] = useRecoilState(actionSound)
+  const [atalertSound, setAtalertSound] = useRecoilState(alertSound)
 
   const handlePushToken = useCallback(async () => {
     const enabled = await messaging().hasPermission()
@@ -235,13 +235,13 @@ const Load = () => {
   useEffect(() => {
     getData().then((res) => {
       if (res != null) {
-        
-        getIcarSwitch().then(res=>setAticarswitch(JSON.parse(res)))
-        getidoorswitch().then(res=>setAtidoorswitch(JSON.parse(res)))
-        getlowboltBoot().then(res=>setAtlowvoltBoot(JSON.parse(res)))
-        getlowboltAlert().then(res=>setAtlowvoltAlert(JSON.parse(res)))
-        getactionsound().then(res=>setAtactionSound(JSON.parse(res)))
-        getalertsound().then(res=>setAtalertSound(JSON.parse(res)))
+
+        getIcarSwitch().then(res => { if (res !== null) setAticarswitch(JSON.parse(res)) })
+        getidoorswitch().then(res => { if (res !== null) setAtidoorswitch(JSON.parse(res)) })
+        getlowboltBoot().then(res => { if (res !== null) setAtlowvoltBoot(JSON.parse(res)) })
+        getlowboltAlert().then(res => { if (res !== null) setAtlowvoltAlert(JSON.parse(res)) })
+        getactionsound().then(res => { if (res !== null) setAtactionSound(JSON.parse(res)) })
+        getalertsound().then(res => { if (res !== null) setAtalertSound(JSON.parse(res)) })
 
 
         getmodem().then(res => setAtModemn(res))
@@ -267,39 +267,39 @@ const Load = () => {
           }
         })
 
-        getBootTimeValue().then(res=>{
-          if(res=='3'){
+        getBootTimeValue().then(res => {
+          if (res == '3') {
             setatBootTimeValue('3')
             setatBootTimeValueSC(5)
-          }else if(res=='5'){
+          } else if (res == '5') {
             setatBootTimeValue('5')
             setatBootTimeValueSC(73)
-          }else if(res=='10'){
+          } else if (res == '10') {
             setatBootTimeValue('10')
             setatBootTimeValueSC(150)
           }
         })
 
-        getLastHeatValue().then(res=>{
-          if(res=='1:30'){
+        getLastHeatValue().then(res => {
+          if (res == '1:30') {
             setAtLastHeatValue('1:30')
             setAtLastHeatValueSC(10)
-          }else if(res=='3:00'){
+          } else if (res == '3:00') {
             setAtLastHeatValue('3:00')
             setAtLastHeatValueSC(74)
-          }else if(res=='5:00'){
+          } else if (res == '5:00') {
             setAtLastHeatValue('5:00')
             setAtLastHeatValueSC(144)
           }
         })
-        getStartTimeValue().then(res=>{
-          if(res=='1'){
+        getStartTimeValue().then(res => {
+          if (res == '1') {
             setAtStartTimeValue('1')
             setAtStartTimeValueSC(0)
-          }else if(res=='2'){
+          } else if (res == '2') {
             setAtStartTimeValue('2')
             setAtStartTimeValueSC(73)
-          }else if(res=='3'){
+          } else if (res == '3') {
             setAtStartTimeValue('3')
             setAtStartTimeValueSC(148)
           }
