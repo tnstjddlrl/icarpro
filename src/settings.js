@@ -86,7 +86,6 @@ const Settings = () => {
     setTimeout(() => {
       setSaveModal(false)
     }, 1500);
-
   }
 
   return (

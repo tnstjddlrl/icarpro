@@ -122,19 +122,7 @@ const Carcontroll = () => {
       client.write(boot_0)
       console.log('전송 : ' + boot_0)
 
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '원격시동 명령',
-        text2: '원격시동 명령을 [OFF]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });
+      lomofc('원격시동 켜기')
     }
 
     var min = parseInt((time % 3600) / 60);
@@ -161,9 +149,6 @@ const Carcontroll = () => {
   var trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
   var boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
   var boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
-
-
-
 
 
   const [boot, setBoot] = useState(false)
