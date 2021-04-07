@@ -83,7 +83,19 @@ const Carcontroll = () => {
   const [loadModal, setLoadModal] = useState(false)
   const [commandtxt, setCommandtxt] = useState('')
 
-  function lomoff() {
+  const [completeModal, setCompleteModal] = useState(false)
+
+  function lomofc(txt) {
+
+    setCommandtxt(txt)
+    setLoadModal(true)
+    setTimeout(() => {
+      setLoadModal(false)
+      setCompleteModal(true)
+      setTimeout(() => {
+        setCompleteModal(false)
+      }, 1500);
+    }, 1500);
 
   }
 
@@ -155,19 +167,7 @@ const Carcontroll = () => {
       setDoor('on')
       //Alert.alert('door_0')
 
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '도어 명령',
-        text2: '도어 명령을 [LOCK]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });
+      lomofc('도어 LOCK')
 
 
       door_1 = JSON.stringify(door_1)
@@ -176,7 +176,7 @@ const Carcontroll = () => {
 
       setTimeout(() => {
         setDoor('no')
-      }, 1500);
+      }, 4000);
 
     }
 
@@ -185,19 +185,7 @@ const Carcontroll = () => {
       setDoor('off')
       // Alert.alert('door_1')
 
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '도어 명령',
-        text2: '도어 명령을 [UNLOCK]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });
+      lomofc('도어 UNLOCK')
 
       door_0 = JSON.stringify(door_0)
       client.write(door_0)
@@ -215,19 +203,8 @@ const Carcontroll = () => {
       setPanic('on')
       //Alert.alert('panic_0')
 
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '패닉 명령',
-        text2: '패닉 명령을 [ON]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });
+
+      lomofc('패닉 ON')
 
 
       panic_1 = JSON.stringify(panic_1)
@@ -236,25 +213,13 @@ const Carcontroll = () => {
 
       setTimeout(() => {
         setPanic('no')
-      }, 1500);
+      }, 4000);
     }
 
     if (is == 'off') {
       setPanic('off')
 
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '패닉 명령',
-        text2: '패닉 명령을 [OFF]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });
+      lomofc('패닉 OFF')
 
       panic_0 = JSON.stringify(panic_0)
       client.write(panic_0)
@@ -262,7 +227,7 @@ const Carcontroll = () => {
 
       setTimeout(() => {
         setPanic('no')
-      }, 1500);
+      }, 4000);
     }
   }
 
@@ -271,19 +236,7 @@ const Carcontroll = () => {
       setWarnbim('on')
       //Alert.alert('emergency_0')
 
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '비상등 명령',
-        text2: '비상등 명령을 [ON]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });
+      lomofc('비상등 ON')
 
       warn_1 = JSON.stringify(warn_1)
       client.write(warn_1)
@@ -291,26 +244,14 @@ const Carcontroll = () => {
 
       setTimeout(() => {
         setWarnbim('no')
-      }, 1500);
+      }, 4000);
     }
 
     if (is == 'off') {
       setWarnbim('off')
       // Alert.alert('emergency_1')
 
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '비상등 명령',
-        text2: '비상등 명령을 [OFF]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });
+      lomofc('비상등 OFF')
 
       warn_0 = JSON.stringify(warn_0)
       client.write(warn_0)
@@ -319,7 +260,7 @@ const Carcontroll = () => {
 
       setTimeout(() => {
         setWarnbim('no')
-      }, 1500);
+      }, 4000);
 
     }
   }
@@ -328,19 +269,7 @@ const Carcontroll = () => {
     //Alert.alert('trunk_0')
     setTrunk(true)
 
-    Toast.show({
-      type: 'success',
-      position: 'top',
-      text1: '트렁크 명령',
-      text2: '트렁크 명령을 [OPEN]하였습니다.',
-      visibilityTime: 2000,
-      autoHide: true,
-      topOffset: 30,
-      bottomOffset: 40,
-      onShow: () => { },
-      onHide: () => { },
-      onPress: () => { }
-    });
+    lomofc('비상등 ON')
 
     trunk_1 = JSON.stringify(trunk_1)
     client.write(trunk_1)
@@ -348,25 +277,14 @@ const Carcontroll = () => {
 
     setTimeout(() => {
       setTrunk(false)
-    }, 1500);
+    }, 4000);
   }
 
   function bootClick() {
     if (boot == false) {
       setBoot(true)
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '원격시동 명령',
-        text2: '원격시동 명령을 [ON]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });
+
+      lomofc('원격시동 켜기')
 
       boot_1 = JSON.stringify(boot_1)
       client.write(boot_1)
@@ -383,19 +301,8 @@ const Carcontroll = () => {
 
     } else {
 
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: '원격시동 명령',
-        text2: '원격시동 명령을 [OFF]하였습니다.',
-        visibilityTime: 2000,
-        autoHide: true,
-        topOffset: 30,
-        bottomOffset: 40,
-        onShow: () => { },
-        onHide: () => { },
-        onPress: () => { }
-      });
+      lomofc('원격시동 끄기')
+
       setBoot(false)
       clearInterval(interval)
       setBootrest('00:00')
@@ -752,9 +659,18 @@ const Carcontroll = () => {
 
       <Modal visible={loadModal} transparent={true} animationType={'fade'}>
         <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -300, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.modaltxt}>{commandtxt} 명령을</Text>
             <Text style={styles.modaltxt}>실행 중 입니다.</Text>
+          </View>
+        </SafeAreaView>
+      </Modal>
+
+      <Modal visible={completeModal} transparent={true} animationType={'fade'}>
+        <SafeAreaView style={{ width: chwidth, height: chheight, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={styles.modaltxt}>{commandtxt} 명령을</Text>
+            <Text style={styles.modaltxt}>실행하였습니다.</Text>
           </View>
         </SafeAreaView>
       </Modal>
