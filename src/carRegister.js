@@ -49,7 +49,10 @@ let updateCount = 0
 
 const CarRegister = () => {
 
-  const [loadModal,setLoadModal] = useState(false)
+  const [loadModal, setLoadModal] = useState(false)
+  const [delModal, setDelModal] = useState(false)
+  const [userCancelModal, setUserCancelModal] = useState(false)
+  const [cancelMss, setCancelMss] = useState('')
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   // console.log('차등록 : ' + pushToken)
@@ -86,12 +89,12 @@ const CarRegister = () => {
 
   function iscar() {
     if (sedan1 == true) {
-      Alert.alert('차량이 변경되었습니다.')
+      usercancelff('차량이 변경되었습니다.')
       setCarRace('SEDAN1')
       setRaceModal(false)
       setatIsCarRace('SEDAN1')
     } else if (suv1 == true) {
-      Alert.alert('차량이 변경되었습니다.')
+      usercancelff('차량이 변경되었습니다.')
       setCarRace('SUV1')
       setRaceModal(false)
       setatIsCarRace('SUV1')
@@ -160,15 +163,18 @@ const CarRegister = () => {
     client.write(txt)
     console.log('전송 : ' + txt)
 
-    Alert.alert('삭제')
+    setUserN('')
+    setCarRace('')
+    setSedan1(false)
+    setSuv1(false)
   }
-  console.log('모뎀 : ' +modemN+ '유저:' + userN)
+  console.log('모뎀 : ' + modemN + '유저:' + userN)
 
 
   client.on('data', function (data) {
     if ('' + data == 'reg_suc') {
       // Alert.alert('등록이 완료되었습니다')
-      navigation.navigate('차량제어')
+      // navigation.navigate('차량제어')
 
       AsyncStorage.setItem("@modem_N", modemN)
       AsyncStorage.setItem("@user_N", userN)
@@ -192,10 +198,10 @@ const CarRegister = () => {
       setUserN('')
       setCarRace('')
     } else if ('' + data == 'reg_fail') {
-      if(updateCount === 0){
+      if (updateCount === 0) {
         updateCount = 1
         setLoadModal(true)
-      }else{
+      } else {
 
       }
     } else {
@@ -211,7 +217,13 @@ const CarRegister = () => {
   }
 
 
-
+  function usercancelff(mss) {
+    setCancelMss(mss)
+    setUserCancelModal(true)
+    setTimeout(() => {
+      setUserCancelModal(false)
+    }, 1500);
+  }
 
 
 
@@ -271,7 +283,7 @@ const CarRegister = () => {
           {(modemN != '' && userN != '' && carRace != '') ?
             <View style={{ flexDirection: "row", width: chwidth - 32, marginTop: 16 }}>
 
-              <TouchableWithoutFeedback onPress={() => registerDel()}>
+              <TouchableWithoutFeedback onPress={() => setDelModal(true)}>
                 <View style={{ borderStyle: "solid", borderWidth: 1.5, borderColor: "#a6a9ac", height: 54, flex: 1, borderRadius: 6, justifyContent: "center", alignItems: "center" }}>
                   <Text style={styles.canceltxt2}>삭제</Text>
                 </View>
@@ -422,34 +434,74 @@ const CarRegister = () => {
         {/* 차량선택 모달 끝*/}
 
         <Modal visible={loadModal} transparent={true} animationType={'fade'}>
-        <SafeAreaView style={{width:chwidth,height:chheight,backgroundColor: 'rgba(0, 0, 0, 0.7)',justifyContent:'center',alignItems:'center'}}>
-          <View style={{width:chwidth-80,height:160,backgroundColor:'white',marginTop:-150,borderRadius:10}}>
-            <View style={{marginTop:20,alignItems:'center'}}>
-            <Text style={styles.modalTitle}>주의!</Text>
-            <Text style={styles.modaltxt}>이미 등록된 사용자입니다.</Text>
-            <Text style={styles.modaltxt}>계속 진행하시겠습니까?</Text>
-            </View>
-            <View style={{flex:1,justifyContent:'flex-end'}}>
-              <View style={{width:chwidth-80,borderWidth:0.5}}></View>
-              <View style={{flexDirection:'row',width:chwidth-80,height:50}}>
-                <TouchableWithoutFeedback onPress={()=>{setLoadModal(false),updateCount=0}}>
-                  <View style={{flex:1,borderBottomLeftRadius:10,justifyContent:'center',alignItems:'center'}}>
-                    <Text>취소</Text>
-                  </View>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ width: chwidth - 80, height: 160, backgroundColor: 'white', marginTop: -150, borderRadius: 10 }}>
+              <View style={{ marginTop: 20, alignItems: 'center' }}>
+                <Text style={styles.modalTitle}>주의!</Text>
+                <Text style={styles.modaltxt}>이미 등록된 사용자입니다.</Text>
+                <Text style={styles.modaltxt}>계속 진행하시겠습니까?</Text>
+              </View>
+              <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
+                <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
+                  <TouchableWithoutFeedback onPress={() => { setLoadModal(false), updateCount = 0, usercancelff('등록을 취소합니다.') }}>
+                    <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Text>취소</Text>
+                    </View>
                   </TouchableWithoutFeedback>
-                  <View style={{height:50,borderWidth:0.5}}></View>
-                  <TouchableWithoutFeedback onPress={()=>{registerClick('register_update'),setLoadModal(false),navigation.navigate('차량제어'),updateCount=0}}>
-                  <View style={{flex:1,borderBottomLeftRadius:10,justifyContent:'center',alignItems:'center'}}>
-                    <Text>확인</Text>
-                  </View>
+                  <View style={{ height: 50, borderWidth: 0.5 }}></View>
+                  <TouchableWithoutFeedback onPress={() => { registerClick('register_update'), setLoadModal(false), usercancelff('등록이 완료되었습니다.'), updateCount = 0 }}>
+                    <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Text>확인</Text>
+                    </View>
                   </TouchableWithoutFeedback>
-                  
+
+                </View>
               </View>
             </View>
-          </View>
-          
-        </SafeAreaView>
-      </Modal>
+
+          </SafeAreaView>
+        </Modal>
+
+
+        <Modal visible={delModal} transparent={true} animationType={'fade'}>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ width: chwidth - 80, height: 160, backgroundColor: 'white', marginTop: -150, borderRadius: 10 }}>
+              <View style={{ marginTop: 20, alignItems: 'center' }}>
+                <Text style={styles.modalTitle}>주의!</Text>
+                <Text style={styles.modaltxt}>등록된 사용자를 삭제합니다.</Text>
+                <Text style={styles.modaltxt}>계속 진행하시겠습니까?</Text>
+              </View>
+              <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
+                <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
+                  <TouchableWithoutFeedback onPress={() => { setDelModal(false), updateCount = 0, usercancelff('삭제를 취소합니다.') }}>
+                    <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Text>취소</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                  <View style={{ height: 50, borderWidth: 0.5 }}></View>
+                  <TouchableWithoutFeedback onPress={() => { registerDel(), setDelModal(false), updateCount = 0, usercancelff('삭제가 완료되었습니다.') }}>
+                    <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Text>확인</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+
+                </View>
+              </View>
+            </View>
+
+          </SafeAreaView>
+        </Modal>
+
+
+        <Modal visible={userCancelModal} transparent={true} animationType={'fade'}>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -300, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={styles.modaltxt}>{cancelMss}</Text>
+            </View>
+          </SafeAreaView>
+        </Modal>
 
       </View>
     </SafeAreaView>
@@ -458,26 +510,26 @@ const CarRegister = () => {
 
 
 const styles = StyleSheet.create({
-  modaltxt:{
+  modaltxt: {
     // fontFamily: "AppleSDGothicNeo",
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
     letterSpacing: 0,
     color: "black",
-    width:chwidth-80,
-    textAlign:'center'
+    width: chwidth - 80,
+    textAlign: 'center'
   },
-  modalTitle:{
+  modalTitle: {
     // fontFamily: "AppleSDGothicNeo",
     fontSize: 20,
     fontWeight: "bold",
     fontStyle: "normal",
     letterSpacing: 0,
     color: "black",
-    width:chwidth-80,
-    textAlign:'center',
-    marginBottom:5
+    width: chwidth - 80,
+    textAlign: 'center',
+    marginBottom: 5
   },
   canceltxt: {
     opacity: 0.3,
@@ -588,4 +640,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default CarRegister
+export default React.memo(CarRegister)
