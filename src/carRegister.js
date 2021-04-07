@@ -164,15 +164,6 @@ const CarRegister = () => {
   }
   console.log('모뎀 : ' +modemN+ '유저:' + userN)
 
-  function registerUpdate(modem,user) {
-    var txt = { type: "R", type_sub: "register_update", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
-    txt = JSON.stringify(txt)
-
-    client.write(txt)
-    console.log('전송 : ' + txt)
-  }
-
-
 
   client.on('data', function (data) {
     if ('' + data == 'reg_suc') {
