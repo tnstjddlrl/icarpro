@@ -25,7 +25,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState, newState, fcmToken, isCarRace, bootRestTime, isBootOn } from './atom/atoms'
+import { networkState, newState, fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -72,15 +72,29 @@ var interval;
 var rrtime = 600;
 
 const Carcontroll = () => {
+  const navigation = useNavigation()
+
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [carRace, setcarRace] = useRecoilState(isCarRace)
   const [bootrest, setBootrest] = useRecoilState(bootRestTime)
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
+  const isicarswitch = useRecoilValue(icarSwitch)
 
   const [loadModal, setLoadModal] = useState(false)
   const [commandtxt, setCommandtxt] = useState('')
 
   const [completeModal, setCompleteModal] = useState(false)
+
+  const unsubscribe = navigation.addListener('focus', () => {
+    if (isicarswitch === false) {
+      Alert.alert('현재 icar 설정이 꺼져있습니다.')
+    }
+  });
+  useEffect(() => {
+    return () => unsubscribe();
+  });
+
+
 
   function lomofc(txt) {
 
@@ -149,7 +163,7 @@ const Carcontroll = () => {
   var boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
 
 
-  const navigation = useNavigation()
+
 
 
   const [boot, setBoot] = useState(false)
