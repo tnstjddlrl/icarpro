@@ -65,18 +65,6 @@ const Settings = () => {
   const [actionsound, setactionsound] = useState(atactionsound)
   const [alertsound, setalertsound] = useState(atalertsound)
 
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@icarswitch')
-      return value
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  // getData().then(res => console.log('어싱크 불린 ' + JSON.parse(res)))
-
-
 
 
   function savebtnclick() {
