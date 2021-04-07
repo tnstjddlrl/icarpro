@@ -11,7 +11,8 @@ import {
   Image,
   StyleSheet,
   Switch,
-  ScrollView
+  ScrollView,
+  Modal
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -46,6 +47,8 @@ const rightArr = require('../img/setImg/rightArr.png')
 const Settings = () => {
   const navigation = useNavigation()
 
+  const [saveModal, setSaveModal] = useState(false)
+
 
   const [aticarswitch, setaticarswitch] = useRecoilState(icarSwitch)
   const [atidoorswitch, setatidoorswitch] = useRecoilState(idoorSwitch)
@@ -77,6 +80,7 @@ const Settings = () => {
 
 
   function savebtnclick() {
+    setSaveModal(true)
     AsyncStorage.setItem("@icarswitch", JSON.stringify(icarswitch))
     AsyncStorage.setItem("@idoorswitch", JSON.stringify(idoorswitch))
     AsyncStorage.setItem("@lowboltBoot", JSON.stringify(lowboltBoot))
@@ -91,13 +95,16 @@ const Settings = () => {
     setatactionsound(actionsound)
     setatalertsound(alertsound)
 
-    Alert.alert('설정이 저장되었습니다.')
+    setTimeout(() => {
+      setSaveModal(false)
+    }, 1500);
+
   }
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
-       {/* 헤더 */}
-       <View style={{ height:60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 32, marginLeft: 16,}}>
+      {/* 헤더 */}
+      <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 32, marginLeft: 16, }}>
         <View><TouchableWithoutFeedback onPress={() => navigation.goBack()}><Image source={back}></Image></TouchableWithoutFeedback></View>
         <Text style={styles.maintxt}>설정</Text>
         <TouchableWithoutFeedback onPress={() => savebtnclick()}>
@@ -177,7 +184,7 @@ const Settings = () => {
                   isOn={lowboltBoot}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => {setlowboltAlert(false),setlowboltBoot(isOn)}}
+                  onToggle={isOn => { setlowboltAlert(false), setlowboltBoot(isOn) }}
                 />
               </View>
               <View style={{ width: chwidth - 32, flexDirection: "row", justifyContent: 'flex-end' }}>
@@ -193,7 +200,7 @@ const Settings = () => {
                   isOn={lowboltAlert}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => {setlowboltAlert(isOn),setlowboltBoot(false)}}
+                  onToggle={isOn => { setlowboltAlert(isOn), setlowboltBoot(false) }}
                 />
               </View>
               <View style={{ width: chwidth - 32, flexDirection: "row", justifyContent: 'flex-end' }}>
@@ -264,16 +271,16 @@ const Settings = () => {
 
             {/* 원격시동 시간설정 */}
             <View style={{ marginTop: 24 }}></View>
-            <TouchableWithoutFeedback onPress={()=>navigation.navigate('원격시동시간')}>
-            <View style={styles.oneFrame}>
-              <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={powerIcon}></Image>
-                  <Text style={styles.frameTitle}>원격시동 시간설정</Text>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('원격시동시간')}>
+              <View style={styles.oneFrame}>
+                <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Image source={powerIcon}></Image>
+                    <Text style={styles.frameTitle}>원격시동 시간설정</Text>
+                  </View>
+                  <Image source={rightArr}></Image>
                 </View>
-                <Image source={rightArr}></Image>
               </View>
-            </View>
             </TouchableWithoutFeedback>
 
 
@@ -334,7 +341,7 @@ const Settings = () => {
               </View>
             </View>
           </View>
-          <View style={{ marginTop: 60,marginBottom:20 }}></View>
+          <View style={{ marginTop: 60, marginBottom: 20 }}></View>
 
 
           {/* 본문 끝 */}
@@ -343,7 +350,15 @@ const Settings = () => {
         </View>
       </ScrollView>
 
-     
+      <Modal visible={saveModal} transparent={true} animationType={'fade'}>
+        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
+          </View>
+        </SafeAreaView>
+      </Modal>
+
+
     </SafeAreaView>
   )
 }

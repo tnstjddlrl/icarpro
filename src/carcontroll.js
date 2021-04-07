@@ -87,7 +87,7 @@ const Carcontroll = () => {
 
   const unsubscribe = navigation.addListener('focus', () => {
     if (isicarswitch === false) {
-      Alert.alert('현재 icar 설정이 꺼져있습니다.')
+      Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
   });
   useEffect(() => {
