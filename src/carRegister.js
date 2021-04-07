@@ -89,12 +89,14 @@ const CarRegister = () => {
 
   function iscar() {
     if (sedan1 == true) {
-      usercancelff('차량이 변경되었습니다.')
+      setCancelMss('차량이 변경되었습니다.')
+      usercancelff()
       setCarRace('SEDAN1')
       setRaceModal(false)
       setatIsCarRace('SEDAN1')
     } else if (suv1 == true) {
-      usercancelff('차량이 변경되었습니다.')
+      setCancelMss('차량이 변경되었습니다.')
+      usercancelff()
       setCarRace('SUV1')
       setRaceModal(false)
       setatIsCarRace('SUV1')
@@ -176,6 +178,9 @@ const CarRegister = () => {
       // Alert.alert('등록이 완료되었습니다')
       // navigation.navigate('차량제어')
 
+      setCancelMss('등록이 완료되었습니다.')
+      usercancelff()
+
       AsyncStorage.setItem("@modem_N", modemN)
       AsyncStorage.setItem("@user_N", userN)
       AsyncStorage.setItem("@car_Race", carRace)
@@ -184,6 +189,8 @@ const CarRegister = () => {
       setAtModemn(modemN)
       setatUserNumber(userN)
       setatIsCarRace(carRace)
+
+
     } else if ('' + data == 'registerDel_suc') {
       delFirst()
       delModem()
@@ -217,8 +224,8 @@ const CarRegister = () => {
   }
 
 
-  function usercancelff(mss) {
-    setCancelMss(mss)
+  function usercancelff() {
+
     setUserCancelModal(true)
     setTimeout(() => {
       setUserCancelModal(false)
@@ -444,13 +451,13 @@ const CarRegister = () => {
               <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
                 <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
-                  <TouchableWithoutFeedback onPress={() => { setLoadModal(false), updateCount = 0, usercancelff('등록을 취소합니다.') }}>
+                  <TouchableWithoutFeedback onPress={() => { setLoadModal(false), updateCount = 0, usercancelff(), setCancelMss('등록을 취소합니다.') }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>취소</Text>
                     </View>
                   </TouchableWithoutFeedback>
                   <View style={{ height: 50, borderWidth: 0.5 }}></View>
-                  <TouchableWithoutFeedback onPress={() => { registerClick('register_update'), setLoadModal(false), usercancelff('등록이 완료되었습니다.'), updateCount = 0 }}>
+                  <TouchableWithoutFeedback onPress={() => { registerClick('register_update'), setLoadModal(false), usercancelff('등록이 완료되었습니다.'), setCancelMss('등록이 완료되었습니다.'), updateCount = 0 }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>확인</Text>
                     </View>
@@ -475,13 +482,13 @@ const CarRegister = () => {
               <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
                 <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
-                  <TouchableWithoutFeedback onPress={() => { setDelModal(false), updateCount = 0, usercancelff('삭제를 취소합니다.') }}>
+                  <TouchableWithoutFeedback onPress={() => { setDelModal(false), updateCount = 0, usercancelff('삭제를 취소합니다.'), setCancelMss('삭제를 취소합니다.') }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>취소</Text>
                     </View>
                   </TouchableWithoutFeedback>
                   <View style={{ height: 50, borderWidth: 0.5 }}></View>
-                  <TouchableWithoutFeedback onPress={() => { registerDel(), setDelModal(false), updateCount = 0, usercancelff('삭제가 완료되었습니다.') }}>
+                  <TouchableWithoutFeedback onPress={() => { registerDel(), setDelModal(false), updateCount = 0, usercancelff('삭제가 완료되었습니다.'), setCancelMss('삭제가 완료되었습니다.') }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>확인</Text>
                     </View>

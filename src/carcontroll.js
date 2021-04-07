@@ -80,9 +80,12 @@ const Carcontroll = () => {
   const [bootrest, setBootrest] = useRecoilState(bootRestTime)
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
 
-  const [loadModal,setLoadModal] = useState(false)
+  const [loadModal, setLoadModal] = useState(false)
+  const [commandtxt, setCommandtxt] = useState('')
 
-  //console.log('제어 : '+pushToken)
+  function lomoff() {
+
+  }
 
   function timecalcul(time) {
     if (time == 0) {
@@ -435,9 +438,11 @@ const Carcontroll = () => {
               <View style={{ flex: 3 }}>
                 <View style={{ flex: 0.8 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
-                  <TouchableWithoutFeedback onPress={()=>{setLoadModal(true),setTimeout(() => {
-                    setLoadModal(false)
-                  }, 1000);}}>
+                  <TouchableWithoutFeedback onPress={() => {
+                    setLoadModal(true), setTimeout(() => {
+                      setLoadModal(false)
+                    }, 1000);
+                  }}>
                     <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
                   </TouchableWithoutFeedback>
                 </View>
@@ -448,22 +453,22 @@ const Carcontroll = () => {
                     <TouchableWithoutFeedback onPress={() => setcarRace('SEDAN1')}>
                       <View style={{ justifyContent: "center", alignItems: "center" }}>
                         {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
-                          <AutoHeightImage source={suv1_big} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={suv1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {door == 'on' &&
-                          <AutoHeightImage source={suvdooron} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={suvdooron} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(panic == 'on') &&
-                          <AutoHeightImage source={suvpanicon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={suvpanicon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(warnbim == 'on') &&
-                          <AutoHeightImage source={suvbimon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={suvbimon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {trunk == true &&
-                          <AutoHeightImage source={suvtrunkon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={suvtrunkon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
-                          <AutoHeightImage source={suvbooton} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={suvbooton} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                       </View>
                     </TouchableWithoutFeedback>
@@ -474,22 +479,22 @@ const Carcontroll = () => {
                     <TouchableWithoutFeedback onPress={() => setcarRace('SUV1')}>
                       <View style={{ justifyContent: "center", alignItems: "center" }}>
                         {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
-                          <AutoHeightImage source={sedan1_big} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={sedan1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {door == 'on' &&
-                          <AutoHeightImage source={dooron} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={dooron} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(panic == 'on') &&
-                          <AutoHeightImage source={panicon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={panicon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(warnbim == 'on') &&
-                          <AutoHeightImage source={bimon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={bimon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {trunk == true &&
-                          <AutoHeightImage source={trunkon} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={trunkon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
-                          <AutoHeightImage source={booton} width={chwidth-40} style={{ marginTop: -30 }}></AutoHeightImage>
+                          <AutoHeightImage source={booton} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                       </View>
                     </TouchableWithoutFeedback>
@@ -729,10 +734,10 @@ const Carcontroll = () => {
                         <Text style={styles.btntxt}>open</Text>
                       </View>
                     </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => trunkClick()}>
-                        <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                          <Text style={styles.btntxt}>open</Text>
-                        </View>
-                      </TouchableWithoutFeedback>}
+                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.btntxt}>open</Text>
+                      </View>
+                    </TouchableWithoutFeedback>}
                   </View>
                 </View>
               </View>
@@ -746,9 +751,9 @@ const Carcontroll = () => {
       <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />
 
       <Modal visible={loadModal} transparent={true} animationType={'fade'}>
-        <SafeAreaView style={{width:chwidth,height:chheight,backgroundColor: 'rgba(0, 0, 0, 0.7)',justifyContent:'center',alignItems:'center'}}>
-          <View style={{width:chwidth-80,height:80,backgroundColor:'white',marginTop:-300,borderRadius:10,justifyContent:'center',alignItems:'center'}}>
-            <Text style={styles.modaltxt}>원격 시동 끄기 명령을</Text>
+        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -300, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={styles.modaltxt}>{commandtxt} 명령을</Text>
             <Text style={styles.modaltxt}>실행 중 입니다.</Text>
           </View>
         </SafeAreaView>
@@ -816,15 +821,15 @@ const styles = StyleSheet.create({
     color: "#f75929",
     marginRight: 24
   },
-  modaltxt:{
+  modaltxt: {
     // fontFamily: "AppleSDGothicNeo",
     fontSize: 16,
     fontWeight: "bold",
     fontStyle: "normal",
     letterSpacing: 0,
     color: "black",
-    width:chwidth-80,
-    textAlign:'center'
+    width: chwidth - 80,
+    textAlign: 'center'
   }
 })
 
