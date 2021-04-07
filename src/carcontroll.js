@@ -22,9 +22,6 @@ import client from './Client.js'
 import { FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
 
 import {
-  RecoilRoot,
-  atom,
-  selector,
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
