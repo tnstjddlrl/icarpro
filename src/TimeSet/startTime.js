@@ -13,13 +13,11 @@ import {
   ScrollView,
   Modal
 } from 'react-native';
-import Toast from 'react-native-toast-message';
 
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRecoilState,
-  useRecoilValue,
 } from 'recoil';
 import { startTimeValue, startTimeValueSC } from '../atom/atoms';
 

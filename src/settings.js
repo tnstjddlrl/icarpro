@@ -69,6 +69,7 @@ const Settings = () => {
 
   function savebtnclick() {
     setSaveModal(true)
+    
     AsyncStorage.setItem("@icarswitch", JSON.stringify(icarswitch))
     AsyncStorage.setItem("@idoorswitch", JSON.stringify(idoorswitch))
     AsyncStorage.setItem("@lowboltBoot", JSON.stringify(lowboltBoot))
@@ -82,7 +83,6 @@ const Settings = () => {
     setatlowboltAlert(lowboltAlert)
     setatactionsound(actionsound)
     setatalertsound(alertsound)
-
     setTimeout(() => {
       setSaveModal(false)
     }, 1500);
