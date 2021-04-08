@@ -10,7 +10,8 @@ import {
   SafeAreaView,
   Image,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  Modal
 } from 'react-native';
 
 import Toast from 'react-native-toast-message';
@@ -29,6 +30,8 @@ const chheight = Dimensions.get('window').height
 
 const LastHeatTime = () => {
   const navigation = useNavigation()
+
+  const [saveModal, setSaveModal] = useState(false)
 
   const [lastHeatValue, setLastHeatValue] = useRecoilState(lastHeatTimeValue)
   const [lastHeatValueSC, setLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
@@ -53,24 +56,18 @@ const LastHeatTime = () => {
   }, [isy])
 
   function saveBtnClick() {
+    setSaveModal(true)
+
+
     setLastHeatValue(checkitem)
     setLastHeatValueSC(isy)
 
     AsyncStorage.setItem('@lastHeat_value', checkitem)
 
-    Toast.show({
-      type: 'success',
-      position: 'bottom',
-      text1: '설정',
-      text2: '설정한 내용이 저장되었습니다.',
-      visibilityTime: 2000,
-      autoHide: true,
-      topOffset: 60,
-      bottomOffset: 150,
-      onShow: () => { },
-      onHide: () => { },
-      onPress: () => { }
-    });
+      setTimeout(() => {
+        setSaveModal(false)
+      }, 1500);
+  
   }
 
   return (
@@ -120,7 +117,13 @@ const LastHeatTime = () => {
         </View>
         {/* 본문 끝 */}
 
-
+        <Modal visible={saveModal} transparent={true} animationType={'fade'}>
+        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
+          </View>
+        </SafeAreaView>
+      </Modal>
 
 
       </View>
