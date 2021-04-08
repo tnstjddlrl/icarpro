@@ -286,8 +286,6 @@ const Carcontroll = () => {
       client.write(boot_1)
       console.log('전송 : ' + boot_1)
 
-      console.log('시간 : ' + boottime)
-
       setAtIsboot(true)
 
       interval = setInterval(() => {

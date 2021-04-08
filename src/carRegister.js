@@ -482,13 +482,13 @@ const CarRegister = () => {
               <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
                 <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
-                  <TouchableWithoutFeedback onPress={() => { setDelModal(false), updateCount = 0, usercancelff(), setCancelMss('삭제를 취소합니다.') }}>
+                  <TouchableWithoutFeedback onPress={() => { setDelModal(false), updateCount = 0, setCancelMss('삭제를 취소합니다.'), usercancelff() }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>취소</Text>
                     </View>
                   </TouchableWithoutFeedback>
                   <View style={{ height: 50, borderWidth: 0.5 }}></View>
-                  <TouchableWithoutFeedback onPress={() => { registerDel(), setDelModal(false), updateCount = 0, usercancelff(), setCancelMss('삭제가 완료되었습니다.') }}>
+                  <TouchableWithoutFeedback onPress={() => { registerDel(), setDelModal(false), updateCount = 0, setCancelMss('삭제가 완료되었습니다.'), usercancelff() }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>확인</Text>
                     </View>
