@@ -134,11 +134,8 @@ const Carcontroll = () => {
       console.log(String(sec).length)
       setBootrest(min + ':' + sec)
     }
-
     console.log(time + ' : ' + bootrest)
   }
-
-  const [boottime, setboottime] = useState(600)
 
   var door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
   var door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
