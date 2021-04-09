@@ -9,7 +9,8 @@ import {
   TextInput,
   SafeAreaView,
   Image,
-  StyleSheet
+  StyleSheet,
+  ImageBackground
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -123,7 +124,9 @@ const CarState = () => {
         {/* 차량 이미지 */}
         <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
           <TouchableOpacity onPress={() => registerClick()}>
-            <Image source={warnOn}></Image>
+            <ImageBackground style={{opacity:0.9}} source={warnOn}>
+              <Image style={{opacity:0.5}} source={trunkOn}></Image>
+            </ImageBackground>
           </TouchableOpacity>
         </View>
         {/* 차량 이미지 끝 */}
