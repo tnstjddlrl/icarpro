@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   RecoilRoot,
@@ -63,6 +64,7 @@ const bootIcon = require('../img/state/bootIcon.png')
 const voltIcon = require('../img/state/voltIcon.png')
 
 const CarState = () => {
+  const navigation = useNavigation()
 
   const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
   const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
@@ -71,6 +73,16 @@ const CarState = () => {
   const [atStateEngineHood, setAtStateEngineHood] = useRecoilState(StateEngineHood)
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
+
+  const [syncCarState,SetSyncCarState] = useState('')
+  
+  useEffect(()=>{
+    if(syncCarState === ''){
+
+    }else{
+      
+    }
+  },[syncCarState])
 
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
@@ -85,11 +97,15 @@ const CarState = () => {
     console.log('전송 : ' + txt)
   }
 
+  useEffect(()=>{
+    client.on('data',function(data){
+
+    })
+  },[])
 
 
 
 
-  const navigation = useNavigation()
   return (
     <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'white' }}>
       {/* 헤더 */}

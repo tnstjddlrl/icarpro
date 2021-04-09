@@ -22,8 +22,6 @@ import {
 
 import {
   Player,
-  Recorder,
-  MediaStates
 } from '@react-native-community/audio-toolkit';
 
 import { modemNumber, userNumber, fcmToken, isCarRace, bootRestTime } from './atom/atoms'

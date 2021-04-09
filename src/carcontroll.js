@@ -28,6 +28,16 @@ import {  fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch,bootTimeValue 
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
+import {
+  Player,
+} from '@react-native-community/audio-toolkit';
+
+const doorOnSound = new Player('dooron.mp3').play(err=>console.log(err))
+const panicOnSound = new Player('panicon.mp3').play(err=>console.log(err))
+const WarnSound = new Player('warn.mp3').play(err=>console.log(err))
+const TrunkOpenSound = new Player('trunkOpen.mp3').play(err=>console.log(err))
+const bootOnSound = new Player('bootOn.mp3').play(err=>console.log(err))
+
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
@@ -171,6 +181,8 @@ const Carcontroll = () => {
       setTimeout(() => {
         setDoor('no')
       }, 4000);
+
+      
 
     }
 
