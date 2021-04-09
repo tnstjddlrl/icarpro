@@ -15,7 +15,6 @@ import {
 
 import { useNavigation } from '@react-navigation/native';
 
-import Toast from 'react-native-toast-message';
 
 import client from './Client.js'
 
@@ -25,7 +24,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState, newState, fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch } from './atom/atoms'
+import {  fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch,bootTimeValue } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -69,7 +68,7 @@ const suvbimon = require('../img/controll/carstate/suvbimon.png')
 const suvbooton = require('../img/controll/carstate/suvbooton.png')
 
 var interval;
-var rrtime = 600;
+// var rrtime = 600;
 
 const Carcontroll = () => {
   const navigation = useNavigation()
@@ -79,6 +78,8 @@ const Carcontroll = () => {
   const [bootrest, setBootrest] = useRecoilState(bootRestTime)
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
   const isicarswitch = useRecoilValue(icarSwitch)
+
+  const [atBootTime,setAtBootTime] = useRecoilState(bootTimeValue)
 
   const [loadModal, setLoadModal] = useState(false)
   const [commandtxt, setCommandtxt] = useState('')
@@ -285,9 +286,18 @@ const Carcontroll = () => {
 
       setAtIsboot(true)
 
+      let bbtime;
+      if(atBootTime === '3'){
+        bbtime = 180
+      }else if(atBootTime === '5'){
+        bbtime = 300
+      }else if(atBootTime === '10'){
+        bbtime = 600
+      }
+
       interval = setInterval(() => {
-        timecalcul(rrtime)
-        rrtime -= 1
+        timecalcul(bbtime)
+        bbtime -= 1
       }, 1000);
 
     } else {
@@ -646,7 +656,6 @@ const Carcontroll = () => {
         </FlingGestureHandler>
       </FlingGestureHandler>
 
-      <Toast style={{ marginBottom: -50 }} ref={(ref) => Toast.setRef(ref)} />
 
       <Modal visible={loadModal} transparent={true} animationType={'fade'}>
         <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>

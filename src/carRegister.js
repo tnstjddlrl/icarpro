@@ -134,24 +134,13 @@ const CarRegister = () => {
   }
 
   function registerClick(sub) {
+
     var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
     txt = JSON.stringify(txt)
 
     client.write(txt)
     console.log('전송 : ' + txt)
 
-
-
-    // navigation.navigate('간편비밀번호')
-
-    // AsyncStorage.setItem("@modem_N", modemN)
-    // AsyncStorage.setItem("@user_N", userN)
-    // AsyncStorage.setItem("@car_Race", carRace)
-    // AsyncStorage.setItem("@is_first", 'notfirst')
-
-    // setAtModemn(modemN)
-    // setatUserNumber(userN)
-    // setatIsCarRace(carRace)
   }
 
   function registerDel() {
@@ -168,51 +157,52 @@ const CarRegister = () => {
   }
   console.log('모뎀 : ' + modemN + '유저:' + userN)
 
-
-  client.on('data', function (data) {
-    if ('' + data == 'reg_suc') {
-      // Alert.alert('등록이 완료되었습니다')
-      // navigation.navigate('차량제어')
-
-      setCancelMss('등록이 완료되었습니다.')
-      usercancelff()
-
-      AsyncStorage.setItem("@modem_N", modemN)
-      AsyncStorage.setItem("@user_N", userN)
-      AsyncStorage.setItem("@car_Race", carRace)
-      AsyncStorage.setItem("@is_first", 'notfirst')
-
-      setAtModemn(modemN)
-      setatUserNumber(userN)
-      setatIsCarRace(carRace)
-
-
-    } else if ('' + data == 'registerDel_suc') {
-      delFirst()
-      delModem()
-      delUser()
-      delcarRace()
-
-      setAtModemn('')
-      setatUserNumber('')
-      setatIsCarRace('')
-
-      setModemN('')
-      setUserN('')
-      setCarRace('')
-    } else if ('' + data == 'reg_fail') {
-      if (updateCount === 0) {
-        updateCount = 1
-        setLoadModal(true)
+  useEffect(()=>{
+    client.on('data', function (data) {
+      if ('' + data == 'reg_suc') {
+        // Alert.alert('등록이 완료되었습니다')
+        // navigation.navigate('차량제어')
+  
+        setCancelMss('등록이 완료되었습니다.')
+        usercancelff()
+  
+        AsyncStorage.setItem("@modem_N", modemN)
+        AsyncStorage.setItem("@user_N", userN)
+        AsyncStorage.setItem("@car_Race", carRace)
+        AsyncStorage.setItem("@is_first", 'notfirst')
+  
+        setAtModemn(modemN)
+        setatUserNumber(userN)
+        setatIsCarRace(carRace)
+  
+  
+      } else if ('' + data == 'registerDel_suc') {
+        delFirst()
+        delModem()
+        delUser()
+        delcarRace()
+  
+        setAtModemn('')
+        setatUserNumber('')
+        setatIsCarRace('')
+  
+        setModemN('')
+        setUserN('')
+        setCarRace('')
+      } else if ('' + data == 'reg_fail') {
+        if (updateCount === 0) {
+          updateCount = 1
+          setLoadModal(true)
+        } else {
+  
+        }
       } else {
-
+  
       }
-    } else {
-
-    }
-    console.log('차량 등록 내에서 받기 ' + data);
-  });
-
+      console.log('차량 등록 내에서 받기 ' + data);
+    });
+  },[])
+  
   function searchUser() {
     var txt = { type: "R", type_sub: "user_search", data: { modem: modemN } }
     txt = JSON.stringify(txt)

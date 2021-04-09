@@ -65,7 +65,7 @@ function App() {
   return (
     <RecoilRoot>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="home" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="home" headerMode={'none'} gestureEnabled={false}>
 
           <Stack.Screen name="인트로" component={Load} />
           <Stack.Screen name="차량제어" component={Carcontroll} />
