@@ -13,6 +13,11 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		56DAD3988EDE845B1D21C535 /* libPods-icar-icarTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF32551400E3B4EAC6FF3EB1 /* libPods-icar-icarTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8520D5422620472900D95FD3 /* panicon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8520D53D2620472900D95FD3 /* panicon.mp3 */; };
+		8520D5432620472900D95FD3 /* warn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8520D53E2620472900D95FD3 /* warn.mp3 */; };
+		8520D5442620472900D95FD3 /* booton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8520D53F2620472900D95FD3 /* booton.mp3 */; };
+		8520D5452620472900D95FD3 /* trunkopen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8520D5402620472900D95FD3 /* trunkopen.mp3 */; };
+		8520D5462620472900D95FD3 /* dooron.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8520D5412620472900D95FD3 /* dooron.mp3 */; };
 		8542D1642609DB2100703635 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8542D1632609DB2100703635 /* GoogleService-Info.plist */; };
 		854F70E026155E6C003BA402 /* bbibb3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 854F70DF26155E6C003BA402 /* bbibb3.mp3 */; };
 		C5F62C4572E1E6997B7F9D49 /* libPods-icar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC43B5C00EB9B870C2DD7C18 /* libPods-icar.a */; };
@@ -41,6 +46,11 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = icar/main.m; sourceTree = "<group>"; };
 		186DD4FA502C58FE753B0F6A /* Pods-icar-icarTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-icar-icarTests.release.xcconfig"; path = "Target Support Files/Pods-icar-icarTests/Pods-icar-icarTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = icar/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8520D53D2620472900D95FD3 /* panicon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = panicon.mp3; path = ../../../../Downloads/panicon.mp3; sourceTree = "<group>"; };
+		8520D53E2620472900D95FD3 /* warn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = warn.mp3; path = ../../../../Downloads/warn.mp3; sourceTree = "<group>"; };
+		8520D53F2620472900D95FD3 /* booton.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = booton.mp3; path = ../../../../Downloads/booton.mp3; sourceTree = "<group>"; };
+		8520D5402620472900D95FD3 /* trunkopen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = trunkopen.mp3; path = ../../../../Downloads/trunkopen.mp3; sourceTree = "<group>"; };
+		8520D5412620472900D95FD3 /* dooron.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = dooron.mp3; path = ../../../../Downloads/dooron.mp3; sourceTree = "<group>"; };
 		8542D1632609DB2100703635 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		854F70DF26155E6C003BA402 /* bbibb3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bbibb3.mp3; path = ../../../../Downloads/bbibb3.mp3; sourceTree = "<group>"; };
 		BC43B5C00EB9B870C2DD7C18 /* libPods-icar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-icar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +100,11 @@
 		13B07FAE1A68108700A75B9A /* icar */ = {
 			isa = PBXGroup;
 			children = (
+				8520D53F2620472900D95FD3 /* booton.mp3 */,
+				8520D5412620472900D95FD3 /* dooron.mp3 */,
+				8520D53D2620472900D95FD3 /* panicon.mp3 */,
+				8520D5402620472900D95FD3 /* trunkopen.mp3 */,
+				8520D53E2620472900D95FD3 /* warn.mp3 */,
 				854F70DF26155E6C003BA402 /* bbibb3.mp3 */,
 				8542D1632609DB2100703635 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -250,9 +265,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				8520D5452620472900D95FD3 /* trunkopen.mp3 in Resources */,
+				8520D5442620472900D95FD3 /* booton.mp3 in Resources */,
 				854F70E026155E6C003BA402 /* bbibb3.mp3 in Resources */,
+				8520D5432620472900D95FD3 /* warn.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				8542D1642609DB2100703635 /* GoogleService-Info.plist in Resources */,
+				8520D5422620472900D95FD3 /* panicon.mp3 in Resources */,
+				8520D5462620472900D95FD3 /* dooron.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

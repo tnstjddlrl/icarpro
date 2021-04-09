@@ -74,15 +74,15 @@ const CarState = () => {
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
-  const [syncCarState,SetSyncCarState] = useState('')
-  
-  useEffect(()=>{
-    if(syncCarState === ''){
+  const [syncCarState, SetSyncCarState] = useState('')
 
-    }else{
-      
+  useEffect(() => {
+    if (syncCarState === '') {
+
+    } else {
+
     }
-  },[syncCarState])
+  }, [syncCarState])
 
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
@@ -97,11 +97,11 @@ const CarState = () => {
     console.log('전송 : ' + txt)
   }
 
-  useEffect(()=>{
-    client.on('data',function(data){
+  useEffect(() => {
+    client.on('data', function (data) {
 
     })
-  },[])
+  }, [])
 
 
 

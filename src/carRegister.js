@@ -41,9 +41,6 @@ const radioSelect = require('../img/radioSelect.png')
 const sedan1img = require('../img/sedan1.png')
 const suv1img = require('../img/suv1.png')
 
-let updateCount = 0
-
-
 const CarRegister = () => {
 
   const [loadModal, setLoadModal] = useState(false)
@@ -145,13 +142,13 @@ const CarRegister = () => {
     asyncSave()
   }
 
-  const asyncSave = async() => {
+  const asyncSave = async () => {
     try {
       await AsyncStorage.setItem("@modem_N", modemN)
       await AsyncStorage.setItem("@user_N", userN)
       await AsyncStorage.setItem("@car_Race", carRace)
       await AsyncStorage.setItem("@is_first", 'notfirst')
-  
+
       setAtModemn(modemN)
       setatUserNumber(userN)
       setatIsCarRace(carRace)
@@ -186,27 +183,27 @@ const CarRegister = () => {
   }
   console.log('모뎀 : ' + modemN + '유저:' + userN)
 
-  useEffect(()=>{
+  useEffect(() => {
     client.on('data', function (data) {
       if ('' + data == 'reg_suc') {
         // Alert.alert('등록이 완료되었습니다')
         // navigation.navigate('차량제어')
-  
+
         setCancelMss('등록이 완료되었습니다.')
         usercancelff()
 
       } else if ('' + data == 'registerDel_suc') {
         setCancelMss('삭제가 완료되었습니다.'),
-        usercancelff()
+          usercancelff()
       } else if ('' + data == 'reg_fail') {
-          setLoadModal(true)
+        setLoadModal(true)
       } else {
-  
+
       }
       console.log('차량 등록 내에서 받기 ' + data);
     });
-  },[])
-  
+  }, [])
+
   function searchUser() {
     var txt = { type: "R", type_sub: "user_search", data: { modem: modemN } }
     txt = JSON.stringify(txt)
@@ -441,13 +438,13 @@ const CarRegister = () => {
               <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
                 <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
-                  <TouchableWithoutFeedback onPress={() => { setLoadModal(false), updateCount = 0, usercancelff(), setCancelMss('등록을 취소합니다.') }}>
+                  <TouchableWithoutFeedback onPress={() => { setLoadModal(false), usercancelff(), setCancelMss('등록을 취소합니다.') }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>취소</Text>
                     </View>
                   </TouchableWithoutFeedback>
                   <View style={{ height: 50, borderWidth: 0.5 }}></View>
-                  <TouchableWithoutFeedback onPress={() => { registerClick('register_update'), setLoadModal(false)}}>
+                  <TouchableWithoutFeedback onPress={() => { registerClick('register_update'), setLoadModal(false) }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>확인</Text>
                     </View>

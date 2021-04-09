@@ -24,7 +24,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import {  fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch,bootTimeValue } from './atom/atoms'
+import { fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch, bootTimeValue } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -32,11 +32,11 @@ import {
   Player,
 } from '@react-native-community/audio-toolkit';
 
-const doorOnSound = () => new Player('dooron.mp3').play(err=>console.log(err))
-const panicOnSound  = () => new Player('panicon.mp3').play(err=>console.log(err))
-const WarnSound  = () =>new Player('warn.mp3').play(err=>console.log(err))
-const TrunkOpenSound  = () =>new Player('trunkopen.mp3').play(err=>console.log(err))
-const bootOnSound  = () =>new Player('booton.mp3').play(err=>console.log(err))
+const doorOnSound = () => new Player('dooron.mp3').play(err => console.log(err))
+const panicOnSound = () => new Player('panicon.mp3').play(err => console.log(err))
+const WarnSound = () => new Player('warn.mp3').play(err => console.log(err))
+const TrunkOpenSound = () => new Player('trunkopen.mp3').play(err => console.log(err))
+const bootOnSound = () => new Player('booton.mp3').play(err => console.log(err))
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -89,7 +89,7 @@ const Carcontroll = () => {
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
   const isicarswitch = useRecoilValue(icarSwitch)
 
-  const [atBootTime,setAtBootTime] = useRecoilState(bootTimeValue)
+  const [atBootTime, setAtBootTime] = useRecoilState(bootTimeValue)
 
   const [loadModal, setLoadModal] = useState(false)
   const [commandtxt, setCommandtxt] = useState('')
@@ -183,7 +183,7 @@ const Carcontroll = () => {
         setDoor('no')
       }, 4000);
 
-      
+
 
     }
 
@@ -306,11 +306,11 @@ const Carcontroll = () => {
       setAtIsboot(true)
 
       let bbtime;
-      if(atBootTime === '3'){
+      if (atBootTime === '3') {
         bbtime = 180
-      }else if(atBootTime === '5'){
+      } else if (atBootTime === '5') {
         bbtime = 300
-      }else if(atBootTime === '10'){
+      } else if (atBootTime === '10') {
         bbtime = 600
       }
 
@@ -660,11 +660,13 @@ const Carcontroll = () => {
                       <View style={{ flex: 1, backgroundColor: "#f75929", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.btntxt}>open</Text>
                       </View>
-                    </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => trunkClick()}>
-                      <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={styles.btntxt}>open</Text>
-                      </View>
-                    </TouchableWithoutFeedback>}
+                    </TouchableWithoutFeedback>
+                      :
+                      <TouchableWithoutFeedback onPress={() => trunkClick()}>
+                        <View style={{ flex: 1, backgroundColor: "#d1d2d6", borderBottomLeftRadius: 10, borderBottomRightRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                          <Text style={styles.btntxt}>open</Text>
+                        </View>
+                      </TouchableWithoutFeedback>}
                   </View>
                 </View>
               </View>
