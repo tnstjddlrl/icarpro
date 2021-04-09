@@ -19,11 +19,7 @@ import client from './Client'
 import { useNavigation } from '@react-navigation/native';
 
 import {
-  RecoilRoot,
-  atom,
-  selector,
   useRecoilState,
-  useRecoilValue,
 } from 'recoil';
 import { modemNumber, userNumber, fcmToken, isCarRace } from './atom/atoms'
 
