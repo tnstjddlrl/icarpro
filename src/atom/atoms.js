@@ -140,15 +140,3 @@ export const StateCarVolt = atom({
   key: 'StateCarVolt',
   default: 0,
 })
-
-
-//모달 상태값
-export const register_registerOK_modal = atom({
-  key: 'register_registerOK_modal',
-  default: false,
-})
-
-export const register_Load_modal = atom({
-  key: 'register_Load_modal',
-  default: false,
-})

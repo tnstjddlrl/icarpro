@@ -21,6 +21,7 @@ import { useNavigation } from '@react-navigation/native';
 import {
   useRecoilState,
 } from 'recoil';
+
 import { modemNumber, userNumber, fcmToken, isCarRace } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -166,27 +167,27 @@ const CarRegister = () => {
         setCancelMss('등록이 완료되었습니다.')
         usercancelff()
   
-        AsyncStorage.setItem("@modem_N", modemN)
-        AsyncStorage.setItem("@user_N", userN)
-        AsyncStorage.setItem("@car_Race", carRace)
+        AsyncStorage.setItem("@modem_N", ''+modemN)
+        AsyncStorage.setItem("@user_N", ''+userN)
+        AsyncStorage.setItem("@car_Race", ''+carRace)
         AsyncStorage.setItem("@is_first", 'notfirst')
   
-        setAtModemn(modemN)
-        setatUserNumber(userN)
-        setatIsCarRace(carRace)
+        setAtModemn(''+modemN)
+        setatUserNumber(''+userN)
+        setatIsCarRace(''+carRace)
   
   
       } else if ('' + data == 'registerDel_suc') {
         delFirst()
-        delModem()
+        // delModem()
         delUser()
         delcarRace()
   
-        setAtModemn('')
+        // setAtModemn('')
         setatUserNumber('')
         setatIsCarRace('')
   
-        setModemN('')
+        // setModemN('')
         setUserN('')
         setCarRace('')
       } else if ('' + data == 'reg_fail') {
