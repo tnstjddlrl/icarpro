@@ -142,6 +142,24 @@ const CarRegister = () => {
     client.write(txt)
     console.log('전송 : ' + txt)
 
+    asyncSave()
+  }
+
+  const asyncSave = async() => {
+    try {
+      await AsyncStorage.setItem("@modem_N", modemN)
+      await AsyncStorage.setItem("@user_N", userN)
+      await AsyncStorage.setItem("@car_Race", carRace)
+      await AsyncStorage.setItem("@is_first", 'notfirst')
+  
+      setAtModemn(modemN)
+      setatUserNumber(userN)
+      setatIsCarRace(carRace)
+      console.log('어싱크 세이브 완료')
+    } catch (error) {
+      console.error(error)
+    }
+
   }
 
   function registerDel() {
@@ -155,6 +173,16 @@ const CarRegister = () => {
     setCarRace('')
     setSedan1(false)
     setSuv1(false)
+
+    delFirst()
+    delUser()
+    delcarRace()
+
+    setatUserNumber('')
+    setatIsCarRace('')
+
+    setUserN('')
+    setCarRace('')
   }
   console.log('모뎀 : ' + modemN + '유저:' + userN)
 
@@ -166,30 +194,9 @@ const CarRegister = () => {
   
         setCancelMss('등록이 완료되었습니다.')
         usercancelff()
-  
-        AsyncStorage.setItem("@modem_N", ''+modemN)
-        AsyncStorage.setItem("@user_N", ''+userN)
-        AsyncStorage.setItem("@car_Race", ''+carRace)
-        AsyncStorage.setItem("@is_first", 'notfirst')
-  
-        setAtModemn(''+modemN)
-        setatUserNumber(''+userN)
-        setatIsCarRace(''+carRace)
-  
-  
+
       } else if ('' + data == 'registerDel_suc') {
-        delFirst()
-        // delModem()
-        delUser()
-        delcarRace()
-  
-        // setAtModemn('')
-        setatUserNumber('')
-        setatIsCarRace('')
-  
-        // setModemN('')
-        setUserN('')
-        setCarRace('')
+
       } else if ('' + data == 'reg_fail') {
         if (updateCount === 0) {
           updateCount = 1

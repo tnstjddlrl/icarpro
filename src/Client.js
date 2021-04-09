@@ -3,11 +3,6 @@ import { Alert } from 'react-native';
 
 import RNExitApp from 'react-native-kill-app';
 
-import {
-  useRecoilState,
-} from 'recoil';
-
-
 const client = TcpSocket.createConnection(
   { port: 3400, host: '175.126.232.72', timeout: 1000 },
   () => {
