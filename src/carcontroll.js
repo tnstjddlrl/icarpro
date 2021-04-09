@@ -32,11 +32,11 @@ import {
   Player,
 } from '@react-native-community/audio-toolkit';
 
-const doorOnSound = new Player('dooron.mp3').play(err=>console.log(err))
-const panicOnSound = new Player('panicon.mp3').play(err=>console.log(err))
-const WarnSound = new Player('warn.mp3').play(err=>console.log(err))
-const TrunkOpenSound = new Player('trunkOpen.mp3').play(err=>console.log(err))
-const bootOnSound = new Player('bootOn.mp3').play(err=>console.log(err))
+const doorOnSound = () => new Player('dooron.mp3').play(err=>console.log(err))
+const panicOnSound  = () => new Player('panicon.mp3').play(err=>console.log(err))
+const WarnSound  = () =>new Player('warn.mp3').play(err=>console.log(err))
+const TrunkOpenSound  = () =>new Player('trunkopen.mp3').play(err=>console.log(err))
+const bootOnSound  = () =>new Player('booton.mp3').play(err=>console.log(err))
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -173,6 +173,7 @@ const Carcontroll = () => {
 
       lomofc('도어 LOCK')
 
+      doorOnSound()
 
       door_1 = JSON.stringify(door_1)
       client.write(door_1)
@@ -220,6 +221,8 @@ const Carcontroll = () => {
       setTimeout(() => {
         setPanic('no')
       }, 4000);
+
+      panicOnSound()
     }
 
     if (is == 'off') {
@@ -251,6 +254,8 @@ const Carcontroll = () => {
       setTimeout(() => {
         setWarnbim('no')
       }, 4000);
+
+      WarnSound()
     }
 
     if (is == 'off') {
@@ -284,6 +289,8 @@ const Carcontroll = () => {
     setTimeout(() => {
       setTrunk(false)
     }, 4000);
+
+    TrunkOpenSound()
   }
 
   function bootClick() {
