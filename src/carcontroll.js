@@ -135,7 +135,7 @@ const Carcontroll = () => {
       client.write(boot_0)
       console.log('전송 : ' + boot_0)
 
-      lomofc('원격시동 켜기')
+      lomofc('원격시동 끄기')
     }
 
     var min = parseInt((time % 3600) / 60);
