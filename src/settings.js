@@ -293,7 +293,7 @@ const Settings = () => {
                 <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
                   <View style={{ flexDirection: "row" }}>
                     <Image source={carhitIcon}></Image>
-                    <Text style={styles.frameTitle}>예열시동 시간설정</Text>
+                    <Text style={styles.frameTitle}>예열시동 시간설정-삭제 예정</Text>
                   </View>
                   <Image source={rightArr}></Image>
                 </View>
