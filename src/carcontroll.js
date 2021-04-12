@@ -397,19 +397,19 @@ const Carcontroll = () => {
                     carRace == "SUV1" &&
                     <TouchableWithoutFeedback onPress={() => setcarRace('SEDAN1')}>
                       <View style={{ justifyContent: "center", alignItems: "center" }}>
-                        {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
+                        {(door == 'no' && panic == 'no' && warnbim == 'no' && trunk != true && boot != true) &&
                           <AutoHeightImage source={suv1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
-                        {door == 'on' &&
+                        {(door == 'on' || door == 'off') &&
                           <AutoHeightImage source={suvdooron} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
-                        {(panic == 'on') &&
+                        {(panic == 'on' || panic == 'off') &&
                           <AutoHeightImage source={suvpanicon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
-                        {(warnbim == 'on') &&
+                        {(warnbim == 'on' || warnbim == 'off') &&
                           <AutoHeightImage source={suvbimon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
-                        {trunk == true &&
+                        {(trunk == true) &&
                           <AutoHeightImage source={suvtrunkon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
@@ -426,13 +426,13 @@ const Carcontroll = () => {
                         {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
                           <AutoHeightImage source={sedan1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
-                        {door == 'on' &&
+                        {(door == 'on' || door == 'off') &&
                           <AutoHeightImage source={dooron} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
-                        {(panic == 'on') &&
+                        {(panic == 'on' || panic == 'off') &&
                           <AutoHeightImage source={panicon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
-                        {(warnbim == 'on') &&
+                        {(warnbim == 'on' || warnbim == 'off') &&
                           <AutoHeightImage source={bimon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {trunk == true &&
