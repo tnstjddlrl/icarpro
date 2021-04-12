@@ -24,7 +24,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch, bootTimeValue } from './atom/atoms'
+import { fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch, bootTimeValue, actionSound } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -88,6 +88,8 @@ const Carcontroll = () => {
   const [bootrest, setBootrest] = useRecoilState(bootRestTime)
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
   const isicarswitch = useRecoilValue(icarSwitch)
+
+  const atActionSound = useRecoilValue(actionSound)
 
   const [atBootTime, setAtBootTime] = useRecoilState(bootTimeValue)
 
@@ -173,7 +175,10 @@ const Carcontroll = () => {
 
       lomofc('도어 LOCK')
 
-      doorOnSound()
+      if(atActionSound===false){
+        doorOnSound()
+      }
+      
 
       door_1 = JSON.stringify(door_1)
       client.write(door_1)
@@ -193,6 +198,10 @@ const Carcontroll = () => {
       // Alert.alert('door_1')
 
       lomofc('도어 UNLOCK')
+
+      if(atActionSound===false){
+        doorOnSound()
+      }
 
       door_0 = JSON.stringify(door_0)
       client.write(door_0)
@@ -222,7 +231,10 @@ const Carcontroll = () => {
         setPanic('no')
       }, 4000);
 
-      panicOnSound()
+      if(atActionSound===false){ 
+        panicOnSound()
+      }
+
     }
 
     if (is == 'off') {
@@ -254,8 +266,9 @@ const Carcontroll = () => {
       setTimeout(() => {
         setWarnbim('no')
       }, 4000);
-
-      WarnSound()
+      if(atActionSound===false){ 
+        WarnSound()
+      }
     }
 
     if (is == 'off') {
@@ -289,8 +302,9 @@ const Carcontroll = () => {
     setTimeout(() => {
       setTrunk(false)
     }, 4000);
-
-    TrunkOpenSound()
+    if(atActionSound===false){ 
+      TrunkOpenSound()
+    }
   }
 
   function bootClick() {
@@ -304,6 +318,10 @@ const Carcontroll = () => {
       console.log('전송 : ' + boot_1)
 
       setAtIsboot(true)
+
+      if(atActionSound===false){ 
+        bootOnSound()
+      }
 
       let bbtime;
       if (atBootTime === '3') {
