@@ -16,7 +16,7 @@ client.on('error', function (error) {
   console.error(error);
   setTimeout(() => {
     client.destroy();
-    RNExitApp.exitApp()
+    // RNExitApp.exitApp()
   }, 1500);
 });
 
