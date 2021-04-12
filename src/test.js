@@ -106,7 +106,7 @@ const Test = () => {
   return (
     <View>
       <SafeAreaView>
-        <Text style={{fontFamily:'AppleSDGothicNeo'}}>아이카</Text>
+        <Text style={{fontFamily:'AppleSDGothicNeo-Medium'}}>아이카</Text>
         <TouchableOpacity onPress={() => navigation.navigate('간편비밀번호')}>
           <Text style={{fontSize:18,margin:10}}>간편비밀번호</Text>
         </TouchableOpacity>

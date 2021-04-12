@@ -505,7 +505,7 @@ const CarRegister = () => {
 
 const styles = StyleSheet.create({
   modaltxt: {
-    // fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -515,7 +515,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   modalTitle: {
-    // fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 20,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -527,7 +527,7 @@ const styles = StyleSheet.create({
   },
   canceltxt: {
     opacity: 0.3,
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
     color: "#4e535a"
   },
   canceltxt2: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -547,7 +547,7 @@ const styles = StyleSheet.create({
     color: "#4e535a"
   },
   registertxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -557,7 +557,7 @@ const styles = StyleSheet.create({
     color: "#ffffff"
   },
   carResist: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 17,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -567,7 +567,7 @@ const styles = StyleSheet.create({
     marginLeft: 16
   },
   race: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 17,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -596,7 +596,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   savetxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -606,7 +606,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   cartext: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 16,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -614,7 +614,7 @@ const styles = StyleSheet.create({
     color: "#4e535a"
   },
   maintxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -622,7 +622,7 @@ const styles = StyleSheet.create({
     color: "#393e46"
   },
   inputtxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 17,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -631,6 +631,7 @@ const styles = StyleSheet.create({
     color: 'rgb(68,73,80)',
     width: chwidth - 80,
     marginLeft: 16,
+    height:56
   }
 })
 

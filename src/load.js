@@ -171,13 +171,6 @@ const Load = () => {
   }
 
 
-
-
-
-
-
-
-
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [atModemn, setAtModemn] = useRecoilState(modemNumber)
   const [atUserNumber, setatUserNumber] = useRecoilState(userNumber)
