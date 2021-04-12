@@ -107,7 +107,10 @@ const LowVoltSetting = () => {
           <View style={{ flex: 7 }}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
               <View style={{ height: 200, width: 100 }}>
-                <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }} showsVerticalScrollIndicator={false}>
+                <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }}
+                 showsVerticalScrollIndicator={false}
+                 scrollEventThrottle={16}
+                 >
                   <Text style={styles.noselecttxt2}> </Text>
                   <Text style={isy < 60 ? styles.selecttxt : styles.noselecttxt}>11.8</Text>
                   <Text style={(60 < isy && isy < 110) ? styles.selecttxt : styles.noselecttxt}>11.9</Text>
@@ -143,7 +146,7 @@ const LowVoltSetting = () => {
 
 const styles = StyleSheet.create({
   maintxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -151,7 +154,7 @@ const styles = StyleSheet.create({
     color: "#393e46"
   },
   savetxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 17,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -168,7 +171,7 @@ const styles = StyleSheet.create({
     borderColor: "#bec0c2"
   },
   masktxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 22,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -177,7 +180,7 @@ const styles = StyleSheet.create({
     color: "#393e46"
   },
   masktxt2: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 22,
     fontWeight: "bold",
     fontStyle: 'normal',
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   selecttxt: {
-    fontFamily: "Metropolis-SemiBold",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 50,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -198,7 +201,7 @@ const styles = StyleSheet.create({
   },
   noselecttxt: {
     opacity: 0.3,
-    fontFamily: "Metropolis-SemiBold",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 40,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -209,7 +212,7 @@ const styles = StyleSheet.create({
   },
   noselecttxt2: {
     opacity: 0.3,
-    fontFamily: "Metropolis-SemiBold",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 40,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -238,7 +241,7 @@ const styles = StyleSheet.create({
     top: '60%'
   },
   topchechktxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 22,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -247,7 +250,7 @@ const styles = StyleSheet.create({
     color: 'rgb(49,54,61)'
   },
   sec: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 40,
     fontWeight: "bold",
     fontStyle: "normal",
