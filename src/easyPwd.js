@@ -9,7 +9,8 @@ import {
   TextInput,
   SafeAreaView,
   Image,
-  StyleSheet
+  StyleSheet,
+  Modal
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -23,7 +24,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { networkState, newState, fcmToken } from './atom/atoms'
+import { fcmToken } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -41,16 +42,30 @@ const CarState = () => {
   const navigation = useNavigation()
 
   const [pwd, setpwd] = useState('')
-  const inputRef = useRef(<TextInput></TextInput>)
+  const inputRef = useRef()
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
+  const [saveModal,setSaveModal] = useState(false)
+
   console.log('간편 : ' + pushToken)
 
-
+  var times
 
   useEffect(() => {
     inputRef.current.focus()
+    client.on('data', function (data) {
+      if ('' + data == 'pwd_suc') {
+        setSaveModal(true)
+        setTimeout(() => {
+          setSaveModal(false)
+        }, 2000);
+      } else {
+        //Alert.alert('비밀번호가 틀렸습니다.')
+      }
+      console.log('간편 비밀번호 내에서 받기 ' + data);
+      // Alert.alert('서버에서 보내온 메시지 ', '' + data)
+    });
   }, [])
 
   useEffect(() => {
@@ -60,7 +75,7 @@ const CarState = () => {
     }
   }, [pwd])
 
-  var times
+
 
   function registerClick() {
     var txt = { type: "R", type_sub: "easy_pwd", data: { pwd: pwd, token: pushToken } }
@@ -68,29 +83,11 @@ const CarState = () => {
 
     var res = client.write(txt)
 
-    times = setTimeout(() => {
-      Alert.alert('서버와 통신을 실패하였습니다.')
-    }, 1500);
-
   }
 
-  const [ispwd, setIspwd] = useState(false)
 
 
-  client.on('data', function (data) {
-    if ('' + data == 'pwd_suc') {
-      clearTimeout(times)
-      if (ispwd == false) {
-        navigation.navigate('테스트')
-        setIspwd(true)
-      }
-    } else {
-      clearTimeout(times)
-      //Alert.alert('비밀번호가 틀렸습니다.')
-    }
-    console.log('간편 비밀번호 내에서 받기 ' + data);
-    Alert.alert('서버에서 보내온 메시지 ', '' + data)
-  });
+
 
 
   console.log(pwd)
@@ -146,16 +143,24 @@ const CarState = () => {
         </View>
         {/* 본문 끝 */}
       </View>
-      <TextInput style={{ position: 'absolute', width: chwidth, height: chheight * 4, marginTop: 60 }} keyboardType={'number-pad'}
+      <TextInput style={{ position: 'absolute', width: chwidth, height: chheight * 4, marginTop: 120 }} keyboardType={'number-pad'}
         onChangeText={(txt) => setpwd(txt)} value={pwd} maxLength={4} ref={inputRef}
       ></TextInput>
+
+      <Modal visible={saveModal} transparent={true} animationType={'fade'}>
+        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -300, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={styles.modaltxt}>설정한 내용이 저장되었습니다.</Text>
+          </View>
+        </SafeAreaView>
+      </Modal>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   maintxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -163,7 +168,7 @@ const styles = StyleSheet.create({
     color: "#393e46"
   },
   savetxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 17,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -172,7 +177,7 @@ const styles = StyleSheet.create({
     color: "#f75929"
   },
   title: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 22,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -181,7 +186,7 @@ const styles = StyleSheet.create({
     color: "#393e46"
   },
   sub: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 15,
     fontWeight: "500",
     fontStyle: "normal",
@@ -189,7 +194,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: 'rgb(68,73,80)',
     marginTop: 16
-  }
+  },
+  modaltxt: {
+    fontFamily: "AppleSDGothicNeo-Medium",
+    fontSize: 16,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    color: "black",
+    width: chwidth - 80,
+    textAlign: 'center'
+  },
 })
 
 export default CarState
