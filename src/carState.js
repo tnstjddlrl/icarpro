@@ -52,7 +52,28 @@ const enginestateOn = require('../img/topviewstate/enginestateOn.png')
 const enginehoodOn = require('../img/topviewstate/enginehoodOn.png')
 const trunkOn = require('../img/topviewstate/trunkOn.png')
 
+///////////////
+const mainframe = require('../img/cutimg/icarmain.png')
 
+const doorcloseblack = require('../img/cutimg/doorcloseblack.png')
+const doorcloseorange = require('../img/cutimg/doorcloseorange.png')
+const dooropen = require('../img/cutimg/dooropen.png')
+
+const hoodorange = require('../img/cutimg/hoodorange.png')
+const trunkorange = require('../img/cutimg/trunkorange.png')
+const bootorange = require('../img/cutimg/bootorange.png')
+const lightorange = require('../img/cutimg/lightorange.png')
+
+const doorlocksticon = require('../img/cutimg/doorlocksticon.png')
+const lightsticon = require('../img/cutimg/lightsticon.png')
+const enginesticon = require('../img/cutimg/enginesticon.png')
+const hoodsticon = require('../img/cutimg/hoodsticon.png')
+const trunksticon = require('../img/cutimg/trunksticon.png')
+const dooropensticon = require('../img/cutimg/dooropensticon.png')
+
+
+
+//////////////////
 
 const warnIcon = require('../img/state/warnIcon.png')
 
@@ -123,11 +144,24 @@ const CarState = () => {
       <View style={{ flex: 10 }}>
         {/* 차량 이미지 */}
         <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
-          <TouchableOpacity onPress={() => registerClick()}>
-            <ImageBackground style={{opacity:0.9}} source={warnOn}>
-              <Image style={{opacity:0.5}} source={trunkOn}></Image>
-            </ImageBackground>
-          </TouchableOpacity>
+            <Image style={{position:"absolute"}} source={mainframe}></Image>
+            
+            {/* <Image style={{position:"absolute"}} source={doorcloseblack}></Image> */}
+            {/* <Image style={{position:"absolute"}} source={doorcloseorange}></Image> */}
+            <Image style={{position:"absolute"}} source={dooropen}></Image>
+
+
+            <Image style={{position:"absolute"}} source={hoodorange}></Image>
+            <Image style={{position:"absolute"}} source={trunkorange}></Image>
+            <Image style={{position:"absolute"}} source={lightorange}></Image>
+            <Image style={{position:"absolute"}} source={bootorange}></Image>
+
+            <Image style={{position:"absolute"}} source={hoodsticon}></Image>
+            <Image style={{position:"absolute"}} source={enginesticon}></Image>
+            <Image style={{position:"absolute"}} source={trunksticon}></Image>
+            <Image style={{position:"absolute"}} source={doorlocksticon}></Image>
+            <Image style={{position:"absolute"}} source={dooropensticon}></Image>
+            <Image style={{position:"absolute"}} source={lightsticon}></Image>
         </View>
         {/* 차량 이미지 끝 */}
 
