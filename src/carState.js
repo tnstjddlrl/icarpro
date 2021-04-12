@@ -179,7 +179,7 @@ const CarState = () => {
                 <Text style={styles.frametxt}>도어</Text>
               </View>
               <View>
-                <Text style={atStateDoor==='ON' ? styles.ontxt : styles.offtxt}>OFF</Text>
+                <Text style={atStateDoor==='ON' ? styles.ontxt : styles.offtxt}>{atStateDoor}</Text>
               </View>
             </View>
           </View>
@@ -193,7 +193,7 @@ const CarState = () => {
                 <Text style={styles.frametxt}>트렁크</Text>
               </View>
               <View>
-                <Text style={atStateTrunk==='ON' ? styles.ontxt : styles.offtxt}>OFF</Text>
+                <Text style={atStateTrunk==='ON' ? styles.ontxt : styles.offtxt}>{atStateTrunk}</Text>
               </View>
             </View>
           </View>
@@ -212,7 +212,7 @@ const CarState = () => {
                 <Text style={styles.frametxt}>엔진 후드</Text>
               </View>
               <View>
-                <Text style={atStateEngineHood==='ON' ? styles.ontxt : styles.offtxt}>OFF</Text>
+                <Text style={atStateEngineHood==='ON' ? styles.ontxt : styles.offtxt}>{atStateEngineHood}</Text>
               </View>
             </View>
           </View>
@@ -220,7 +220,7 @@ const CarState = () => {
           <View style={{ flex: 0.05 }}></View>
 
           <View style={styles.frame}>
-            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between",alignItems:"center"  }}>
+            <View style={{ flexDirection: "row", marginLeft: 10, marginRight: 16, justifyContent: "space-between", alignItems:"center" }}>
               <View style={{ flexDirection: "row" ,alignItems:"center" }}>
                 <Image source={stateIcon}></Image>
                 <Text style={styles.frametxt}>엔진 상태</Text>
