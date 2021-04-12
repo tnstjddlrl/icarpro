@@ -62,10 +62,10 @@ const LastHeatTime = () => {
 
     AsyncStorage.setItem('@lastHeat_value', checkitem)
 
-      setTimeout(() => {
-        setSaveModal(false)
-      }, 1500);
-  
+    setTimeout(() => {
+      setSaveModal(false)
+    }, 1500);
+
   }
 
   return (
@@ -96,8 +96,11 @@ const LastHeatTime = () => {
           </View>
           <View style={{ flex: 7 }}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-              <View style={{ height: 200, width: 100 }}>
-                <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }} showsVerticalScrollIndicator={false}>
+              <View style={{ height: 200, width: 110 }}>
+                <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }}
+                 showsVerticalScrollIndicator={false}
+                 scrollEventThrottle={16}
+                 >
                   <Text style={styles.noselecttxt2}> </Text>
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>1:30</Text>
                   <Text style={(50 < isy && isy < 130) ? styles.selecttxt : styles.noselecttxt}>3:00</Text>
@@ -116,12 +119,12 @@ const LastHeatTime = () => {
         {/* 본문 끝 */}
 
         <Modal visible={saveModal} transparent={true} animationType={'fade'}>
-        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
-          </View>
-        </SafeAreaView>
-      </Modal>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
+            </View>
+          </SafeAreaView>
+        </Modal>
 
 
       </View>
@@ -131,7 +134,7 @@ const LastHeatTime = () => {
 
 const styles = StyleSheet.create({
   maintxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -139,7 +142,7 @@ const styles = StyleSheet.create({
     color: "#393e46"
   },
   savetxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 17,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -153,19 +156,20 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderStyle: "solid",
     borderWidth: 2,
-    borderColor: "#bec0c2"
+    borderColor: "#bec0c2",
+    justifyContent:"center",
+    alignItems:"center"
   },
   masktxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 22,
     fontWeight: "normal",
     fontStyle: "normal",
     letterSpacing: -0.29,
-    textAlign: "center",
     color: "#393e46"
   },
   masktxt2: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 22,
     fontWeight: "bold",
     fontStyle: 'normal',
@@ -175,7 +179,7 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   selecttxt: {
-    fontFamily: "Metropolis-SemiBold",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 50,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -186,7 +190,7 @@ const styles = StyleSheet.create({
   },
   noselecttxt: {
     opacity: 0.3,
-    fontFamily: "Metropolis-SemiBold",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 40,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -197,7 +201,7 @@ const styles = StyleSheet.create({
   },
   noselecttxt2: {
     opacity: 0.3,
-    fontFamily: "Metropolis-SemiBold",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 40,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -226,7 +230,7 @@ const styles = StyleSheet.create({
     top: '60%'
   },
   topchechktxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 22,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -235,7 +239,7 @@ const styles = StyleSheet.create({
     color: 'rgb(49,54,61)'
   },
   sec: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 40,
     fontWeight: "bold",
     fontStyle: "normal",

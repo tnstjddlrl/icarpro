@@ -352,7 +352,7 @@ const Settings = () => {
 
 const styles = StyleSheet.create({
   maintxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
     color: "#393e46"
   },
   savetxt: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 17,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   frameTitle: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 16,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
   },
   infotxt: {
     opacity: 0.5,
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 13,
     fontWeight: "500",
     fontStyle: "normal",
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f1f5"
   },
   framecon: {
-    fontFamily: "AppleSDGothicNeo",
+    fontFamily: "AppleSDGothicNeo-Medium",
     fontSize: 16,
     fontWeight: "normal",
     fontStyle: "normal",
