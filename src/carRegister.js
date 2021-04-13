@@ -224,7 +224,7 @@ const CarRegister = () => {
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
 
-      <View style={{ width: chwidth, height: chheight }}>
+      <View style={{ width: '100%', height: '100%' }}>
 
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>

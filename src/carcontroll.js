@@ -210,7 +210,7 @@ const Carcontroll = () => {
 
       setTimeout(() => {
         setDoor('no')
-      }, 1500);
+      }, 4000);
     }
   }
 
@@ -360,7 +360,7 @@ const Carcontroll = () => {
         direction={Directions.LEFT}
         onHandlerStateChange={({ nativeEvent }) => {
           if (nativeEvent.state === State.ACTIVE) {
-            navigation.navigate('설정')
+            navigation.navigate('차량등록')
           }
         }}>
         <FlingGestureHandler
@@ -374,12 +374,12 @@ const Carcontroll = () => {
             direction={Directions.RIGHT}
             onHandlerStateChange={({ nativeEvent }) => {
               if (nativeEvent.state === State.ACTIVE) {
-                navigation.navigate('차량등록')
+                navigation.navigate('설정')
               }
             }}>
 
 
-            <View style={{ width: chwidth, height: chheight }}>
+            <View style={{ width: '100%', height: '100%' }}>
               <View style={{ flex: 3 }}>
                 <View style={{ flex: 0.8 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
@@ -423,7 +423,7 @@ const Carcontroll = () => {
                     carRace == "SEDAN1" &&
                     <TouchableWithoutFeedback onPress={() => setcarRace('SUV1')}>
                       <View style={{ justifyContent: "center", alignItems: "center" }}>
-                        {(door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true && boot != true) &&
+                        {(door == 'no' && panic == 'no' && warnbim == 'no' && trunk != true && boot != true) &&
                           <AutoHeightImage source={sedan1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                         {(door == 'on' || door == 'off') &&

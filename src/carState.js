@@ -130,7 +130,7 @@ const CarState = () => {
 
 
   return (
-    <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'white' }}>
+    <SafeAreaView style={{ width: '100%', height: '100%', backgroundColor: 'white' }}>
       {/* 헤더 */}
       <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
@@ -147,12 +147,13 @@ const CarState = () => {
       {/* 본문 */}
       <View style={{ flex: 10 }}>
         {/* 차량 이미지 */}
+        <TouchableWithoutFeedback onPress={()=>registerClick()}>
         <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
           <Image style={{ position: "absolute" }} source={mainframe}></Image>
           {(atStateDoorLock === 'OFF' && atStateDoor == 'OFF') &&
             <Image style={{ position: "absolute" }} source={doorcloseblack}></Image>
           }
-          {atStateDoorLock === 'ON' &&
+          {(atStateDoorLock === 'ON' && atStateDoor === 'OFF') &&
             <Image style={{ position: "absolute" }} source={doorcloseorange}></Image>
           }
           {atStateDoor === 'ON' &&
@@ -195,6 +196,7 @@ const CarState = () => {
           <Image style={{ position: "absolute" }} source={bootsticon}></Image>
           }
         </View>
+        </TouchableWithoutFeedback>
         {/* 차량 이미지 끝 */}
 
         <View style={{ flex: 0.6 }}></View>
