@@ -788,4 +788,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Carcontroll
+export default React.memo(Carcontroll)

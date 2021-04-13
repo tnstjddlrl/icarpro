@@ -68,7 +68,7 @@ export const voltValue = atom({
 })
 export const voltValueSC = atom({
   key: 'voltValueSC',
-  default: 151,
+  default: 140,
 })
 
 export const bootTimeValue = atom({

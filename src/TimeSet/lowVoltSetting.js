@@ -247,7 +247,8 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     letterSpacing: -1,
     textAlign: "center",
-    color: 'rgb(49,54,61)'
+    color: 'rgb(49,54,61)',
+    marginTop:Platform.OS ==='ios' ? 3 : 0
   },
   sec: {
     fontFamily: "AppleSDGothicNeo-Medium",

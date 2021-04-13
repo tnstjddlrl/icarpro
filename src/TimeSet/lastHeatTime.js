@@ -11,7 +11,8 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  Modal
+  Modal,
+  Platform
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -234,9 +235,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     fontStyle: "normal",
-    letterSpacing: -1,
-    textAlign: "center",
-    color: 'rgb(49,54,61)'
+    color: 'rgb(49,54,61)',
+    marginTop:Platform.OS ==='ios' ? 3 : 0
   },
   sec: {
     fontFamily: "AppleSDGothicNeo-Medium",
