@@ -70,6 +70,7 @@ const enginesticon = require('../img/cutimg/enginesticon.png')
 const hoodsticon = require('../img/cutimg/hoodsticon.png')
 const trunksticon = require('../img/cutimg/trunksticon.png')
 const dooropensticon = require('../img/cutimg/dooropensticon.png')
+const bootsticon = require('../img/cutimg/bootsticon.png')
 
 
 
@@ -148,28 +149,56 @@ const CarState = () => {
         {/* 차량 이미지 */}
         <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
           <Image style={{ position: "absolute" }} source={mainframe}></Image>
-
-          {/* <Image style={{position:"absolute"}} source={doorcloseblack}></Image> */}
-          {/* <Image style={{position:"absolute"}} source={doorcloseorange}></Image> */}
+          {(atStateDoorLock === 'OFF' && atStateDoor == 'OFF') &&
+            <Image style={{ position: "absolute" }} source={doorcloseblack}></Image>
+          }
+          {atStateDoorLock === 'ON' &&
+            <Image style={{ position: "absolute" }} source={doorcloseorange}></Image>
+          }
+          {atStateDoor === 'ON' &&
           <Image style={{ position: "absolute" }} source={dooropen}></Image>
+          }
 
-
-          <Image style={{ position: "absolute" }} source={hoodorange}></Image>
+          {(atStateEngineHood === 'ON' || atStateEngineState === 'ON') &&
+            <Image style={{ position: "absolute" }} source={hoodorange}></Image>
+          }
+          {atStateTrunk === 'ON' &&
           <Image style={{ position: "absolute" }} source={trunkorange}></Image>
+          }
+          {atStateCarAlert ==='ON' &&
           <Image style={{ position: "absolute" }} source={lightorange}></Image>
+          }
+          {isbooton &&
           <Image style={{ position: "absolute" }} source={bootorange}></Image>
+          }
 
-          <Image style={{ position: "absolute" }} source={hoodsticon}></Image>
+          {atStateEngineHood === 'ON' &&
+            <Image style={{ position: "absolute" }} source={hoodsticon}></Image>
+          }
+          {atStateEngineState === 'ON' &&
           <Image style={{ position: "absolute" }} source={enginesticon}></Image>
+          }
+          {atStateTrunk === 'ON' &&
           <Image style={{ position: "absolute" }} source={trunksticon}></Image>
-          <Image style={{ position: "absolute" }} source={doorlocksticon}></Image>
+          }
+
+          {atStateDoorLock === 'ON' &&
+            <Image style={{ position: "absolute" }} source={doorlocksticon}></Image>
+          }
+          {(atStateDoor === 'ON') &&
           <Image style={{ position: "absolute" }} source={dooropensticon}></Image>
+          }
+          {atStateCarAlert ==='ON' &&
           <Image style={{ position: "absolute" }} source={lightsticon}></Image>
+          }
+          {isbooton &&
+          <Image style={{ position: "absolute" }} source={bootsticon}></Image>
+          }
         </View>
         {/* 차량 이미지 끝 */}
 
         <View style={{ flex: 0.6 }}></View>
-        
+
 
 
 
@@ -185,7 +214,9 @@ const CarState = () => {
                 <Text style={styles.frametxt}>차량 경계</Text>
               </View>
               <View>
+                <TouchableWithoutFeedback onPress={()=>{if(atStateCarAlert==='ON')setAtStateCarAlert('OFF');else setAtStateCarAlert('ON');}}>
                 <Text style={atStateCarAlert === 'ON' ? styles.ontxt : styles.offtxt}>{atStateCarAlert}</Text>
+                </TouchableWithoutFeedback>
               </View>
             </View>
           </View>
@@ -221,7 +252,9 @@ const CarState = () => {
                 <Text style={styles.frametxt}>도어</Text>
               </View>
               <View>
+              <TouchableWithoutFeedback onPress={()=>{if(atStateDoor==='ON')setAtStateDoor('OFF');else setAtStateDoor('ON');}}>
                 <Text style={atStateDoor === 'ON' ? styles.ontxt : styles.offtxt}>{atStateDoor}</Text>
+                </TouchableWithoutFeedback>
               </View>
             </View>
           </View>
@@ -235,7 +268,9 @@ const CarState = () => {
                 <Text style={styles.frametxt}>트렁크</Text>
               </View>
               <View>
+              <TouchableWithoutFeedback onPress={()=>{if(atStateTrunk==='ON')setAtStateTrunk('OFF');else setAtStateTrunk('ON');}}>
                 <Text style={atStateTrunk === 'ON' ? styles.ontxt : styles.offtxt}>{atStateTrunk}</Text>
+                </TouchableWithoutFeedback>
               </View>
             </View>
           </View>
@@ -256,7 +291,9 @@ const CarState = () => {
                 <Text style={styles.frametxt}>엔진 후드</Text>
               </View>
               <View>
+              <TouchableWithoutFeedback onPress={()=>{if(atStateEngineHood==='ON')setAtStateEngineHood('OFF');else setAtStateEngineHood('ON');}}>
                 <Text style={atStateEngineHood === 'ON' ? styles.ontxt : styles.offtxt}>{atStateEngineHood}</Text>
+                </TouchableWithoutFeedback>
               </View>
             </View>
           </View>
@@ -270,7 +307,9 @@ const CarState = () => {
                 <Text style={styles.frametxt}>엔진 상태</Text>
               </View>
               <View>
+              <TouchableWithoutFeedback onPress={()=>{if(atStateEngineState==='ON')setAtStateEngineState('OFF');else setAtStateEngineState('ON');}}>
                 <Text style={atStateEngineState === 'ON' ? styles.ontxt : styles.offtxt}>{atStateEngineState}</Text>
+                </TouchableWithoutFeedback>
               </View>
             </View>
           </View>
