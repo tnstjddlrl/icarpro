@@ -88,7 +88,7 @@ const bootIcon = require('../img/state/bootIcon.png')
 const voltIcon = require('../img/state/voltIcon.png')
 
 
-let command = '123123/E:ooooo122o/D:oiooiio/L:iiiio/F:oo0000oooo/S:iiiioooooo1200000oo'
+let command = '123123/E:ooooo119o/D:ooooiio/L:iiiio/F:oo0000oooo/S:iiiioooooo1200000oo'
 
 
 const CarState = () => {
