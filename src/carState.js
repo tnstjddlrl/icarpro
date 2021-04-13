@@ -33,7 +33,8 @@ import {
   StateTrunk,
   StateEngineHood,
   StateEngineState,
-  StateCarVolt
+  StateCarVolt,
+  voltValue
 } from './atom/atoms'
 
 import client from './Client'
@@ -86,6 +87,10 @@ const stateIcon = require('../img/state/stateIcon.png')
 const bootIcon = require('../img/state/bootIcon.png')
 const voltIcon = require('../img/state/voltIcon.png')
 
+
+let command = '123123/E:ooooo122o/D:ooooooo/L:ooooo/F:oo0000oooo/S:iiiioooooo1200000oo'
+
+
 const CarState = () => {
   const navigation = useNavigation()
 
@@ -97,15 +102,7 @@ const CarState = () => {
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
-  const [syncCarState, SetSyncCarState] = useState('')
-
-  useEffect(() => {
-    if (syncCarState === '') {
-
-    } else {
-
-    }
-  }, [syncCarState])
+  const [lowvoltValue, setLowvoltValue] = useRecoilState(voltValue)
 
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
@@ -356,7 +353,7 @@ const CarState = () => {
                 <Text style={styles.frametxt}>차량 전압</Text>
               </View>
               <View>
-                <Text style={styles.volttxt}>00.0V</Text>
+                <Text style={styles.volttxt}>{lowvoltValue}V</Text>
               </View>
             </View>
           </View>
@@ -455,4 +452,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CarState
+export default React.memo(CarState)
