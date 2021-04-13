@@ -122,7 +122,6 @@ const CarState = () => {
 
     // })
 
-    console.log(command.split('/')[1][2])
     //차량 경계 상태
     if(command.split('/')[1][2] === 'i'){
       setAtStateCarAlert('ON')
