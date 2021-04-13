@@ -46,7 +46,7 @@ const CarState = () => {
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
-  const [saveModal,setSaveModal] = useState(false)
+  const [saveModal, setSaveModal] = useState(false)
 
   console.log('간편 : ' + pushToken)
 

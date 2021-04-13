@@ -175,10 +175,10 @@ const Carcontroll = () => {
 
       lomofc('도어 LOCK')
 
-      if(atActionSound===false){
+      if (atActionSound === false) {
         doorOnSound()
       }
-      
+
 
       door_1 = JSON.stringify(door_1)
       client.write(door_1)
@@ -199,7 +199,7 @@ const Carcontroll = () => {
 
       lomofc('도어 UNLOCK')
 
-      if(atActionSound===false){
+      if (atActionSound === false) {
         doorOnSound()
       }
 
@@ -231,7 +231,7 @@ const Carcontroll = () => {
         setPanic('no')
       }, 4000);
 
-      if(atActionSound===false){ 
+      if (atActionSound === false) {
         panicOnSound()
       }
 
@@ -266,7 +266,7 @@ const Carcontroll = () => {
       setTimeout(() => {
         setWarnbim('no')
       }, 4000);
-      if(atActionSound===false){ 
+      if (atActionSound === false) {
         WarnSound()
       }
     }
@@ -302,7 +302,7 @@ const Carcontroll = () => {
     setTimeout(() => {
       setTrunk(false)
     }, 4000);
-    if(atActionSound===false){ 
+    if (atActionSound === false) {
       TrunkOpenSound()
     }
   }
@@ -319,7 +319,7 @@ const Carcontroll = () => {
 
       setAtIsboot(true)
 
-      if(atActionSound===false){ 
+      if (atActionSound === false) {
         bootOnSound()
       }
 

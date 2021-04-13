@@ -5,21 +5,15 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Alert,
-  TouchableOpacity,
-  TextInput,
   SafeAreaView,
   Image,
   StyleSheet,
-  ImageBackground
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
-  RecoilRoot,
-  atom,
-  selector,
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
@@ -123,50 +117,49 @@ const CarState = () => {
     // })
 
     //차량 경계 상태
-    if(command.split('/')[1][2] === 'i'){
+    if (command.split('/')[1][2] === 'i') {
       setAtStateCarAlert('ON')
-    }else if(command.split('/')[1][2] === 'o'){
+    } else if (command.split('/')[1][2] === 'o') {
       setAtStateCarAlert('OFF')
     }
 
     //엔진 상태
-    if(command.split('/')[1][3] === 'i'){
+    if (command.split('/')[1][3] === 'i') {
       setAtStateEngineState('ON')
-    }else if(command.split('/')[1][2] === 'o'){
+    } else if (command.split('/')[1][2] === 'o') {
       setAtStateEngineState('OFF')
     }
 
     //차량 전압
-    setAtStateCarVolt(command.split('/')[1][7] +command.split('/')[1][8]+'.' + command.split('/')[1][9])
+    setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
 
     //도어 열림 상태
-    if(command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o'){
+    if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
       setAtStateDoor('OFF')
-    }else{
+    } else {
       setAtStateDoor('ON')
     }
 
     //트렁크 상태
-    if(command.split('/')[2][6] === 'i'){
+    if (command.split('/')[2][6] === 'i') {
       setAtStateTrunk('ON')
-    }else if(command.split('/')[2][6] === 'o'){
+    } else if (command.split('/')[2][6] === 'o') {
       setAtStateTrunk('OFF')
     }
 
     //후드 상태
-    if(command.split('/')[2][7] === 'i'){
+    if (command.split('/')[2][7] === 'i') {
       setAtStateEngineHood('ON')
-    }else if(command.split('/')[2][7] === 'o'){
+    } else if (command.split('/')[2][7] === 'o') {
       setAtStateEngineHood('OFF')
     }
 
     //도어락 상태
-    if(command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i' ){
+    if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
       setAtStateDoorLock('ON')
-    }else{
+    } else {
       setAtStateDoorLock('OFF')
     }
-
 
   }, [])
 
@@ -191,55 +184,55 @@ const CarState = () => {
       {/* 본문 */}
       <View style={{ flex: 10 }}>
         {/* 차량 이미지 */}
-        <TouchableWithoutFeedback onPress={()=>registerClick()}>
-        <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
-          <Image style={{ position: "absolute" }} source={mainframe}></Image>
-          {(atStateDoorLock === 'OFF' && atStateDoor == 'OFF') &&
-            <Image style={{ position: "absolute" }} source={doorcloseblack}></Image>
-          }
-          {(atStateDoorLock === 'ON' && atStateDoor === 'OFF') &&
-            <Image style={{ position: "absolute" }} source={doorcloseorange}></Image>
-          }
-          {atStateDoor === 'ON' &&
-          <Image style={{ position: "absolute" }} source={dooropen}></Image>
-          }
+        <TouchableWithoutFeedback onPress={() => registerClick()}>
+          <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
+            <Image style={{ position: "absolute" }} source={mainframe}></Image>
+            {(atStateDoorLock === 'OFF' && atStateDoor == 'OFF') &&
+              <Image style={{ position: "absolute" }} source={doorcloseblack}></Image>
+            }
+            {(atStateDoorLock === 'ON' && atStateDoor === 'OFF') &&
+              <Image style={{ position: "absolute" }} source={doorcloseorange}></Image>
+            }
+            {atStateDoor === 'ON' &&
+              <Image style={{ position: "absolute" }} source={dooropen}></Image>
+            }
 
-          {(atStateEngineHood === 'ON' || atStateEngineState === 'ON') &&
-            <Image style={{ position: "absolute" }} source={hoodorange}></Image>
-          }
-          {atStateTrunk === 'ON' &&
-          <Image style={{ position: "absolute" }} source={trunkorange}></Image>
-          }
-          {atStateCarAlert ==='ON' &&
-          <Image style={{ position: "absolute" }} source={lightorange}></Image>
-          }
-          {isbooton &&
-          <Image style={{ position: "absolute" }} source={bootorange}></Image>
-          }
+            {(atStateEngineHood === 'ON' || atStateEngineState === 'ON') &&
+              <Image style={{ position: "absolute" }} source={hoodorange}></Image>
+            }
+            {atStateTrunk === 'ON' &&
+              <Image style={{ position: "absolute" }} source={trunkorange}></Image>
+            }
+            {atStateCarAlert === 'ON' &&
+              <Image style={{ position: "absolute" }} source={lightorange}></Image>
+            }
+            {isbooton &&
+              <Image style={{ position: "absolute" }} source={bootorange}></Image>
+            }
 
-          {atStateEngineHood === 'ON' &&
-            <Image style={{ position: "absolute" }} source={hoodsticon}></Image>
-          }
-          {atStateEngineState === 'ON' &&
-          <Image style={{ position: "absolute" }} source={enginesticon}></Image>
-          }
-          {atStateTrunk === 'ON' &&
-          <Image style={{ position: "absolute" }} source={trunksticon}></Image>
-          }
+            {atStateEngineHood === 'ON' &&
+              <Image style={{ position: "absolute" }} source={hoodsticon}></Image>
+            }
+            {atStateEngineState === 'ON' &&
+              <Image style={{ position: "absolute" }} source={enginesticon}></Image>
+            }
+            {atStateTrunk === 'ON' &&
+              <Image style={{ position: "absolute" }} source={trunksticon}></Image>
+            }
 
-          {atStateDoorLock === 'ON' &&
-            <Image style={{ position: "absolute" }} source={doorlocksticon}></Image>
-          }
-          {(atStateDoor === 'ON') &&
-          <Image style={{ position: "absolute" }} source={dooropensticon}></Image>
-          }
-          {atStateCarAlert ==='ON' &&
-          <Image style={{ position: "absolute" }} source={lightsticon}></Image>
-          }
-          {isbooton &&
-          <Image style={{ position: "absolute" }} source={bootsticon}></Image>
-          }
-        </View>
+            {atStateDoorLock === 'ON' &&
+              <Image style={{ position: "absolute" }} source={doorlocksticon}></Image>
+            }
+            {(atStateDoor === 'ON') &&
+              <Image style={{ position: "absolute" }} source={dooropensticon}></Image>
+            }
+            {atStateCarAlert === 'ON' &&
+              <Image style={{ position: "absolute" }} source={lightsticon}></Image>
+            }
+            {isbooton &&
+              <Image style={{ position: "absolute" }} source={bootsticon}></Image>
+            }
+          </View>
         </TouchableWithoutFeedback>
         {/* 차량 이미지 끝 */}
 
@@ -260,8 +253,8 @@ const CarState = () => {
                 <Text style={styles.frametxt}>차량 경계</Text>
               </View>
               <View>
-                <TouchableWithoutFeedback onPress={()=>{if(atStateCarAlert==='ON')setAtStateCarAlert('OFF');else setAtStateCarAlert('ON');}}>
-                <Text style={atStateCarAlert === 'ON' ? styles.ontxt : styles.offtxt}>{atStateCarAlert}</Text>
+                <TouchableWithoutFeedback onPress={() => { if (atStateCarAlert === 'ON') setAtStateCarAlert('OFF'); else setAtStateCarAlert('ON'); }}>
+                  <Text style={atStateCarAlert === 'ON' ? styles.ontxt : styles.offtxt}>{atStateCarAlert}</Text>
                 </TouchableWithoutFeedback>
               </View>
             </View>
@@ -298,8 +291,8 @@ const CarState = () => {
                 <Text style={styles.frametxt}>도어</Text>
               </View>
               <View>
-              <TouchableWithoutFeedback onPress={()=>{if(atStateDoor==='ON')setAtStateDoor('OFF');else setAtStateDoor('ON');}}>
-                <Text style={atStateDoor === 'ON' ? styles.ontxt : styles.offtxt}>{atStateDoor}</Text>
+                <TouchableWithoutFeedback onPress={() => { if (atStateDoor === 'ON') setAtStateDoor('OFF'); else setAtStateDoor('ON'); }}>
+                  <Text style={atStateDoor === 'ON' ? styles.ontxt : styles.offtxt}>{atStateDoor}</Text>
                 </TouchableWithoutFeedback>
               </View>
             </View>
@@ -314,8 +307,8 @@ const CarState = () => {
                 <Text style={styles.frametxt}>트렁크</Text>
               </View>
               <View>
-              <TouchableWithoutFeedback onPress={()=>{if(atStateTrunk==='ON')setAtStateTrunk('OFF');else setAtStateTrunk('ON');}}>
-                <Text style={atStateTrunk === 'ON' ? styles.ontxt : styles.offtxt}>{atStateTrunk}</Text>
+                <TouchableWithoutFeedback onPress={() => { if (atStateTrunk === 'ON') setAtStateTrunk('OFF'); else setAtStateTrunk('ON'); }}>
+                  <Text style={atStateTrunk === 'ON' ? styles.ontxt : styles.offtxt}>{atStateTrunk}</Text>
                 </TouchableWithoutFeedback>
               </View>
             </View>
@@ -337,8 +330,8 @@ const CarState = () => {
                 <Text style={styles.frametxt}>엔진 후드</Text>
               </View>
               <View>
-              <TouchableWithoutFeedback onPress={()=>{if(atStateEngineHood==='ON')setAtStateEngineHood('OFF');else setAtStateEngineHood('ON');}}>
-                <Text style={atStateEngineHood === 'ON' ? styles.ontxt : styles.offtxt}>{atStateEngineHood}</Text>
+                <TouchableWithoutFeedback onPress={() => { if (atStateEngineHood === 'ON') setAtStateEngineHood('OFF'); else setAtStateEngineHood('ON'); }}>
+                  <Text style={atStateEngineHood === 'ON' ? styles.ontxt : styles.offtxt}>{atStateEngineHood}</Text>
                 </TouchableWithoutFeedback>
               </View>
             </View>
@@ -353,8 +346,8 @@ const CarState = () => {
                 <Text style={styles.frametxt}>엔진 상태</Text>
               </View>
               <View>
-              <TouchableWithoutFeedback onPress={()=>{if(atStateEngineState==='ON')setAtStateEngineState('OFF');else setAtStateEngineState('ON');}}>
-                <Text style={atStateEngineState === 'ON' ? styles.ontxt : styles.offtxt}>{atStateEngineState}</Text>
+                <TouchableWithoutFeedback onPress={() => { if (atStateEngineState === 'ON') setAtStateEngineState('OFF'); else setAtStateEngineState('ON'); }}>
+                  <Text style={atStateEngineState === 'ON' ? styles.ontxt : styles.offtxt}>{atStateEngineState}</Text>
                 </TouchableWithoutFeedback>
               </View>
             </View>

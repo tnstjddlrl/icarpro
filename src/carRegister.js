@@ -631,7 +631,7 @@ const styles = StyleSheet.create({
     color: 'rgb(68,73,80)',
     width: chwidth - 80,
     marginLeft: 16,
-    height:56
+    height: 56
   }
 })
 
