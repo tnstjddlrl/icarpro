@@ -138,5 +138,5 @@ export const StateEngineState = atom({
 
 export const StateCarVolt = atom({
   key: 'StateCarVolt',
-  default: 0,
+  default: '00.0',
 })

@@ -45,13 +45,13 @@ const chheight = Dimensions.get('window').height
 
 const back = require('../img/backbtn.png')
 
-const warnOn = require('../img/topviewstate/warnOn.png')
-const bootOn = require('../img/topviewstate/bootOn.png')
-const doorlockOn = require('../img/topviewstate/doorlockOn.png')
-const doorOn = require('../img/topviewstate/doorOn.png')
-const enginestateOn = require('../img/topviewstate/enginestateOn.png')
-const enginehoodOn = require('../img/topviewstate/enginehoodOn.png')
-const trunkOn = require('../img/topviewstate/trunkOn.png')
+// const warnOn = require('../img/topviewstate/warnOn.png')
+// const bootOn = require('../img/topviewstate/bootOn.png')
+// const doorlockOn = require('../img/topviewstate/doorlockOn.png')
+// const doorOn = require('../img/topviewstate/doorOn.png')
+// const enginestateOn = require('../img/topviewstate/enginestateOn.png')
+// const enginehoodOn = require('../img/topviewstate/enginehoodOn.png')
+// const trunkOn = require('../img/topviewstate/trunkOn.png')
 
 ///////////////
 const mainframe = require('../img/cutimg/icarmain.png')
@@ -88,7 +88,7 @@ const bootIcon = require('../img/state/bootIcon.png')
 const voltIcon = require('../img/state/voltIcon.png')
 
 
-let command = '123123/E:ooooo122o/D:ooooooo/L:ooooo/F:oo0000oooo/S:iiiioooooo1200000oo'
+let command = '123123/E:ooooo122o/D:oiooiio/L:iiiio/F:oo0000oooo/S:iiiioooooo1200000oo'
 
 
 const CarState = () => {
@@ -118,9 +118,57 @@ const CarState = () => {
   }
 
   useEffect(() => {
-    client.on('data', function (data) {
+    // client.on('data', function (data) {
 
-    })
+    // })
+
+    console.log(command.split('/')[1][2])
+    //차량 경계 상태
+    if(command.split('/')[1][2] === 'i'){
+      setAtStateCarAlert('ON')
+    }else if(command.split('/')[1][2] === 'o'){
+      setAtStateCarAlert('OFF')
+    }
+
+    //엔진 상태
+    if(command.split('/')[1][3] === 'i'){
+      setAtStateEngineState('ON')
+    }else if(command.split('/')[1][2] === 'o'){
+      setAtStateEngineState('OFF')
+    }
+
+    //차량 전압
+    setAtStateCarVolt(command.split('/')[1][7] +command.split('/')[1][8]+'.' + command.split('/')[1][9])
+
+    //도어 열림 상태
+    if(command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o'){
+      setAtStateDoor('OFF')
+    }else{
+      setAtStateDoor('ON')
+    }
+
+    //트렁크 상태
+    if(command.split('/')[2][6] === 'i'){
+      setAtStateTrunk('ON')
+    }else if(command.split('/')[2][6] === 'o'){
+      setAtStateTrunk('OFF')
+    }
+
+    //후드 상태
+    if(command.split('/')[2][7] === 'i'){
+      setAtStateEngineHood('ON')
+    }else if(command.split('/')[2][7] === 'o'){
+      setAtStateEngineHood('OFF')
+    }
+
+    //도어락 상태
+    if(command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i' ){
+      setAtStateDoorLock('ON')
+    }else{
+      setAtStateDoorLock('OFF')
+    }
+
+
   }, [])
 
 
@@ -353,7 +401,7 @@ const CarState = () => {
                 <Text style={styles.frametxt}>차량 전압</Text>
               </View>
               <View>
-                <Text style={styles.volttxt}>{lowvoltValue}V</Text>
+                <Text style={styles.volttxt}>{atStateCarVolt}V</Text>
               </View>
             </View>
           </View>
