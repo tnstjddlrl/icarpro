@@ -68,7 +68,33 @@ const Settings = () => {
 
 
   function savebtnclick() {
+    if(icarswitch !== aticarswitch){
+      
+    }
+
+    if(idoorswitch !== atidoorswitch){
+
+    }
+
+    if(lowboltBoot !==atlowboltBoot){
+
+    }
+
+    if(lowboltAlert !==atlowboltAlert){
+
+    }
+
+    if(actionsound !== atactionsound){
+
+    }
+
+    if(alertsound !== atalertsound){
+      
+    }
+    
     setSaveModal(true)
+
+
     
     AsyncStorage.setItem("@icarswitch", JSON.stringify(icarswitch))
     AsyncStorage.setItem("@idoorswitch", JSON.stringify(idoorswitch))
