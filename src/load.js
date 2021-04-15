@@ -1,21 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
-  Text,
   Dimensions,
-  TouchableWithoutFeedback,
-  Alert,
-  TouchableOpacity,
   SafeAreaView,
   Image,
 } from 'react-native';
 
 import {
-  RecoilRoot,
-  atom,
-  selector,
   useRecoilState,
-  useRecoilValue,
 } from 'recoil';
 
 import {
@@ -24,13 +16,9 @@ import {
   fcmToken,
   isCarRace,
   voltValue,
-  voltValueSC,
   bootTimeValue,
-  bootTimeValueSC,
   lastHeatTimeValue,
-  lastHeatTimeValueSC,
   startTimeValue,
-  startTimeValueSC,
   actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert
 } from './atom/atoms'
 
@@ -41,7 +29,6 @@ import firebase from '@react-native-firebase/app'
 import { useNavigation } from '@react-navigation/native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LastHeatTime from './TimeSet/lastHeatTime';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -172,23 +159,23 @@ const Load = () => {
 
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
-  const [atModemn, setAtModemn] = useRecoilState(modemNumber)
-  const [atUserNumber, setatUserNumber] = useRecoilState(userNumber)
-  const [atIsCarRace, setatIsCarRace] = useRecoilState(isCarRace)
+  const [, setAtModemn] = useRecoilState(modemNumber)
+  const [, setatUserNumber] = useRecoilState(userNumber)
+  const [, setatIsCarRace] = useRecoilState(isCarRace)
   const [isAuthorized, setIsAuthorized] = useState(false)
 
 
-  const [lowVoltValue, setLowVoltValue] = useRecoilState(voltValue)
-  const [atbootTimeValue, setatBootTimeValue] = useRecoilState(bootTimeValue)
-  const [atLastHeatvalue, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
-  const [atStartTimeValue, setAtStartTimeValue] = useRecoilState(startTimeValue)
+  const [, setLowVoltValue] = useRecoilState(voltValue)
+  const [, setatBootTimeValue] = useRecoilState(bootTimeValue)
+  const [, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
+  const [, setAtStartTimeValue] = useRecoilState(startTimeValue)
 
-  const [atIcarSwitch, setAticarswitch] = useRecoilState(icarSwitch)
-  const [atidoorswitch, setAtidoorswitch] = useRecoilState(idoorSwitch)
-  const [atlowvoltBoot, setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
-  const [atlowvoltAlert, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
-  const [atactionSound, setAtactionSound] = useRecoilState(actionSound)
-  const [atalertSound, setAtalertSound] = useRecoilState(alertSound)
+  const [, setAticarswitch] = useRecoilState(icarSwitch)
+  const [, setAtidoorswitch] = useRecoilState(idoorSwitch)
+  const [, setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
+  const [, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
+  const [, setAtactionSound] = useRecoilState(actionSound)
+  const [, setAtalertSound] = useRecoilState(alertSound)
 
   const handlePushToken = useCallback(async () => {
     const enabled = await messaging().hasPermission()
