@@ -69,27 +69,45 @@ const Settings = () => {
 
   function savebtnclick() {
     if(icarswitch !== aticarswitch){
-      
+      if(icarswitch === true){
+        let sett = 'mn'
+      }else{
+        let sett = 'mf'
+      }
     }
 
     if(idoorswitch !== atidoorswitch){
-
+      if(idoorswitch === true){
+        let sett = 'dn'
+      }else{
+        let sett = 'df'
+      }
     }
 
-    if(lowboltBoot !==atlowboltBoot){
-
-    }
-
-    if(lowboltAlert !==atlowboltAlert){
-
+    if(lowboltBoot !==atlowboltBoot || lowboltAlert !==atlowboltAlert){
+      if(lowboltBoot === true){
+        let sett = 'le'
+      }else if(lowboltAlert === true){
+        let sett = 'la'
+      }else{
+        let sett = 'lf'
+      }
     }
 
     if(actionsound !== atactionsound){
-
+      if(actionsound === true){
+        let sett = '1n'
+      }else{
+        let sett = '1f'
+      }
     }
 
     if(alertsound !== atalertsound){
-      
+      if(alertsound === true){
+        let sett = '2n'
+      }else{
+        let sett = '2f'
+      }
     }
     
     setSaveModal(true)
