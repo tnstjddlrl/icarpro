@@ -81,7 +81,7 @@ const LastHeatTime = () => {
 
   return (
     <SafeAreaView>
-      <View style={{ width: chwidth, height: chheight }}>
+      <View style={{ width: chwidth, height: '100%' }}>
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
           <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
@@ -96,7 +96,7 @@ const LastHeatTime = () => {
 
         {/* 본문 */}
         <View style={{ flex: 10 }}>
-          <View style={{ flex: 3, justifyContent: "center", alignItems: "center" }}>
+          <View style={{ flex: 4, justifyContent: "center", alignItems: "center",marginBottom:-40 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <View style={styles.mask}>
                 <Text style={styles.topchechktxt}>{checkitem}</Text>
@@ -107,16 +107,16 @@ const LastHeatTime = () => {
           </View>
           <View style={{ flex: 7 }}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-              <View style={{ height: 200, width: 110 }}>
+              <View style={{ height: 400, width: 110 }}>
                 <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }}
                   showsVerticalScrollIndicator={false}
                   scrollEventThrottle={16}
                 >
-                  <Text style={styles.noselecttxt2}> </Text>
+                  <View style={{height:140}}></View>
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>1:30</Text>
                   <Text style={(50 < isy && isy < 130) ? styles.selecttxt : styles.noselecttxt}>3:00</Text>
                   <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>5:00</Text>
-                  <Text style={styles.noselecttxt}> </Text>
+                  <View style={{height:155}}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>sec</Text>
@@ -125,6 +125,8 @@ const LastHeatTime = () => {
             </View>
 
           </View>
+
+          <View style={{flex:1,backgroundColor:'gray'}}></View>
 
         </View>
         {/* 본문 끝 */}
@@ -197,7 +199,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.67,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginBottom: 20
+    marginBottom: 30
   },
   noselecttxt: {
     opacity: 0.3,
@@ -208,7 +210,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.53,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginBottom: 20
+    marginBottom: 30
   },
   noselecttxt2: {
     opacity: 0.3,
@@ -228,7 +230,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: "#979797",
     position: "absolute",
-    top: '18%'
+    top: '33%'
   },
   indicator2: {
     width: 97,
@@ -238,7 +240,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: "#979797",
     position: "absolute",
-    top: '60%'
+    top: '52%'
   },
   topchechktxt: {
     fontFamily: "AppleSDGothicNeo-Medium",
@@ -258,7 +260,7 @@ const styles = StyleSheet.create({
     color: 'rgb(49,54,61)',
     position: "absolute",
     right: '15%',
-    bottom: '40%'
+    bottom: '50%'
   }
 })
 
