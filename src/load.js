@@ -179,7 +179,6 @@ const Load = () => {
 
 
   const [lowVoltValue, setLowVoltValue] = useRecoilState(voltValue)
-  const [lowVoltValuesc, setLowVoltValuesc] = useRecoilState(voltValueSC)
   const [atbootTimeValue, setatBootTimeValue] = useRecoilState(bootTimeValue)
   const [atbootTimeValueSC, setatBootTimeValueSC] = useRecoilState(bootTimeValueSC)
   const [atLastHeatvalue, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
@@ -244,19 +243,14 @@ const Load = () => {
         getLowVoltValue().then(res => {
           if (res == '11.8') {
             setLowVoltValue('11.8')
-            setLowVoltValuesc(5)
           } else if (res == '11.9') {
             setLowVoltValue('11.9')
-            setLowVoltValuesc(80)
           } else if (res == '12.0') {
             setLowVoltValue('12.0')
-            setLowVoltValuesc(151)
           } else if (res == '12.1') {
             setLowVoltValue('12.1')
-            setLowVoltValuesc(220)
           } else if (res == '12.2') {
             setLowVoltValue('12.2')
-            setLowVoltValuesc(292)
           }
         })
 

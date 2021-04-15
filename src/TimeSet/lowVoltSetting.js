@@ -33,31 +33,43 @@ const LowVoltSetting = () => {
   const [saveModal, setSaveModal] = useState(false)
 
   const [lowvoltValue, setLowvoltValue] = useRecoilState(voltValue)
-  const [lowvoltSCValue, setLowvoltSCValue] = useRecoilState(voltValueSC)
-  console.log(lowvoltValue)
-  console.log(lowvoltSCValue)
-
 
   const [checkitem, setChechkitem] = useState(lowvoltValue)
 
-  const [isy, setisy] = useState(lowvoltSCValue)
+  const [isy, setisy] = useState(0)
 
   const ii = useRef()
 
   useEffect(() => {
-    ii.current.scrollTo({ x: 0, y: isy, animated: true })
+    if(checkitem === '11.8'){
+      setisy(0)
+      ii.current.scrollTo({ x: 0, y: 0 })
+    }else if(checkitem === '11.9'){
+      setisy(75)
+      ii.current.scrollTo({ x: 0, y: 75 })
+    }else if(checkitem === '12.0'){
+      setisy(155)
+      ii.current.scrollTo({ x: 0, y: 155 })
+    }else if(checkitem === '12.1'){
+      setisy(235)
+      ii.current.scrollTo({ x: 0, y: 235 })
+    }else if(checkitem === '12.2'){
+      setisy(350)
+      ii.current.scrollTo({ x: 0, y: 350 })
+    }
+    
   }, [])
 
   useEffect(() => {
-    if (isy < 60) {
+    if (isy < 40) {
       setChechkitem('11.8')
-    } else if (60 < isy && isy < 110) {
+    } else if (40 < isy && isy < 120) {
       setChechkitem('11.9')
-    } else if (110 < isy && isy < 170) {
+    } else if (120 < isy && isy < 195) {
       setChechkitem('12.0')
-    } else if (170 < isy && isy < 250) {
+    } else if (195 < isy && isy < 270) {
       setChechkitem('12.1')
-    } else if (250 < isy) {
+    } else if (270 < isy) {
       setChechkitem('12.2')
     }
   }, [isy])
@@ -68,7 +80,6 @@ const LowVoltSetting = () => {
     AsyncStorage.setItem("@lowvolt_Value", checkitem)
 
     setLowvoltValue(checkitem)
-    setLowvoltSCValue(isy)
 
     setSaveModal(true)
     setTimeout(() => {
@@ -80,7 +91,7 @@ const LowVoltSetting = () => {
 
   return (
     <SafeAreaView>
-      <View style={{ width: chwidth, height: chheight }}>
+      <View style={{ width: chwidth, height: "100%" }}>
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
           <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
@@ -106,18 +117,18 @@ const LowVoltSetting = () => {
           </View>
           <View style={{ flex: 7 }}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-              <View style={{ height: 200, width: 100 }}>
+              <View style={{ height: 400, width: 100 }}>
                 <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }}
                  showsVerticalScrollIndicator={false}
-                 scrollEventThrottle={16}
+                 scrollEventThrottle={8}
                  >
-                  <Text style={styles.noselecttxt2}> </Text>
-                  <Text style={isy < 60 ? styles.selecttxt : styles.noselecttxt}>11.8</Text>
-                  <Text style={(60 < isy && isy < 110) ? styles.selecttxt : styles.noselecttxt}>11.9</Text>
-                  <Text style={(110 < isy && isy < 170) ? styles.selecttxt : styles.noselecttxt}>12.0</Text>
-                  <Text style={(170 < isy && isy < 250) ? styles.selecttxt : styles.noselecttxt}>12.1</Text>
-                  <Text style={250 < isy ? styles.selecttxt : styles.noselecttxt}>12.2</Text>
-                  <Text style={styles.noselecttxt}> </Text>
+                  <View style={{height:140}}></View>
+                  <Text style={isy < 40 ? styles.selecttxt : styles.noselecttxt}>11.8</Text>
+                  <Text style={(40 < isy && isy < 120) ? styles.selecttxt : styles.noselecttxt}>11.9</Text>
+                  <Text style={(120 < isy && isy < 195) ? styles.selecttxt : styles.noselecttxt}>12.0</Text>
+                  <Text style={(195 < isy && isy < 270) ? styles.selecttxt : styles.noselecttxt}>12.1</Text>
+                  <Text style={270 < isy ? styles.selecttxt : styles.noselecttxt}>12.2</Text>
+                  <View style={{height:160}}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>V</Text>
@@ -126,6 +137,8 @@ const LowVoltSetting = () => {
             </View>
 
           </View>
+
+          <View style={{flex:1,backgroundColor:'gray'}}></View>
 
         </View>
         {/* 본문 끝 */}
@@ -197,7 +210,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.67,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginBottom: 20
+    marginBottom: 30
   },
   noselecttxt: {
     opacity: 0.3,
@@ -208,7 +221,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.53,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginBottom: 20
+    marginBottom: 30
   },
   noselecttxt2: {
     opacity: 0.3,
@@ -228,7 +241,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#979797",
     position: "absolute",
-    top: '18%'
+    top: '33%'
   },
   indicator2: {
     width: 97,
@@ -238,7 +251,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#979797",
     position: "absolute",
-    top: '60%'
+    top: '53%'
   },
   topchechktxt: {
     fontFamily: "AppleSDGothicNeo-Medium",
@@ -260,7 +273,7 @@ const styles = StyleSheet.create({
     color: 'rgb(49,54,61)',
     position: "absolute",
     right: '23%',
-    bottom: '48%'
+    bottom: '50%'
   }
 })
 

@@ -20,7 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRecoilState,
 } from 'recoil';
-import { lastHeatTimeValue, lastHeatTimeValueSC, lastHeatTimeValueLimit } from '../atom/atoms';
+import { lastHeatTimeValue, lastHeatTimeValueLimit } from '../atom/atoms';
 
 
 const chwidth = Dimensions.get('window').width
