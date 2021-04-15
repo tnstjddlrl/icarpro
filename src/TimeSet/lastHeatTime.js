@@ -35,7 +35,7 @@ const LastHeatTime = () => {
   const [lastHeatValue, setLastHeatValue] = useRecoilState(lastHeatTimeValue)
   const [lastHeatValueSC, setLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
   const [lastHeatValueLimit, setLastHeatValueLimit] = useRecoilState(lastHeatTimeValueLimit)
- 
+
   const [checkitem, setChechkitem] = useState(lastHeatValue)
   const [isy, setisy] = useState(lastHeatValueSC)
 
@@ -56,11 +56,10 @@ const LastHeatTime = () => {
   }, [isy])
 
   function saveBtnClick() {
-    if(lastHeatValueLimit === false){
+    if (lastHeatValueLimit === false) {
       setLastHeatValueLimit(true)
 
       setSaveModal(true)
-
 
       setLastHeatValue(checkitem)
       setLastHeatValueSC(isy)
@@ -75,10 +74,9 @@ const LastHeatTime = () => {
         setLastHeatValueLimit(false)
       }, 30000);
 
-    }else{
+    } else {
       Alert.alert('설정 변경이 너무 잦습니다. 잠시후 이용해주세요')
     }
-    
   }
 
   return (
@@ -111,9 +109,9 @@ const LastHeatTime = () => {
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
               <View style={{ height: 200, width: 110 }}>
                 <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }}
-                 showsVerticalScrollIndicator={false}
-                 scrollEventThrottle={16}
-                 >
+                  showsVerticalScrollIndicator={false}
+                  scrollEventThrottle={16}
+                >
                   <Text style={styles.noselecttxt2}> </Text>
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>1:30</Text>
                   <Text style={(50 < isy && isy < 130) ? styles.selecttxt : styles.noselecttxt}>3:00</Text>
@@ -170,8 +168,8 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 2,
     borderColor: "#bec0c2",
-    justifyContent:"center",
-    alignItems:"center"
+    justifyContent: "center",
+    alignItems: "center"
   },
   masktxt: {
     fontFamily: "AppleSDGothicNeo-Medium",
@@ -248,7 +246,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontStyle: "normal",
     color: 'rgb(49,54,61)',
-    marginTop:Platform.OS ==='ios' ? 3 : 0
+    marginTop: Platform.OS === 'ios' ? 3 : 0
   },
   sec: {
     fontFamily: "AppleSDGothicNeo-Medium",
