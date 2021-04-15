@@ -46,8 +46,8 @@ const RemoteBootTime = () => {
       setisy(65)
       ii.current.scrollTo({ x: 0, y: 65 })
     }else if(checkitem === '10'){
-      setisy(140)
-      ii.current.scrollTo({ x: 0, y: 140 })
+      setisy(160)
+      ii.current.scrollTo({ x: 0, y: 160 })
     }
     
   }, [])
@@ -77,7 +77,8 @@ const RemoteBootTime = () => {
         setAtBootTimeLimit(false)
       }, 10000);
     }else {
-      Alert.alert('설정 변경 유휴시간은 10초입니다.')
+      Alert.alert('설정 변경 유휴시간은 10초입니다.','10초 후 시도해주세요')
+
     }
   }
 
@@ -120,7 +121,7 @@ const RemoteBootTime = () => {
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>3</Text>
                   <Text style={(50 < isy && isy < 100) ? styles.selecttxt : styles.noselecttxt}>5</Text>
                   <Text style={100 < isy ? styles.selecttxt : styles.noselecttxt}>10</Text>
-                  <View style={{height:160}}></View>
+                  <View style={{height:170}}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>min</Text>

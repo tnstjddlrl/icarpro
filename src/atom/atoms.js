@@ -94,11 +94,12 @@ export const lastHeatTimeValueLimit = atom({
 export const startTimeValue = atom({
   key: 'startTimeValue',
   default: '1',
-})
-export const startTimeValueSC = atom({
-  key: 'startTimeValueSC',
-  default: 3,
-})
+})//스타트 시간
+export const startTimeValueLimit = atom({
+  key: 'startTimeValueLimit',
+  default: false,
+})//스타트 시간
+
 
 //차량 상태 값(서버와 연동된 값이 계속 여기에 저장되어야 함)
 

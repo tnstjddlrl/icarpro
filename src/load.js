@@ -182,7 +182,6 @@ const Load = () => {
   const [atbootTimeValue, setatBootTimeValue] = useRecoilState(bootTimeValue)
   const [atLastHeatvalue, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
   const [atStartTimeValue, setAtStartTimeValue] = useRecoilState(startTimeValue)
-  const [atStartTimeValueSC, setAtStartTimeValueSC] = useRecoilState(startTimeValueSC)
 
   const [atIcarSwitch, setAticarswitch] = useRecoilState(icarSwitch)
   const [atidoorswitch, setAtidoorswitch] = useRecoilState(idoorSwitch)
@@ -240,49 +239,26 @@ const Load = () => {
         getcar().then(res => setatIsCarRace(res))
 
         getLowVoltValue().then(res => {
-          if (res == '11.8') {
-            setLowVoltValue('11.8')
-          } else if (res == '11.9') {
-            setLowVoltValue('11.9')
-          } else if (res == '12.0') {
-            setLowVoltValue('12.0')
-          } else if (res == '12.1') {
-            setLowVoltValue('12.1')
-          } else if (res == '12.2') {
-            setLowVoltValue('12.2')
+          if (res !== null) {
+            setLowVoltValue(res)
           }
         })
 
         getBootTimeValue().then(res => {
-          if (res == '3') {
-            setatBootTimeValue('3')
-          } else if (res == '5') {
-            setatBootTimeValue('5')
-          } else if (res == '10') {
-            setatBootTimeValue('10')
+          if (res !== null) {
+            setatBootTimeValue(res)
           }
         })
 
         getLastHeatValue().then(res => {
-          if (res == '1:30') {
-            setAtLastHeatValue('1:30')
-          } else if (res == '3:00') {
-            setAtLastHeatValue('3:00')
-          } else if (res == '5:00') {
-            setAtLastHeatValue('5:00')
+          if (res !== null) {
+            setAtLastHeatValue(res)
           }
         })
         getStartTimeValue().then(res => {
-          if (res == '1') {
-            setAtStartTimeValue('1')
-            setAtStartTimeValueSC(0)
-          } else if (res == '2') {
-            setAtStartTimeValue('2')
-            setAtStartTimeValueSC(73)
-          } else if (res == '3') {
-            setAtStartTimeValue('3')
-            setAtStartTimeValueSC(148)
-          }
+          if (res !== null) {
+            setAtStartTimeValue(res)
+          } 
         })
 
 

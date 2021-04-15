@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRecoilState,
 } from 'recoil';
-import { startTimeValue, startTimeValueSC } from '../atom/atoms';
+import { startTimeValue, startTimeValueLimit } from '../atom/atoms';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -31,37 +31,54 @@ const StartTime = () => {
   const [saveModal, setSaveModal] = useState(false)
 
   const [startTime, setStartTime] = useRecoilState(startTimeValue)
-  const [startTimeSC, setStartTimeSC] = useRecoilState(startTimeValueSC)
+  const [startTimeLimit, setStartTimeLimit] = useRecoilState(startTimeValueLimit)
 
   const [checkitem, setChechkitem] = useState(startTime)
-  const [isy, setisy] = useState(startTimeSC)
+  const [isy, setisy] = useState(0)
 
   const ii = useRef()
 
   useEffect(() => {
-    ii.current.scrollTo({ x: 0, y: isy, animated: true })
+    if(checkitem === '1'){
+      setisy(0)
+      ii.current.scrollTo({ x: 0, y: 0 })
+    }else if(checkitem === '2'){
+      setisy(65)
+      ii.current.scrollTo({ x: 0, y: 65 })
+    }else if(checkitem === '3'){
+      setisy(160)
+      ii.current.scrollTo({ x: 0, y: 160 })
+    }
   }, [])
 
   useEffect(() => {
     if (isy < 50) {
       setChechkitem('1')
-    } else if (50 < isy && isy < 130) {
+    } else if (50 < isy && isy < 100) {
       setChechkitem('2')
-    } else if (130 < isy) {
+    } else if (100 < isy) {
       setChechkitem('3')
     }
   }, [isy])
 
   function saveBtnClick() {
-    setStartTime(checkitem)
-    setStartTimeSC(isy)
-    setSaveModal(true)
+    if(startTimeLimit===false){
+      setStartTimeLimit(true)
 
-    AsyncStorage.setItem('@startTime_value', checkitem)
-
+      setStartTime(checkitem)
+      setSaveModal(true)
+  
+      AsyncStorage.setItem('@startTime_value', checkitem)
+  
+        setTimeout(() => {
+          setSaveModal(false)
+        }, 1500);
       setTimeout(() => {
-        setSaveModal(false)
-      }, 1500);
+        setStartTimeLimit(false)
+      }, 10000);  
+    }else{
+      Alert.alert('설정 변경 유휴시간은 10초입니다.','10초 후 시도해주세요')
+    }
   }
 
 
@@ -102,9 +119,9 @@ const StartTime = () => {
                 >
                   <View style={{height:140}}></View>
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>1</Text>
-                  <Text style={(50 < isy && isy < 130) ? styles.selecttxt : styles.noselecttxt}>2</Text>
-                  <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>3</Text>
-                  <View style={{height:160}}></View>
+                  <Text style={(50 < isy && isy < 100) ? styles.selecttxt : styles.noselecttxt}>2</Text>
+                  <Text style={100 < isy ? styles.selecttxt : styles.noselecttxt}>3</Text>
+                  <View style={{height:170}}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>sec</Text>
