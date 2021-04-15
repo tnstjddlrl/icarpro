@@ -120,7 +120,7 @@ const RemoteBootTime = () => {
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>3</Text>
                   <Text style={(50 < isy && isy < 100) ? styles.selecttxt : styles.noselecttxt}>5</Text>
                   <Text style={100 < isy ? styles.selecttxt : styles.noselecttxt}>10</Text>
-                  <View style={{height:180}}></View>
+                  <View style={{height:160}}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>min</Text>
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.67,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginBottom: 20
+    marginBottom: 30
   },
   noselecttxt: {
     opacity: 0.3,
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.53,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginBottom: 20
+    marginBottom: 30
   },
   noselecttxt2: {
     opacity: 0.3,

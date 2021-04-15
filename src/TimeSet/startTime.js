@@ -69,7 +69,7 @@ const StartTime = () => {
 
   return (
     <SafeAreaView>
-      <View style={{ width: chwidth, height: chheight }}>
+      <View style={{ width: chwidth, height: '100%' }}>
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
           <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
@@ -95,16 +95,16 @@ const StartTime = () => {
           </View>
           <View style={{ flex: 7 }}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-              <View style={{ height: 200, width: 97 }}>
+              <View style={{ height: 400, width: 97 }}>
                 <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }}
                 showsVerticalScrollIndicator={false}
                 scrollEventThrottle={16}
                 >
-                  <Text style={styles.noselecttxt2}> </Text>
+                  <View style={{height:140}}></View>
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>1</Text>
                   <Text style={(50 < isy && isy < 130) ? styles.selecttxt : styles.noselecttxt}>2</Text>
                   <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>3</Text>
-                  <Text style={styles.noselecttxt}> </Text>
+                  <View style={{height:160}}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>sec</Text>
@@ -113,6 +113,7 @@ const StartTime = () => {
             </View>
 
           </View>
+          <View style={{flex:1,backgroundColor:'gray'}}></View>
 
         </View>
         {/* 본문 끝 */}
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.67,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginBottom: 20
+    marginBottom: 30
   },
   noselecttxt: {
     opacity: 0.3,
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.53,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginBottom: 20
+    marginBottom: 30
   },
   noselecttxt2: {
     opacity: 0.3,
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#979797",
     position: "absolute",
-    top: '18%'
+    top: '33%'
   },
   indicator2: {
     width: 97,
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#979797",
     position: "absolute",
-    top: '60%'
+    top: '52%'
   },
   topchechktxt: {
     fontFamily: "AppleSDGothicNeo-Medium",
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
     color: 'rgb(49,54,61)',
     position: "absolute",
     right: '15%',
-    bottom: '40%'
+    bottom: '50%'
   }
 })
 
