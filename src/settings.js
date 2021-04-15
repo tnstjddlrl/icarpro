@@ -20,6 +20,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ToggleSwitch from 'toggle-switch-react-native'
 
+
+import client from './Client';
+
 import {
   useRecoilState,
   useRecoilValue,
@@ -57,6 +60,8 @@ const Settings = () => {
   const [atactionsound, setatactionsound] = useRecoilState(actionSound)
   const [atalertsound, setatalertsound] = useRecoilState(alertSound)
 
+  const pushToken = useRecoilValue(fcmToken)
+
 
   const [icarswitch, seticarswitch] = useState(aticarswitch)
   const [idoorswitch, setidoorswitch] = useState(atidoorswitch)
@@ -65,14 +70,34 @@ const Settings = () => {
   const [actionsound, setactionsound] = useState(atactionsound)
   const [alertsound, setalertsound] = useState(atalertsound)
 
+  function sendCommand (cc){
+
+    let comm = { type: "R", type_sub: "settings", data: { command: cc, token: pushToken } }
+    comm = JSON.stringify(comm)
+
+    client.write(comm)
+    console.log('전송 : ' + comm)
+  }
+
 
 
   function savebtnclick() {
     if(icarswitch !== aticarswitch){
       if(icarswitch === true){
-        let sett = 'mn'
+        try {
+          sendCommand('mn')
+        } catch (e) {
+          console.log(e)
+          return
+        }
+        
       }else{
-        let sett = 'mf'
+        try {
+          sendCommand('mf')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }
     }
 
@@ -382,7 +407,7 @@ const Settings = () => {
       </ScrollView>
 
       <Modal visible={saveModal} transparent={true} animationType={'fade'}>
-        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
           <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
           </View>
