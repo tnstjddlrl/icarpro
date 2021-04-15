@@ -180,7 +180,6 @@ const Load = () => {
 
   const [lowVoltValue, setLowVoltValue] = useRecoilState(voltValue)
   const [atbootTimeValue, setatBootTimeValue] = useRecoilState(bootTimeValue)
-  const [atbootTimeValueSC, setatBootTimeValueSC] = useRecoilState(bootTimeValueSC)
   const [atLastHeatvalue, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
   const [atStartTimeValue, setAtStartTimeValue] = useRecoilState(startTimeValue)
   const [atStartTimeValueSC, setAtStartTimeValueSC] = useRecoilState(startTimeValueSC)
@@ -257,13 +256,10 @@ const Load = () => {
         getBootTimeValue().then(res => {
           if (res == '3') {
             setatBootTimeValue('3')
-            setatBootTimeValueSC(5)
           } else if (res == '5') {
             setatBootTimeValue('5')
-            setatBootTimeValueSC(73)
           } else if (res == '10') {
             setatBootTimeValue('10')
-            setatBootTimeValueSC(150)
           }
         })
 

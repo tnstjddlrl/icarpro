@@ -74,11 +74,11 @@ export const voltValueLimit = atom({
 export const bootTimeValue = atom({
   key: 'bootTimeValue',
   default: '10',
-})
-export const bootTimeValueSC = atom({
-  key: 'bootTimeValueSC',
-  default: 150,
-})
+})//원격시동시간
+export const bootTimeValueLimt = atom({
+  key: 'bootTimeValueLimt',
+  default: false,
+})//원격시동시간
 
 
 export const lastHeatTimeValue = atom({

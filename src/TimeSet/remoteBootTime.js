@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRecoilState,
 } from 'recoil';
-import { bootTimeValue, bootTimeValueSC } from '../atom/atoms';
+import { bootTimeValue, bootTimeValueLimt } from '../atom/atoms';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -28,40 +28,57 @@ const chheight = Dimensions.get('window').height
 const RemoteBootTime = () => {
   const navigation = useNavigation()
   const [atBootTime, setAtBootTime] = useRecoilState(bootTimeValue)
-  const [atBootTimeSC, setAtBootTimeSC] = useRecoilState(bootTimeValueSC)
+  const [atBootTimeLimit, setAtBootTimeLimit] = useRecoilState(bootTimeValueLimt)
 
   const [saveModal, setSaveModal] = useState(false)
 
   const [checkitem, setChechkitem] = useState(atBootTime)
 
-  const [isy, setisy] = useState(atBootTimeSC)
+  const [isy, setisy] = useState(0)
 
   const ii = useRef()
 
   useEffect(() => {
-    ii.current.scrollTo({ x: 0, y: isy, animated: true })
+    if(checkitem === '3'){
+      setisy(0)
+      ii.current.scrollTo({ x: 0, y: 0 })
+    }else if(checkitem === '5'){
+      setisy(65)
+      ii.current.scrollTo({ x: 0, y: 65 })
+    }else if(checkitem === '10'){
+      setisy(140)
+      ii.current.scrollTo({ x: 0, y: 140 })
+    }
+    
   }, [])
 
   useEffect(() => {
     if (isy < 50) {
       setChechkitem('3')
-    } else if (50 < isy && isy < 130) {
+    } else if (50 < isy && isy < 100) {
       setChechkitem('5')
-    } else if (130 < isy) {
+    } else if (100 < isy) {
       setChechkitem('10')
     }
   }, [isy])
 
   function saveBtnClick() {
-    setSaveModal(true)
-    
-    setAtBootTimeSC(isy)
-    setAtBootTime(checkitem)
-    AsyncStorage.setItem("@bootTime_Value", checkitem)
-    
-    setTimeout(() => {
-      setSaveModal(false)
-    }, 1500);
+    if(atBootTimeLimit === false){
+      setAtBootTimeLimit(true)
+      setSaveModal(true)
+      
+      setAtBootTime(checkitem)
+      AsyncStorage.setItem("@bootTime_Value", checkitem)
+      
+      setTimeout(() => {
+        setSaveModal(false)
+      }, 1500);
+      setTimeout(() => {
+        setAtBootTimeLimit(false)
+      }, 10000);
+    }else {
+      Alert.alert('설정 변경 유휴시간은 10초입니다.')
+    }
   }
 
 
@@ -101,8 +118,8 @@ const RemoteBootTime = () => {
                 >
                   <View style={{height:140}}></View>
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>3</Text>
-                  <Text style={(50 < isy && isy < 130) ? styles.selecttxt : styles.noselecttxt}>5</Text>
-                  <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>10</Text>
+                  <Text style={(50 < isy && isy < 100) ? styles.selecttxt : styles.noselecttxt}>5</Text>
+                  <Text style={100 < isy ? styles.selecttxt : styles.noselecttxt}>10</Text>
                   <View style={{height:180}}></View>
                 </ScrollView>
               </View>

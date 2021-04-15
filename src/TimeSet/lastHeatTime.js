@@ -85,7 +85,7 @@ const LastHeatTime = () => {
       }, 10000);
 
     } else {
-      Alert.alert('설정 변경 유휴시간은 30초입니다.')
+      Alert.alert('설정 변경 유휴시간은 10초입니다.')
     }
   }
 
