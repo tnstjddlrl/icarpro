@@ -89,6 +89,10 @@ export const lastHeatTimeValueSC = atom({
   key: 'lastHeatTimeValueSC',
   default: 7,
 })
+export const lastHeatTimeValueLimit = atom({
+  key: 'lastHeatTimeValueLimit',
+  default: false,
+})
 
 export const preHeatTimeValue = atom({
   key: 'preHeatTimeValue',

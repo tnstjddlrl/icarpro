@@ -20,7 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRecoilState,
 } from 'recoil';
-import { lastHeatTimeValue, lastHeatTimeValueSC } from '../atom/atoms';
+import { lastHeatTimeValue, lastHeatTimeValueSC, lastHeatTimeValueLimit } from '../atom/atoms';
 
 
 const chwidth = Dimensions.get('window').width
@@ -34,7 +34,8 @@ const LastHeatTime = () => {
 
   const [lastHeatValue, setLastHeatValue] = useRecoilState(lastHeatTimeValue)
   const [lastHeatValueSC, setLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
-
+  const [lastHeatValueLimit, setLastHeatValueLimit] = useRecoilState(lastHeatTimeValueLimit)
+ 
   const [checkitem, setChechkitem] = useState(lastHeatValue)
   const [isy, setisy] = useState(lastHeatValueSC)
 
@@ -55,18 +56,29 @@ const LastHeatTime = () => {
   }, [isy])
 
   function saveBtnClick() {
-    setSaveModal(true)
+    if(lastHeatValueLimit === false){
+      setLastHeatValueLimit(true)
+
+      setSaveModal(true)
 
 
-    setLastHeatValue(checkitem)
-    setLastHeatValueSC(isy)
+      setLastHeatValue(checkitem)
+      setLastHeatValueSC(isy)
 
-    AsyncStorage.setItem('@lastHeat_value', checkitem)
+      AsyncStorage.setItem('@lastHeat_value', checkitem)
 
-    setTimeout(() => {
-      setSaveModal(false)
-    }, 1500);
+      setTimeout(() => {
+        setSaveModal(false)
+      }, 1500);
 
+      setTimeout(() => {
+        setLastHeatValueLimit(false)
+      }, 30000);
+
+    }else{
+      Alert.alert('설정 변경이 너무 잦습니다. 잠시후 이용해주세요')
+    }
+    
   }
 
   return (
