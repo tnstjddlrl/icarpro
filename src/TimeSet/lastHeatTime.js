@@ -19,9 +19,10 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRecoilState,
+  useRecoilValue
 } from 'recoil';
-import { lastHeatTimeValue, lastHeatTimeValueLimit } from '../atom/atoms';
-
+import { lastHeatTimeValue, lastHeatTimeValueLimit, fcmToken } from '../atom/atoms';
+import client from '../Client';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -34,6 +35,7 @@ const LastHeatTime = () => {
 
   const [lastHeatValue, setLastHeatValue] = useRecoilState(lastHeatTimeValue)
   const [lastHeatValueLimit, setLastHeatValueLimit] = useRecoilState(lastHeatTimeValueLimit)
+  const pushToken = useRecoilValue(fcmToken)
 
   const [checkitem, setChechkitem] = useState(lastHeatValue)
   // const [isy, setisy] = useState(lastHeatValueSC) //뭔가 이상함
@@ -68,6 +70,14 @@ const LastHeatTime = () => {
 
   function saveBtnClick() {
     if (lastHeatValueLimit === false) {
+      try {
+        sendCommand()  
+      } catch (error) {
+        console.log(error)
+        Alert.alert('서버와의 통신에서 오류가 발생하였습니다.','앱을 종료합니다.')
+        return
+      }
+
       setLastHeatValueLimit(true)
 
       setSaveModal(true)
@@ -89,6 +99,23 @@ const LastHeatTime = () => {
 
     }
   }
+
+  function sendCommand (){
+    let cc = '0'
+    if (checkitem === '1:30') {
+      cc = 'ae=0'
+    } else if (checkitem === '3:00') {
+      cc = 'ae=1'
+    } else if (checkitem === '5:00') {
+      cc = 'ae=2'
+    }
+    let comm = { type: "R", type_sub: "settings", data: { command: cc, token: pushToken } }
+    comm = JSON.stringify(comm)
+
+    client.write(comm)
+    console.log('전송 : ' + comm)
+  }
+
 
   return (
     <SafeAreaView>
@@ -143,7 +170,7 @@ const LastHeatTime = () => {
         {/* 본문 끝 */}
 
         <Modal visible={saveModal} transparent={true} animationType={'fade'}>
-          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
               <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
             </View>
