@@ -33,16 +33,27 @@ const LastHeatTime = () => {
   const [saveModal, setSaveModal] = useState(false)
 
   const [lastHeatValue, setLastHeatValue] = useRecoilState(lastHeatTimeValue)
-  const [lastHeatValueSC, setLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
   const [lastHeatValueLimit, setLastHeatValueLimit] = useRecoilState(lastHeatTimeValueLimit)
 
   const [checkitem, setChechkitem] = useState(lastHeatValue)
-  const [isy, setisy] = useState(lastHeatValueSC)
+  // const [isy, setisy] = useState(lastHeatValueSC) //뭔가 이상함
+  const [isy, setisy] = useState(0)
 
   const ii = useRef()
 
   useEffect(() => {
-    ii.current.scrollTo({ x: 0, y: isy, animated: true })
+    if(checkitem === '1:30'){
+      setisy(0)
+      ii.current.scrollTo({ x: 0, y: 0})
+    }else if(checkitem === '3:00'){
+      setisy(77)
+      ii.current.scrollTo({ x: 0, y: 77})
+    }else if(checkitem === '5:00'){
+      setisy(150)
+      ii.current.scrollTo({ x: 0, y: 150})
+    }
+
+    
   }, [])
 
   useEffect(() => {
@@ -62,7 +73,6 @@ const LastHeatTime = () => {
       setSaveModal(true)
 
       setLastHeatValue(checkitem)
-      setLastHeatValueSC(isy)
 
       AsyncStorage.setItem('@lastHeat_value', checkitem)
 
@@ -116,7 +126,7 @@ const LastHeatTime = () => {
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>1:30</Text>
                   <Text style={(50 < isy && isy < 130) ? styles.selecttxt : styles.noselecttxt}>3:00</Text>
                   <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>5:00</Text>
-                  <View style={{height:155}}></View>
+                  <View style={{height:160}}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>sec</Text>

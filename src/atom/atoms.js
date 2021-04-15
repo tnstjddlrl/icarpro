@@ -84,20 +84,12 @@ export const bootTimeValueSC = atom({
 export const lastHeatTimeValue = atom({
   key: 'lastHeatTimeValue',
   default: '1:30',
-})
-export const lastHeatTimeValueSC = atom({
-  key: 'lastHeatTimeValueSC',
-  default: 7,
-})
+})//후열시간
 export const lastHeatTimeValueLimit = atom({
   key: 'lastHeatTimeValueLimit',
   default: false,
-})
+})//후열시간
 
-export const preHeatTimeValue = atom({
-  key: 'preHeatTimeValue',
-  default: 0,
-})
 
 export const startTimeValue = atom({
   key: 'startTimeValue',

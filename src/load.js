@@ -183,7 +183,6 @@ const Load = () => {
   const [atbootTimeValue, setatBootTimeValue] = useRecoilState(bootTimeValue)
   const [atbootTimeValueSC, setatBootTimeValueSC] = useRecoilState(bootTimeValueSC)
   const [atLastHeatvalue, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
-  const [atLastHeatvalueSC, setAtLastHeatValueSC] = useRecoilState(lastHeatTimeValueSC)
   const [atStartTimeValue, setAtStartTimeValue] = useRecoilState(startTimeValue)
   const [atStartTimeValueSC, setAtStartTimeValueSC] = useRecoilState(startTimeValueSC)
 
@@ -277,13 +276,10 @@ const Load = () => {
         getLastHeatValue().then(res => {
           if (res == '1:30') {
             setAtLastHeatValue('1:30')
-            setAtLastHeatValueSC(10)
           } else if (res == '3:00') {
             setAtLastHeatValue('3:00')
-            setAtLastHeatValueSC(74)
           } else if (res == '5:00') {
             setAtLastHeatValue('5:00')
-            setAtLastHeatValueSC(144)
           }
         })
         getStartTimeValue().then(res => {
