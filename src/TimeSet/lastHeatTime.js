@@ -82,10 +82,10 @@ const LastHeatTime = () => {
 
       setTimeout(() => {
         setLastHeatValueLimit(false)
-      }, 30000);
+      }, 10000);
 
     } else {
-      Alert.alert('설정 변경이 너무 잦습니다. 잠시후 이용해주세요')
+      Alert.alert('설정 변경 유휴시간은 30초입니다.')
     }
   }
 

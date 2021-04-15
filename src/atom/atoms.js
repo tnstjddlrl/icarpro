@@ -66,6 +66,10 @@ export const voltValue = atom({
   key: 'voltValue',
   default: '12.0',
 })//저전압 설정
+export const voltValueLimit = atom({
+  key: 'voltValueLimit',
+  default: false,
+})//저전압 설정
 
 export const bootTimeValue = atom({
   key: 'bootTimeValue',

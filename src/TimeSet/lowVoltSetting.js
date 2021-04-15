@@ -20,7 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRecoilState,
 } from 'recoil';
-import { voltValue, voltValueSC } from '../atom/atoms'
+import { voltValue, voltValueLimit } from '../atom/atoms'
 
 
 const chwidth = Dimensions.get('window').width
@@ -33,6 +33,7 @@ const LowVoltSetting = () => {
   const [saveModal, setSaveModal] = useState(false)
 
   const [lowvoltValue, setLowvoltValue] = useRecoilState(voltValue)
+  const [lowvoltValueLimit, setLowvoltValueLimit] = useRecoilState(voltValueLimit)
 
   const [checkitem, setChechkitem] = useState(lowvoltValue)
 
@@ -77,14 +78,24 @@ const LowVoltSetting = () => {
 
 
   function saveBtnClick() {
-    AsyncStorage.setItem("@lowvolt_Value", checkitem)
+    if(lowvoltValueLimit === false){
+      setLowvoltValueLimit(true)
+      AsyncStorage.setItem("@lowvolt_Value", checkitem)
+  
+      setLowvoltValue(checkitem)
+  
+      setSaveModal(true)
+      setTimeout(() => {
+        setSaveModal(false)
+      }, 1500);
 
-    setLowvoltValue(checkitem)
+      setTimeout(() => {
+        setLowvoltValueLimit(false)
+      }, 10000);
+    }else{
+      Alert.alert('설정 변경 유휴시간은 10초입니다.')
+    }
 
-    setSaveModal(true)
-    setTimeout(() => {
-      setSaveModal(false)
-    }, 1500);
   }
 
 
