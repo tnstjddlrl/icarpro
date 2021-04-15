@@ -39,17 +39,17 @@ const RemoteBootTime = () => {
   const ii = useRef()
 
   useEffect(() => {
-    if(checkitem === '3'){
+    if (checkitem === '3') {
       setisy(0)
       ii.current.scrollTo({ x: 0, y: 0 })
-    }else if(checkitem === '5'){
+    } else if (checkitem === '5') {
       setisy(65)
       ii.current.scrollTo({ x: 0, y: 65 })
-    }else if(checkitem === '10'){
+    } else if (checkitem === '10') {
       setisy(160)
       ii.current.scrollTo({ x: 0, y: 160 })
     }
-    
+
   }, [])
 
   useEffect(() => {
@@ -63,21 +63,21 @@ const RemoteBootTime = () => {
   }, [isy])
 
   function saveBtnClick() {
-    if(atBootTimeLimit === false){
+    if (atBootTimeLimit === false) {
       setAtBootTimeLimit(true)
       setSaveModal(true)
-      
+
       setAtBootTime(checkitem)
       AsyncStorage.setItem("@bootTime_Value", checkitem)
-      
+
       setTimeout(() => {
         setSaveModal(false)
       }, 1500);
       setTimeout(() => {
         setAtBootTimeLimit(false)
       }, 10000);
-    }else {
-      Alert.alert('설정 변경 유휴시간은 10초입니다.','10초 후 시도해주세요')
+    } else {
+      Alert.alert('설정 변경 유휴시간은 10초입니다.', '10초 후 시도해주세요')
 
     }
   }
@@ -114,14 +114,14 @@ const RemoteBootTime = () => {
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
               <View style={{ height: 400, width: 97 }}>
                 <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }}
-                showsVerticalScrollIndicator={false}
-                scrollEventThrottle={16}
+                  showsVerticalScrollIndicator={false}
+                  scrollEventThrottle={16}
                 >
-                  <View style={{height:140}}></View>
+                  <View style={{ height: 140 }}></View>
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>3</Text>
                   <Text style={(50 < isy && isy < 100) ? styles.selecttxt : styles.noselecttxt}>5</Text>
                   <Text style={100 < isy ? styles.selecttxt : styles.noselecttxt}>10</Text>
-                  <View style={{height:170}}></View>
+                  <View style={{ height: 170 }}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>min</Text>
@@ -129,7 +129,7 @@ const RemoteBootTime = () => {
               <View style={styles.indicator2}></View>
             </View>
 
-            <View style={{flex:1,backgroundColor:'gray'}}></View>
+            <View style={{ flex: 1 }}></View>
 
 
           </View>
@@ -139,12 +139,12 @@ const RemoteBootTime = () => {
 
 
         <Modal visible={saveModal} transparent={true} animationType={'fade'}>
-        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
-          </View>
-        </SafeAreaView>
-      </Modal>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
+            </View>
+          </SafeAreaView>
+        </Modal>
 
       </View>
     </SafeAreaView>
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     letterSpacing: -1,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginTop:Platform.OS ==='ios' ? 3 : 0
+    marginTop: Platform.OS === 'ios' ? 3 : 0
   },
   sec: {
     fontFamily: "AppleSDGothicNeo-Medium",

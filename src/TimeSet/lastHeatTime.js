@@ -42,18 +42,18 @@ const LastHeatTime = () => {
   const ii = useRef()
 
   useEffect(() => {
-    if(checkitem === '1:30'){
+    if (checkitem === '1:30') {
       setisy(0)
-      ii.current.scrollTo({ x: 0, y: 0})
-    }else if(checkitem === '3:00'){
+      ii.current.scrollTo({ x: 0, y: 0 })
+    } else if (checkitem === '3:00') {
       setisy(77)
-      ii.current.scrollTo({ x: 0, y: 77})
-    }else if(checkitem === '5:00'){
+      ii.current.scrollTo({ x: 0, y: 77 })
+    } else if (checkitem === '5:00') {
       setisy(150)
-      ii.current.scrollTo({ x: 0, y: 150})
+      ii.current.scrollTo({ x: 0, y: 150 })
     }
 
-    
+
   }, [])
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const LastHeatTime = () => {
       }, 10000);
 
     } else {
-      Alert.alert('설정 변경 유휴시간은 10초입니다.','10초 후 시도해주세요')
+      Alert.alert('설정 변경 유휴시간은 10초입니다.', '10초 후 시도해주세요')
 
     }
   }
@@ -107,7 +107,7 @@ const LastHeatTime = () => {
 
         {/* 본문 */}
         <View style={{ flex: 10 }}>
-          <View style={{ flex: 4, justifyContent: "center", alignItems: "center",marginBottom:-40 }}>
+          <View style={{ flex: 4, justifyContent: "center", alignItems: "center", marginBottom: -40 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <View style={styles.mask}>
                 <Text style={styles.topchechktxt}>{checkitem}</Text>
@@ -123,11 +123,11 @@ const LastHeatTime = () => {
                   showsVerticalScrollIndicator={false}
                   scrollEventThrottle={16}
                 >
-                  <View style={{height:140}}></View>
+                  <View style={{ height: 140 }}></View>
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>1:30</Text>
                   <Text style={(50 < isy && isy < 130) ? styles.selecttxt : styles.noselecttxt}>3:00</Text>
                   <Text style={130 < isy ? styles.selecttxt : styles.noselecttxt}>5:00</Text>
-                  <View style={{height:160}}></View>
+                  <View style={{ height: 160 }}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>sec</Text>
@@ -137,7 +137,7 @@ const LastHeatTime = () => {
 
           </View>
 
-          <View style={{flex:1,backgroundColor:'gray'}}></View>
+          <View style={{ flex: 1 }}></View>
 
         </View>
         {/* 본문 끝 */}

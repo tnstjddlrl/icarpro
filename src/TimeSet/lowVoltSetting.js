@@ -42,23 +42,23 @@ const LowVoltSetting = () => {
   const ii = useRef()
 
   useEffect(() => {
-    if(checkitem === '11.8'){
+    if (checkitem === '11.8') {
       setisy(0)
       ii.current.scrollTo({ x: 0, y: 0 })
-    }else if(checkitem === '11.9'){
+    } else if (checkitem === '11.9') {
       setisy(75)
       ii.current.scrollTo({ x: 0, y: 75 })
-    }else if(checkitem === '12.0'){
+    } else if (checkitem === '12.0') {
       setisy(155)
       ii.current.scrollTo({ x: 0, y: 155 })
-    }else if(checkitem === '12.1'){
+    } else if (checkitem === '12.1') {
       setisy(235)
       ii.current.scrollTo({ x: 0, y: 235 })
-    }else if(checkitem === '12.2'){
+    } else if (checkitem === '12.2') {
       setisy(350)
       ii.current.scrollTo({ x: 0, y: 350 })
     }
-    
+
   }, [])
 
   useEffect(() => {
@@ -78,12 +78,12 @@ const LowVoltSetting = () => {
 
 
   function saveBtnClick() {
-    if(lowvoltValueLimit === false){
+    if (lowvoltValueLimit === false) {
       setLowvoltValueLimit(true)
       AsyncStorage.setItem("@lowvolt_Value", checkitem)
-  
+
       setLowvoltValue(checkitem)
-  
+
       setSaveModal(true)
       setTimeout(() => {
         setSaveModal(false)
@@ -92,8 +92,8 @@ const LowVoltSetting = () => {
       setTimeout(() => {
         setLowvoltValueLimit(false)
       }, 10000);
-    }else{
-      Alert.alert('설정 변경 유휴시간은 10초입니다.','10초 후 시도해주세요')
+    } else {
+      Alert.alert('설정 변경 유휴시간은 10초입니다.', '10초 후 시도해주세요')
 
     }
 
@@ -131,16 +131,16 @@ const LowVoltSetting = () => {
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
               <View style={{ height: 400, width: 100 }}>
                 <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }}
-                 showsVerticalScrollIndicator={false}
-                 scrollEventThrottle={8}
-                 >
-                  <View style={{height:140}}></View>
+                  showsVerticalScrollIndicator={false}
+                  scrollEventThrottle={8}
+                >
+                  <View style={{ height: 140 }}></View>
                   <Text style={isy < 40 ? styles.selecttxt : styles.noselecttxt}>11.8</Text>
                   <Text style={(40 < isy && isy < 120) ? styles.selecttxt : styles.noselecttxt}>11.9</Text>
                   <Text style={(120 < isy && isy < 195) ? styles.selecttxt : styles.noselecttxt}>12.0</Text>
                   <Text style={(195 < isy && isy < 270) ? styles.selecttxt : styles.noselecttxt}>12.1</Text>
                   <Text style={270 < isy ? styles.selecttxt : styles.noselecttxt}>12.2</Text>
-                  <View style={{height:160}}></View>
+                  <View style={{ height: 160 }}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>V</Text>
@@ -150,7 +150,7 @@ const LowVoltSetting = () => {
 
           </View>
 
-          <View style={{flex:1,backgroundColor:'gray'}}></View>
+          <View style={{ flex: 1 }}></View>
 
         </View>
         {/* 본문 끝 */}
@@ -158,12 +158,12 @@ const LowVoltSetting = () => {
 
 
         <Modal visible={saveModal} transparent={true} animationType={'fade'}>
-        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
-          </View>
-        </SafeAreaView>
-      </Modal>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={styles.maintxt}>설정한 내용이 저장되었습니다.</Text>
+            </View>
+          </SafeAreaView>
+        </Modal>
       </View>
     </SafeAreaView>
   )
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     letterSpacing: -1,
     textAlign: "center",
     color: 'rgb(49,54,61)',
-    marginTop:Platform.OS ==='ios' ? 3 : 0
+    marginTop: Platform.OS === 'ios' ? 3 : 0
   },
   sec: {
     fontFamily: "AppleSDGothicNeo-Medium",
