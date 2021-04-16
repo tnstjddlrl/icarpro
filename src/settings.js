@@ -103,35 +103,80 @@ const Settings = () => {
 
     if(idoorswitch !== atidoorswitch){
       if(idoorswitch === true){
-        let sett = 'dn'
+        try {
+          sendCommand('dn')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }else{
-        let sett = 'df'
+        try {
+          sendCommand('df')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }
     }
 
     if(lowboltBoot !==atlowboltBoot || lowboltAlert !==atlowboltAlert){
       if(lowboltBoot === true){
-        let sett = 'le'
+        try {
+          sendCommand('le')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }else if(lowboltAlert === true){
-        let sett = 'la'
+        try {
+          sendCommand('la')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }else{
-        let sett = 'lf'
+        try {
+          sendCommand('lf')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }
     }
 
     if(actionsound !== atactionsound){
       if(actionsound === true){
-        let sett = '1n'
+        try {
+          sendCommand('1n')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }else{
-        let sett = '1f'
+        try {
+          sendCommand('1f')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }
     }
 
     if(alertsound !== atalertsound){
       if(alertsound === true){
-        let sett = '2n'
+        try {
+          sendCommand('2n')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }else{
-        let sett = '2f'
+        try {
+          sendCommand('2f')
+        } catch (e) {
+          console.log(e)
+          return
+        }
       }
     }
     
