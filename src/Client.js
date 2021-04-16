@@ -9,11 +9,11 @@ const client = TcpSocket.createConnection(
 
     console.log('연결됨');
     Alert.alert('서버와 연결되었습니다.');
-    
+
   },
 );
 
-client.setKeepAlive(true,0)
+// client.setKeepAlive(true,0)
 
 client.on('error', function (error) {
   Alert.alert('서버와의 통신을 실패하였습니다.', '앱을 종료합니다.');

@@ -96,9 +96,8 @@ const CarState = () => {
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
-  // const [lowvoltValue, setLowvoltValue] = useRecoilState(voltValue)
 
-  const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  const pushToken = useRecoilValue(fcmToken)
   const isbooton = useRecoilValue(isBootOn)
   const boottime = useRecoilValue(bootRestTime)
 
