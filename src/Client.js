@@ -11,7 +11,7 @@ const client = TcpSocket.createConnection(
   },
 );
 
-client.setKeepAlive(true,1000)
+client.setKeepAlive(true,0)
 
 client.on('error', function (error) {
   Alert.alert('서버와의 통신을 실패하였습니다.', '앱을 종료합니다.');

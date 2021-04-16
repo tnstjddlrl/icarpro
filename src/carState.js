@@ -103,11 +103,18 @@ const CarState = () => {
   const boottime = useRecoilValue(bootRestTime)
 
   function registerClick() {
-    var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
-    txt = JSON.stringify(txt)
-
-    client.write(txt)
-    console.log('전송 : ' + txt)
+    try {
+      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
+      txt = JSON.stringify(txt)
+  
+      client.write(txt)
+      console.log('전송 : ' + txt)
+      
+    } catch (e) {
+      console.log(e)
+      client.connect({ port: 3400, host: '175.126.232.72'})
+      registerClick()
+    }
   }
 
   useEffect(() => {
