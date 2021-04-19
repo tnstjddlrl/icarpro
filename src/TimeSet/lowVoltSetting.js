@@ -86,7 +86,8 @@ const LowVoltSetting = () => {
         sendCommand()  
       } catch (error) {
         console.log(error)
-        Alert.alert('서버와의 통신에서 오류가 발생하였습니다.','앱을 종료합니다.')
+        client.connect({ port: 3400, host: '175.126.232.72'})
+        sendCommand()
         return
       }
 
