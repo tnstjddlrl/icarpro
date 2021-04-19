@@ -140,8 +140,15 @@ const Carcontroll = () => {
       setAtIsboot(false)
 
       boot_0 = JSON.stringify(boot_0)
-      client.write(boot_0)
-      console.log('전송 : ' + boot_0)
+      try {
+        client.write(boot_0)
+        console.log('전송 : ' + boot_0)
+      } catch (error) {
+        console.log(error)
+        client.connect({port: 3400, host: '175.126.232.72'})
+        client.write(boot_0)
+        console.log('전송 : ' + boot_0)
+      }
 
       lomofc('원격시동 끄기')
     }
@@ -179,8 +186,16 @@ const Carcontroll = () => {
 
 
       door_1 = JSON.stringify(door_1)
-      client.write(door_1)
-      console.log('전송 : ' + door_1)
+      
+      try {
+        client.write(door_1)
+        console.log('전송 : ' + door_1)
+      } catch (error) {
+        console.log(error)
+        client.connect({port: 3400, host: '175.126.232.72'})
+        client.write(door_1)
+        console.log('전송 : ' + door_1)
+      }
 
       setTimeout(() => {
         setDoor('no')

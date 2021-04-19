@@ -4,6 +4,9 @@ import {
   Dimensions,
   SafeAreaView,
   Image,
+  StyleSheet,
+  Text,
+  Alert
 } from 'react-native';
 
 import {
@@ -24,6 +27,8 @@ import {
 
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app'
+
+import AutoHeightImage from 'react-native-auto-height-image';
 
 
 import { useNavigation } from '@react-navigation/native'
@@ -157,6 +162,8 @@ const Load = () => {
     }
   }
 
+  const [loadbarwd, setLoadbarwd] =useState(10)
+
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [, setAtModemn] = useRecoilState(modemNumber)
@@ -204,63 +211,118 @@ const Load = () => {
   }, [pushToken, isAuthorized])
 
   useEffect(() => {
-    handlePushToken()
-    saveDeviceToken()
+    try {
+      handlePushToken()
+      saveDeviceToken()
+    } catch (error) {
+      console.log(error)
+      Alert.alert('토큰 받아오기 실패')
+    }
   }, [])
 
 
   useEffect(() => {
-    getData().then((res) => {
-      if (res != null) {
-
-        getIcarSwitch().then(res => { if (res !== null) setAticarswitch(JSON.parse(res)) })
-        getidoorswitch().then(res => { if (res !== null) setAtidoorswitch(JSON.parse(res)) })
-        getlowboltBoot().then(res => { if (res !== null) setAtlowvoltBoot(JSON.parse(res)) })
-        getlowboltAlert().then(res => { if (res !== null) setAtlowvoltAlert(JSON.parse(res)) })
-        getactionsound().then(res => { if (res !== null) setAtactionSound(JSON.parse(res)) })
-        getalertsound().then(res => { if (res !== null) setAtalertSound(JSON.parse(res)) })
-
-
-        getmodem().then(res => setAtModemn(res))
-        getuser().then(res => setatUserNumber(res))
-        getcar().then(res => setatIsCarRace(res))
-
-        getLowVoltValue().then(res => {
-          if (res !== null) {
-            setLowVoltValue(res)
-          }
-        })
-
-        getBootTimeValue().then(res => {
-          if (res !== null) {
-            setatBootTimeValue(res)
-          }
-        })
-
-        getLastHeatValue().then(res => {
-          if (res !== null) {
-            setAtLastHeatValue(res)
-          }
-        })
-        getStartTimeValue().then(res => {
-          if (res !== null) {
-            setAtStartTimeValue(res)
-          } 
-        })
-
-
-
-        setTimeout(() => {
-          navigation.navigate('테스트')
-          console.log('구사용자 : ' + res)
-        }, 1000);
-      } else {
-        setTimeout(() => {
-          navigation.navigate('테스트')
-          console.log('첫사용자 : ' + res)
-        }, 1000);
-      }
-    })
+    try {
+      getData().then((res) => {
+        if (res != null) {
+  
+          getIcarSwitch().then(res => { if (res !== null) setAticarswitch(JSON.parse(res)) })
+          getidoorswitch().then(res => { if (res !== null) setAtidoorswitch(JSON.parse(res)) })
+          getlowboltBoot().then(res => { if (res !== null) setAtlowvoltBoot(JSON.parse(res)) })
+          getlowboltAlert().then(res => { if (res !== null) setAtlowvoltAlert(JSON.parse(res)) })
+          getactionsound().then(res => { if (res !== null) setAtactionSound(JSON.parse(res)) })
+          getalertsound().then(res => { if (res !== null) setAtalertSound(JSON.parse(res)) })
+  
+  
+          getmodem().then(res => setAtModemn(res))
+          getuser().then(res => setatUserNumber(res))
+          getcar().then(res => setatIsCarRace(res))
+  
+          getLowVoltValue().then(res => {
+            if (res !== null) {
+              setLowVoltValue(res)
+            }
+          })
+  
+          getBootTimeValue().then(res => {
+            if (res !== null) {
+              setatBootTimeValue(res)
+            }
+          })
+  
+          getLastHeatValue().then(res => {
+            if (res !== null) {
+              setAtLastHeatValue(res)
+            }
+          })
+          getStartTimeValue().then(res => {
+            if (res !== null) {
+              setAtStartTimeValue(res)
+            }
+          })
+  
+          setTimeout(() => {
+            setLoadbarwd(30)
+            setTimeout(() => {
+              setLoadbarwd(60)
+              setTimeout(() => {
+                setLoadbarwd(90)
+                setTimeout(() => {
+                  setLoadbarwd(120)
+                  setTimeout(() => {
+                    setLoadbarwd(160)
+                    setTimeout(() => {
+                      setLoadbarwd(183)
+                      setTimeout(() => {
+                        navigation.navigate('테스트')
+                      }, 500);
+                    }, 250);
+                  }, 250);
+                }, 250);
+              }, 250);
+            }, 250);
+          }, 250);
+  
+          
+  
+          // setTimeout(() => {
+          //   navigation.navigate('테스트')
+          //   console.log('구사용자 : ' + res)
+          // }, 1000);
+        } else {
+          setTimeout(() => {
+            setLoadbarwd(30)
+            setTimeout(() => {
+              setLoadbarwd(60)
+              setTimeout(() => {
+                setLoadbarwd(90)
+                setTimeout(() => {
+                  setLoadbarwd(120)
+                  setTimeout(() => {
+                    setLoadbarwd(160)
+                    setTimeout(() => {
+                      setLoadbarwd(183)
+                      setTimeout(() => {
+                        navigation.navigate('테스트')
+                      }, 500);
+                    }, 250);
+                  }, 250);
+                }, 250);
+              }, 250);
+            }, 250);
+          }, 250);
+  
+  
+          // setTimeout(() => {
+          //   navigation.navigate('테스트')
+          //   console.log('첫사용자 : ' + res)
+          // }, 1000);
+        }
+      })
+    } catch (error) {
+      console.log(error)
+      Alert.alert('async stroage error')
+    }
   }, [])
 
 
@@ -269,8 +331,19 @@ const Load = () => {
     <SafeAreaView>
       <View style={{ width: chwidth, height: chheight, justifyContent: "center", alignItems: "center" }}>
         <View style={{ flex: 3 }}></View>
-        <View style={{ flex: 2 }}>
-          <Image source={logo} style={{ maxWidth: chwidth / 1.5, maxHeight: chheight / 8 }}></Image>
+        <View style={{ flex: 3, justifyContent: "space-between", alignItems: "center" }}>
+          <AutoHeightImage source={logo} width={chwidth / 1.7}></AutoHeightImage>
+          <View>
+            <View style={styles.loding}>
+              <View style={{
+                width: loadbarwd,
+                height: 8,
+                borderRadius: 6,
+                backgroundColor: 'rgb(78,83,90)'
+              }}></View>
+            </View>
+            <Text style={styles.lodingtxt}>Loading...</Text>
+          </View>
         </View>
         <View style={{ flex: 2 }}></View>
         <View style={{ flex: 3 }}></View>
@@ -278,5 +351,26 @@ const Load = () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  loding: {
+    width: 184,
+    height: 8,
+    borderRadius: 6,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: 'rgb(78,83,90)'
+  },
+  lodingtxt: {
+    fontFamily: "AppleSDGothicNeo-Medium",
+    fontSize: 16,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    textAlign: "center",
+    color: 'rgb(78,83,90)',
+    marginTop: 10
+  }
+})
 
 export default Load
