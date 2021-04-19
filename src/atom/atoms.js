@@ -61,6 +61,11 @@ export const alertSound = atom({
   default: false,
 })
 
+export const settingLimit = atom({
+  key: 'settingLimit',
+  default: false,
+})//설정 저장 제어
+
 //설정 상세 값
 export const voltValue = atom({
   key: 'voltValue',

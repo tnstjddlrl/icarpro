@@ -27,7 +27,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken, actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert } from './atom/atoms'
+import { fcmToken, actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert, settingLimit } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -62,6 +62,8 @@ const Settings = () => {
 
   const pushToken = useRecoilValue(fcmToken)
 
+  const [stLimit,setStLimit] = useRecoilState(settingLimit)
+
 
   const [icarswitch, seticarswitch] = useState(aticarswitch)
   const [idoorswitch, setidoorswitch] = useState(atidoorswitch)
@@ -82,123 +84,134 @@ const Settings = () => {
 
 
   function savebtnclick() {
-    if(icarswitch !== aticarswitch){
-      if(icarswitch === true){
-        try {
-          sendCommand('mn')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }else{
-        try {
-          sendCommand('mf')
-        } catch (e) {
-          console.log(e)
-          return
+    if(stLimit === false){
+      setStLimit(true)
+      if(icarswitch !== aticarswitch){
+        if(icarswitch === true){
+          try {
+            sendCommand('mn')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }else{
+          try {
+            sendCommand('mf')
+          } catch (e) {
+            console.log(e)
+            return
+          }
         }
       }
-    }
+  
+      if(idoorswitch !== atidoorswitch){
+        if(idoorswitch === true){
+          try {
+            sendCommand('dn')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }else{
+          try {
+            sendCommand('df')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }
+      }
+  
+      if(lowboltBoot !==atlowboltBoot || lowboltAlert !==atlowboltAlert){
+        if(lowboltBoot === true){
+          try {
+            sendCommand('le')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }else if(lowboltAlert === true){
+          try {
+            sendCommand('la')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }else{
+          try {
+            sendCommand('lf')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }
+      }
+  
+      if(actionsound !== atactionsound){
+        if(actionsound === true){
+          try {
+            sendCommand('1n')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }else{
+          try {
+            sendCommand('1f')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }
+      }
+  
+      if(alertsound !== atalertsound){
+        if(alertsound === true){
+          try {
+            sendCommand('2n')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }else{
+          try {
+            sendCommand('2f')
+          } catch (e) {
+            console.log(e)
+            return
+          }
+        }
+      }
+      
+      setSaveModal(true)
+  
+  
+      
+      AsyncStorage.setItem("@icarswitch", JSON.stringify(icarswitch))
+      AsyncStorage.setItem("@idoorswitch", JSON.stringify(idoorswitch))
+      AsyncStorage.setItem("@lowboltBoot", JSON.stringify(lowboltBoot))
+      AsyncStorage.setItem("@lowboltAlert", JSON.stringify(lowboltAlert))
+      AsyncStorage.setItem("@actionsound", JSON.stringify(actionsound))
+      AsyncStorage.setItem("@alertsound", JSON.stringify(alertsound))
+  
+      setaticarswitch(icarswitch)
+      setatidoorswitch(idoorswitch)
+      setatlowboltBoot(lowboltBoot)
+      setatlowboltAlert(lowboltAlert)
+      setatactionsound(actionsound)
+      setatalertsound(alertsound)
+      setTimeout(() => {
+        setSaveModal(false)
+      }, 1500);
 
-    if(idoorswitch !== atidoorswitch){
-      if(idoorswitch === true){
-        try {
-          sendCommand('dn')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }else{
-        try {
-          sendCommand('df')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }
+      setTimeout(() => {
+        setStLimit(false)      
+      }, 10000);
     }
-
-    if(lowboltBoot !==atlowboltBoot || lowboltAlert !==atlowboltAlert){
-      if(lowboltBoot === true){
-        try {
-          sendCommand('le')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }else if(lowboltAlert === true){
-        try {
-          sendCommand('la')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }else{
-        try {
-          sendCommand('lf')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }
-    }
-
-    if(actionsound !== atactionsound){
-      if(actionsound === true){
-        try {
-          sendCommand('1n')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }else{
-        try {
-          sendCommand('1f')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }
-    }
-
-    if(alertsound !== atalertsound){
-      if(alertsound === true){
-        try {
-          sendCommand('2n')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }else{
-        try {
-          sendCommand('2f')
-        } catch (e) {
-          console.log(e)
-          return
-        }
-      }
+    else{
+      Alert.alert('설정 변경 유휴시간은 10초입니다.', '10초 후 시도해주세요')
     }
     
-    setSaveModal(true)
-
-
-    
-    AsyncStorage.setItem("@icarswitch", JSON.stringify(icarswitch))
-    AsyncStorage.setItem("@idoorswitch", JSON.stringify(idoorswitch))
-    AsyncStorage.setItem("@lowboltBoot", JSON.stringify(lowboltBoot))
-    AsyncStorage.setItem("@lowboltAlert", JSON.stringify(lowboltAlert))
-    AsyncStorage.setItem("@actionsound", JSON.stringify(actionsound))
-    AsyncStorage.setItem("@alertsound", JSON.stringify(alertsound))
-
-    setaticarswitch(icarswitch)
-    setatidoorswitch(idoorswitch)
-    setatlowboltBoot(lowboltBoot)
-    setatlowboltAlert(lowboltAlert)
-    setatactionsound(actionsound)
-    setatalertsound(alertsound)
-    setTimeout(() => {
-      setSaveModal(false)
-    }, 1500);
   }
 
   return (
