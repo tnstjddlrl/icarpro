@@ -92,6 +92,8 @@ const Settings = () => {
             sendCommand('mn')
           } catch (e) {
             console.log(e)
+            client.connect({ port: 3400, host: '175.126.232.72'})
+            sendCommand('mn')
             return
           }
         }else{
@@ -99,6 +101,10 @@ const Settings = () => {
             sendCommand('mf')
           } catch (e) {
             console.log(e)
+            client.connect({ port: 3400, host: '175.126.232.72'})
+
+            sendCommand('mf')
+
             return
           }
         }
@@ -109,14 +115,20 @@ const Settings = () => {
           try {
             sendCommand('dn')
           } catch (e) {
+            client.connect({ port: 3400, host: '175.126.232.72'})
             console.log(e)
+            sendCommand('dn')
+
             return
           }
         }else{
           try {
             sendCommand('df')
           } catch (e) {
+            client.connect({ port: 3400, host: '175.126.232.72'})
             console.log(e)
+            sendCommand('df')
+
             return
           }
         }
@@ -127,21 +139,30 @@ const Settings = () => {
           try {
             sendCommand('le')
           } catch (e) {
+            client.connect({ port: 3400, host: '175.126.232.72'})
             console.log(e)
+            sendCommand('le')
+
             return
           }
         }else if(lowboltAlert === true){
           try {
             sendCommand('la')
           } catch (e) {
+            client.connect({ port: 3400, host: '175.126.232.72'})
             console.log(e)
+            sendCommand('la')
+
             return
           }
         }else{
           try {
             sendCommand('lf')
           } catch (e) {
+            client.connect({ port: 3400, host: '175.126.232.72'})
             console.log(e)
+            sendCommand('lf')
+
             return
           }
         }
@@ -152,14 +173,20 @@ const Settings = () => {
           try {
             sendCommand('1n')
           } catch (e) {
+            client.connect({ port: 3400, host: '175.126.232.72'})
             console.log(e)
+            sendCommand('1n')
+
             return
           }
         }else{
           try {
             sendCommand('1f')
           } catch (e) {
+            client.connect({ port: 3400, host: '175.126.232.72'})
             console.log(e)
+            sendCommand('1f')
+
             return
           }
         }
@@ -170,14 +197,19 @@ const Settings = () => {
           try {
             sendCommand('2n')
           } catch (e) {
+            client.connect({ port: 3400, host: '175.126.232.72'})
             console.log(e)
+            sendCommand('2n')
+
             return
           }
         }else{
           try {
             sendCommand('2f')
           } catch (e) {
+            client.connect({ port: 3400, host: '175.126.232.72'})
             console.log(e)
+            sendCommand('2f')
             return
           }
         }
@@ -206,7 +238,7 @@ const Settings = () => {
 
       setTimeout(() => {
         setStLimit(false)      
-      }, 10000);
+      }, 1000);
     }
     else{
       Alert.alert('설정 변경 유휴시간은 10초입니다.', '10초 후 시도해주세요')
