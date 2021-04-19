@@ -90,7 +90,6 @@ const Settings = () => {
           console.log(e)
           return
         }
-        
       }else{
         try {
           sendCommand('mf')

@@ -107,7 +107,15 @@ const Carcontroll = () => {
     return () => unsubscribe();
   });
 
-
+  var door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
+  var door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
+  var panic_0 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '0', token: pushToken } }
+  var panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '1', token: pushToken } }
+  var warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '0', token: pushToken } }
+  var warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '1', token: pushToken } }
+  var trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
+  var boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
+  var boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
 
   function lomofc(txt) {
 
@@ -149,16 +157,6 @@ const Carcontroll = () => {
     }
     console.log(time + ' : ' + bootrest)
   }
-
-  var door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
-  var door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
-  var panic_0 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '0', token: pushToken } }
-  var panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '1', token: pushToken } }
-  var warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '0', token: pushToken } }
-  var warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '1', token: pushToken } }
-  var trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
-  var boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
-  var boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
 
 
   const [boot, setBoot] = useState(false)
