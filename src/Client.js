@@ -19,11 +19,11 @@ const client = TcpSocket.createConnection(
 // client.setKeepAlive(true,0)
 
 client.on('error', function (error) {
-  Alert.alert('서버와의 통신을 실패하였습니다.', '앱을 종료합니다.');
+  Alert.alert('서버와의 통신을 실패하였습니다.', '앱을 다시 시작해주세요.');
   console.error(error);
   setTimeout(() => {
     // client.destroy();
-    // RNExitApp.exitApp()
+    RNExitApp.exitApp()
   }, 1500);
   // client.connect({port: 3400, host: '175.126.232.72'})
 });

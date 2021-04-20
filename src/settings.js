@@ -216,9 +216,7 @@ const Settings = () => {
       }
       
       setSaveModal(true)
-  
-  
-      
+
       AsyncStorage.setItem("@icarswitch", JSON.stringify(icarswitch))
       AsyncStorage.setItem("@idoorswitch", JSON.stringify(idoorswitch))
       AsyncStorage.setItem("@lowboltBoot", JSON.stringify(lowboltBoot))
