@@ -25,7 +25,7 @@ client.on('error', function (error) {
     // client.destroy();
     // RNExitApp.exitApp()
   }, 1500);
-  client.connect({port: 3400, host: '175.126.232.72'})
+  // client.connect({port: 3400, host: '175.126.232.72'})
 });
 
 client.on('data', function (data) {

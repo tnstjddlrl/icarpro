@@ -284,7 +284,6 @@ const Load = () => {
             }, 250);
           }, 250);
   
-          
   
           // setTimeout(() => {
           //   navigation.navigate('테스트')
