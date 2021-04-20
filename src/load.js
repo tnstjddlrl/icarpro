@@ -274,6 +274,7 @@ const Load = () => {
                     setTimeout(() => {
                       setLoadbarwd(183)
                       setTimeout(() => {
+                        console.log('구사용자 : ' + res)
                         navigation.navigate('테스트')
                       }, 500);
                     }, 250);
@@ -287,7 +288,7 @@ const Load = () => {
   
           // setTimeout(() => {
           //   navigation.navigate('테스트')
-          //   console.log('구사용자 : ' + res)
+          //   
           // }, 1000);
         } else {
           setTimeout(() => {
@@ -303,6 +304,7 @@ const Load = () => {
                     setTimeout(() => {
                       setLoadbarwd(183)
                       setTimeout(() => {
+                        console.log('첫사용자 : ' + res)
                         navigation.navigate('테스트')
                       }, 500);
                     }, 250);
@@ -315,7 +317,7 @@ const Load = () => {
   
           // setTimeout(() => {
           //   navigation.navigate('테스트')
-          //   console.log('첫사용자 : ' + res)
+          //   
           // }, 1000);
         }
       })
