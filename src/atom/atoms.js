@@ -2,7 +2,7 @@ import {
   atom, selector
 } from 'recoil';
 
-import {client} from '../Client'
+import { client } from '../Client'
 
 
 export const modemNumber = atom({

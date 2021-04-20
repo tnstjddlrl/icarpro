@@ -71,10 +71,10 @@ const LastHeatTime = () => {
   function saveBtnClick() {
     if (lastHeatValueLimit === false) {
       try {
-        sendCommand()  
+        sendCommand()
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72'})
+        client.connect({ port: 3400, host: '175.126.232.72' })
         sendCommand()
         return
       }
@@ -101,7 +101,7 @@ const LastHeatTime = () => {
     }
   }
 
-  function sendCommand (){
+  function sendCommand() {
     let cc = '0'
     if (checkitem === '1:30') {
       cc = 'ae=0'

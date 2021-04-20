@@ -21,7 +21,7 @@ import {
   useRecoilState,
   useRecoilValue
 } from 'recoil';
-import { voltValue, voltValueLimit,fcmToken } from '../atom/atoms'
+import { voltValue, voltValueLimit, fcmToken } from '../atom/atoms'
 import client from '../Client';
 
 const chwidth = Dimensions.get('window').width
@@ -83,10 +83,10 @@ const LowVoltSetting = () => {
     if (lowvoltValueLimit === false) {
 
       try {
-        sendCommand()  
+        sendCommand()
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72'})
+        client.connect({ port: 3400, host: '175.126.232.72' })
         sendCommand()
         return
       }
@@ -111,7 +111,7 @@ const LowVoltSetting = () => {
 
   }
 
-  function sendCommand (){
+  function sendCommand() {
     let cc = '0'
     if (checkitem === '11.8') {
       cc = 'lb=118'
@@ -119,9 +119,9 @@ const LowVoltSetting = () => {
       cc = 'lb=119'
     } else if (checkitem === '12.0') {
       cc = 'lb=120'
-    }else if (checkitem === '12.1') {
+    } else if (checkitem === '12.1') {
       cc = 'lb=121'
-    }else if (checkitem === '12.2') {
+    } else if (checkitem === '12.2') {
       cc = 'lb=122'
     }
     let comm = { type: "R", type_sub: "settings", data: { command: cc, token: pushToken } }

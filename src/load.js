@@ -162,7 +162,7 @@ const Load = () => {
     }
   }
 
-  const [loadbarwd, setLoadbarwd] =useState(10)
+  const [loadbarwd, setLoadbarwd] = useState(10)
 
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
@@ -225,31 +225,31 @@ const Load = () => {
     try {
       getData().then((res) => {
         if (res != null) {
-  
+
           getIcarSwitch().then(res => { if (res !== null) setAticarswitch(JSON.parse(res)) })
           getidoorswitch().then(res => { if (res !== null) setAtidoorswitch(JSON.parse(res)) })
           getlowboltBoot().then(res => { if (res !== null) setAtlowvoltBoot(JSON.parse(res)) })
           getlowboltAlert().then(res => { if (res !== null) setAtlowvoltAlert(JSON.parse(res)) })
           getactionsound().then(res => { if (res !== null) setAtactionSound(JSON.parse(res)) })
           getalertsound().then(res => { if (res !== null) setAtalertSound(JSON.parse(res)) })
-  
-  
+
+
           getmodem().then(res => setAtModemn(res))
           getuser().then(res => setatUserNumber(res))
           getcar().then(res => setatIsCarRace(res))
-  
+
           getLowVoltValue().then(res => {
             if (res !== null) {
               setLowVoltValue(res)
             }
           })
-  
+
           getBootTimeValue().then(res => {
             if (res !== null) {
               setatBootTimeValue(res)
             }
           })
-  
+
           getLastHeatValue().then(res => {
             if (res !== null) {
               setAtLastHeatValue(res)
@@ -260,7 +260,7 @@ const Load = () => {
               setAtStartTimeValue(res)
             }
           })
-  
+
           setTimeout(() => {
             setLoadbarwd(30)
             setTimeout(() => {
@@ -283,8 +283,8 @@ const Load = () => {
               }, 250);
             }, 250);
           }, 250);
-  
-  
+
+
           // setTimeout(() => {
           //   navigation.navigate('테스트')
           //   
@@ -312,8 +312,8 @@ const Load = () => {
               }, 250);
             }, 250);
           }, 250);
-  
-  
+
+
           // setTimeout(() => {
           //   navigation.navigate('테스트')
           //   

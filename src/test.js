@@ -45,40 +45,40 @@ const chheight = Dimensions.get('window').height
 import TcpSocket from 'react-native-tcp-socket';
 
 function testModem(modem) {
-  var txt = { type: "R", type_sub: "conntest",data: { modem : modem } }
+  var txt = { type: "R", type_sub: "conntest", data: { modem: modem } }
   txt = JSON.stringify(txt)
 
   client.write(txt)
   Alert.alert('전송 : ' + txt)
 }
 
-client.on('data',function(data){
+client.on('data', function (data) {
   console.log('테스트에서 데이터 받기 : ' + data)
   // console.log(data)
-  var ee = ''+data
-  if(ee == '송신 완료'){
+  var ee = '' + data
+  if (ee == '송신 완료') {
     Alert.alert('송신완료! 서버와 이중 연결 성공')
-  }else{
-    ee = ee.replace(/'/gi,"").split(',')
+  } else {
+    ee = ee.replace(/'/gi, "").split(',')
 
-  if(ee[0].split(':')[0] == 'conn_ip'){
-    var port = Number(ee[1].split(':')[1])
-    console.log(port)
-    console.log(ee[0].split(':')[1])
+    if (ee[0].split(':')[0] == 'conn_ip') {
+      var port = Number(ee[1].split(':')[1])
+      console.log(port)
+      console.log(ee[0].split(':')[1])
 
-    // const moduleclient = TcpSocket.createConnection({ port: port, host: ee[0].split(':')[1], timeout: 1000 }, () => {
-    //   console.log('모듈연결됨')
-    //   Alert.alert('모듈 연결되었습니다.')
-    //   moduleclient.write('hello, module?')
-    // });
-    moduleclient.connect({ port: port, host: ee[0].split(':')[1]},()=>{
-      Alert.alert('모듈과 연결됨')
-      moduleclient.write('test conntest2.');
-      // client.write(JSON.stringify({ type: "R", type_sub: "conntest2" }))
-      // Alert.alert('서버에 conntest2 전송')
-      // moduleclient.destroy()
-    })
-  }
+      // const moduleclient = TcpSocket.createConnection({ port: port, host: ee[0].split(':')[1], timeout: 1000 }, () => {
+      //   console.log('모듈연결됨')
+      //   Alert.alert('모듈 연결되었습니다.')
+      //   moduleclient.write('hello, module?')
+      // });
+      moduleclient.connect({ port: port, host: ee[0].split(':')[1] }, () => {
+        Alert.alert('모듈과 연결됨')
+        moduleclient.write('test conntest2.');
+        // client.write(JSON.stringify({ type: "R", type_sub: "conntest2" }))
+        // Alert.alert('서버에 conntest2 전송')
+        // moduleclient.destroy()
+      })
+    }
   }
 })
 
@@ -95,7 +95,7 @@ const Test = () => {
   const token = useRecoilValue(fcmToken)
   const [neww, setneww] = useRecoilState(userNumber)
   const atcarrace = useRecoilValue(isCarRace)
-  
+
 
 
   console.log('모뎀 넘버 : ' + state)
@@ -106,25 +106,25 @@ const Test = () => {
   return (
     <View>
       <SafeAreaView>
-        <Text style={{fontFamily:'AppleSDGothicNeo-Medium'}}>아이카</Text>
+        <Text style={{ fontFamily: 'AppleSDGothicNeo-Medium' }}>아이카</Text>
         <TouchableOpacity onPress={() => navigation.navigate('간편비밀번호')}>
-          <Text style={{fontSize:25,margin:10}}>간편비밀번호</Text>
+          <Text style={{ fontSize: 25, margin: 10 }}>간편비밀번호</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate('차량등록')}>
-          <Text style={{fontSize:25,margin:10}}>차량등록</Text>
+          <Text style={{ fontSize: 25, margin: 10 }}>차량등록</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('차량제어')}>
-          <Text style={{fontSize:25,margin:10}}>차량제어</Text>
+          <Text style={{ fontSize: 25, margin: 10 }}>차량제어</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('차량상태')}>
-          <Text style={{fontSize:25,margin:10}}>차량상태</Text>
+          <Text style={{ fontSize: 25, margin: 10 }}>차량상태</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity onPress={() => navigation.navigate('스와이프테스트')}>
           <Text style={{fontSize:25,margin:10}}>스와이프테스트</Text>
         </TouchableOpacity> */}
         <TouchableOpacity onPress={() => navigation.navigate('설정')}>
-          <Text style={{fontSize:25,margin:10}}>설정</Text>
+          <Text style={{ fontSize: 25, margin: 10 }}>설정</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity onPress={() => navigation.navigate('스크롤베이스')}>
           <Text style={{fontSize:25,margin:10}}>스크롤베이스</Text>
@@ -143,7 +143,7 @@ const Test = () => {
         </TouchableOpacity> */}
 
         <TouchableOpacity onPress={() => RNExitApp.exitApp()}>
-          <Text style={{fontSize:25,margin:10}}>앱종료</Text>
+          <Text style={{ fontSize: 25, margin: 10 }}>앱종료</Text>
         </TouchableOpacity>
 
         {/* <TouchableOpacity onPress={() => new Player('bbibb3.mp3').play(err=>console.log(err))}>

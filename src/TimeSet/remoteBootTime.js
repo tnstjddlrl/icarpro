@@ -68,22 +68,22 @@ const RemoteBootTime = () => {
   function saveBtnClick() {
     if (atBootTimeLimit === false) {
       try {
-        sendCommand()  
+        sendCommand()
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72'})
+        client.connect({ port: 3400, host: '175.126.232.72' })
         sendCommand()
 
         return
       }
-      
+
       setAtBootTimeLimit(true)
       setSaveModal(true)
 
       setAtBootTime(checkitem)
       AsyncStorage.setItem("@bootTime_Value", checkitem)
 
-      
+
 
       setTimeout(() => {
         setSaveModal(false)
@@ -97,7 +97,7 @@ const RemoteBootTime = () => {
     }
   }
 
-  function sendCommand (){
+  function sendCommand() {
     let cc = '0'
     if (checkitem === '3') {
       cc = 're=0'

@@ -34,7 +34,7 @@ const StartTime = () => {
   const [startTime, setStartTime] = useRecoilState(startTimeValue)
   const [startTimeLimit, setStartTimeLimit] = useRecoilState(startTimeValueLimit)
   const pushToken = useRecoilValue(fcmToken)
-  
+
   const [checkitem, setChechkitem] = useState(startTime)
   const [isy, setisy] = useState(0)
 
@@ -69,7 +69,7 @@ const StartTime = () => {
         sendCommand()
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72'})
+        client.connect({ port: 3400, host: '175.126.232.72' })
         sendCommand()
         return
       }
@@ -93,7 +93,7 @@ const StartTime = () => {
     }
   }
 
-  function sendCommand (){
+  function sendCommand() {
     let cc = '0'
     if (checkitem === '1') {
       cc = 'st=0'

@@ -4,13 +4,13 @@ import { Alert } from 'react-native';
 import RNExitApp from 'react-native-kill-app';
 
 const client = TcpSocket.createConnection(
-  { port: 3400, host: '175.126.232.72'},
+  { port: 3400, host: '175.126.232.72' },
   () => {
 
     console.log('연결됨');
     setTimeout(() => {
       Alert.alert('서버와 연결되었습니다.');
-      
+
     }, 2000);
 
   },

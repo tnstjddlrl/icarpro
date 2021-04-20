@@ -62,7 +62,7 @@ const Settings = () => {
 
   const pushToken = useRecoilValue(fcmToken)
 
-  const [stLimit,setStLimit] = useRecoilState(settingLimit)
+  const [stLimit, setStLimit] = useRecoilState(settingLimit)
 
 
   const [icarswitch, seticarswitch] = useState(aticarswitch)
@@ -72,7 +72,7 @@ const Settings = () => {
   const [actionsound, setactionsound] = useState(atactionsound)
   const [alertsound, setalertsound] = useState(atalertsound)
 
-  function sendCommand (cc){
+  function sendCommand(cc) {
 
     let comm = { type: "R", type_sub: "settings", data: { command: cc, token: pushToken } }
     comm = JSON.stringify(comm)
@@ -84,24 +84,24 @@ const Settings = () => {
 
 
   function savebtnclick() {
-    if(stLimit === false){
+    if (stLimit === false) {
       setStLimit(true)
-      if(icarswitch !== aticarswitch){
-        if(icarswitch === true){
+      if (icarswitch !== aticarswitch) {
+        if (icarswitch === true) {
           try {
             sendCommand('mn')
           } catch (e) {
             console.log(e)
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             sendCommand('mn')
             return
           }
-        }else{
+        } else {
           try {
             sendCommand('mf')
           } catch (e) {
             console.log(e)
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
 
             sendCommand('mf')
 
@@ -109,23 +109,23 @@ const Settings = () => {
           }
         }
       }
-  
-      if(idoorswitch !== atidoorswitch){
-        if(idoorswitch === true){
+
+      if (idoorswitch !== atidoorswitch) {
+        if (idoorswitch === true) {
           try {
             sendCommand('dn')
           } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('dn')
 
             return
           }
-        }else{
+        } else {
           try {
             sendCommand('df')
           } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('df')
 
@@ -133,33 +133,33 @@ const Settings = () => {
           }
         }
       }
-  
-      if(lowboltBoot !==atlowboltBoot || lowboltAlert !==atlowboltAlert){
-        if(lowboltBoot === true){
+
+      if (lowboltBoot !== atlowboltBoot || lowboltAlert !== atlowboltAlert) {
+        if (lowboltBoot === true) {
           try {
             sendCommand('le')
           } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('le')
 
             return
           }
-        }else if(lowboltAlert === true){
+        } else if (lowboltAlert === true) {
           try {
             sendCommand('la')
           } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('la')
 
             return
           }
-        }else{
+        } else {
           try {
             sendCommand('lf')
           } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('lf')
 
@@ -167,23 +167,23 @@ const Settings = () => {
           }
         }
       }
-  
-      if(actionsound !== atactionsound){
-        if(actionsound === true){
+
+      if (actionsound !== atactionsound) {
+        if (actionsound === true) {
           try {
             sendCommand('1n')
           } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('1n')
 
             return
           }
-        }else{
+        } else {
           try {
             sendCommand('1f')
           } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('1f')
 
@@ -191,30 +191,30 @@ const Settings = () => {
           }
         }
       }
-  
-      if(alertsound !== atalertsound){
-        if(alertsound === true){
+
+      if (alertsound !== atalertsound) {
+        if (alertsound === true) {
           try {
             sendCommand('2n')
           } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('2n')
 
             return
           }
-        }else{
+        } else {
           try {
             sendCommand('2f')
           } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72'})
+            client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('2f')
             return
           }
         }
       }
-      
+
       setSaveModal(true)
 
       AsyncStorage.setItem("@icarswitch", JSON.stringify(icarswitch))
@@ -223,7 +223,7 @@ const Settings = () => {
       AsyncStorage.setItem("@lowboltAlert", JSON.stringify(lowboltAlert))
       AsyncStorage.setItem("@actionsound", JSON.stringify(actionsound))
       AsyncStorage.setItem("@alertsound", JSON.stringify(alertsound))
-  
+
       setaticarswitch(icarswitch)
       setatidoorswitch(idoorswitch)
       setatlowboltBoot(lowboltBoot)
@@ -235,13 +235,13 @@ const Settings = () => {
       }, 1500);
 
       setTimeout(() => {
-        setStLimit(false)      
+        setStLimit(false)
       }, 1000);
     }
-    else{
+    else {
       Alert.alert('설정 변경 유휴시간은 10초입니다.', '10초 후 시도해주세요')
     }
-    
+
   }
 
   return (
