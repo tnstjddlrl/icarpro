@@ -522,6 +522,13 @@ const Carcontroll = () => {
                     </TouchableWithoutFeedback>
                   }
 
+                  {
+                    (carRace !== "SEDAN1" && carRace !== "SUV1") &&
+                    <View style={{justifyContent:"center",alignItems:"center"}}>
+                    <Text style={{marginTop:50}}>차량을 등록해주세요</Text>
+                    </View>
+                  }
+
                 </View>
               </View>
 

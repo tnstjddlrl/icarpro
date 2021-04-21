@@ -314,7 +314,7 @@ const CarRegister = () => {
         {/* 본문 */}
 
         {/* 차량선택 모달 */}
-        <Modal visible={raceModal} transparent={true}>
+        <Modal visible={raceModal} transparent={true} animationType={'slide'}>
           <SafeAreaView style={{ backgroundColor: 'rgb(247,247,247)' }}>
             <View style={{ width: chwidth, height: chheight }}>
               {/* 모달헤더 */}
