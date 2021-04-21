@@ -107,15 +107,25 @@ const Carcontroll = () => {
     return () => unsubscribe();
   });
 
-  let door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
-  let door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
-  let panic_0 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '0', token: pushToken } }
-  let panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '1', token: pushToken } }
-  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '0', token: pushToken } }
-  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '1', token: pushToken } }
-  let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
-  let boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
-  let boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
+  // let door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
+  // let door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
+  // let panic_0 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '0', token: pushToken } }
+  // let panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '1', token: pushToken } }
+  // let warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '0', token: pushToken } }
+  // let warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '1', token: pushToken } }
+  // let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
+  // let boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
+  // let boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
+  let door_0 = { type: "R", type_sub: "car_controll", data: { command: 'du', token: pushToken } }
+  let door_1 = { type: "R", type_sub: "car_controll", data: { command: 'dl', token: pushToken } }
+  let panic_0 = { type: "R", type_sub: "car_controll", data: { command: 'pf', token: pushToken } }
+  let panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'pn', token: pushToken } }
+  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'hn', token: pushToken } }
+  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'hf', token: pushToken } }
+  let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'tu', token: pushToken } }
+  let boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'ef', token: pushToken } }
+  let boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'en', token: pushToken } }
+
 
   function lomofc(txt) {
 
@@ -128,7 +138,6 @@ const Carcontroll = () => {
         setCompleteModal(false)
       }, 1500);
     }, 1500);
-
   }
 
   function timecalcul(time) {
@@ -139,16 +148,16 @@ const Carcontroll = () => {
       rrtime = 600
       setAtIsboot(false)
 
-      boot_0 = JSON.stringify(boot_0)
-      try {
-        client.write(boot_0)
-        console.log('전송 : ' + boot_0)
-      } catch (error) {
-        console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(boot_0)
-        console.log('전송 : ' + boot_0)
-      }
+      // boot_0 = JSON.stringify(boot_0)
+      // try {
+      //   client.write(boot_0)
+      //   console.log('전송 : ' + boot_0)
+      // } catch (error) {
+      //   console.log(error)
+      //   client.connect({ port: 3400, host: '175.126.232.72' })
+      //   client.write(boot_0)
+      //   console.log('전송 : ' + boot_0)
+      // }
 
       lomofc('원격시동 끄기')
     }
@@ -217,15 +226,22 @@ const Carcontroll = () => {
       }
 
       door_0 = JSON.stringify(door_0)
-      client.write(door_0)
-      console.log('전송 : ' + door_0)
+      try {
+        client.write(door_0)
+        console.log('전송 : ' + door_0)
+      } catch (error) {
+        console.log(error)
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        client.write(door_0)
+        console.log('전송 : ' + door_0)
+      }
 
 
       setTimeout(() => {
         setDoor('no')
       }, 4000);
     }
-  }
+  }//도어 제어
 
   function panicClick(is) {
     if (is == 'on') {
@@ -237,8 +253,15 @@ const Carcontroll = () => {
 
 
       panic_1 = JSON.stringify(panic_1)
-      client.write(panic_1)
-      console.log('전송 : ' + panic_1)
+      try {
+        client.write(panic_1)
+        console.log('전송 : ' + panic_1)
+      } catch (error) {
+        console.log(error)
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        client.write(panic_1)
+        console.log('전송 : ' + panic_1)
+      }
 
       setTimeout(() => {
         setPanic('no')
@@ -256,8 +279,15 @@ const Carcontroll = () => {
       lomofc('패닉 OFF')
 
       panic_0 = JSON.stringify(panic_0)
-      client.write(panic_0)
-      console.log('전송 : ' + panic_0)
+      try {
+        client.write(panic_0)
+        console.log('전송 : ' + panic_0)
+      } catch (error) {
+        console.log(error)
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        client.write(panic_0)
+        console.log('전송 : ' + panic_0)
+      }
 
       setTimeout(() => {
         setPanic('no')
@@ -273,9 +303,17 @@ const Carcontroll = () => {
       lomofc('비상등 ON')
 
       warn_1 = JSON.stringify(warn_1)
-      client.write(warn_1)
-      console.log('전송 : ' + warn_1)
+      try {
+        client.write(warn_1)
+        console.log('전송 : ' + warn_1)
+      } catch (error) {
+        console.log(error)
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        client.write(warn_1)
+        console.log('전송 : ' + warn_1)
+      }
 
+      
       setTimeout(() => {
         setWarnbim('no')
       }, 4000);
@@ -291,8 +329,15 @@ const Carcontroll = () => {
       lomofc('비상등 OFF')
 
       warn_0 = JSON.stringify(warn_0)
-      client.write(warn_0)
-      console.log('전송 : ' + warn_0)
+      try {
+        client.write(warn_0)
+        console.log('전송 : ' + warn_0)
+      } catch (error) {
+        console.log(error)
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        client.write(warn_0)
+        console.log('전송 : ' + warn_0)
+      }
 
 
       setTimeout(() => {
@@ -309,8 +354,15 @@ const Carcontroll = () => {
     lomofc('트렁크 OPEN')
 
     trunk_1 = JSON.stringify(trunk_1)
-    client.write(trunk_1)
-    console.log('전송 : ' + trunk_1)
+    try {
+      client.write(trunk_1)
+      console.log('전송 : ' + trunk_1)
+    } catch (error) {
+      console.log(error)
+      client.connect({ port: 3400, host: '175.126.232.72' })
+      client.write(trunk_1)
+      console.log('전송 : ' + trunk_1)
+    }
 
     setTimeout(() => {
       setTrunk(false)
@@ -327,8 +379,15 @@ const Carcontroll = () => {
       lomofc('원격시동 켜기')
 
       boot_1 = JSON.stringify(boot_1)
-      client.write(boot_1)
-      console.log('전송 : ' + boot_1)
+      try {
+        client.write(boot_1)
+        console.log('전송 : ' + boot_1)
+      } catch (error) {
+        console.log(error)
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        client.write(boot_1)
+        console.log('전송 : ' + boot_1)
+      }
 
       setAtIsboot(true)
 
@@ -361,8 +420,15 @@ const Carcontroll = () => {
       setAtIsboot(false)
 
       boot_0 = JSON.stringify(boot_0)
-      client.write(boot_0)
-      console.log('전송 : ' + boot_0)
+      try {
+        client.write(boot_0)
+        console.log('전송 : ' + boot_0)
+      } catch (error) {
+        console.log(error)
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        client.write(boot_0)
+        console.log('전송 : ' + boot_0)
+      }
 
     }
   }
