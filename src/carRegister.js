@@ -227,7 +227,7 @@ const CarRegister = () => {
       <View style={{ width: '100%', height: '100%' }}>
 
         {/* 헤더 */}
-        <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
+        <View style={{ height:60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
           <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
