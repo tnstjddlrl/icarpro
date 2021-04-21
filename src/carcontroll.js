@@ -28,9 +28,7 @@ import { fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch, bootTimeValue,
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
-import {
-  Player,
-} from '@react-native-community/audio-toolkit';
+import {Player} from '@react-native-community/audio-toolkit';
 
 const doorOnSound = () => new Player('dooron.mp3').play(err => console.log(err))
 const panicOnSound = () => new Player('panicon.mp3').play(err => console.log(err))
