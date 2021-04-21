@@ -42,7 +42,7 @@ const sedan1img = require('../img/sedan1.png')
 const suv1img = require('../img/suv1.png')
 
 const CarRegister = () => {
-
+  let serverCheck
   const [loadModal, setLoadModal] = useState(false)
   const [delModal, setDelModal] = useState(false)
   const [userCancelModal, setUserCancelModal] = useState(false)
@@ -140,6 +140,10 @@ const CarRegister = () => {
     console.log('전송 : ' + txt)
 
     asyncSave()
+
+    // serverCheck=setTimeout(() => {
+    //   Alert.alert('서버와 통신이 원활하지 않습니다.','잠시후 다시 시도해주세요.')
+    // }, 2000);
   }
 
   const asyncSave = async () => {
@@ -163,9 +167,6 @@ const CarRegister = () => {
     var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN } }
     txt = JSON.stringify(txt)
 
-    client.write(txt)
-    console.log('전송 : ' + txt)
-
     setUserN('')
     setCarRace('')
     setSedan1(false)
@@ -180,16 +181,24 @@ const CarRegister = () => {
 
     setUserN('')
     setCarRace('')
+
+    client.write(txt)
+    console.log('전송 : ' + txt)
+
   }
   console.log('모뎀 : ' + modemN + '유저:' + userN)
 
   useEffect(() => {
     client.on('data', function (data) {
       if ('' + data == 'reg_suc') {
+        // clearTimeout(serverCheck)
         // Alert.alert('등록이 완료되었습니다')
         // navigation.navigate('차량제어')
-
-        setCancelMss('등록이 완료되었습니다.')
+        if(userN===''){
+          setCancelMss('삭제가 완료되었습니다.')
+        }else{
+          setCancelMss('등록이 완료되었습니다.')
+        }
         usercancelff()
 
       } else if ('' + data == 'registerDel_suc') {
@@ -428,7 +437,7 @@ const CarRegister = () => {
         {/* 차량선택 모달 끝*/}
 
         <Modal visible={loadModal} transparent={true} animationType={'fade'}>
-          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ width: chwidth - 80, height: 160, backgroundColor: 'white', marginTop: -150, borderRadius: 10 }}>
               <View style={{ marginTop: 20, alignItems: 'center' }}>
                 <Text style={styles.modalTitle}>주의!</Text>
@@ -459,7 +468,7 @@ const CarRegister = () => {
 
 
         <Modal visible={delModal} transparent={true} animationType={'fade'}>
-          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ width: chwidth - 80, height: 160, backgroundColor: 'white', marginTop: -150, borderRadius: 10 }}>
               <View style={{ marginTop: 20, alignItems: 'center' }}>
                 <Text style={styles.modalTitle}>주의!</Text>
@@ -490,7 +499,7 @@ const CarRegister = () => {
 
 
         <Modal visible={userCancelModal} transparent={true} animationType={'fade'}>
-          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -300, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
               <Text style={styles.modaltxt}>{cancelMss}</Text>
             </View>
