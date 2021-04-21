@@ -107,15 +107,15 @@ const Carcontroll = () => {
     return () => unsubscribe();
   });
 
-  var door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
-  var door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
-  var panic_0 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '0', token: pushToken } }
-  var panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '1', token: pushToken } }
-  var warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '0', token: pushToken } }
-  var warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '1', token: pushToken } }
-  var trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
-  var boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
-  var boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
+  let door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
+  let door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
+  let panic_0 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '0', token: pushToken } }
+  let panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '1', token: pushToken } }
+  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '0', token: pushToken } }
+  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '1', token: pushToken } }
+  let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
+  let boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
+  let boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
 
   function lomofc(txt) {
 
@@ -306,7 +306,7 @@ const Carcontroll = () => {
     //Alert.alert('trunk_0')
     setTrunk(true)
 
-    lomofc('비상등 ON')
+    lomofc('트렁크 OPEN')
 
     trunk_1 = JSON.stringify(trunk_1)
     client.write(trunk_1)
@@ -710,7 +710,7 @@ const Carcontroll = () => {
 
 
       <Modal visible={loadModal} transparent={true} animationType={'fade'}>
-        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.7)', justifyContent: 'center', alignItems: 'center' }}>
+        <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
           <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.modaltxt}>{commandtxt} 명령을</Text>
             <Text style={styles.modaltxt}>실행 중 입니다.</Text>
