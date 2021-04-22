@@ -201,6 +201,7 @@ const CarRegister = () => {
         }
         usercancelff()
 
+
       } else if ('' + data == 'registerDel_suc') {
         setCancelMss('삭제가 완료되었습니다.'),
           usercancelff()
@@ -225,6 +226,10 @@ const CarRegister = () => {
     setUserCancelModal(true)
     setTimeout(() => {
       setUserCancelModal(false)
+      console.log(cancelMss)
+      if(cancelMss==='등록이 완료되었습니다.'){
+        navigation.navigate('차량제어')
+      }
     }, 1500);
   }
 
@@ -237,7 +242,7 @@ const CarRegister = () => {
 
         {/* 헤더 */}
         <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('차량제어')}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>

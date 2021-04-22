@@ -34,6 +34,7 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import { useNavigation } from '@react-navigation/native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RNExitApp from 'react-native-kill-app';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -275,7 +276,7 @@ const Load = () => {
                       setLoadbarwd(183)
                       setTimeout(() => {
                         console.log('구사용자 : ' + res)
-                        navigation.navigate('테스트')
+                        navigation.navigate('차량제어')
                       }, 500);
                     }, 250);
                   }, 250);
@@ -304,7 +305,7 @@ const Load = () => {
                       setLoadbarwd(183)
                       setTimeout(() => {
                         console.log('첫사용자 : ' + res)
-                        navigation.navigate('테스트')
+                        navigation.navigate('차량등록')
                       }, 500);
                     }, 250);
                   }, 250);
@@ -323,6 +324,7 @@ const Load = () => {
     } catch (error) {
       console.log(error)
       Alert.alert('async stroage error')
+      RNExitApp()
     }
   }, [])
 

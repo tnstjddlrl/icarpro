@@ -94,7 +94,7 @@ const Settings = () => {
             console.log(e)
             client.connect({ port: 3400, host: '175.126.232.72' })
             sendCommand('mn')
-            return
+            // return
           }
         } else {
           try {
@@ -105,7 +105,7 @@ const Settings = () => {
 
             sendCommand('mf')
 
-            return
+            // return
           }
         }
       }
@@ -119,7 +119,7 @@ const Settings = () => {
             console.log(e)
             sendCommand('dn')
 
-            return
+            // return
           }
         } else {
           try {
@@ -129,7 +129,7 @@ const Settings = () => {
             console.log(e)
             sendCommand('df')
 
-            return
+            // return
           }
         }
       }
@@ -143,7 +143,7 @@ const Settings = () => {
             console.log(e)
             sendCommand('le')
 
-            return
+            // return
           }
         } else if (lowboltAlert === true) {
           try {
@@ -153,7 +153,7 @@ const Settings = () => {
             console.log(e)
             sendCommand('la')
 
-            return
+            // return
           }
         } else {
           try {
@@ -163,7 +163,7 @@ const Settings = () => {
             console.log(e)
             sendCommand('lf')
 
-            return
+            // return
           }
         }
       }
@@ -177,7 +177,7 @@ const Settings = () => {
             console.log(e)
             sendCommand('1n')
 
-            return
+            // return
           }
         } else {
           try {
@@ -187,7 +187,7 @@ const Settings = () => {
             console.log(e)
             sendCommand('1f')
 
-            return
+            // return
           }
         }
       }
@@ -201,7 +201,7 @@ const Settings = () => {
             console.log(e)
             sendCommand('2n')
 
-            return
+            // return
           }
         } else {
           try {
@@ -210,7 +210,7 @@ const Settings = () => {
             client.connect({ port: 3400, host: '175.126.232.72' })
             console.log(e)
             sendCommand('2f')
-            return
+            // return
           }
         }
       }
