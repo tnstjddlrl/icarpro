@@ -591,7 +591,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: "#e1e1e3",
     width: chwidth - 32,
-    marginLeft: 16,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -600,7 +599,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: "#f75929",
     width: chwidth - 32,
-    marginLeft: 16,
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
