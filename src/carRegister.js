@@ -194,14 +194,11 @@ const CarRegister = () => {
         // clearTimeout(serverCheck)
         // Alert.alert('등록이 완료되었습니다')
         // navigation.navigate('차량제어')
-        if (userN === '') {
-          setCancelMss('삭제가 완료되었습니다.')
-        } else {
+        
+
           setCancelMss('등록이 완료되었습니다.')
-        }
-        usercancelff()
-
-
+          usercancelff('등록완료')
+       
       } else if ('' + data == 'registerDel_suc') {
         setCancelMss('삭제가 완료되었습니다.'),
           usercancelff()
@@ -221,13 +218,13 @@ const CarRegister = () => {
   }
 
 
-  function usercancelff() {
+  function usercancelff(mss) {
 
     setUserCancelModal(true)
     setTimeout(() => {
       setUserCancelModal(false)
       console.log(cancelMss)
-      if(cancelMss==='등록이 완료되었습니다.'){
+      if(mss==='등록완료'){
         navigation.navigate('차량제어')
       }
     }, 1500);
