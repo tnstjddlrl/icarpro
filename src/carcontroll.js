@@ -432,12 +432,12 @@ const Carcontroll = () => {
   }
 
   return (
-    <View style={{ backgroundColor: 'white' }}>
+    <SafeAreaView style={{ backgroundColor: 'white' }}>
       <FlingGestureHandler
         direction={Directions.LEFT}
         onHandlerStateChange={({ nativeEvent }) => {
           if (nativeEvent.state === State.ACTIVE) {
-            navigation.navigate('차량등록')
+            navigation.navigate('설정')
           }
         }}>
         <FlingGestureHandler
@@ -451,22 +451,17 @@ const Carcontroll = () => {
             direction={Directions.RIGHT}
             onHandlerStateChange={({ nativeEvent }) => {
               if (nativeEvent.state === State.ACTIVE) {
-                navigation.navigate('설정')
+                navigation.navigate('차량등록')
               }
             }}>
 
 
             <View style={{ width: '100%', height: '100%' }}>
               <View style={{ flex: 3 }}>
-                <View style={{ flex: 0.8 }}></View>
+                <View style={{ flex: 0.2 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
-                  <TouchableWithoutFeedback onPress={() => {
-                    setLoadModal(true), setTimeout(() => {
-                      setLoadModal(false)
-                    }, 1000);
-                  }}>
+                  
                     <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
-                  </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flex: 4 }}>
                   <Text style={styles.carnum}>12기 3456</Text>
@@ -798,7 +793,7 @@ const Carcontroll = () => {
         </SafeAreaView>
       </Modal>
 
-    </View>
+    </SafeAreaView>
   )
 }
 
