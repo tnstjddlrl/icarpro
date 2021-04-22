@@ -194,9 +194,9 @@ const CarRegister = () => {
         // clearTimeout(serverCheck)
         // Alert.alert('등록이 완료되었습니다')
         // navigation.navigate('차량제어')
-        if(userN===''){
+        if (userN === '') {
           setCancelMss('삭제가 완료되었습니다.')
-        }else{
+        } else {
           setCancelMss('등록이 완료되었습니다.')
         }
         usercancelff()
@@ -236,7 +236,7 @@ const CarRegister = () => {
       <View style={{ width: '100%', height: '100%' }}>
 
         {/* 헤더 */}
-        <View style={{ height:60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
+        <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
           <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
@@ -325,7 +325,7 @@ const CarRegister = () => {
         {/* 차량선택 모달 */}
         <Modal visible={raceModal} transparent={true} animationType={'slide'}>
           <SafeAreaView style={{ backgroundColor: 'rgb(247,247,247)' }}>
-            <View style={{ width: chwidth, height: chheight }}>
+            <View style={{ width: chwidth, height: '100%' }}>
               {/* 모달헤더 */}
               <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
                 <TouchableWithoutFeedback onPress={() => setRaceModal(false)}>
@@ -345,7 +345,7 @@ const CarRegister = () => {
 
                       {sedan1 ?
                         <TouchableWithoutFeedback onPress={() => setSedan1(false)}>
-                          <View style={{ height: 128, flex: 1, backgroundColor: "#f0f1f5", borderRadius: 6, borderWidth: 1, borderColor: "#f75929", borderStyle: 'solid' }}>
+                          <View style={styles.carselectbtn}>
                             <View style={{ flex: 2, justifyContent: "flex-end" }}>
                               <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <Image source={radioSelect} style={{ marginLeft: 17, marginRight: 8 }}></Image>
@@ -359,7 +359,7 @@ const CarRegister = () => {
                         </TouchableWithoutFeedback>
                         :
                         <TouchableWithoutFeedback onPress={() => { setSedan1(true), setSuv1(false) }}>
-                          <View style={{ height: 128, flex: 1, backgroundColor: "#f0f1f5", borderRadius: 6, }}>
+                          <View style={styles.carbtn}>
                             <View style={{ flex: 2, justifyContent: "flex-end" }}>
                               <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <View style={{ width: 20, height: 20, borderStyle: 'solid', borderWidth: 1, borderColor: "#bababa", borderRadius: 20, marginLeft: 17, marginRight: 8 }}></View>
@@ -378,7 +378,7 @@ const CarRegister = () => {
 
                       {suv1 ?
                         <TouchableWithoutFeedback onPress={() => { setSuv1(false) }}>
-                          <View style={{ height: 128, flex: 1, backgroundColor: "#f0f1f5", borderRadius: 6, borderWidth: 1, borderColor: "#f75929", borderStyle: 'solid' }}>
+                          <View style={styles.carselectbtn}>
                             <View style={{ flex: 2, justifyContent: "flex-end" }}>
                               <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <Image source={radioSelect} style={{ marginLeft: 17, marginRight: 8 }}></Image>
@@ -392,7 +392,7 @@ const CarRegister = () => {
                         </TouchableWithoutFeedback>
                         :
                         <TouchableWithoutFeedback onPress={() => { setSuv1(true), setSedan1(false) }}>
-                          <View style={{ height: 128, flex: 1, backgroundColor: "#f0f1f5", borderRadius: 6, }}>
+                          <View style={styles.carbtn}>
                             <View style={{ flex: 2, justifyContent: "flex-end" }}>
                               <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <View style={{ width: 20, height: 20, borderStyle: 'solid', borderWidth: 1, borderColor: "#bababa", borderRadius: 20, marginLeft: 17, marginRight: 8 }}></View>
@@ -414,7 +414,7 @@ const CarRegister = () => {
                 {/*  */}
 
                 {/* 저장버튼 */}
-                <View style={{ flex: 1.5 }}>
+                <View style={{ flex: 1.5,justifyContent:"center",alignItems:"center" }}>
                   {(sedan1 == true || suv1 == true) ?
                     <TouchableWithoutFeedback onPress={() => iscar()}>
                       <View style={styles.saveBtn2}>
@@ -602,7 +602,16 @@ const styles = StyleSheet.create({
     width: chwidth - 32,
     marginLeft: 16,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
+    shadowOpacity: 0.41,
+    shadowRadius: 9.11,
+
+    elevation: 14,
   },
   savetxt: {
     fontFamily: "AppleSDGothicNeo-Medium",
@@ -641,6 +650,42 @@ const styles = StyleSheet.create({
     width: chwidth - 80,
     marginLeft: 16,
     height: 56
+  },
+  carbtn: {
+    height: 128,
+    flex: 1,
+    backgroundColor: "#f0f1f5",
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#f0f1f5",
+    borderStyle: 'solid',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  carselectbtn: {
+    height: 128,
+    flex: 1,
+    backgroundColor: "#f0f1f5",
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#f75929",
+    borderStyle: 'solid',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   }
 })
 
