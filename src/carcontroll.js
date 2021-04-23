@@ -76,7 +76,7 @@ const suvbimon = require('../img/controll/carstate/suvbimon.png')
 const suvbooton = require('../img/controll/carstate/suvbooton.png')
 
 var interval;
-// var rrtime = 600;
+var rrtime;
 
 const Carcontroll = () => {
   const navigation = useNavigation()
@@ -138,38 +138,88 @@ const Carcontroll = () => {
     }, 1500);
   }
 
-  function timecalcul(time) {
-    if (time == 0) {
+  function timecalcul() {
+    // if (time == 0) {
+    //   setBoot(false)
+    //   clearInterval(interval)
+    //   setBootrest('00:00')
+    //   // rrtime = 600
+    //   setAtIsboot(false)
+
+    //   // boot_0 = JSON.stringify(boot_0)
+    //   // try {
+    //   //   client.write(boot_0)
+    //   //   console.log('전송 : ' + boot_0)
+    //   // } catch (error) {
+    //   //   console.log(error)
+    //   //   client.connect({ port: 3400, host: '175.126.232.72' })
+    //   //   client.write(boot_0)
+    //   //   console.log('전송 : ' + boot_0)
+    //   // }
+
+    //   lomofc('원격시동 끄기')
+    // }
+
+    // var min = parseInt((time % 3600) / 60);
+    // var sec = time % 60;
+    // if (String(sec).length == 1) {
+    //   console.log(String(sec).length)
+    //   setBootrest(min + ':0' + sec)
+    // } else {
+    //   console.log(String(sec).length)
+    //   setBootrest(min + ':' + sec)
+    // }
+    // console.log(time + ' : ' + bootrest)
+    if (rrtime - new Date() <= 0) {
       setBoot(false)
       clearInterval(interval)
       setBootrest('00:00')
-      rrtime = 600
       setAtIsboot(false)
 
-      // boot_0 = JSON.stringify(boot_0)
-      // try {
-      //   client.write(boot_0)
-      //   console.log('전송 : ' + boot_0)
-      // } catch (error) {
-      //   console.log(error)
-      //   client.connect({ port: 3400, host: '175.126.232.72' })
-      //   client.write(boot_0)
-      //   console.log('전송 : ' + boot_0)
-      // }
+      boot_0 = JSON.stringify(boot_0)
+      try {
+        client.write(boot_0)
+        console.log('전송 : ' + boot_0)
+      } catch (error) {
+        console.log(error)
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        client.write(boot_0)
+        console.log('전송 : ' + boot_0)
+      }
+
+
 
       lomofc('원격시동 끄기')
-    }
-
-    var min = parseInt((time % 3600) / 60);
-    var sec = time % 60;
-    if (String(sec).length == 1) {
-      console.log(String(sec).length)
-      setBootrest(min + ':0' + sec)
     } else {
-      console.log(String(sec).length)
-      setBootrest(min + ':' + sec)
+      let tt = String((rrtime - new Date()) / 1000).split('.')[0];
+      console.log(tt)
+
+      if (tt.length === 1) {
+        var time = parseInt(tt[0])
+        console.log(time)
+      } else if (tt.length === 2) {
+        var time = parseInt(tt[0] + tt[1])
+        console.log(time)
+      } else if (tt.length === 3) {
+        var time = parseInt(tt[0] + tt[1] + tt[2])
+        console.log(time)
+      } else if (tt.length === 4) {
+        var time = parseInt(tt[0] + tt[1] + tt[2] + tt[3])
+        console.log(time)
+      }
+
+      var min = parseInt((time % 3600) / 60);
+      var sec = time % 60;
+      if (String(sec).length == 1) {
+        console.log(String(sec).length)
+        setBootrest(min + ':0' + sec)
+      } else {
+        console.log(String(sec).length)
+        setBootrest(min + ':' + sec)
+      }
+
+      console.log(min + ':' + sec)
     }
-    console.log(time + ' : ' + bootrest)
   }
 
 
@@ -393,18 +443,22 @@ const Carcontroll = () => {
         bootOnSound()
       }
 
-      let bbtime;
-      if (atBootTime === '3') {
-        bbtime = 180
-      } else if (atBootTime === '5') {
-        bbtime = 300
-      } else if (atBootTime === '10') {
-        bbtime = 600
-      }
+      // let bbtime;
+      // if (atBootTime === '3') {
+      //   bbtime = 180
+      // } else if (atBootTime === '5') {
+      //   bbtime = 300
+      // } else if (atBootTime === '10') {
+      //   bbtime = 600
+      // }
+
+      rrtime = new Date()
+
+      rrtime.setMinutes(rrtime.getMinutes() + parseInt(atBootTime))
 
       interval = setInterval(() => {
-        timecalcul(bbtime)
-        bbtime -= 1
+        timecalcul()
+        // bbtime -= 1
       }, 1000);
 
     } else {
@@ -414,7 +468,7 @@ const Carcontroll = () => {
       setBoot(false)
       clearInterval(interval)
       setBootrest('00:00')
-      rrtime = 600
+      // rrtime = 600
       setAtIsboot(false)
 
       boot_0 = JSON.stringify(boot_0)
@@ -510,7 +564,7 @@ const Carcontroll = () => {
                         {trunk == true &&
                           <AutoHeightImage source={trunkon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
-                        {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
+                        {(boot == true && door == 'no' && panic == 'no' && warnbim == 'no' && trunk == false) &&
                           <AutoHeightImage source={booton} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                       </View>
