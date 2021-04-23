@@ -460,8 +460,8 @@ const Carcontroll = () => {
               <View style={{ flex: 3 }}>
                 <View style={{ flex: 0.2 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
-                  
-                    <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
+
+                  <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
                 </View>
                 <View style={{ flex: 4 }}>
                   <Text style={styles.carnum}>12기 3456</Text>
@@ -519,8 +519,8 @@ const Carcontroll = () => {
 
                   {
                     (carRace !== "SEDAN1" && carRace !== "SUV1") &&
-                    <View style={{justifyContent:"center",alignItems:"center"}}>
-                    <Text style={{marginTop:50}}>차량을 등록해주세요</Text>
+                    <View style={{ justifyContent: "center", alignItems: "center" }}>
+                      <Text style={{ marginTop: 50 }}>차량을 등록해주세요</Text>
                     </View>
                   }
 
@@ -777,7 +777,15 @@ const Carcontroll = () => {
 
       <Modal visible={loadModal} transparent={true} animationType={'fade'}>
         <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{
+            width: chwidth - 80,
+            height: 80,
+            backgroundColor: 'white',
+            marginTop: -200,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
             <Text style={styles.modaltxt}>{commandtxt} 명령을</Text>
             <Text style={styles.modaltxt}>실행 중 입니다.</Text>
           </View>
@@ -786,7 +794,23 @@ const Carcontroll = () => {
 
       <Modal visible={completeModal} transparent={true} animationType={'fade'}>
         <SafeAreaView style={{ width: chwidth, height: chheight, justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ width: chwidth - 80, height: 80, backgroundColor: 'white', marginTop: -200, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{
+            width: chwidth - 80,
+            height: 80,
+            backgroundColor: 'white',
+            marginTop: -200,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            elevation: 14,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 7,
+            },
+            shadowOpacity: 0.41,
+            shadowRadius: 9.11,
+          }}>
             <Text style={styles.modaltxt}>{commandtxt} 명령을</Text>
             <Text style={styles.modaltxt}>실행하였습니다.</Text>
           </View>
