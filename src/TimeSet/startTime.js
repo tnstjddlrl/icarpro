@@ -45,8 +45,8 @@ const StartTime = () => {
       setisy(0)
       ii.current.scrollTo({ x: 0, y: 0 })
     } else if (checkitem === '2') {
-      setisy(65)
-      ii.current.scrollTo({ x: 0, y: 65 })
+      setisy(77)
+      ii.current.scrollTo({ x: 0, y: 77 })
     } else if (checkitem === '3') {
       setisy(160)
       ii.current.scrollTo({ x: 0, y: 160 })

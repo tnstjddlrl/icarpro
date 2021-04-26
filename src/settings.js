@@ -109,111 +109,119 @@ const Settings = () => {
           }
         }
       }
-
-      if (idoorswitch !== atidoorswitch) {
-        if (idoorswitch === true) {
-          try {
-            sendCommand('dn')
-          } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            console.log(e)
-            sendCommand('dn')
-
-            // return
-          }
-        } else {
-          try {
-            sendCommand('df')
-          } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            console.log(e)
-            sendCommand('df')
-
-            // return
-          }
-        }
-      }
-
-      if (lowboltBoot !== atlowboltBoot || lowboltAlert !== atlowboltAlert) {
-        if (lowboltBoot === true) {
-          try {
-            sendCommand('le')
-          } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            console.log(e)
-            sendCommand('le')
-
-            // return
-          }
-        } else if (lowboltAlert === true) {
-          try {
-            sendCommand('la')
-          } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            console.log(e)
-            sendCommand('la')
-
-            // return
-          }
-        } else {
-          try {
-            sendCommand('lf')
-          } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            console.log(e)
-            sendCommand('lf')
-
-            // return
+      setTimeout(() => {
+        if (idoorswitch !== atidoorswitch) {
+          if (idoorswitch === true) {
+            try {
+              sendCommand('dn')
+            } catch (e) {
+              client.connect({ port: 3400, host: '175.126.232.72' })
+              console.log(e)
+              sendCommand('dn')
+  
+              // return
+            }
+          } else {
+            try {
+              sendCommand('df')
+            } catch (e) {
+              client.connect({ port: 3400, host: '175.126.232.72' })
+              console.log(e)
+              sendCommand('df')
+  
+              // return
+            }
           }
         }
-      }
+      }, 100);
 
-      if (actionsound !== atactionsound) {
-        if (actionsound === true) {
-          try {
-            sendCommand('1n')
-          } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            console.log(e)
-            sendCommand('1n')
-
-            // return
-          }
-        } else {
-          try {
-            sendCommand('1f')
-          } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            console.log(e)
-            sendCommand('1f')
-
-            // return
-          }
-        }
-      }
-
-      if (alertsound !== atalertsound) {
-        if (alertsound === true) {
-          try {
-            sendCommand('2n')
-          } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            console.log(e)
-            sendCommand('2n')
-
-            // return
-          }
-        } else {
-          try {
-            sendCommand('2f')
-          } catch (e) {
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            console.log(e)
-            sendCommand('2f')
-            // return
+      setTimeout(() => {
+        if (lowboltBoot !== atlowboltBoot || lowboltAlert !== atlowboltAlert) {
+          if (lowboltBoot === true) {
+            try {
+              sendCommand('le')
+            } catch (e) {
+              client.connect({ port: 3400, host: '175.126.232.72' })
+              console.log(e)
+              sendCommand('le')
+  
+              // return
+            }
+          } else if (lowboltAlert === true) {
+            try {
+              sendCommand('la')
+            } catch (e) {
+              client.connect({ port: 3400, host: '175.126.232.72' })
+              console.log(e)
+              sendCommand('la')
+  
+              // return
+            }
+          } else {
+            try {
+              sendCommand('lf')
+            } catch (e) {
+              client.connect({ port: 3400, host: '175.126.232.72' })
+              console.log(e)
+              sendCommand('lf')
+  
+              // return
+            }
           }
         }
-      }
+      }, 200);
+
+      setTimeout(() => {
+        if (actionsound !== atactionsound) {
+          if (actionsound === true) {
+            try {
+              sendCommand('1n')
+            } catch (e) {
+              client.connect({ port: 3400, host: '175.126.232.72' })
+              console.log(e)
+              sendCommand('1n')
+  
+              // return
+            }
+          } else {
+            try {
+              sendCommand('1f')
+            } catch (e) {
+              client.connect({ port: 3400, host: '175.126.232.72' })
+              console.log(e)
+              sendCommand('1f')
+  
+              // return
+            }
+          }
+        }
+      }, 300);
+
+      setTimeout(() => {
+        if (alertsound !== atalertsound) {
+          if (alertsound === true) {
+            try {
+              sendCommand('2n')
+            } catch (e) {
+              client.connect({ port: 3400, host: '175.126.232.72' })
+              console.log(e)
+              sendCommand('2n')
+  
+              // return
+            }
+          } else {
+            try {
+              sendCommand('2f')
+            } catch (e) {
+              client.connect({ port: 3400, host: '175.126.232.72' })
+              console.log(e)
+              sendCommand('2f')
+              // return
+            }
+          }
+        }
+      }, 400);
+      
 
       setSaveModal(true)
 
