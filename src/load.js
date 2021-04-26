@@ -175,10 +175,12 @@ const Load = () => {
 
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  const [isAuthorized, setIsAuthorized] = useState(false)
+  
   const [, setAtModemn] = useRecoilState(modemNumber)
   const [, setatUserNumber] = useRecoilState(userNumber)
   const [, setatIsCarRace] = useRecoilState(isCarRace)
-  const [isAuthorized, setIsAuthorized] = useState(false)
+  
 
 
   const [, setLowVoltValue] = useRecoilState(voltValue)
@@ -226,21 +228,6 @@ const Load = () => {
       return messaging().onTokenRefresh((token) => saveTokenToDatabase(token))
     }
   }, [pushToken, isAuthorized])
-
-  function registerClick() {
-    try {
-      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
-      txt = JSON.stringify(txt)
-
-      client.write(txt)
-      console.log('전송 : ' + txt)
-
-    } catch (e) {
-      console.log(e)
-      client.connect({ port: 3400, host: '175.126.232.72' })
-      registerClick()
-    }
-  }
 
 
   useEffect(() => {
@@ -450,7 +437,6 @@ const Load = () => {
 
           setTimeout(() => {
             setLoadbarwd(30)
-            registerClick()
             setTimeout(() => {
               setLoadbarwd(60)
               setTimeout(() => {

@@ -104,10 +104,25 @@ const Carcontroll = () => {
     if (isicarswitch === false) {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
+    registerClick()
   });
   useEffect(() => {
-    return () => unsubscribe();
+    return () => {unsubscribe()};
   });
+
+  function registerClick() {
+    try {
+      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
+      txt = JSON.stringify(txt)
+
+      client.write(txt)
+      console.log('전송 : ' + txt)
+
+    } catch (e) {
+      console.log(e)
+      Alert.alert('서버와 통신오류가 있습니다.','잠시후 다시시도해주세요')
+    }
+  }
 
   // let door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
   // let door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
