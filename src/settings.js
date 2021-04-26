@@ -63,7 +63,6 @@ const Settings = () => {
 
   const [saveModal, setSaveModal] = useState(false)
 
-
   const [aticarswitch, setaticarswitch] = useRecoilState(icarSwitch)
   const [atidoorswitch, setatidoorswitch] = useRecoilState(idoorSwitch)
   const [atlowboltBoot, setatlowboltBoot] = useRecoilState(lowvoltBoot)
@@ -84,6 +83,15 @@ const Settings = () => {
   const [lowboltAlert, setlowboltAlert] = useState(atlowboltAlert)
   const [actionsound, setactionsound] = useState(atactionsound)
   const [alertsound, setalertsound] = useState(atalertsound)
+
+  useEffect(()=>{
+    seticarswitch(aticarswitch)
+    setidoorswitch(atidoorswitch)
+    setlowboltBoot(atlowboltBoot)
+    setlowboltAlert(atlowboltAlert)
+    setactionsound(atactionsound)
+    setalertsound(atalertsound)
+  },[aticarswitch,atidoorswitch,atlowboltBoot,atlowboltAlert,atactionsound,atalertsound])
 
   function sendCommand(cc) {
 
@@ -118,10 +126,12 @@ const Settings = () => {
   });
 
 
-
   function savebtnclick() {
     if (stLimit === false) {
       setStLimit(true)
+
+
+      //아이카 스위치
       if (icarswitch !== aticarswitch) {
         if (icarswitch === true) {
           try {
@@ -145,6 +155,8 @@ const Settings = () => {
           }
         }
       }
+
+      //아이도어 스위치
       setTimeout(() => {
         if (idoorswitch !== atidoorswitch) {
           if (idoorswitch === true) {
@@ -171,6 +183,7 @@ const Settings = () => {
         }
       }, 100);
 
+      //저전압 기능
       setTimeout(() => {
         if (lowboltBoot !== atlowboltBoot || lowboltAlert !== atlowboltAlert) {
           if (lowboltBoot === true) {
@@ -201,12 +214,13 @@ const Settings = () => {
               console.log(e)
               sendCommand('lf')
 
-
             }
           }
         }
       }, 200);
 
+
+      //동작음 무음 기능
       setTimeout(() => {
         if (actionsound !== atactionsound) {
           if (actionsound === true) {
@@ -233,6 +247,8 @@ const Settings = () => {
         }
       }, 300);
 
+
+      //경계음 무음 기능
       setTimeout(() => {
         if (alertsound !== atalertsound) {
           if (alertsound === true) {
@@ -261,12 +277,12 @@ const Settings = () => {
 
       setSaveModal(true)
 
-      AsyncStorage.setItem("@icarswitch", JSON.stringify(icarswitch))
-      AsyncStorage.setItem("@idoorswitch", JSON.stringify(idoorswitch))
-      AsyncStorage.setItem("@lowboltBoot", JSON.stringify(lowboltBoot))
-      AsyncStorage.setItem("@lowboltAlert", JSON.stringify(lowboltAlert))
-      AsyncStorage.setItem("@actionsound", JSON.stringify(actionsound))
-      AsyncStorage.setItem("@alertsound", JSON.stringify(alertsound))
+      // AsyncStorage.setItem("@icarswitch", JSON.stringify(icarswitch))
+      // AsyncStorage.setItem("@idoorswitch", JSON.stringify(idoorswitch))
+      // AsyncStorage.setItem("@lowboltBoot", JSON.stringify(lowboltBoot))
+      // AsyncStorage.setItem("@lowboltAlert", JSON.stringify(lowboltAlert))
+      // AsyncStorage.setItem("@actionsound", JSON.stringify(actionsound))
+      // AsyncStorage.setItem("@alertsound", JSON.stringify(alertsound))
 
       setaticarswitch(icarswitch)
       setatidoorswitch(idoorswitch)
