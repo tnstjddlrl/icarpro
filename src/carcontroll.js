@@ -24,7 +24,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch, bootTimeValue, actionSound } from './atom/atoms'
+import { fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch, bootTimeValue, actionSound,modemNumber,userNumber } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -82,6 +82,10 @@ const Carcontroll = () => {
   const navigation = useNavigation()
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  const atmodemN = useRecoilValue(modemNumber)
+  const atuserN = useRecoilValue(userNumber)
+
+
   const [carRace, setcarRace] = useRecoilState(isCarRace)
   const [bootrest, setBootrest] = useRecoilState(bootRestTime)
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
@@ -114,17 +118,17 @@ const Carcontroll = () => {
   // let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
   // let boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
   // let boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
-  let door_0 = { type: "R", type_sub: "car_controll", data: { command: 'du', token: pushToken } }
-  let door_1 = { type: "R", type_sub: "car_controll", data: { command: 'dl', token: pushToken } }
-  let panic_0 = { type: "R", type_sub: "car_controll", data: { command: 'pf', token: pushToken } }
-  let panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'pn', token: pushToken } }
-  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'hn', token: pushToken } }
-  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'hf', token: pushToken } }
-  let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'tu', token: pushToken } }
-  let boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'ef', token: pushToken } }
-  let boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'en', token: pushToken } }
+  let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:du', modem: atmodemN } }
+  let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:dl', modem: atmodemN } }
+  let panic_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:pf', modem: atmodemN  } }
+  let panic_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:pn', modem: atmodemN  } }
+  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:hn', modem: atmodemN } }
+  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:hf', modem: atmodemN } }
+  let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:tu', modem: atmodemN  } }
+  let boot_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:ef', modem: atmodemN } }
+  let boot_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:en', modem: atmodemN } }
 
-
+//모뎀 유저 무슨상태 커맨드
   function lomofc(txt) {
 
     setCommandtxt(txt)

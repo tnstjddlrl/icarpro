@@ -116,6 +116,16 @@ const CarState = () => {
     }
   }
 
+  const reqState = navigation.addListener('focus', () => {
+    registerClick();
+  });
+  
+  useEffect(() => {
+    return () => reqState();
+  });
+
+
+
   useEffect(() => {
     client.on('data', function (data) {
       if(''+data === 'no_certification'){
@@ -124,7 +134,16 @@ const CarState = () => {
         Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
       }else{
         var command = ''+data
+
         if (command.split('/')[1][3] === 'i') {
+          setAtStateCarAlert('ON')
+          console.log('경계온ok')
+        } else if (command.split('/')[1][3] === 'o') {
+          setAtStateCarAlert('OFF')
+          console.log('경계오프ok')
+        }
+
+        if (command.split('/')[1][2] === 'i') {
           setAtStateEngineState('ON')
           console.log('엔진온ok')
         } else if (command.split('/')[1][2] === 'o') {
