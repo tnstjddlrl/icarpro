@@ -181,17 +181,17 @@ const Load = () => {
   const [isAuthorized, setIsAuthorized] = useState(false)
 
 
-  // const [, setLowVoltValue] = useRecoilState(voltValue)
-  // const [, setatBootTimeValue] = useRecoilState(bootTimeValue)
-  // const [, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
-  // const [, setAtStartTimeValue] = useRecoilState(startTimeValue)
+  const [, setLowVoltValue] = useRecoilState(voltValue)
+  const [, setatBootTimeValue] = useRecoilState(bootTimeValue)
+  const [, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
+  const [, setAtStartTimeValue] = useRecoilState(startTimeValue)
 
-  // const [, setAticarswitch] = useRecoilState(icarSwitch)
-  // const [, setAtidoorswitch] = useRecoilState(idoorSwitch)
-  // const [, setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
-  // const [, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
-  // const [, setAtactionSound] = useRecoilState(actionSound)
-  // const [, setAtalertSound] = useRecoilState(alertSound)
+  const [, setAticarswitch] = useRecoilState(icarSwitch)
+  const [, setAtidoorswitch] = useRecoilState(idoorSwitch)
+  const [, setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
+  const [, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
+  const [, setAtactionSound] = useRecoilState(actionSound)
+  const [, setAtalertSound] = useRecoilState(alertSound)
 
   const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
   const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
@@ -227,6 +227,22 @@ const Load = () => {
     }
   }, [pushToken, isAuthorized])
 
+  function registerClick() {
+    try {
+      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
+      txt = JSON.stringify(txt)
+
+      client.write(txt)
+      console.log('전송 : ' + txt)
+
+    } catch (e) {
+      console.log(e)
+      client.connect({ port: 3400, host: '175.126.232.72' })
+      registerClick()
+    }
+  }
+
+
   useEffect(() => {
     try {
       handlePushToken()
@@ -234,7 +250,8 @@ const Load = () => {
     } catch (error) {
       console.log(error)
       Alert.alert('토큰 받아오기 실패')
-    }
+    } // 토큰 받아오기
+
 
     client.on('data', function (data) {
       if(''+data === 'no_certification'){
@@ -298,6 +315,91 @@ const Load = () => {
           setAtStateDoorLock('OFF')
           console.log('도어락오프ok')
         }
+
+        if (command.split('/')[5][2] === 'i') {
+          setAticarswitch(true)
+          console.log('아이카온ok')
+        } else if (command.split('/')[5][2] === 'o') {
+          setAticarswitch(false)
+          console.log('아이카오프')
+        }
+
+        if (command.split('/')[5][3] === 'i') {
+          setAtidoorswitch(true)
+          console.log('아이도어온')
+        } else if (command.split('/')[5][3] === 'o') {
+          setAtidoorswitch(false)
+          console.log('아이도어오프')
+        }
+
+        if (command.split('/')[5][10] === 'i') {
+          setAtlowvoltAlert(true)
+          console.log('저전압알람온')
+        } else if (command.split('/')[5][10] === 'o') {
+          setAtlowvoltAlert(false)
+          console.log('저전압알람오프')
+        }
+
+        if (command.split('/')[5][11] === 'i') {
+          setAtlowvoltBoot(true)
+          console.log('저전압시동온')
+        } else if (command.split('/')[5][11] === 'o') {
+          setAtlowvoltBoot(false)
+          console.log('저전압시동오프')
+        }
+
+        if (command.split('/')[5][8] === 'i') {
+          setAtactionSound(true)
+          console.log('동작음온')
+        } else if (command.split('/')[5][8] === 'o') {
+          setAtactionSound(false)
+          console.log('동작음오프')
+        }
+
+        if (command.split('/')[5][9] === 'i') {
+          setAtalertSound(true)
+          console.log('경계음온')
+        } else if (command.split('/')[5][9] === 'o') {
+          setAtalertSound(false)
+          console.log('경계음오프')
+        }
+
+        if (command.split('/')[5][15] === '0') {
+          setatBootTimeValue('3')
+          console.log('원격시간0')
+        } else if (command.split('/')[5][15] === '1') {
+          setatBootTimeValue('5')
+          console.log('원격시간1')
+        } else if (command.split('/')[5][15] === '2') {
+          setatBootTimeValue('10')
+          console.log('원격시간2')
+        }
+
+        if (command.split('/')[5][16] === '0') {
+          setAtLastHeatValue('1')
+          console.log('후열시간0')
+        } else if (command.split('/')[5][16] === '1') {
+          setAtLastHeatValue('3')
+          console.log('후열시간1')
+        } else if (command.split('/')[5][16] === '2') {
+          setAtLastHeatValue('5')
+          console.log('후열시간2')
+        }
+
+        if (command.split('/')[5][17] === '0') {
+          setAtStartTimeValue('1')
+          console.log('스타트시간0')
+        } else if (command.split('/')[5][17] === '1') {
+          setAtStartTimeValue('2')
+          console.log('스타트시간1')
+        } else if (command.split('/')[5][17] === '2') {
+          setAtStartTimeValue('3')
+          console.log('스타트시간2')
+        }
+
+        setLowVoltValue(command.split('/')[5][12]+command.split('/')[5][13]+'.'+command.split('/')[5][14])
+        
+
       }
       console.log('로드 상태에서 데이터 받기 :'+data)
     })
@@ -348,6 +450,7 @@ const Load = () => {
 
           setTimeout(() => {
             setLoadbarwd(30)
+            registerClick()
             setTimeout(() => {
               setLoadbarwd(60)
               setTimeout(() => {
