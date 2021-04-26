@@ -82,7 +82,7 @@ const bootIcon = require('../img/state/bootIcon.png')
 const voltIcon = require('../img/state/voltIcon.png')
 
 
-let command = '123123/E:iiooo119o/D:ioooiio/L:iiiio/F:oo0000oooo/S:iiiioooooo120000oo'
+// let command = '123123/E:iiooo119o/D:ioooiio/L:iiiio/F:oo0000oooo/S:iiiioooooo120000oo'
 
 
 const CarState = () => {
@@ -117,54 +117,107 @@ const CarState = () => {
   }
 
   useEffect(() => {
-    // client.on('data', function (data) {
-
-    // })
+    client.on('data', function (data) {
+      if(''+data === 'no_certification'){
+        Alert.alert('미인증 상태입니다.','인증을 진행해주세요')
+      }else if(''+data === 'no_state'){
+        Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
+      }else{
+        var command = ''+data
+        if (command.split('/')[1][3] === 'i') {
+          setAtStateEngineState('ON')
+          console.log('엔진온ok')
+        } else if (command.split('/')[1][2] === 'o') {
+          setAtStateEngineState('OFF')
+          console.log('엔진오프ok')
+        }
+    
+        //차량 전압
+        setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
+    
+        //도어 열림 상태
+        if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
+          setAtStateDoor('OFF')
+          console.log('도어오프ok')
+        } else {
+          setAtStateDoor('ON')
+          console.log('도어온ok')
+        }
+    
+        //트렁크 상태
+        if (command.split('/')[2][6] === 'i') {
+          setAtStateTrunk('ON')
+          console.log('트렁크온ok')
+        } else if (command.split('/')[2][6] === 'o') {
+          setAtStateTrunk('OFF')
+          console.log('트렁크오프ok')
+        }
+    
+        //후드 상태
+        if (command.split('/')[2][7] === 'i') {
+          setAtStateEngineHood('ON')
+          console.log('후드온ok')
+        } else if (command.split('/')[2][7] === 'o') {
+          setAtStateEngineHood('OFF')
+          console.log('후드오프ok')
+        }
+    
+        //도어락 상태
+        if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
+          setAtStateDoorLock('ON')
+          console.log('도어락온ok')
+        } else {
+          setAtStateDoorLock('OFF')
+          console.log('도어락오프ok')
+        }
+      }
+      console.log('차량 상태에서 데이터 받기 :'+data)
+    })
 
     //차량 경계 상태
-    if (command.split('/')[1][2] === 'i') {
-      setAtStateCarAlert('ON')
-    } else if (command.split('/')[1][2] === 'o') {
-      setAtStateCarAlert('OFF')
-    }
+    // if (command.split('/')[1][2] === 'i') {
+    //   setAtStateCarAlert('ON')
+    // } else if (command.split('/')[1][2] === 'o') {
+    //   setAtStateCarAlert('OFF')
+    // }
 
-    //엔진 상태
-    if (command.split('/')[1][3] === 'i') {
-      setAtStateEngineState('ON')
-    } else if (command.split('/')[1][2] === 'o') {
-      setAtStateEngineState('OFF')
-    }
+    // //엔진 상태
+    // if (command.split('/')[1][3] === 'i') {
+    //   setAtStateEngineState('ON')
+    // } else if (command.split('/')[1][2] === 'o') {
+    //   setAtStateEngineState('OFF')
+    // }
 
-    //차량 전압
-    setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
+    // //차량 전압
+    // setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
 
-    //도어 열림 상태
-    if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
-      setAtStateDoor('OFF')
-    } else {
-      setAtStateDoor('ON')
-    }
+    // //도어 열림 상태
+    // if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
+    //   setAtStateDoor('OFF')
+    // } else {
+    //   setAtStateDoor('ON')
+    // }
 
-    //트렁크 상태
-    if (command.split('/')[2][6] === 'i') {
-      setAtStateTrunk('ON')
-    } else if (command.split('/')[2][6] === 'o') {
-      setAtStateTrunk('OFF')
-    }
+    // //트렁크 상태
+    // if (command.split('/')[2][6] === 'i') {
+    //   setAtStateTrunk('ON')
+    // } else if (command.split('/')[2][6] === 'o') {
+    //   setAtStateTrunk('OFF')
+    // }
 
-    //후드 상태
-    if (command.split('/')[2][7] === 'i') {
-      setAtStateEngineHood('ON')
-    } else if (command.split('/')[2][7] === 'o') {
-      setAtStateEngineHood('OFF')
-    }
+    // //후드 상태
+    // if (command.split('/')[2][7] === 'i') {
+    //   setAtStateEngineHood('ON')
+    // } else if (command.split('/')[2][7] === 'o') {
+    //   setAtStateEngineHood('OFF')
+    // }
 
-    //도어락 상태
-    if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
-      setAtStateDoorLock('ON')
-    } else {
-      setAtStateDoorLock('OFF')
-    }
+    // //도어락 상태
+    // if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
+    //   setAtStateDoorLock('ON')
+    // } else {
+    //   setAtStateDoorLock('OFF')
+    // }
 
   }, [])
 
