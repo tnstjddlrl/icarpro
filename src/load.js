@@ -175,10 +175,13 @@ const Load = () => {
 
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  const [isAuthorized, setIsAuthorized] = useState(false)
+
+
   const [, setAtModemn] = useRecoilState(modemNumber)
   const [, setatUserNumber] = useRecoilState(userNumber)
   const [, setatIsCarRace] = useRecoilState(isCarRace)
-  const [isAuthorized, setIsAuthorized] = useState(false)
+  
 
 
   const [, setLowVoltValue] = useRecoilState(voltValue)
@@ -239,7 +242,7 @@ const Load = () => {
       console.log(e)
       client.destroy()
       client.connect({ port: 3400, host: '175.126.232.72' })
-      registerClick()
+      // registerClick()
     }
   }
 
@@ -248,6 +251,7 @@ const Load = () => {
     try {
       handlePushToken()
       saveDeviceToken()
+      console.log('토큰 받아오기')
     } catch (error) {
       console.log(error)
       Alert.alert('토큰 받아오기 실패')
@@ -406,48 +410,14 @@ const Load = () => {
     })
 
 
-  }, [])
-
-
-  useEffect(() => {
     try {
       getData().then((res) => {
         if (res != null) {
-
-          // getIcarSwitch().then(res => { if (res !== null) setAticarswitch(JSON.parse(res)) })
-          // getidoorswitch().then(res => { if (res !== null) setAtidoorswitch(JSON.parse(res)) })
-          // getlowboltBoot().then(res => { if (res !== null) setAtlowvoltBoot(JSON.parse(res)) })
-          // getlowboltAlert().then(res => { if (res !== null) setAtlowvoltAlert(JSON.parse(res)) })
-          // getactionsound().then(res => { if (res !== null) setAtactionSound(JSON.parse(res)) })
-          // getalertsound().then(res => { if (res !== null) setAtalertSound(JSON.parse(res)) })
-
 
           getmodem().then(res => setAtModemn(res))
           getuser().then(res => setatUserNumber(res))
           getcar().then(res => setatIsCarRace(res))
 
-          // getLowVoltValue().then(res => {
-          //   if (res !== null) {
-          //     setLowVoltValue(res)
-          //   }
-          // })
-
-          // getBootTimeValue().then(res => {
-          //   if (res !== null) {
-          //     setatBootTimeValue(res)
-          //   }
-          // })
-
-          // getLastHeatValue().then(res => {
-          //   if (res !== null) {
-          //     setAtLastHeatValue(res)
-          //   }
-          // })
-          // getStartTimeValue().then(res => {
-          //   if (res !== null) {
-          //     setAtStartTimeValue(res)
-          //   }
-          // })
 
           setTimeout(() => {
             setLoadbarwd(30)
@@ -514,7 +484,10 @@ const Load = () => {
       Alert.alert('async stroage error')
       RNExitApp()
     }
+
+
   }, [])
+
 
 
 
