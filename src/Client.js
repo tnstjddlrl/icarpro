@@ -28,8 +28,8 @@ client.on('error', function (error) {
   // client.connect({port: 3400, host: '175.126.232.72'})
 });
 
-client.on('data', function (data) {
-  console.log('묘듈에서 데이터 받기 : ' + data);
-});
+// client.on('data', function (data) {
+//   console.log('묘듈에서 데이터 받기 : ' + data);
+// });
 
 export default client;
