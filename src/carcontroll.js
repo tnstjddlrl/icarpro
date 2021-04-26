@@ -122,8 +122,8 @@ const Carcontroll = () => {
   let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:dl', modem: atmodemN } }
   let panic_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:pf', modem: atmodemN  } }
   let panic_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:pn', modem: atmodemN  } }
-  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:hn', modem: atmodemN } }
-  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:hf', modem: atmodemN } }
+  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:hf', modem: atmodemN } }
+  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:hn', modem: atmodemN } }
   let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:tu', modem: atmodemN  } }
   let boot_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:ef', modem: atmodemN } }
   let boot_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:en', modem: atmodemN } }

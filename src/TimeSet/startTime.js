@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useRecoilState, useRecoilValue,
 } from 'recoil';
-import { startTimeValue, startTimeValueLimit, fcmToken, } from '../atom/atoms';
+import { startTimeValue, startTimeValueLimit, fcmToken,modemNumber,userNumber } from '../atom/atoms';
 import client from '../Client';
 
 const chwidth = Dimensions.get('window').width
@@ -34,6 +34,8 @@ const StartTime = () => {
   const [startTime, setStartTime] = useRecoilState(startTimeValue)
   const [startTimeLimit, setStartTimeLimit] = useRecoilState(startTimeValueLimit)
   const pushToken = useRecoilValue(fcmToken)
+  const atmodemN = useRecoilValue(modemNumber)
+  const atuserN = useRecoilValue(userNumber)
 
   const [checkitem, setChechkitem] = useState(startTime)
   const [isy, setisy] = useState(0)
@@ -102,7 +104,7 @@ const StartTime = () => {
     } else if (checkitem === '3') {
       cc = 'st=2'
     }
-    let comm = { type: "R", type_sub: "settings", data: { command: cc, token: pushToken } }
+    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN } }
     comm = JSON.stringify(comm)
 
     client.write(comm)

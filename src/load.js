@@ -22,11 +22,19 @@ import {
   bootTimeValue,
   lastHeatTimeValue,
   startTimeValue,
-  actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert
+  actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert,
+  StateCarAlert,
+  StateDoorLock,
+  StateDoor,
+  StateTrunk,
+  StateEngineHood,
+  StateEngineState,
+  StateCarVolt,
 } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app'
+import client from './Client'
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -173,17 +181,25 @@ const Load = () => {
   const [isAuthorized, setIsAuthorized] = useState(false)
 
 
-  const [, setLowVoltValue] = useRecoilState(voltValue)
-  const [, setatBootTimeValue] = useRecoilState(bootTimeValue)
-  const [, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
-  const [, setAtStartTimeValue] = useRecoilState(startTimeValue)
+  // const [, setLowVoltValue] = useRecoilState(voltValue)
+  // const [, setatBootTimeValue] = useRecoilState(bootTimeValue)
+  // const [, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
+  // const [, setAtStartTimeValue] = useRecoilState(startTimeValue)
 
-  const [, setAticarswitch] = useRecoilState(icarSwitch)
-  const [, setAtidoorswitch] = useRecoilState(idoorSwitch)
-  const [, setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
-  const [, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
-  const [, setAtactionSound] = useRecoilState(actionSound)
-  const [, setAtalertSound] = useRecoilState(alertSound)
+  // const [, setAticarswitch] = useRecoilState(icarSwitch)
+  // const [, setAtidoorswitch] = useRecoilState(idoorSwitch)
+  // const [, setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
+  // const [, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
+  // const [, setAtactionSound] = useRecoilState(actionSound)
+  // const [, setAtalertSound] = useRecoilState(alertSound)
+
+  const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
+  const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
+  const [atStateDoor, setAtStateDoor] = useRecoilState(StateDoor)
+  const [atStateTrunk, setAtStateTrunk] = useRecoilState(StateTrunk)
+  const [atStateEngineHood, setAtStateEngineHood] = useRecoilState(StateEngineHood)
+  const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
+  const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
   const handlePushToken = useCallback(async () => {
     const enabled = await messaging().hasPermission()
@@ -219,6 +235,74 @@ const Load = () => {
       console.log(error)
       Alert.alert('토큰 받아오기 실패')
     }
+
+    client.on('data', function (data) {
+      if(''+data === 'no_certification'){
+        Alert.alert('미인증 상태입니다.','인증을 진행해주세요')
+      }else if(''+data === 'no_state'){
+        Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
+      }else{
+        var command = ''+data
+
+        if (command.split('/')[1][3] === 'i') {
+          setAtStateCarAlert('ON')
+          console.log('경계온ok')
+        } else if (command.split('/')[1][3] === 'o') {
+          setAtStateCarAlert('OFF')
+          console.log('경계오프ok')
+        }
+
+        if (command.split('/')[1][2] === 'i') {
+          setAtStateEngineState('ON')
+          console.log('엔진온ok')
+        } else if (command.split('/')[1][2] === 'o') {
+          setAtStateEngineState('OFF')
+          console.log('엔진오프ok')
+        }
+    
+        //차량 전압
+        setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
+    
+        //도어 열림 상태
+        if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
+          setAtStateDoor('OFF')
+          console.log('도어오프ok')
+        } else {
+          setAtStateDoor('ON')
+          console.log('도어온ok')
+        }
+    
+        //트렁크 상태
+        if (command.split('/')[2][6] === 'i') {
+          setAtStateTrunk('ON')
+          console.log('트렁크온ok')
+        } else if (command.split('/')[2][6] === 'o') {
+          setAtStateTrunk('OFF')
+          console.log('트렁크오프ok')
+        }
+    
+        //후드 상태
+        if (command.split('/')[2][7] === 'i') {
+          setAtStateEngineHood('ON')
+          console.log('후드온ok')
+        } else if (command.split('/')[2][7] === 'o') {
+          setAtStateEngineHood('OFF')
+          console.log('후드오프ok')
+        }
+    
+        //도어락 상태
+        if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
+          setAtStateDoorLock('ON')
+          console.log('도어락온ok')
+        } else {
+          setAtStateDoorLock('OFF')
+          console.log('도어락오프ok')
+        }
+      }
+      console.log('로드 상태에서 데이터 받기 :'+data)
+    })
+
+
   }, [])
 
 
@@ -227,40 +311,40 @@ const Load = () => {
       getData().then((res) => {
         if (res != null) {
 
-          getIcarSwitch().then(res => { if (res !== null) setAticarswitch(JSON.parse(res)) })
-          getidoorswitch().then(res => { if (res !== null) setAtidoorswitch(JSON.parse(res)) })
-          getlowboltBoot().then(res => { if (res !== null) setAtlowvoltBoot(JSON.parse(res)) })
-          getlowboltAlert().then(res => { if (res !== null) setAtlowvoltAlert(JSON.parse(res)) })
-          getactionsound().then(res => { if (res !== null) setAtactionSound(JSON.parse(res)) })
-          getalertsound().then(res => { if (res !== null) setAtalertSound(JSON.parse(res)) })
+          // getIcarSwitch().then(res => { if (res !== null) setAticarswitch(JSON.parse(res)) })
+          // getidoorswitch().then(res => { if (res !== null) setAtidoorswitch(JSON.parse(res)) })
+          // getlowboltBoot().then(res => { if (res !== null) setAtlowvoltBoot(JSON.parse(res)) })
+          // getlowboltAlert().then(res => { if (res !== null) setAtlowvoltAlert(JSON.parse(res)) })
+          // getactionsound().then(res => { if (res !== null) setAtactionSound(JSON.parse(res)) })
+          // getalertsound().then(res => { if (res !== null) setAtalertSound(JSON.parse(res)) })
 
 
           getmodem().then(res => setAtModemn(res))
           getuser().then(res => setatUserNumber(res))
           getcar().then(res => setatIsCarRace(res))
 
-          getLowVoltValue().then(res => {
-            if (res !== null) {
-              setLowVoltValue(res)
-            }
-          })
+          // getLowVoltValue().then(res => {
+          //   if (res !== null) {
+          //     setLowVoltValue(res)
+          //   }
+          // })
 
-          getBootTimeValue().then(res => {
-            if (res !== null) {
-              setatBootTimeValue(res)
-            }
-          })
+          // getBootTimeValue().then(res => {
+          //   if (res !== null) {
+          //     setatBootTimeValue(res)
+          //   }
+          // })
 
-          getLastHeatValue().then(res => {
-            if (res !== null) {
-              setAtLastHeatValue(res)
-            }
-          })
-          getStartTimeValue().then(res => {
-            if (res !== null) {
-              setAtStartTimeValue(res)
-            }
-          })
+          // getLastHeatValue().then(res => {
+          //   if (res !== null) {
+          //     setAtLastHeatValue(res)
+          //   }
+          // })
+          // getStartTimeValue().then(res => {
+          //   if (res !== null) {
+          //     setAtStartTimeValue(res)
+          //   }
+          // })
 
           setTimeout(() => {
             setLoadbarwd(30)

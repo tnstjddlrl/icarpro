@@ -21,7 +21,7 @@ import {
   useRecoilState,
   useRecoilValue
 } from 'recoil';
-import { lastHeatTimeValue, lastHeatTimeValueLimit, fcmToken } from '../atom/atoms';
+import { lastHeatTimeValue, lastHeatTimeValueLimit, fcmToken,modemNumber,userNumber } from '../atom/atoms';
 import client from '../Client';
 
 const chwidth = Dimensions.get('window').width
@@ -36,6 +36,8 @@ const LastHeatTime = () => {
   const [lastHeatValue, setLastHeatValue] = useRecoilState(lastHeatTimeValue)
   const [lastHeatValueLimit, setLastHeatValueLimit] = useRecoilState(lastHeatTimeValueLimit)
   const pushToken = useRecoilValue(fcmToken)
+  const atmodemN = useRecoilValue(modemNumber)
+  const atuserN = useRecoilValue(userNumber)
 
   const [checkitem, setChechkitem] = useState(lastHeatValue)
   // const [isy, setisy] = useState(lastHeatValueSC) //뭔가 이상함
@@ -110,7 +112,7 @@ const LastHeatTime = () => {
     } else if (checkitem === '5:00') {
       cc = 'ae=2'
     }
-    let comm = { type: "R", type_sub: "settings", data: { command: cc, token: pushToken } }
+    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN } }
     comm = JSON.stringify(comm)
 
     client.write(comm)

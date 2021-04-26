@@ -27,7 +27,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken, actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert, settingLimit } from './atom/atoms'
+import { fcmToken, actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert, settingLimit,modemNumber,userNumber } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -61,6 +61,8 @@ const Settings = () => {
   const [atalertsound, setatalertsound] = useRecoilState(alertSound)
 
   const pushToken = useRecoilValue(fcmToken)
+  const atmodemN = useRecoilValue(modemNumber)
+  const atuserN = useRecoilValue(userNumber)
 
   const [stLimit, setStLimit] = useRecoilState(settingLimit)
 
@@ -74,7 +76,7 @@ const Settings = () => {
 
   function sendCommand(cc) {
 
-    let comm = { type: "R", type_sub: "settings", data: { command: cc, token: pushToken } }
+    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN } }
     comm = JSON.stringify(comm)
 
     client.write(comm)

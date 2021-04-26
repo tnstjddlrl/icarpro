@@ -20,7 +20,7 @@ import {
   useRecoilState,
   useRecoilValue
 } from 'recoil';
-import { bootTimeValue, bootTimeValueLimt, fcmToken } from '../atom/atoms';
+import { bootTimeValue, bootTimeValueLimt, fcmToken,modemNumber,userNumber } from '../atom/atoms';
 import client from '../Client';
 
 const chwidth = Dimensions.get('window').width
@@ -32,6 +32,8 @@ const RemoteBootTime = () => {
   const [atBootTime, setAtBootTime] = useRecoilState(bootTimeValue)
   const [atBootTimeLimit, setAtBootTimeLimit] = useRecoilState(bootTimeValueLimt)
   const pushToken = useRecoilValue(fcmToken)
+  const atmodemN = useRecoilValue(modemNumber)
+  const atuserN = useRecoilValue(userNumber)
 
   const [saveModal, setSaveModal] = useState(false)
 
@@ -106,7 +108,7 @@ const RemoteBootTime = () => {
     } else if (checkitem === '10') {
       cc = 're=2'
     }
-    let comm = { type: "R", type_sub: "settings", data: { command: cc, token: pushToken } }
+    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN } }
     comm = JSON.stringify(comm)
 
     client.write(comm)
