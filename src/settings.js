@@ -27,7 +27,18 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken, actionSound, alertSound, icarSwitch, idoorSwitch, lowvoltBoot, lowvoltAlert, settingLimit,modemNumber,userNumber } from './atom/atoms'
+import {
+  fcmToken,
+  actionSound,
+  alertSound,
+  icarSwitch,
+  idoorSwitch,
+  lowvoltBoot,
+  lowvoltAlert,
+  settingLimit,
+  modemNumber,
+  userNumber
+} from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -76,7 +87,7 @@ const Settings = () => {
 
   function sendCommand(cc) {
 
-    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN } }
+    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/S:' + cc, modem: atmodemN } }
     comm = JSON.stringify(comm)
 
     client.write(comm)
@@ -119,7 +130,7 @@ const Settings = () => {
             console.log(e)
             client.connect({ port: 3400, host: '175.126.232.72' })
             sendCommand('mn')
-            // return
+
           }
         } else {
           try {
@@ -130,7 +141,7 @@ const Settings = () => {
 
             sendCommand('mf')
 
-            // return
+
           }
         }
       }
@@ -143,8 +154,8 @@ const Settings = () => {
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('dn')
-  
-              // return
+
+
             }
           } else {
             try {
@@ -153,8 +164,8 @@ const Settings = () => {
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('df')
-  
-              // return
+
+
             }
           }
         }
@@ -169,8 +180,8 @@ const Settings = () => {
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('le')
-  
-              // return
+
+
             }
           } else if (lowboltAlert === true) {
             try {
@@ -179,8 +190,8 @@ const Settings = () => {
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('la')
-  
-              // return
+
+
             }
           } else {
             try {
@@ -189,8 +200,8 @@ const Settings = () => {
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('lf')
-  
-              // return
+
+
             }
           }
         }
@@ -205,8 +216,8 @@ const Settings = () => {
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('1n')
-  
-              // return
+
+
             }
           } else {
             try {
@@ -215,8 +226,8 @@ const Settings = () => {
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('1f')
-  
-              // return
+
+
             }
           }
         }
@@ -231,8 +242,8 @@ const Settings = () => {
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('2n')
-  
-              // return
+
+
             }
           } else {
             try {
@@ -241,12 +252,12 @@ const Settings = () => {
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('2f')
-              // return
+
             }
           }
         }
       }, 400);
-      
+
 
       setSaveModal(true)
 
@@ -507,19 +518,19 @@ const Settings = () => {
 
             {/* i도어 비밀번호설정 */}
             <View style={{ marginTop: 8 }}></View>
-            <TouchableWithoutFeedback onPress={()=>navigation.navigate('간편비밀번호')}>
-            <View style={styles.oneFrame}>
-              <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image source={lockIcon}></Image>
-                  <Text style={styles.frameTitle}>i도어 비밀번호설정</Text>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('간편비밀번호')}>
+              <View style={styles.oneFrame}>
+                <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Image source={lockIcon}></Image>
+                    <Text style={styles.frameTitle}>i도어 비밀번호설정</Text>
+                  </View>
+                  <Image source={rightArr}></Image>
                 </View>
-                <Image source={rightArr}></Image>
               </View>
-            </View>
             </TouchableWithoutFeedback>
           </View>
-          
+
           <View style={{ marginTop: 60, marginBottom: 20 }}></View>
 
 
