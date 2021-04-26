@@ -111,8 +111,9 @@ const CarState = () => {
 
     } catch (e) {
       console.log(e)
+      client.destroy()
       client.connect({ port: 3400, host: '175.126.232.72' })
-      registerClick()
+      client.write(txt)
     }
   }
 
