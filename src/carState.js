@@ -13,6 +13,8 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import AutoHeightImage from 'react-native-auto-height-image';
+
 import {
   useRecoilState,
   useRecoilValue,
@@ -82,7 +84,7 @@ const bootIcon = require('../img/state/bootIcon.png')
 const voltIcon = require('../img/state/voltIcon.png')
 
 
-// let command = '123123/E:iiooo119o/D:ioooiio/L:iiiio/F:oo0000oooo/S:iiiioooooo120000oo'
+// let command = '123123/E:iiooo119o/D:ioooiio/L:iiiio/F:oo0000oooo/S:iiiioooooo110000oo'
 
 
 const CarState = () => {
@@ -142,53 +144,84 @@ const CarState = () => {
       {/* 본문 */}
       <View style={{ flex: 10 }}>
         {/* 차량 이미지 */}
+        
+
         <TouchableWithoutFeedback onPress={() => registerClick()}>
           <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
-            <Image style={{ position: "absolute" }} source={mainframe}></Image>
+            {/* <Image style={{ position: "absolute" }} source={mainframe}></Image> */}
+            <AutoHeightImage source={mainframe} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
             {(atStateDoorLock === 'OFF' && atStateDoor == 'OFF') &&
-              <Image style={{ position: "absolute" }} source={doorcloseblack}></Image>
+              // <Image style={{ position: "absolute" }} source={doorcloseblack}></Image>
+            <AutoHeightImage source={doorcloseblack} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {(atStateDoorLock === 'ON' && atStateDoor === 'OFF') &&
-              <Image style={{ position: "absolute" }} source={doorcloseorange}></Image>
+              // <Image style={{ position: "absolute" }} source={doorcloseorange}></Image>
+            <AutoHeightImage source={doorcloseorange} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {atStateDoor === 'ON' &&
-              <Image style={{ position: "absolute" }} source={dooropen}></Image>
+              // <Image style={{ position: "absolute" }} source={dooropen}></Image>
+            <AutoHeightImage source={dooropen} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
 
             {(atStateEngineHood === 'ON' || atStateEngineState === 'ON') &&
-              <Image style={{ position: "absolute" }} source={hoodorange}></Image>
+              // <Image style={{ position: "absolute" }} source={hoodorange}></Image>
+            <AutoHeightImage source={hoodorange} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {atStateTrunk === 'ON' &&
-              <Image style={{ position: "absolute" }} source={trunkorange}></Image>
+              // <Image style={{ position: "absolute" }} source={trunkorange}></Image>
+            <AutoHeightImage source={trunkorange} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {atStateCarAlert === 'ON' &&
-              <Image style={{ position: "absolute" }} source={lightorange}></Image>
+              // <Image style={{ position: "absolute" }} source={lightorange}></Image>
+            <AutoHeightImage source={lightorange} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {isbooton &&
-              <Image style={{ position: "absolute" }} source={bootorange}></Image>
+              // <Image style={{ position: "absolute" }} source={bootorange}></Image>
+            <AutoHeightImage source={bootorange} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
 
             {atStateEngineHood === 'ON' &&
-              <Image style={{ position: "absolute" }} source={hoodsticon}></Image>
+              // <Image style={{ position: "absolute" }} source={hoodsticon}></Image>
+            <AutoHeightImage source={hoodsticon} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {atStateEngineState === 'ON' &&
-              <Image style={{ position: "absolute" }} source={enginesticon}></Image>
+              // <Image style={{ position: "absolute" }} source={enginesticon}></Image>
+            <AutoHeightImage source={enginesticon} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {atStateTrunk === 'ON' &&
-              <Image style={{ position: "absolute" }} source={trunksticon}></Image>
+              // <Image style={{ position: "absolute" }} source={trunksticon}></Image>
+            <AutoHeightImage source={trunksticon} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
 
             {atStateDoorLock === 'ON' &&
-              <Image style={{ position: "absolute" }} source={doorlocksticon}></Image>
+              // <Image style={{ position: "absolute" }} source={doorlocksticon}></Image>
+            <AutoHeightImage source={doorlocksticon} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {(atStateDoor === 'ON') &&
-              <Image style={{ position: "absolute" }} source={dooropensticon}></Image>
+              // <Image style={{ position: "absolute" }} source={dooropensticon}></Image>
+            <AutoHeightImage source={dooropensticon} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {atStateCarAlert === 'ON' &&
-              <Image style={{ position: "absolute" }} source={lightsticon}></Image>
+              // <Image style={{ position: "absolute" }} source={lightsticon}></Image>
+            <AutoHeightImage source={lightsticon} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
             {isbooton &&
-              <Image style={{ position: "absolute" }} source={bootsticon}></Image>
+              // <Image style={{ position: "absolute" }} source={bootsticon}></Image>
+            <AutoHeightImage source={bootsticon} width={chwidth - 110} style={{  position: "absolute"  }}></AutoHeightImage>
+
             }
           </View>
         </TouchableWithoutFeedback>
