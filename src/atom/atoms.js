@@ -1,9 +1,6 @@
 import {
-  atom, selector
+  atom
 } from 'recoil';
-
-import { client } from '../Client'
-
 
 export const modemNumber = atom({
   key: 'modemNumber',
