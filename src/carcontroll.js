@@ -504,6 +504,21 @@ const Carcontroll = () => {
     }
   }
 
+  function redirect(){
+    client.destroy()
+    console.log(client._destroyed)
+
+    setTimeout(() => {
+      client.connect({port: 3400, host: '175.126.232.72'})
+      console.log(client._destroyed)  
+      setTimeout(() => {
+        client.write(JSON.stringify(boot_0))
+        console.log('전송 : ' + JSON.stringify(boot_0))
+      }, 1000);
+    }, 300);
+
+  }
+
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
       <FlingGestureHandler
@@ -533,7 +548,10 @@ const Carcontroll = () => {
               <View style={{ flex: 3 }}>
                 <View style={{ flex: 0.2 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
-                  <TouchableWithoutFeedback onPress={()=>console.log(client._destroyed)}>
+                  <TouchableWithoutFeedback onPress={()=>{
+                    redirect()
+                  }
+                    }>
                   <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
                   </TouchableWithoutFeedback>
                 </View>
