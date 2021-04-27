@@ -120,7 +120,17 @@ const Carcontroll = () => {
 
     } catch (e) {
       console.log(e)
-      Alert.alert('서버와 통신오류가 있습니다.', '잠시후 다시시도해주세요')
+      client.destroy()
+      console.log(client._destroyed)
+  
+      setTimeout(() => {
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        console.log(client._destroyed)
+        setTimeout(() => {
+          client.write(txt)
+          console.log('전송 : ' + txt)
+        }, 1000);
+      }, 300);
     }
   }
 
@@ -556,7 +566,9 @@ const Carcontroll = () => {
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flex: 4 }}>
+                  <TouchableWithoutFeedback onPress={()=>registerClick()}>
                   <Text style={styles.carnum}>12기 3456</Text>
+                  </TouchableWithoutFeedback>
                   {
                     carRace == "SUV1" &&
                     <TouchableWithoutFeedback onPress={() => setcarRace('SEDAN1')}>
