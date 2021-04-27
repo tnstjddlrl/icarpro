@@ -24,7 +24,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch, bootTimeValue, actionSound,modemNumber,userNumber } from './atom/atoms'
+import { fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch, bootTimeValue, actionSound, modemNumber, userNumber } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -107,7 +107,7 @@ const Carcontroll = () => {
     registerClick()
   });
   useEffect(() => {
-    return () => {unsubscribe()};
+    return () => { unsubscribe() };
   });
 
   function registerClick() {
@@ -120,7 +120,7 @@ const Carcontroll = () => {
 
     } catch (e) {
       console.log(e)
-      Alert.alert('서버와 통신오류가 있습니다.','잠시후 다시시도해주세요')
+      Alert.alert('서버와 통신오류가 있습니다.', '잠시후 다시시도해주세요')
     }
   }
 
@@ -133,17 +133,17 @@ const Carcontroll = () => {
   // let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
   // let boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
   // let boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
-  let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:du', modem: atmodemN } }
-  let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:dl', modem: atmodemN } }
-  let panic_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:pf', modem: atmodemN  } }
-  let panic_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:pn', modem: atmodemN  } }
-  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:hf', modem: atmodemN } }
-  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:hn', modem: atmodemN } }
-  let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:tu', modem: atmodemN  } }
-  let boot_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:ef', modem: atmodemN } }
-  let boot_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD='+atmodemN+'/C:en', modem: atmodemN } }
+  let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:du', modem: atmodemN } }
+  let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:dl', modem: atmodemN } }
+  let panic_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:pf', modem: atmodemN } }
+  let panic_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:pn', modem: atmodemN } }
+  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:hf', modem: atmodemN } }
+  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:hn', modem: atmodemN } }
+  let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:tu', modem: atmodemN } }
+  let boot_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:ef', modem: atmodemN } }
+  let boot_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:en', modem: atmodemN } }
 
-//모뎀 유저 무슨상태 커맨드
+  //모뎀 유저 무슨상태 커맨드
   function lomofc(txt) {
 
     setCommandtxt(txt)
@@ -504,13 +504,13 @@ const Carcontroll = () => {
     }
   }
 
-  function redirect(){
+  function redirect() {
     client.destroy()
     console.log(client._destroyed)
 
     setTimeout(() => {
-      client.connect({port: 3400, host: '175.126.232.72'})
-      console.log(client._destroyed)  
+      client.connect({ port: 3400, host: '175.126.232.72' })
+      console.log(client._destroyed)
       setTimeout(() => {
         client.write(JSON.stringify(boot_0))
         console.log('전송 : ' + JSON.stringify(boot_0))
@@ -548,11 +548,11 @@ const Carcontroll = () => {
               <View style={{ flex: 3 }}>
                 <View style={{ flex: 0.2 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
-                  <TouchableWithoutFeedback onPress={()=>{
+                  <TouchableWithoutFeedback onPress={() => {
                     redirect()
                   }
-                    }>
-                  <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
+                  }>
+                    <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flex: 4 }}>
