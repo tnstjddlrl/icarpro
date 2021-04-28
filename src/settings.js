@@ -181,7 +181,7 @@ const Settings = () => {
             }
           }
         }
-      }, 100);
+      }, 300);
 
       //저전압 기능
       setTimeout(() => {
@@ -217,7 +217,7 @@ const Settings = () => {
             }
           }
         }
-      }, 200);
+      }, 600);
 
 
       //동작음 무음 기능
@@ -227,25 +227,25 @@ const Settings = () => {
             try {
               sendCommand('1n')
             } catch (e) {
+              
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('1n')
-
 
             }
           } else {
             try {
               sendCommand('1f')
             } catch (e) {
+
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('1f')
 
-
             }
           }
         }
-      }, 300);
+      }, 800);
 
 
       //경계음 무음 기능
@@ -272,7 +272,7 @@ const Settings = () => {
             }
           }
         }
-      }, 400);
+      }, 900);
 
 
       setSaveModal(true)
@@ -292,7 +292,7 @@ const Settings = () => {
       setatalertsound(alertsound)
       setTimeout(() => {
         setSaveModal(false)
-      }, 1500);
+      }, 2000);
 
       setTimeout(() => {
         setStLimit(false)
