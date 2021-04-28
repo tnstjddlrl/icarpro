@@ -227,7 +227,7 @@ const Settings = () => {
             try {
               sendCommand('1n')
             } catch (e) {
-              
+
               client.connect({ port: 3400, host: '175.126.232.72' })
               console.log(e)
               sendCommand('1n')
