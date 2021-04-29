@@ -132,14 +132,18 @@ const CarRegister = () => {
   }
 
   function registerClick(sub) {
-
-    var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
-    txt = JSON.stringify(txt)
-
-    client.write(txt)
-    console.log('전송 : ' + txt)
-
-    asyncSave()
+    try {
+      var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
+      txt = JSON.stringify(txt)
+  
+      client.write(txt)
+      console.log('전송 : ' + txt)
+  
+      asyncSave()
+      
+    } catch (error) {
+      Alert.alert('오류!!!!!')
+    }
 
     // serverCheck=setTimeout(() => {
     //   Alert.alert('서버와 통신이 원활하지 않습니다.','잠시후 다시 시도해주세요.')
@@ -201,7 +205,7 @@ const CarRegister = () => {
        
       } else if ('' + data == 'registerDel_suc') {
         setCancelMss('삭제가 완료되었습니다.'),
-          usercancelff()
+          usercancelff('55')
       } else if ('' + data == 'reg_fail') {
         setLoadModal(true)
       } else {
@@ -239,7 +243,7 @@ const CarRegister = () => {
 
         {/* 헤더 */}
         <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('차량제어')}>
+          <TouchableWithoutFeedback onPress={() => {if(modemN!=='' && userN !=='' && carRace !== '')navigation.navigate('차량제어'); else Alert.alert('먼저 차량을 등록해주세요')}}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>

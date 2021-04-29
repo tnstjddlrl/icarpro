@@ -177,7 +177,7 @@ const Load = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [isAuthorized, setIsAuthorized] = useState(false)
   
-  const [, setAtModemn] = useRecoilState(modemNumber)
+  const [atmodemn, setAtModemn] = useRecoilState(modemNumber)
   const [, setatUserNumber] = useRecoilState(userNumber)
   const [, setatIsCarRace] = useRecoilState(isCarRace)
   
@@ -239,14 +239,18 @@ const Load = () => {
       Alert.alert('토큰 받아오기 실패')
     } // 토큰 받아오기
 
-
+    let modemm
+    getmodem().then(res=>modemm = res)
     client.on('data', function (data) {
+      var command = ''+data
+      console.log(command.split('/')[0])
+      console.log(modemm)
       if(''+data === 'no_certification'){
         Alert.alert('미인증 상태입니다.','인증을 진행해주세요')
       }else if(''+data === 'no_state'){
         Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
-      }else{
-        var command = ''+data
+      }else if(modemm == command.split('/')[0]){
+        
 
         if (command.split('/')[1][3] === 'i') {
           setAtStateCarAlert('ON')
@@ -408,7 +412,7 @@ const Load = () => {
           // getalertsound().then(res => { if (res !== null) setAtalertSound(JSON.parse(res)) })
 
 
-          getmodem().then(res => setAtModemn(res))
+          getmodem().then(res => {setAtModemn(res),console.log('모뎀번호 가져오기:'+atmodemn==null)})
           getuser().then(res => setatUserNumber(res))
           getcar().then(res => setatIsCarRace(res))
 
@@ -439,6 +443,9 @@ const Load = () => {
             setLoadbarwd(30)
             setTimeout(() => {
               setLoadbarwd(60)
+              getmodem().then(res => {setAtModemn(res),console.log('모뎀번호 가져오기:'+atmodemn==null)})
+              getuser().then(res => setatUserNumber(res))
+              getcar().then(res => setatIsCarRace(res))
               setTimeout(() => {
                 setLoadbarwd(90)
                 setTimeout(() => {
@@ -464,6 +471,7 @@ const Load = () => {
           //   
           // }, 1000);
         } else {
+
           setTimeout(() => {
             setLoadbarwd(30)
             setTimeout(() => {
