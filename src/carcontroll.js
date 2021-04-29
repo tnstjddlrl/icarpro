@@ -571,7 +571,6 @@ const Carcontroll = () => {
                   </TouchableWithoutFeedback>
                   {
                     carRace == "SUV1" &&
-                    <TouchableWithoutFeedback onPress={() => setcarRace('SEDAN1')}>
                       <View style={{ justifyContent: "center", alignItems: "center" }}>
                         {(door == 'no' && panic == 'no' && warnbim == 'no' && trunk != true && boot != true) &&
                           <AutoHeightImage source={suv1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
@@ -592,12 +591,10 @@ const Carcontroll = () => {
                           <AutoHeightImage source={suvbooton} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                       </View>
-                    </TouchableWithoutFeedback>
                   }
 
                   {
                     carRace == "SEDAN1" &&
-                    <TouchableWithoutFeedback onPress={() => setcarRace('SUV1')}>
                       <View style={{ justifyContent: "center", alignItems: "center" }}>
                         {(door == 'no' && panic == 'no' && warnbim == 'no' && trunk != true && boot != true) &&
                           <AutoHeightImage source={sedan1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
@@ -618,7 +615,6 @@ const Carcontroll = () => {
                           <AutoHeightImage source={booton} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
                         }
                       </View>
-                    </TouchableWithoutFeedback>
                   }
 
                   {
