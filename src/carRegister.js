@@ -43,14 +43,12 @@ const sedan1img = require('../img/sedan1.png')
 const suv1img = require('../img/suv1.png')
 
 const CarRegister = () => {
-  let serverCheck
   const [loadModal, setLoadModal] = useState(false)
   const [delModal, setDelModal] = useState(false)
   const [userCancelModal, setUserCancelModal] = useState(false)
   const [cancelMss, setCancelMss] = useState('')
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
-  // console.log('차등록 : ' + pushToken)
 
 
   const navigation = useNavigation()
@@ -89,7 +87,10 @@ const CarRegister = () => {
     }
 
     getData().then(res=>{if(res!=null)setIsRegister(true)})
-    console.log('등록 현황 : ' + isRegister)
+    setTimeout(() => {
+      console.log('등록 현황 : ' + isRegister)  
+    }, 200);
+    
   }, [])
 
 
