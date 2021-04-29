@@ -11,7 +11,8 @@ import {
   Image,
   StyleSheet,
   Modal,
-  ScrollView
+  ScrollView,
+  Keyboard
 } from 'react-native';
 
 import client from './Client'
@@ -273,7 +274,7 @@ const CarRegister = () => {
               }
             </View>
           </View>
-          <TouchableWithoutFeedback onPress={() => setRaceModal(true)}>
+          <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(),setRaceModal(true)}}>
             <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16, justifyContent: "center" }}>
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: chwidth - 48 }}>
                 <Text style={styles.carResist}>차량 선택</Text>
@@ -422,7 +423,7 @@ const CarRegister = () => {
                 {/* 저장버튼 */}
                 <View style={{ flex: 1.5,justifyContent:"center",alignItems:"center" }}>
                   {(sedan1 == true || suv1 == true) ?
-                    <TouchableWithoutFeedback onPress={() => iscar()}>
+                    <TouchableWithoutFeedback onPress={() => {iscar()}}>
                       <View style={styles.saveBtn2}>
                         <Text style={styles.savetxt}>저장</Text>
                       </View>
