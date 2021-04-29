@@ -64,6 +64,17 @@ const CarRegister = () => {
   const [carRace, setCarRace] = useState('')
   const [raceModal, setRaceModal] = useState(false)
 
+  const [isRegister,setIsRegister] = useState(false)
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@is_first')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
 
   useEffect(() => {
     setModemN(atModemn)
@@ -76,6 +87,9 @@ const CarRegister = () => {
     } else {
 
     }
+
+    getData().then(res=>{if(res!=null)setIsRegister(true)})
+    console.log('등록 현황 : ' + isRegister)
   }, [])
 
 
@@ -244,7 +258,7 @@ const CarRegister = () => {
 
         {/* 헤더 */}
         <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={() => {if(modemN!=='' && userN !=='' && carRace !== '')navigation.navigate('차량제어'); else Alert.alert('먼저 차량을 등록해주세요')}}>
+          <TouchableWithoutFeedback onPress={() => {if(isRegister === true)navigation.navigate('차량제어'); else Alert.alert('먼저 차량을 등록해주세요')}}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>
