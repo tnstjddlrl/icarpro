@@ -30,6 +30,7 @@ import {
   StateEngineHood,
   StateEngineState,
   StateCarVolt,
+  isRegister,
 } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
@@ -82,6 +83,15 @@ const Load = () => {
   const getcar = async () => {
     try {
       const value = await AsyncStorage.getItem('@car_Race')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const getIsRegister = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@is_register')
       return value
     } catch (e) {
       console.log(e)
@@ -180,6 +190,7 @@ const Load = () => {
   const [atmodemn, setAtModemn] = useRecoilState(modemNumber)
   const [, setatUserNumber] = useRecoilState(userNumber)
   const [, setatIsCarRace] = useRecoilState(isCarRace)
+  const [atIsRegister,setAtIsRegister] = useRecoilState(isRegister)
   
 
 
@@ -415,6 +426,7 @@ const Load = () => {
           getmodem().then(res => {setAtModemn(res),console.log('모뎀번호 가져오기:'+atmodemn==null)})
           getuser().then(res => setatUserNumber(res))
           getcar().then(res => setatIsCarRace(res))
+          getIsRegister().then(res=>setAtIsRegister(res))
 
           // getLowVoltValue().then(res => {
           //   if (res !== null) {
@@ -471,6 +483,7 @@ const Load = () => {
           //   
           // }, 1000);
         } else {
+          getmodem().then(res => {if(res!==null)setAtModemn(res),console.log('모뎀번호 가져오기:'+atmodemn==null)})
 
           setTimeout(() => {
             setLoadbarwd(30)

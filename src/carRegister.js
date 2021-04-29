@@ -22,7 +22,7 @@ import {
   useRecoilState,
 } from 'recoil';
 
-import { modemNumber, userNumber, fcmToken, isCarRace } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace, isRegister } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -57,6 +57,7 @@ const CarRegister = () => {
   const [atModemn, setAtModemn] = useRecoilState(modemNumber)
   const [atUserNumber, setatUserNumber] = useRecoilState(userNumber)
   const [atIsCarRace, setatIsCarRace] = useRecoilState(isCarRace)
+  const [atIsRegister,setAtIsRegister] = useRecoilState(isRegister)
 
   const [modemN, setModemN] = useState('')
   const [userN, setUserN] = useState('')
@@ -131,6 +132,14 @@ const CarRegister = () => {
     }
   }
 
+  const delRegister = async () => {
+    try {
+      await AsyncStorage.removeItem('@is_register')
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   function registerClick(sub) {
     try {
       var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
@@ -156,7 +165,9 @@ const CarRegister = () => {
       await AsyncStorage.setItem("@user_N", userN)
       await AsyncStorage.setItem("@car_Race", carRace)
       await AsyncStorage.setItem("@is_first", 'notfirst')
+      await AsyncStorage.setItem("@is_register", 'register')
 
+      setAtIsRegister('register')
       setAtModemn(modemN)
       setatUserNumber(userN)
       setatIsCarRace(carRace)
@@ -164,21 +175,18 @@ const CarRegister = () => {
     } catch (error) {
       console.error(error)
     }
-
   }
 
-  function registerDel() {
-    var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN } }
-    txt = JSON.stringify(txt)
-
+  const asyngDel = async () => {
     setUserN('')
     setCarRace('')
     setSedan1(false)
     setSuv1(false)
 
-    delFirst()
-    delUser()
-    delcarRace()
+    await AsyncStorage.removeItem('@is_first')
+    await AsyncStorage.removeItem('@user_N')
+    await AsyncStorage.removeItem('@car_Race')
+    await AsyncStorage.removeItem('@is_register')
 
     setatUserNumber('')
     setatIsCarRace('')
@@ -186,13 +194,22 @@ const CarRegister = () => {
     setUserN('')
     setCarRace('')
 
+    console.log('어싱크 삭제')
+  }
+
+  function registerDel() {
+    var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN } }
+    txt = JSON.stringify(txt)
+
     client.write(txt)
     console.log('전송 : ' + txt)
+
+    asyngDel()
 
   }
   console.log('모뎀 : ' + modemN + '유저:' + userN)
 
-  useEffect(() => {
+  useEffect(async() => {
     client.on('data', function (data) {
       if ('' + data == 'reg_suc') {
         // clearTimeout(serverCheck)
@@ -202,10 +219,13 @@ const CarRegister = () => {
 
           setCancelMss('등록이 완료되었습니다.')
           usercancelff('등록완료')
+          asyncSave()
        
       } else if ('' + data == 'registerDel_suc') {
+        asyngDel()
+
         setCancelMss('삭제가 완료되었습니다.'),
-          usercancelff('55')
+        usercancelff('55')
       } else if ('' + data == 'reg_fail') {
         setLoadModal(true)
       } else {
@@ -228,6 +248,7 @@ const CarRegister = () => {
     setTimeout(() => {
       setUserCancelModal(false)
       console.log(cancelMss)
+      console.log('매개변수 : '+mss)
       if(mss==='등록완료'){
         navigation.navigate('차량제어')
       }
@@ -243,7 +264,7 @@ const CarRegister = () => {
 
         {/* 헤더 */}
         <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={() => {if(modemN!=='' && userN !=='' && carRace !== '')navigation.navigate('차량제어'); else Alert.alert('먼저 차량을 등록해주세요')}}>
+          <TouchableWithoutFeedback onPress={() => {if(atIsRegister==='register')navigation.navigate('차량제어'); else Alert.alert('먼저 차량을 등록해주세요')}}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>

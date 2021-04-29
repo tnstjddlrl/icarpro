@@ -17,6 +17,11 @@ export const fcmToken = atom({
   default: 'notoken',
 })
 
+export const isRegister = atom({
+  key: 'isRegister',
+  default: '',
+})
+
 export const isCarRace = atom({
   key: 'isCarRace',
   default: '',
