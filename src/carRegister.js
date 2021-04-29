@@ -11,7 +11,8 @@ import {
   Image,
   StyleSheet,
   Modal,
-  ScrollView
+  ScrollView,
+  Keyboard
 } from 'react-native';
 
 import client from './Client'
@@ -148,7 +149,7 @@ const CarRegister = () => {
       client.write(txt)
       console.log('전송 : ' + txt)
   
-      asyncSave()
+      // asyncSave()
       
     } catch (error) {
       Alert.alert('오류!!!!!')
@@ -161,11 +162,12 @@ const CarRegister = () => {
 
   const asyncSave = async () => {
     try {
+      // await AsyncStorage.setItem("@is_register", 'register')
       await AsyncStorage.setItem("@modem_N", modemN)
       await AsyncStorage.setItem("@user_N", userN)
       await AsyncStorage.setItem("@car_Race", carRace)
       await AsyncStorage.setItem("@is_first", 'notfirst')
-      await AsyncStorage.setItem("@is_register", 'register')
+      
 
       setAtIsRegister('register')
       setAtModemn(modemN)
@@ -294,7 +296,7 @@ const CarRegister = () => {
               }
             </View>
           </View>
-          <TouchableWithoutFeedback onPress={() => setRaceModal(true)}>
+          <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(),setRaceModal(true)}}>
             <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16, justifyContent: "center" }}>
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: chwidth - 48 }}>
                 <Text style={styles.carResist}>차량 선택</Text>
