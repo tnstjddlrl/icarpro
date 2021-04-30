@@ -277,7 +277,6 @@ const Settings = () => {
               console.log(e)
               sendCommand('2n')
 
-
             }
           } else {
             try {

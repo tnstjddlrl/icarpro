@@ -112,7 +112,7 @@ const CarState = () => {
       var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
 
       client.write(JSON.stringify(txt))
-      console.log('전송 : ' + txt)
+      console.log('전송 : ' + JSON.stringify(txt))
 
     } catch (e) {
       console.log(e)

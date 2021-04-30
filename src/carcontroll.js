@@ -10,7 +10,8 @@ import {
   Image,
   StyleSheet,
   Platform,
-  Modal
+  Modal,
+  Vibration
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -291,6 +292,8 @@ const Carcontroll = () => {
 
       door_1 = JSON.stringify(door_1)
 
+      console.log(client._state)
+
       try {
         client.write(door_1)
         console.log('전송 : ' + door_1)
@@ -520,7 +523,7 @@ const Carcontroll = () => {
     console.log(client._destroyed)
 
     setTimeout(() => {
-      client.connect({ port: 3400, host: '175.126.232.72' })
+      client.connect({ port: 3400, host: '175.126.232.72' },()=>{console.log('다시 연결됨!!!!!!!!!!!!!')})
       console.log(client._destroyed)
       setTimeout(() => {
         client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:'+ccc, modem: atmodemN } }))
@@ -537,6 +540,7 @@ const Carcontroll = () => {
         onHandlerStateChange={({ nativeEvent }) => {
           if (nativeEvent.state === State.ACTIVE) {
             navigation.navigate('설정')
+            Vibration.vibrate(50)
           }
         }}>
         <FlingGestureHandler
@@ -544,6 +548,7 @@ const Carcontroll = () => {
           onHandlerStateChange={({ nativeEvent }) => {
             if (nativeEvent.state === State.ACTIVE) {
               navigation.navigate('차량상태')
+              Vibration.vibrate(50)
             }
           }}>
           <FlingGestureHandler
@@ -551,6 +556,7 @@ const Carcontroll = () => {
             onHandlerStateChange={({ nativeEvent }) => {
               if (nativeEvent.state === State.ACTIVE) {
                 navigation.navigate('차량등록')
+                Vibration.vibrate(50)
               }
             }}>
 
@@ -561,6 +567,8 @@ const Carcontroll = () => {
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
                   <TouchableWithoutFeedback onPress={() => {
                     // redirect('du')
+                    client.destroy()
+                    console.log('연결 디스트로이')
                   }
                   }>
                     <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
