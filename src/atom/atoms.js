@@ -32,6 +32,11 @@ export const isBootOn = atom({
   default: false,
 })
 
+export const stateWaitTime = atom({
+  key: 'stateWaitTime',
+  default: false,
+})
+
 //설정
 export const icarSwitch = atom({
   key: 'icarSwitch',

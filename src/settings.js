@@ -37,7 +37,8 @@ import {
   lowvoltAlert,
   settingLimit,
   modemNumber,
-  userNumber
+  userNumber,
+  stateWaitTime
 } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
@@ -75,6 +76,8 @@ const Settings = () => {
   const atuserN = useRecoilValue(userNumber)
 
   const [stLimit, setStLimit] = useRecoilState(settingLimit)
+
+  const [atStateWaitTime,setAtStateWaitTime] = useRecoilState(stateWaitTime)
 
 
   const [icarswitch, seticarswitch] = useState(aticarswitch)
@@ -119,7 +122,13 @@ const Settings = () => {
   }
 
   const reqState = navigation.addListener('focus', () => {
-    registerClick();
+    if(atStateWaitTime === false){
+      registerClick()
+      setAtStateWaitTime(true)
+      setTimeout(() => {
+        setAtStateWaitTime(false)
+      }, 10000);
+    }
   });
 
   useEffect(() => {

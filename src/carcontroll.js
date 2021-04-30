@@ -24,7 +24,18 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken, isCarRace, bootRestTime, isBootOn, icarSwitch, bootTimeValue, actionSound, modemNumber, userNumber } from './atom/atoms'
+import { 
+  fcmToken, 
+  isCarRace, 
+  bootRestTime, 
+  isBootOn, 
+  icarSwitch, 
+  bootTimeValue, 
+  actionSound, 
+  modemNumber, 
+  userNumber,
+  stateWaitTime
+ } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -91,6 +102,8 @@ const Carcontroll = () => {
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
   const isicarswitch = useRecoilValue(icarSwitch)
 
+  const [atStateWaitTime,setAtStateWaitTime] = useRecoilState(stateWaitTime)
+
   const atActionSound = useRecoilValue(actionSound)
 
   const [atBootTime, setAtBootTime] = useRecoilState(bootTimeValue)
@@ -104,7 +117,13 @@ const Carcontroll = () => {
     if (isicarswitch === false) {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
-    registerClick()
+    if(atStateWaitTime === false){
+      registerClick()
+      setAtStateWaitTime(true)
+      setTimeout(() => {
+        setAtStateWaitTime(false)
+      }, 10000);
+    }
   });
   useEffect(() => {
     return () => { unsubscribe() };

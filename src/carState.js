@@ -30,7 +30,8 @@ import {
   StateEngineHood,
   StateEngineState,
   StateCarVolt,
-  voltValue
+  voltValue,
+  stateWaitTime
 } from './atom/atoms'
 
 import client from './Client'
@@ -99,6 +100,9 @@ const CarState = () => {
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
 
+  const [atStateWaitTime,setAtStateWaitTime] = useRecoilState(stateWaitTime)
+
+
   const pushToken = useRecoilValue(fcmToken)
   const isbooton = useRecoilValue(isBootOn)
   const boottime = useRecoilValue(bootRestTime)
@@ -119,7 +123,13 @@ const CarState = () => {
   }
 
   const reqState = navigation.addListener('focus', () => {
-    registerClick();
+    if(atStateWaitTime === false){
+      registerClick()
+      setAtStateWaitTime(true)
+      setTimeout(() => {
+        setAtStateWaitTime(false)
+      }, 10000);
+    }
   });
 
   useEffect(() => {
