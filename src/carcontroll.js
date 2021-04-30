@@ -278,9 +278,7 @@ const Carcontroll = () => {
         console.log('전송 : ' + door_1)
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(door_1)
-        console.log('전송 : ' + door_1)
+        redirect('dl')
       }
 
       setTimeout(() => {
@@ -308,9 +306,7 @@ const Carcontroll = () => {
         console.log('전송 : ' + door_0)
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(door_0)
-        console.log('전송 : ' + door_0)
+        redirect('du')
       }
 
 
@@ -335,9 +331,7 @@ const Carcontroll = () => {
         console.log('전송 : ' + panic_1)
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(panic_1)
-        console.log('전송 : ' + panic_1)
+        redirect('pn')
       }
 
       setTimeout(() => {
@@ -361,9 +355,7 @@ const Carcontroll = () => {
         console.log('전송 : ' + panic_0)
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(panic_0)
-        console.log('전송 : ' + panic_0)
+        redirect('pf')
       }
 
       setTimeout(() => {
@@ -385,9 +377,8 @@ const Carcontroll = () => {
         console.log('전송 : ' + warn_1)
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(warn_1)
-        console.log('전송 : ' + warn_1)
+        
+        redirect('hn')
       }
 
 
@@ -411,9 +402,7 @@ const Carcontroll = () => {
         console.log('전송 : ' + warn_0)
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(warn_0)
-        console.log('전송 : ' + warn_0)
+        redirect('hf')
       }
 
 
@@ -436,9 +425,7 @@ const Carcontroll = () => {
       console.log('전송 : ' + trunk_1)
     } catch (error) {
       console.log(error)
-      client.connect({ port: 3400, host: '175.126.232.72' })
-      client.write(trunk_1)
-      console.log('전송 : ' + trunk_1)
+      redirect('tu')
     }
 
     setTimeout(() => {
@@ -461,9 +448,7 @@ const Carcontroll = () => {
         console.log('전송 : ' + boot_1)
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(boot_1)
-        console.log('전송 : ' + boot_1)
+        redirect('en')
       }
 
       setAtIsboot(true)
@@ -506,15 +491,13 @@ const Carcontroll = () => {
         console.log('전송 : ' + boot_0)
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(boot_0)
-        console.log('전송 : ' + boot_0)
+        redirect('ef')
       }
 
     }
   }
 
-  function redirect() {
+  function redirect(ccc) {
     client.destroy()
     console.log(client._destroyed)
 
@@ -522,10 +505,10 @@ const Carcontroll = () => {
       client.connect({ port: 3400, host: '175.126.232.72' })
       console.log(client._destroyed)
       setTimeout(() => {
-        client.write(JSON.stringify(boot_0))
+        client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:'+ccc, modem: atmodemN } }))
         console.log('전송 : ' + JSON.stringify(boot_0))
       }, 1000);
-    }, 300);
+    }, 1000);
 
   }
 
@@ -559,7 +542,7 @@ const Carcontroll = () => {
                 <View style={{ flex: 0.2 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
                   <TouchableWithoutFeedback onPress={() => {
-                    redirect()
+                    redirect('du')
                   }
                   }>
                     <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
