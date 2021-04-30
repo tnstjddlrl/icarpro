@@ -132,9 +132,8 @@ const Carcontroll = () => {
   function registerClick() {
     try {
       var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
-      txt = JSON.stringify(txt)
 
-      client.write(txt)
+      client.write(JSON.stringify(txt))
       console.log('전송 : ' + txt)
 
     } catch (e) {
@@ -146,10 +145,10 @@ const Carcontroll = () => {
         client.connect({ port: 3400, host: '175.126.232.72' })
         console.log(client._destroyed)
         setTimeout(() => {
-          client.write(txt)
-          console.log('전송 : ' + txt)
+          client.write(JSON.stringify(txt))
+          console.log('전송 : ' + JSON.stringify(txt))
         }, 1000);
-      }, 300);
+      }, 1000);
     }
   }
 
@@ -561,7 +560,7 @@ const Carcontroll = () => {
                 <View style={{ flex: 0.2 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
                   <TouchableWithoutFeedback onPress={() => {
-                    redirect('du')
+                    // redirect('du')
                   }
                   }>
                     <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>

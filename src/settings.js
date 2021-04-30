@@ -109,15 +109,23 @@ const Settings = () => {
   function registerClick() {
     try {
       var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
-      txt = JSON.stringify(txt)
 
       client.write(txt)
       console.log('전송 : ' + txt)
 
     } catch (e) {
       console.log(e)
-      client.connect({ port: 3400, host: '175.126.232.72' })
-      registerClick()
+      client.destroy()
+      console.log(client._destroyed)
+  
+      setTimeout(() => {
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        console.log(client._destroyed)
+        setTimeout(() => {
+          client.write(JSON.stringify(txt))
+          console.log('전송 : ' + JSON.stringify(txt))
+        }, 1000);
+      }, 1000);
     }
   }
 
