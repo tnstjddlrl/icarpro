@@ -30,6 +30,7 @@ import {
   StateEngineHood,
   StateEngineState,
   StateCarVolt,
+  certifyState,
 } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
@@ -180,6 +181,8 @@ const Load = () => {
   const [atmodemn, setAtModemn] = useRecoilState(modemNumber)
   const [, setatUserNumber] = useRecoilState(userNumber)
   const [, setatIsCarRace] = useRecoilState(isCarRace)
+
+  const [atCertifyState,setAtCertifyState] = useRecoilState(certifyState)
   
 
 
@@ -246,12 +249,14 @@ const Load = () => {
       console.log(command.split('/')[0])
       console.log(modemm)
       if(''+data === 'no_certification'){
+        setAtCertifyState('no_certification')
         Alert.alert('미인증 상태입니다.','인증을 진행해주세요')
       }else if(''+data === 'no_state'){
+        setAtCertifyState('no_state')
         Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
       }else if(modemm == command.split('/')[0]){
+        setAtCertifyState('good')
         
-
         if (command.split('/')[1][3] === 'i') {
           setAtStateCarAlert('ON')
           console.log('경계온ok')

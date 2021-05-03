@@ -35,7 +35,8 @@ import {
   actionSound, 
   modemNumber, 
   userNumber,
-  stateWaitTime
+  stateWaitTime,
+  certifyState
  } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
@@ -102,6 +103,8 @@ const Carcontroll = () => {
   const [bootrest, setBootrest] = useRecoilState(bootRestTime)
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
   const isicarswitch = useRecoilValue(icarSwitch)
+
+  const [atCertifyState,setAtCertifyState] = useRecoilState(certifyState)
 
   const [atStateWaitTime,setAtStateWaitTime] = useRecoilState(stateWaitTime)
 
@@ -279,65 +282,91 @@ const Carcontroll = () => {
 
 
   function doorClick(is) {
-    if (is == 'lock') {
-      setDoor('on')
-      //Alert.alert('door_0')
 
-      lomofc('도어 LOCK')
+    if(atCertifyState === 'good'){
 
-      if (atActionSound === false) {
-        doorOnSound()
+      if (is == 'lock') {
+
+        setDoor('on')
+        //Alert.alert('door_0')
+  
+        lomofc('도어 LOCK')
+  
+        if (atActionSound === false) {
+          doorOnSound()
+        }
+  
+  
+        door_1 = JSON.stringify(door_1)
+  
+        console.log(client._state)
+  
+        try {
+          client.write(door_1)
+          console.log('전송 : ' + door_1)
+        } catch (error) {
+          console.log(error)
+          redirect('dl')
+        }
+  
+        setTimeout(() => {
+          setDoor('no')
+        }, 4000);
+  
+      }
+  
+  
+      if (is == 'unlock') {
+        
+        setDoor('off')
+        // Alert.alert('door_1')
+  
+        lomofc('도어 UNLOCK')
+  
+        if (atActionSound === false) {
+          doorOnSound()
+        }
+  
+        door_0 = JSON.stringify(door_0)
+        try {
+          client.write(door_0)
+          console.log('전송 : ' + door_0)
+        } catch (error) {
+          console.log(error)
+          redirect('du')
+        }
+  
+  
+        setTimeout(() => {
+          setDoor('no')
+        }, 4000);
       }
 
-
-      door_1 = JSON.stringify(door_1)
-
-      console.log(client._state)
-
-      try {
-        client.write(door_1)
-        console.log('전송 : ' + door_1)
-      } catch (error) {
-        console.log(error)
-        redirect('dl')
-      }
-
-      setTimeout(() => {
-        setDoor('no')
-      }, 4000);
-
-
-
+    }else if(atCertifyState === 'no_certification'){
+      Alert.alert('미인증 상태입니다.')
+    }else if(atCertifyState === 'no_state'){
+      Alert.alert('상태값이 없습니다.')
+    }else if(atCertifyState === 'nono'){
+      Alert.alert('서버와 연동되지 않았습니다.')
     }
 
 
-    if (is == 'unlock') {
-      setDoor('off')
-      // Alert.alert('door_1')
-
-      lomofc('도어 UNLOCK')
-
-      if (atActionSound === false) {
-        doorOnSound()
-      }
-
-      door_0 = JSON.stringify(door_0)
-      try {
-        client.write(door_0)
-        console.log('전송 : ' + door_0)
-      } catch (error) {
-        console.log(error)
-        redirect('du')
-      }
-
-
-      setTimeout(() => {
-        setDoor('no')
-      }, 4000);
-    }
+    
   }//도어 제어
 
   function panicClick(is) {
+
+    if(atCertifyState === 'good'){
+
+    }else if(atCertifyState === 'no_certification'){
+      Alert.alert('미인증 상태입니다.')
+    }else if(atCertifyState === 'no_state'){
+      Alert.alert('상태값이 없습니다.')
+    }else if(atCertifyState === 'nono'){
+      Alert.alert('서버와 연동되지 않았습니다.')
+    }
+
+
     if (is == 'on') {
       setPanic('on')
       //Alert.alert('panic_0')
@@ -386,6 +415,18 @@ const Carcontroll = () => {
   }
 
   function warnClick(is) {
+
+    if(atCertifyState === 'good'){
+
+    }else if(atCertifyState === 'no_certification'){
+      Alert.alert('미인증 상태입니다.')
+    }else if(atCertifyState === 'no_state'){
+      Alert.alert('상태값이 없습니다.')
+    }else if(atCertifyState === 'nono'){
+      Alert.alert('서버와 연동되지 않았습니다.')
+    }
+
+
     if (is == 'on') {
       setWarnbim('on')
       //Alert.alert('emergency_0')
@@ -435,6 +476,18 @@ const Carcontroll = () => {
   }
 
   function trunkClick() {
+
+    if(atCertifyState === 'good'){
+
+    }else if(atCertifyState === 'no_certification'){
+      Alert.alert('미인증 상태입니다.')
+    }else if(atCertifyState === 'no_state'){
+      Alert.alert('상태값이 없습니다.')
+    }else if(atCertifyState === 'nono'){
+      Alert.alert('서버와 연동되지 않았습니다.')
+    }
+
+
     //Alert.alert('trunk_0')
     setTrunk(true)
 
@@ -458,6 +511,18 @@ const Carcontroll = () => {
   }
 
   function bootClick() {
+
+    if(atCertifyState === 'good'){
+
+    }else if(atCertifyState === 'no_certification'){
+      Alert.alert('미인증 상태입니다.')
+    }else if(atCertifyState === 'no_state'){
+      Alert.alert('상태값이 없습니다.')
+    }else if(atCertifyState === 'nono'){
+      Alert.alert('서버와 연동되지 않았습니다.')
+    }
+
+
     if (boot == false) {
       setBoot(true)
 

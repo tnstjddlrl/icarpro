@@ -39,8 +39,8 @@ export const stateWaitTime = atom({
 
 export const certifyState = atom({
   key: 'certifyState',
-  default: 'nostate',
-})
+  default: 'nono',
+})//인증상태 저장 아톰
 
 //설정
 export const icarSwitch = atom({
