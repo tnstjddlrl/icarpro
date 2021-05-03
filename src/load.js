@@ -250,7 +250,8 @@ const Load = () => {
       console.log(modemm)
       if(''+data === 'no_certification'){
         setAtCertifyState('no_certification')
-        Alert.alert('미인증 상태입니다.','인증을 진행해주세요')
+        Alert.alert('미인증 상태입니다.','인증을 진행해주세요',
+        [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
       }else if(''+data === 'no_state'){
         setAtCertifyState('no_state')
         Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')

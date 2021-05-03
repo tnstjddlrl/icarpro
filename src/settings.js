@@ -149,147 +149,147 @@ const Settings = () => {
       setStLimit(true)
 
 
-      //아이카 스위치
-      if (icarswitch !== aticarswitch) {
-        if (icarswitch === true) {
-          try {
-            sendCommand('mn')
-          } catch (e) {
-            console.log(e)
-            client.connect({ port: 3400, host: '175.126.232.72' })
-            sendCommand('mn')
+      // //아이카 스위치
+      // if (icarswitch !== aticarswitch) {
+      //   if (icarswitch === true) {
+      //     try {
+      //       sendCommand('mn')
+      //     } catch (e) {
+      //       console.log(e)
+      //       client.connect({ port: 3400, host: '175.126.232.72' })
+      //       sendCommand('mn')
 
-          }
-        } else {
-          try {
-            sendCommand('mf')
-          } catch (e) {
-            console.log(e)
-            client.connect({ port: 3400, host: '175.126.232.72' })
+      //     }
+      //   } else {
+      //     try {
+      //       sendCommand('mf')
+      //     } catch (e) {
+      //       console.log(e)
+      //       client.connect({ port: 3400, host: '175.126.232.72' })
 
-            sendCommand('mf')
-
-
-          }
-        }
-      }
-
-      //아이도어 스위치
-      setTimeout(() => {
-        if (idoorswitch !== atidoorswitch) {
-          if (idoorswitch === true) {
-            try {
-              sendCommand('dn')
-            } catch (e) {
-              client.connect({ port: 3400, host: '175.126.232.72' })
-              console.log(e)
-              sendCommand('dn')
+      //       sendCommand('mf')
 
 
-            }
-          } else {
-            try {
-              sendCommand('df')
-            } catch (e) {
-              client.connect({ port: 3400, host: '175.126.232.72' })
-              console.log(e)
-              sendCommand('df')
+      //     }
+      //   }
+      // }
+
+      // //아이도어 스위치
+      // setTimeout(() => {
+      //   if (idoorswitch !== atidoorswitch) {
+      //     if (idoorswitch === true) {
+      //       try {
+      //         sendCommand('dn')
+      //       } catch (e) {
+      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         console.log(e)
+      //         sendCommand('dn')
 
 
-            }
-          }
-        }
-      }, 300);
-
-      //저전압 기능
-      setTimeout(() => {
-        if (lowboltBoot !== atlowboltBoot || lowboltAlert !== atlowboltAlert) {
-          if (lowboltBoot === true) {
-            try {
-              sendCommand('le')
-            } catch (e) {
-              client.connect({ port: 3400, host: '175.126.232.72' })
-              console.log(e)
-              sendCommand('le')
+      //       }
+      //     } else {
+      //       try {
+      //         sendCommand('df')
+      //       } catch (e) {
+      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         console.log(e)
+      //         sendCommand('df')
 
 
-            }
-          } else if (lowboltAlert === true) {
-            try {
-              sendCommand('la')
-            } catch (e) {
-              client.connect({ port: 3400, host: '175.126.232.72' })
-              console.log(e)
-              sendCommand('la')
+      //       }
+      //     }
+      //   }
+      // }, 300);
+
+      // //저전압 기능
+      // setTimeout(() => {
+      //   if (lowboltBoot !== atlowboltBoot || lowboltAlert !== atlowboltAlert) {
+      //     if (lowboltBoot === true) {
+      //       try {
+      //         sendCommand('le')
+      //       } catch (e) {
+      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         console.log(e)
+      //         sendCommand('le')
 
 
-            }
-          } else {
-            try {
-              sendCommand('lf')
-            } catch (e) {
-              client.connect({ port: 3400, host: '175.126.232.72' })
-              console.log(e)
-              sendCommand('lf')
-
-            }
-          }
-        }
-      }, 600);
+      //       }
+      //     } else if (lowboltAlert === true) {
+      //       try {
+      //         sendCommand('la')
+      //       } catch (e) {
+      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         console.log(e)
+      //         sendCommand('la')
 
 
-      //동작음 무음 기능
-      setTimeout(() => {
-        if (actionsound !== atactionsound) {
-          if (actionsound === true) {
-            try {
-              sendCommand('1n')
-            } catch (e) {
+      //       }
+      //     } else {
+      //       try {
+      //         sendCommand('lf')
+      //       } catch (e) {
+      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         console.log(e)
+      //         sendCommand('lf')
 
-              client.connect({ port: 3400, host: '175.126.232.72' })
-              console.log(e)
-              sendCommand('1n')
-
-            }
-          } else {
-            try {
-              sendCommand('1f')
-            } catch (e) {
-
-              client.connect({ port: 3400, host: '175.126.232.72' })
-              console.log(e)
-              sendCommand('1f')
-
-            }
-          }
-        }
-      }, 800);
+      //       }
+      //     }
+      //   }
+      // }, 600);
 
 
-      //경계음 무음 기능
-      setTimeout(() => {
-        if (alertsound !== atalertsound) {
-          if (alertsound === true) {
-            try {
-              sendCommand('2n')
-            } catch (e) {
-              client.connect({ port: 3400, host: '175.126.232.72' })
-              console.log(e)
-              sendCommand('2n')
+      // //동작음 무음 기능
+      // setTimeout(() => {
+      //   if (actionsound !== atactionsound) {
+      //     if (actionsound === true) {
+      //       try {
+      //         sendCommand('1n')
+      //       } catch (e) {
 
-            }
-          } else {
-            try {
-              sendCommand('2f')
-            } catch (e) {
-              client.connect({ port: 3400, host: '175.126.232.72' })
-              console.log(e)
-              sendCommand('2f')
+      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         console.log(e)
+      //         sendCommand('1n')
 
-            }
-          }
-        }
-      }, 900);
+      //       }
+      //     } else {
+      //       try {
+      //         sendCommand('1f')
+      //       } catch (e) {
+
+      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         console.log(e)
+      //         sendCommand('1f')
+
+      //       }
+      //     }
+      //   }
+      // }, 800);
+
+
+      // //경계음 무음 기능
+      // setTimeout(() => {
+      //   if (alertsound !== atalertsound) {
+      //     if (alertsound === true) {
+      //       try {
+      //         sendCommand('2n')
+      //       } catch (e) {
+      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         console.log(e)
+      //         sendCommand('2n')
+
+      //       }
+      //     } else {
+      //       try {
+      //         sendCommand('2f')
+      //       } catch (e) {
+      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         console.log(e)
+      //         sendCommand('2f')
+
+      //       }
+      //     }
+      //   }
+      // }, 900);
 
 
       setSaveModal(true)
@@ -320,6 +320,7 @@ const Settings = () => {
     }
 
   }
+
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
@@ -354,7 +355,14 @@ const Settings = () => {
                   isOn={icarswitch}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => seticarswitch(isOn)}
+                  onToggle={isOn => {
+                    seticarswitch(isOn)
+                    if(isOn === true){
+                      sendCommand('mn')
+                    }else{
+                      sendCommand('mf')
+                    }
+                    }}
                 />
               </View>
             </View>
@@ -374,7 +382,14 @@ const Settings = () => {
                   isOn={idoorswitch}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => setidoorswitch(isOn)}
+                  onToggle={isOn => {setidoorswitch(isOn)
+                    if(isOn === true){
+                      sendCommand('dn')
+                    }else{
+                      sendCommand('df')
+                    }
+                  
+                  }}
                 />
               </View>
             </View>
@@ -404,7 +419,16 @@ const Settings = () => {
                   isOn={lowboltBoot}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => { setlowboltAlert(false), setlowboltBoot(isOn) }}
+                  onToggle={isOn => { setlowboltAlert(false)
+                    setlowboltBoot(isOn)
+                    if(isOn === true){
+                      sendCommand('le')
+                    }else{
+                      if(lowboltAlert === isOn){
+                        sendCommand('lf')
+                      }
+                    }
+                   }}
                 />
               </View>
               <View style={{ width: chwidth - 32, flexDirection: "row", justifyContent: 'flex-end' }}>
@@ -420,7 +444,16 @@ const Settings = () => {
                   isOn={lowboltAlert}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => { setlowboltAlert(isOn), setlowboltBoot(false) }}
+                  onToggle={isOn => { setlowboltAlert(isOn)
+                    setlowboltBoot(false)
+                    if(isOn === true){
+                      sendCommand('la')
+                    }else{
+                      if(lowboltBoot === false){
+                        sendCommand('lf')
+                      }
+                    }
+                   }}
                 />
               </View>
               <View style={{ width: chwidth - 32, flexDirection: "row", justifyContent: 'flex-end' }}>
@@ -465,7 +498,13 @@ const Settings = () => {
                   isOn={actionsound}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => setactionsound(isOn)}
+                  onToggle={isOn => {setactionsound(isOn)
+                    if(isOn === true){
+                      sendCommand('1n')
+                    }else{
+                      sendCommand('1f')
+                    }
+                  }}
                 />
               </View>
               <View style={{ width: chwidth - 32, flexDirection: "row", justifyContent: 'flex-end' }}>
@@ -481,7 +520,12 @@ const Settings = () => {
                   isOn={alertsound}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => setalertsound(isOn)}
+                  onToggle={isOn => {setalertsound(isOn)
+                    if(isOn === true){
+                      sendCommand('2n')
+                    }else{
+                      sendCommand('2f')
+                    }}}
                 />
               </View>
 

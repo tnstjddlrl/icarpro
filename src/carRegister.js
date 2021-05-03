@@ -158,7 +158,18 @@ const CarRegister = () => {
       asyncSave()
       
     } catch (error) {
-      Alert.alert('오류!!!!!')
+      console.log('등록 에러')
+      client.destroy()
+      console.log(client._destroyed)
+
+      setTimeout(() => {
+      client.connect({ port: 3400, host: '175.126.232.72' })
+      console.log(client._destroyed)
+      setTimeout(() => {
+        client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+      }, 1000);
+    }, 1000);
     }
 
     // serverCheck=setTimeout(() => {
