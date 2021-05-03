@@ -148,7 +148,7 @@ const LastHeatTime = () => {
           </View>
           <View style={{ flex: 7 }}>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-              <View style={{ height: 400, width: 110 }}>
+              <View style={{ height: 400, width: '70%' }}>
                 <ScrollView ref={ii} onScroll={(res) => { setisy(res.nativeEvent.contentOffset.y), console.log(res.nativeEvent.contentOffset.y) }}
                   showsVerticalScrollIndicator={false}
                   scrollEventThrottle={16}
