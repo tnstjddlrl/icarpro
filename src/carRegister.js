@@ -62,7 +62,7 @@ const CarRegister = () => {
   const [carRace, setCarRace] = useState('')
   const [raceModal, setRaceModal] = useState(false)
 
-  const [isRegister,setIsRegister] = useState(false)
+  const [isRegister, setIsRegister] = useState(false)
 
   const getData = async () => {
     try {
@@ -86,11 +86,11 @@ const CarRegister = () => {
 
     }
 
-    getData().then(res=>{if(res!=null)setIsRegister(true)})
+    getData().then(res => { if (res != null) setIsRegister(true) })
     setTimeout(() => {
-      console.log('등록 현황 : ' + isRegister)  
+      console.log('등록 현황 : ' + isRegister)
     }, 200);
-    
+
   }, [])
 
 
@@ -151,25 +151,25 @@ const CarRegister = () => {
     try {
       var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
       txt = JSON.stringify(txt)
-  
+
       client.write(txt)
-      console.log('전송 : ' + txt)
-  
+      console.log('전송 : ' + JSON.stringify(txt))
+
       asyncSave()
-      
+
     } catch (error) {
       console.log('등록 에러')
       client.destroy()
       console.log(client._destroyed)
 
       setTimeout(() => {
-      client.connect({ port: 3400, host: '175.126.232.72' })
-      console.log(client._destroyed)
-      setTimeout(() => {
-        client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+        client.connect({ port: 3400, host: '175.126.232.72' })
+        console.log(client._destroyed)
+        setTimeout(() => {
+          client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+          console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+        }, 1000);
       }, 1000);
-    }, 1000);
     }
 
     // serverCheck=setTimeout(() => {
@@ -225,11 +225,11 @@ const CarRegister = () => {
         // clearTimeout(serverCheck)
         // Alert.alert('등록이 완료되었습니다')
         // navigation.navigate('차량제어')
-        
 
-          setCancelMss('등록이 완료되었습니다.')
-          usercancelff('등록완료')
-       
+
+        setCancelMss('등록이 완료되었습니다.')
+        usercancelff('등록완료')
+
       } else if ('' + data == 'registerDel_suc') {
         setCancelMss('삭제가 완료되었습니다.'),
           usercancelff('55')
@@ -255,7 +255,7 @@ const CarRegister = () => {
     setTimeout(() => {
       setUserCancelModal(false)
       console.log(cancelMss)
-      if(mss==='등록완료'){
+      if (mss === '등록완료') {
         navigation.navigate('차량제어')
       }
     }, 1500);
@@ -265,12 +265,12 @@ const CarRegister = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
-      
+
       <View style={{ width: '100%', height: '100%' }}>
 
         {/* 헤더 */}
         <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={() => {if(isRegister === true)navigation.navigate('차량제어'); else Alert.alert('먼저 차량을 등록해주세요')}}>
+          <TouchableWithoutFeedback onPress={() => { if (isRegister === true) navigation.navigate('차량제어'); else Alert.alert('먼저 차량을 등록해주세요') }}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>
@@ -300,7 +300,7 @@ const CarRegister = () => {
               }
             </View>
           </View>
-          <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(),setRaceModal(true)}}>
+          <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(), setRaceModal(true) }}>
             <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16, justifyContent: "center" }}>
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: chwidth - 48 }}>
                 <Text style={styles.carResist}>차량 선택</Text>
@@ -447,9 +447,9 @@ const CarRegister = () => {
                 {/*  */}
 
                 {/* 저장버튼 */}
-                <View style={{ flex: 1.5,justifyContent:"center",alignItems:"center" }}>
+                <View style={{ flex: 1.5, justifyContent: "center", alignItems: "center" }}>
                   {(sedan1 == true || suv1 == true) ?
-                    <TouchableWithoutFeedback onPress={() => {iscar()}}>
+                    <TouchableWithoutFeedback onPress={() => { iscar() }}>
                       <View style={styles.saveBtn2}>
                         <Text style={styles.savetxt}>저장</Text>
                       </View>
