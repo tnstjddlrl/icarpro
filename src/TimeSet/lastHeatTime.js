@@ -91,6 +91,8 @@ const LastHeatTime = () => {
 
       setTimeout(() => {
         setSaveModal(false)
+        navigation.goBack()
+
       }, 1500);
 
       setTimeout(() => {

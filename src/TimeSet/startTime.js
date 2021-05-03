@@ -86,6 +86,8 @@ const StartTime = () => {
 
       setTimeout(() => {
         setSaveModal(false)
+        navigation.goBack()
+
       }, 1500);
       setTimeout(() => {
         setStartTimeLimit(false)
@@ -149,7 +151,7 @@ const StartTime = () => {
                   <Text style={isy < 50 ? styles.selecttxt : styles.noselecttxt}>1</Text>
                   <Text style={(50 < isy && isy < 100) ? styles.selecttxt : styles.noselecttxt}>2</Text>
                   <Text style={100 < isy ? styles.selecttxt : styles.noselecttxt}>3</Text>
-                  <View style={{ height: 170 }}></View>
+                  <View style={{ height: 160 }}></View>
                 </ScrollView>
               </View>
               <Text style={styles.sec}>sec</Text>

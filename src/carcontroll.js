@@ -317,7 +317,7 @@ const Carcontroll = () => {
   
   
       if (is == 'unlock') {
-        
+
         setDoor('off')
         // Alert.alert('door_1')
   
@@ -358,6 +358,52 @@ const Carcontroll = () => {
 
     if(atCertifyState === 'good'){
 
+      if (is == 'on') {
+        setPanic('on')
+        //Alert.alert('panic_0')
+  
+  
+        lomofc('패닉 ON')
+  
+  
+        panic_1 = JSON.stringify(panic_1)
+        try {
+          client.write(panic_1)
+          console.log('전송 : ' + panic_1)
+        } catch (error) {
+          console.log(error)
+          redirect('pn')
+        }
+  
+        setTimeout(() => {
+          setPanic('no')
+        }, 4000);
+  
+        if (atActionSound === false) {
+          panicOnSound()
+        }
+  
+      }
+  
+      if (is == 'off') {
+        setPanic('off')
+  
+        lomofc('패닉 OFF')
+  
+        panic_0 = JSON.stringify(panic_0)
+        try {
+          client.write(panic_0)
+          console.log('전송 : ' + panic_0)
+        } catch (error) {
+          console.log(error)
+          redirect('pf')
+        }
+  
+        setTimeout(() => {
+          setPanic('no')
+        }, 4000);
+      }
+
     }else if(atCertifyState === 'no_certification'){
       Alert.alert('미인증 상태입니다.')
     }else if(atCertifyState === 'no_state'){
@@ -367,57 +413,59 @@ const Carcontroll = () => {
     }
 
 
-    if (is == 'on') {
-      setPanic('on')
-      //Alert.alert('panic_0')
-
-
-      lomofc('패닉 ON')
-
-
-      panic_1 = JSON.stringify(panic_1)
-      try {
-        client.write(panic_1)
-        console.log('전송 : ' + panic_1)
-      } catch (error) {
-        console.log(error)
-        redirect('pn')
-      }
-
-      setTimeout(() => {
-        setPanic('no')
-      }, 4000);
-
-      if (atActionSound === false) {
-        panicOnSound()
-      }
-
-    }
-
-    if (is == 'off') {
-      setPanic('off')
-
-      lomofc('패닉 OFF')
-
-      panic_0 = JSON.stringify(panic_0)
-      try {
-        client.write(panic_0)
-        console.log('전송 : ' + panic_0)
-      } catch (error) {
-        console.log(error)
-        redirect('pf')
-      }
-
-      setTimeout(() => {
-        setPanic('no')
-      }, 4000);
-    }
   }
 
   function warnClick(is) {
 
     if(atCertifyState === 'good'){
 
+      if (is == 'on') {
+        setWarnbim('on')
+        //Alert.alert('emergency_0')
+  
+        lomofc('비상등 ON')
+  
+        warn_1 = JSON.stringify(warn_1)
+        try {
+          client.write(warn_1)
+          console.log('전송 : ' + warn_1)
+        } catch (error) {
+          console.log(error)
+          
+          redirect('hn')
+        }
+  
+  
+        setTimeout(() => {
+          setWarnbim('no')
+        }, 4000);
+        if (atActionSound === false) {
+          WarnSound()
+        }
+      }
+  
+      if (is == 'off') {
+        setWarnbim('off')
+        // Alert.alert('emergency_1')
+  
+        lomofc('비상등 OFF')
+  
+        warn_0 = JSON.stringify(warn_0)
+        try {
+          client.write(warn_0)
+          console.log('전송 : ' + warn_0)
+        } catch (error) {
+          console.log(error)
+          redirect('hf')
+        }
+  
+  
+        setTimeout(() => {
+          setWarnbim('no')
+        }, 4000);
+  
+      }
+
     }else if(atCertifyState === 'no_certification'){
       Alert.alert('미인증 상태입니다.')
     }else if(atCertifyState === 'no_state'){
@@ -427,58 +475,33 @@ const Carcontroll = () => {
     }
 
 
-    if (is == 'on') {
-      setWarnbim('on')
-      //Alert.alert('emergency_0')
-
-      lomofc('비상등 ON')
-
-      warn_1 = JSON.stringify(warn_1)
-      try {
-        client.write(warn_1)
-        console.log('전송 : ' + warn_1)
-      } catch (error) {
-        console.log(error)
-        
-        redirect('hn')
-      }
-
-
-      setTimeout(() => {
-        setWarnbim('no')
-      }, 4000);
-      if (atActionSound === false) {
-        WarnSound()
-      }
-    }
-
-    if (is == 'off') {
-      setWarnbim('off')
-      // Alert.alert('emergency_1')
-
-      lomofc('비상등 OFF')
-
-      warn_0 = JSON.stringify(warn_0)
-      try {
-        client.write(warn_0)
-        console.log('전송 : ' + warn_0)
-      } catch (error) {
-        console.log(error)
-        redirect('hf')
-      }
-
-
-      setTimeout(() => {
-        setWarnbim('no')
-      }, 4000);
-
-    }
   }
 
   function trunkClick() {
 
     if(atCertifyState === 'good'){
 
+
+      setTrunk(true)
+  
+      lomofc('트렁크 OPEN')
+  
+      trunk_1 = JSON.stringify(trunk_1)
+      try {
+        client.write(trunk_1)
+        console.log('전송 : ' + trunk_1)
+      } catch (error) {
+        console.log(error)
+        redirect('tu')
+      }
+  
+      setTimeout(() => {
+        setTrunk(false)
+      }, 4000);
+      if (atActionSound === false) {
+        TrunkOpenSound()
+      }
+
     }else if(atCertifyState === 'no_certification'){
       Alert.alert('미인증 상태입니다.')
     }else if(atCertifyState === 'no_state'){
@@ -488,32 +511,72 @@ const Carcontroll = () => {
     }
 
 
-    //Alert.alert('trunk_0')
-    setTrunk(true)
-
-    lomofc('트렁크 OPEN')
-
-    trunk_1 = JSON.stringify(trunk_1)
-    try {
-      client.write(trunk_1)
-      console.log('전송 : ' + trunk_1)
-    } catch (error) {
-      console.log(error)
-      redirect('tu')
-    }
-
-    setTimeout(() => {
-      setTrunk(false)
-    }, 4000);
-    if (atActionSound === false) {
-      TrunkOpenSound()
-    }
   }
 
   function bootClick() {
 
     if(atCertifyState === 'good'){
 
+      if (boot == false) {
+        
+        setBoot(true)
+  
+        lomofc('원격시동 켜기')
+  
+        boot_1 = JSON.stringify(boot_1)
+        try {
+          client.write(boot_1)
+          console.log('전송 : ' + boot_1)
+        } catch (error) {
+          console.log(error)
+          redirect('en')
+        }
+  
+        setAtIsboot(true)
+  
+        if (atActionSound === false) {
+          bootOnSound()
+        }
+  
+        // let bbtime;
+        // if (atBootTime === '3') {
+        //   bbtime = 180
+        // } else if (atBootTime === '5') {
+        //   bbtime = 300
+        // } else if (atBootTime === '10') {
+        //   bbtime = 600
+        // }
+  
+        rrtime = new Date()
+  
+        rrtime.setMinutes(rrtime.getMinutes() + parseInt(atBootTime))
+  
+        interval = setInterval(() => {
+          timecalcul()
+          // bbtime -= 1
+        }, 1000);
+  
+      } else {
+  
+        lomofc('원격시동 끄기')
+  
+        setBoot(false)
+        clearInterval(interval)
+        setBootrest('00:00')
+        // rrtime = 600
+        setAtIsboot(false)
+  
+        boot_0 = JSON.stringify(boot_0)
+        try {
+          client.write(boot_0)
+          console.log('전송 : ' + boot_0)
+        } catch (error) {
+          console.log(error)
+          redirect('ef')
+        }
+  
+      }
+
     }else if(atCertifyState === 'no_certification'){
       Alert.alert('미인증 상태입니다.')
     }else if(atCertifyState === 'no_state'){
@@ -523,64 +586,6 @@ const Carcontroll = () => {
     }
 
 
-    if (boot == false) {
-      setBoot(true)
-
-      lomofc('원격시동 켜기')
-
-      boot_1 = JSON.stringify(boot_1)
-      try {
-        client.write(boot_1)
-        console.log('전송 : ' + boot_1)
-      } catch (error) {
-        console.log(error)
-        redirect('en')
-      }
-
-      setAtIsboot(true)
-
-      if (atActionSound === false) {
-        bootOnSound()
-      }
-
-      // let bbtime;
-      // if (atBootTime === '3') {
-      //   bbtime = 180
-      // } else if (atBootTime === '5') {
-      //   bbtime = 300
-      // } else if (atBootTime === '10') {
-      //   bbtime = 600
-      // }
-
-      rrtime = new Date()
-
-      rrtime.setMinutes(rrtime.getMinutes() + parseInt(atBootTime))
-
-      interval = setInterval(() => {
-        timecalcul()
-        // bbtime -= 1
-      }, 1000);
-
-    } else {
-
-      lomofc('원격시동 끄기')
-
-      setBoot(false)
-      clearInterval(interval)
-      setBootrest('00:00')
-      // rrtime = 600
-      setAtIsboot(false)
-
-      boot_0 = JSON.stringify(boot_0)
-      try {
-        client.write(boot_0)
-        console.log('전송 : ' + boot_0)
-      } catch (error) {
-        console.log(error)
-        redirect('ef')
-      }
-
-    }
   }
 
   function redirect(ccc) {

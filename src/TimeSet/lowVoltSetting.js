@@ -101,10 +101,12 @@ const LowVoltSetting = () => {
       setSaveModal(true)
       setTimeout(() => {
         setSaveModal(false)
+        navigation.goBack()
       }, 1500);
 
       setTimeout(() => {
         setLowvoltValueLimit(false)
+        
       }, 1000);
     } else {
       Alert.alert('설정 변경 유휴시간은 10초입니다.', '10초 후 시도해주세요')
