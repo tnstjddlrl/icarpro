@@ -123,7 +123,7 @@ const Carcontroll = () => {
       setAtStateWaitTime(true)
       setTimeout(() => {
         setAtStateWaitTime(false)
-      }, 10000);
+      }, 1000);
     }
   });
   useEffect(() => {
@@ -523,7 +523,7 @@ const Carcontroll = () => {
     console.log(client._destroyed)
 
     setTimeout(() => {
-      client.connect({ port: 3400, host: '175.126.232.72' },()=>{console.log('다시 연결됨!!!!!!!!!!!!!')})
+      client.connect({ port: 3400, host: '175.126.232.72' })
       console.log(client._destroyed)
       setTimeout(() => {
         client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:'+ccc, modem: atmodemN } }))

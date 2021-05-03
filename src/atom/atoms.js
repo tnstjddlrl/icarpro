@@ -37,6 +37,11 @@ export const stateWaitTime = atom({
   default: false,
 })
 
+export const certifyState = atom({
+  key: 'certifyState',
+  default: 'nostate',
+})
+
 //설정
 export const icarSwitch = atom({
   key: 'icarSwitch',

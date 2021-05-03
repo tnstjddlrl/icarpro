@@ -136,7 +136,7 @@ const CarState = () => {
       setAtStateWaitTime(true)
       setTimeout(() => {
         setAtStateWaitTime(false)
-      }, 10000);
+      }, 1000);
     }
   });
 
