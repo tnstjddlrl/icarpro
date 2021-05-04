@@ -149,22 +149,28 @@ const CarRegister = () => {
 
   function registerClick(sub) {
     try {
-      var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
+      var txt = { type : "R", type_sub : sub, data : { modem : modemN, user : userN, carRace : carRace, token : pushToken } }
       txt = JSON.stringify(txt)
 
       client.write(txt)
-      console.log('전송 : ' + JSON.stringify(txt))
+      console.log('전송 : ' + txt)
 
       asyncSave()
 
     } catch (error) {
       console.log('등록 에러')
       client.destroy()
+      
       console.log(client._destroyed)
 
       setTimeout(() => {
-        client.connect({ port: 3400, host: '175.126.232.72' })
+        console.log('연결중 : ')
+        console.log(client.connecting)
+        
+        client.connect({ port: 3400, host: '175.126.232.72' },()=>console.log('연결됨!'))
         console.log(client._destroyed)
+        
+        
         setTimeout(() => {
           client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
           console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
