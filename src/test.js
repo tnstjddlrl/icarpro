@@ -42,7 +42,7 @@ const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
 
-import TcpSocket from 'react-native-tcp-socket';
+// import TcpSocket from 'react-native-tcp-socket';
 
 function testModem(modem) {
   var txt = { type: "R", type_sub: "conntest", data: { modem: modem } }

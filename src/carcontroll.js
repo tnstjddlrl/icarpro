@@ -36,7 +36,9 @@ import {
   modemNumber, 
   userNumber,
   stateWaitTime,
-  certifyState
+  certifyState,
+  settingLimit,
+  AppLocalClientPort
  } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
@@ -98,6 +100,8 @@ const Carcontroll = () => {
   const atmodemN = useRecoilValue(modemNumber)
   const atuserN = useRecoilValue(userNumber)
 
+  const [atLocalClientPort , setatLocalClientPort] = useRecoilState(AppLocalClientPort)
+
 
   const [carRace, setcarRace] = useRecoilState(isCarRace)
   const [bootrest, setBootrest] = useRecoilState(bootRestTime)
@@ -118,6 +122,7 @@ const Carcontroll = () => {
   const [completeModal, setCompleteModal] = useState(false)
 
   const unsubscribe = navigation.addListener('focus', () => {
+    console.log('로컬포트 : '+atLocalClientPort)
     if (isicarswitch === false) {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
@@ -600,8 +605,23 @@ const Carcontroll = () => {
         console.log('전송 : ' + JSON.stringify(boot_0))
       }, 1000);
     }, 1000);
-
   }
+
+  function writeData(socket, data){
+    console.log('전송!')
+    try {
+      socket.write(data);
+    } catch (error) {
+      (function(socket, data){
+        socket.once('drain', function(){
+          writeData(socket, data);
+        });
+      })(socket, data);
+      
+    }
+  }
+
+
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
@@ -639,13 +659,17 @@ const Carcontroll = () => {
                     // redirect('du')
                     client.destroy()
                     console.log('연결 디스트로이')
+                    
+                    setTimeout(() => {
+                      writeData(client,JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
+                    }, 1000);
                   }
                   }>
                     <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flex: 4 }}>
-                  <TouchableWithoutFeedback onPress={()=>registerClick()}>
+                  <TouchableWithoutFeedback onPress={()=>writeData(client,'socket Test!')}>
                   <Text style={styles.carnum}>12기 3456</Text>
                   </TouchableWithoutFeedback>
                   {

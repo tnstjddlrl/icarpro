@@ -42,6 +42,11 @@ export const certifyState = atom({
   default: 'nono',
 })//인증상태 저장 아톰
 
+export const AppLocalClientPort = atom({
+  key: 'AppLocalClientPort',
+  default: 0,
+})
+
 //설정
 export const icarSwitch = atom({
   key: 'icarSwitch',

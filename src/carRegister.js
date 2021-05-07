@@ -23,7 +23,7 @@ import {
   useRecoilState,
 } from 'recoil';
 
-import { modemNumber, userNumber, fcmToken, isCarRace } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -42,13 +42,20 @@ const radioSelect = require('../img/radioSelect.png')
 const sedan1img = require('../img/sedan1.png')
 const suv1img = require('../img/suv1.png')
 
+
+
+
 const CarRegister = () => {
   const [loadModal, setLoadModal] = useState(false)
   const [delModal, setDelModal] = useState(false)
   const [userCancelModal, setUserCancelModal] = useState(false)
+  const [DeleteFirstModal, setDeleteFirstModal] = useState(false)
   const [cancelMss, setCancelMss] = useState('')
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
+
+  const [atLocalClientPort , setatLocalClientPort] = useRecoilState(AppLocalClientPort)
+
 
 
   const navigation = useNavigation()
@@ -91,6 +98,7 @@ const CarRegister = () => {
       console.log('등록 현황 : ' + isRegister)
     }, 200);
 
+
   }, [])
 
 
@@ -99,14 +107,12 @@ const CarRegister = () => {
 
   function iscar() {
     if (sedan1 == true) {
-      setCancelMss('차량이 변경되었습니다.')
-      usercancelff()
+      usercancelff('차량이 변경되었습니다.')
       setCarRace('SEDAN1')
       setRaceModal(false)
       setatIsCarRace('SEDAN1')
     } else if (suv1 == true) {
-      setCancelMss('차량이 변경되었습니다.')
-      usercancelff()
+      usercancelff('차량이 변경되었습니다.')
       setCarRace('SUV1')
       setRaceModal(false)
       setatIsCarRace('SUV1')
@@ -155,32 +161,38 @@ const CarRegister = () => {
       client.write(txt)
       console.log('전송 : ' + txt)
 
+      console.log('로컬 포트 : ')
+      console.log(client.localPort)
+
       asyncSave()
+
+      console.log('리스너 갯수 : ')
+      console.log(client.listenerCount('data'))
 
     } catch (error) {
       console.log('등록 에러')
+      console.log(error)
       client.destroy()
       
       console.log(client._destroyed)
 
       setTimeout(() => {
-        console.log('연결중 : ')
-        console.log(client.connecting)
-        
-        client.connect({ port: 3400, host: '175.126.232.72' },()=>console.log('연결됨!'))
-        console.log(client._destroyed)
-        
-        
+
+        let vvs = client.connect({ port: 3400, host: '175.126.232.72',localPort: atLocalClientPort})
+        vvs.on('data',function(data){
+          console.log('안녕')
+          Alert.alert(data)
+        })
+
+        console.log('리스너 갯수 : ')
+        console.log(client.listenerCount('data'))
+
         setTimeout(() => {
           client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
           console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-        }, 1000);
+        }, 2000);
       }, 1000);
     }
-
-    // serverCheck=setTimeout(() => {
-    //   Alert.alert('서버와 통신이 원활하지 않습니다.','잠시후 다시 시도해주세요.')
-    // }, 2000);
   }
 
   const asyncSave = async () => {
@@ -223,6 +235,8 @@ const CarRegister = () => {
     console.log('전송 : ' + txt)
 
   }
+
+  
   console.log('모뎀 : ' + modemN + '유저:' + userN)
 
   useEffect(() => {
@@ -233,35 +247,29 @@ const CarRegister = () => {
         // navigation.navigate('차량제어')
 
 
-        setCancelMss('등록이 완료되었습니다.')
-        usercancelff('등록완료')
+        usercancelff('등록이 완료되었습니다.')
 
-      } else if ('' + data == 'registerDel_suc') {
-        setCancelMss('삭제가 완료되었습니다.'),
-          usercancelff('55')
+      } else if ('' + data == 'reg_delsuc') {
+        
+          usercancelff('삭제가 완료되었습니다.')
       } else if ('' + data == 'reg_fail') {
-        setLoadModal(true)
+        // setLoadModal(true)
+        setDeleteFirstModal(true)
       } else {
-
+        console.log('??이상하게 넘어옴')
       }
       console.log('차량 등록 내에서 받기 ' + data);
     });
   }, [])
 
-  function searchUser() {
-    var txt = { type: "R", type_sub: "user_search", data: { modem: modemN } }
-    txt = JSON.stringify(txt)
-    client.write(txt)
-  }
-
-
   function usercancelff(mss) {
 
     setUserCancelModal(true)
+    setCancelMss(mss),
     setTimeout(() => {
       setUserCancelModal(false)
       console.log(cancelMss)
-      if (mss === '등록완료') {
+      if (mss == '등록이 완료되었습니다.') {
         navigation.navigate('차량제어')
       }
     }, 1500);
@@ -280,7 +288,9 @@ const CarRegister = () => {
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>
+          <TouchableWithoutFeedback onPress={()=>{client.destroy()}}>
           <View><Image source={close}></Image></View>
+          </TouchableWithoutFeedback>
         </View>
         {/* 헤더 */}
 
@@ -475,6 +485,8 @@ const CarRegister = () => {
         </Modal>
         {/* 차량선택 모달 끝*/}
 
+
+                  {/*  */}
         <Modal visible={loadModal} transparent={true} animationType={'fade'}>
           <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ width: chwidth - 80, height: 160, backgroundColor: 'white', marginTop: -150, borderRadius: 10 }}>
@@ -486,7 +498,7 @@ const CarRegister = () => {
               <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
                 <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
-                  <TouchableWithoutFeedback onPress={() => { setLoadModal(false), usercancelff(), setCancelMss('등록을 취소합니다.') }}>
+                  <TouchableWithoutFeedback onPress={() => { setLoadModal(false), usercancelff('등록을 취소합니다.') }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>취소</Text>
                     </View>
@@ -504,8 +516,35 @@ const CarRegister = () => {
 
           </SafeAreaView>
         </Modal>
+        {/*  */}
 
+                          {/*  */}
+          <Modal visible={DeleteFirstModal} transparent={true} animationType={'fade'}>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ width: chwidth - 80, height: 160, backgroundColor: 'white', marginTop: -150, borderRadius: 10 }}>
+              <View style={{ marginTop: 20, alignItems: 'center' }}>
+                <Text style={styles.modalTitle}>주의!</Text>
+                <Text style={styles.modaltxt}>이미 등록된 사용자입니다.</Text>
+                <Text style={styles.modaltxt}>삭제를 먼저 진행해주세요!</Text>
+              </View>
+              <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
+                <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
+                  <TouchableWithoutFeedback onPress={() => { setDeleteFirstModal(false)}}>
+                    <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Text>확인</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
 
+                </View>
+              </View>
+            </View>
+
+          </SafeAreaView>
+        </Modal>
+        {/*  */}
+
+        {/*  */}
         <Modal visible={delModal} transparent={true} animationType={'fade'}>
           <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ width: chwidth - 80, height: 160, backgroundColor: 'white', marginTop: -150, borderRadius: 10 }}>
@@ -517,7 +556,7 @@ const CarRegister = () => {
               <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
                 <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
-                  <TouchableWithoutFeedback onPress={() => { setDelModal(false), setCancelMss('삭제를 취소합니다.'), usercancelff() }}>
+                  <TouchableWithoutFeedback onPress={() => { setDelModal(false), usercancelff('삭제를 취소합니다.') }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>취소</Text>
                     </View>
@@ -535,6 +574,7 @@ const CarRegister = () => {
 
           </SafeAreaView>
         </Modal>
+        {/*  */}
 
 
         <Modal visible={userCancelModal} transparent={true} animationType={'fade'}>
