@@ -40,7 +40,7 @@ const LowVoltSetting = () => {
   const atuserN = useRecoilValue(userNumber)
 
   const [checkitem, setChechkitem] = useState(lowvoltValue)
-
+    
   const [isy, setisy] = useState(0)
 
   const ii = useRef()
@@ -169,11 +169,17 @@ const LowVoltSetting = () => {
                   scrollEventThrottle={8}
                 >
                   <View style={{ height: 140 }}></View>
+
                   <Text style={isy < 40 ? styles.selecttxt : styles.noselecttxt}>11.8</Text>
+
                   <Text style={(40 < isy && isy < 120) ? styles.selecttxt : styles.noselecttxt}>11.9</Text>
+
                   <Text style={(120 < isy && isy < 195) ? styles.selecttxt : styles.noselecttxt}>12.0</Text>
+
                   <Text style={(195 < isy && isy < 270) ? styles.selecttxt : styles.noselecttxt}>12.1</Text>
+
                   <Text style={270 < isy ? styles.selecttxt : styles.noselecttxt}>12.2</Text>
+                  
                   <View style={{ height: 160 }}></View>
                 </ScrollView>
               </View>

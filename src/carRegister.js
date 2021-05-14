@@ -23,9 +23,15 @@ import {
   useRecoilState,
 } from 'recoil';
 
+
+import TcpSocket from 'react-native-tcp-socket';
+var net = require('net');
+
+
 import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const chwidth = Dimensions.get('window').width
@@ -42,10 +48,16 @@ const radioSelect = require('../img/radioSelect.png')
 const sedan1img = require('../img/sedan1.png')
 const suv1img = require('../img/suv1.png')
 
-
+var newsocket = new net.Socket
 
 
 const CarRegister = () => {
+
+  newsocket.on('data',(data)=>{
+    console.log('데이터 실험 : ' +data)
+  }) 
+
+
   const [loadModal, setLoadModal] = useState(false)
   const [delModal, setDelModal] = useState(false)
   const [userCancelModal, setUserCancelModal] = useState(false)
@@ -179,6 +191,8 @@ const CarRegister = () => {
       setTimeout(() => {
 
         let vvs = client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+        // let vvs = client.connect({ port: 3400, host: '175.126.232.72' })
+
         vvs.on('data', function (data) {
           console.log('안녕')
           Alert.alert(data)
@@ -187,12 +201,36 @@ const CarRegister = () => {
         console.log('리스너 갯수 : ')
         console.log(client.listenerCount('data'))
 
-        setTimeout(() => {
-          client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-          console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-        }, 2000);
+        if(!client._destroyed){
+
+          console.log(client._destroyed)
+
+          setTimeout(() => {
+            client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+            console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+          }, 2000);
+        }else{
+          console.log('??')
+          
+          console.log(client._destroyed)
+        }
+        
       }, 1000);
     }
+  }
+
+  function newRegister (sub){
+    newsocket = net.createConnection({ port: 3400, host: '175.126.232.72' },()=>{
+      console.log('재연결됨!')
+      newsocket.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+      newsocket.destroy()
+    })
+
+    newsocket.on('data',(data)=>{
+      console.log(data)
+    })
+    
+    console.log('리스너 몇개?' + newsocket.listenerCount('data'))
   }
 
   const asyncSave = async () => {
@@ -210,9 +248,11 @@ const CarRegister = () => {
       console.error(error)
     }
 
+
   }
 
   function registerDel() {
+    
     var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN } }
     txt = JSON.stringify(txt)
 
@@ -260,6 +300,9 @@ const CarRegister = () => {
       }
       console.log('차량 등록 내에서 받기 ' + data);
     });
+
+    
+
   }, [])
 
   function usercancelff(mss) {
@@ -288,7 +331,7 @@ const CarRegister = () => {
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>
-          <TouchableWithoutFeedback onPress={() => { client.destroy() }}>
+          <TouchableWithoutFeedback onPress={() => { client.destroy(),Alert.alert('연결 끊기') }}>
             <View><Image source={close}></Image></View>
           </TouchableWithoutFeedback>
         </View>
@@ -736,15 +779,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#f0f1f5",
     borderStyle: 'solid',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
   },
   carselectbtn: {
     height: 128,
@@ -754,15 +788,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#f75929",
     borderStyle: 'solid',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
   }
 })
 

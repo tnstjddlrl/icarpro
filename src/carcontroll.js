@@ -127,7 +127,7 @@ const Carcontroll = () => {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
     if(atStateWaitTime === false){
-      registerClick()
+      // registerClick()
       setAtStateWaitTime(true)
       setTimeout(() => {
         setAtStateWaitTime(false)
@@ -139,10 +139,10 @@ const Carcontroll = () => {
   });
 
   function registerClick() {
+    console.log('?')
     try {
-      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
 
-      client.write(JSON.stringify(txt))
+      client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
       console.log('전송 : ' + txt)
 
     } catch (e) {
@@ -161,15 +161,6 @@ const Carcontroll = () => {
     }
   }
 
-  // let door_0 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '0', token: pushToken } }
-  // let door_1 = { type: "R", type_sub: "car_controll", data: { command: 'door', state: '1', token: pushToken } }
-  // let panic_0 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '0', token: pushToken } }
-  // let panic_1 = { type: "R", type_sub: "car_controll", data: { command: 'panic', state: '1', token: pushToken } }
-  // let warn_0 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '0', token: pushToken } }
-  // let warn_1 = { type: "R", type_sub: "car_controll", data: { command: 'warn', state: '1', token: pushToken } }
-  // let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: 'trunk', state: '1', token: pushToken } }
-  // let boot_0 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '0', token: pushToken } }
-  // let boot_1 = { type: "R", type_sub: "car_controll", data: { command: 'boot', state: '1', token: pushToken } }
   let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:du', modem: atmodemN } }
   let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:dl', modem: atmodemN } }
   let panic_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:pf', modem: atmodemN } }
@@ -195,37 +186,7 @@ const Carcontroll = () => {
   }
 
   function timecalcul() {
-    // if (time == 0) {
-    //   setBoot(false)
-    //   clearInterval(interval)
-    //   setBootrest('00:00')
-    //   // rrtime = 600
-    //   setAtIsboot(false)
 
-    //   // boot_0 = JSON.stringify(boot_0)
-    //   // try {
-    //   //   client.write(boot_0)
-    //   //   console.log('전송 : ' + boot_0)
-    //   // } catch (error) {
-    //   //   console.log(error)
-    //   //   client.connect({ port: 3400, host: '175.126.232.72' })
-    //   //   client.write(boot_0)
-    //   //   console.log('전송 : ' + boot_0)
-    //   // }
-
-    //   lomofc('원격시동 끄기')
-    // }
-
-    // var min = parseInt((time % 3600) / 60);
-    // var sec = time % 60;
-    // if (String(sec).length == 1) {
-    //   console.log(String(sec).length)
-    //   setBootrest(min + ':0' + sec)
-    // } else {
-    //   console.log(String(sec).length)
-    //   setBootrest(min + ':' + sec)
-    // }
-    // console.log(time + ' : ' + bootrest)
     if (rrtime - new Date() <= 0) {
       setBoot(false)
       clearInterval(interval)
