@@ -127,7 +127,7 @@ const Carcontroll = () => {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
     if(atStateWaitTime === false){
-      // registerClick()
+      registerClick()
       setAtStateWaitTime(true)
       setTimeout(() => {
         setAtStateWaitTime(false)
@@ -138,12 +138,37 @@ const Carcontroll = () => {
     return () => { unsubscribe() };
   });
 
+  useEffect(()=>{
+    client.once('data',(data)=>{
+      
+      var command = ''+data
+
+      if(atmodemN == command.split('/')[0]){
+        if(command.split('/')[4][3] === 'i'){
+          console.log('원격 시동 on 상태 확인')
+          setAtIsboot(true)
+          setBoot(true)
+
+          rrtime = new Date()
+  
+          rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
+          rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
+    
+          interval = setInterval(() => {
+            timecalcul()
+          }, 1000);
+
+        }//차량 원격 시동 타이머 값 받아와서 설정해야함.
+      }
+    })
+  },[])
+
   function registerClick() {
     console.log('?')
     try {
 
       client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
-      console.log('전송 : ' + txt)
+      console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
 
     } catch (e) {
       console.log(e)
@@ -154,8 +179,8 @@ const Carcontroll = () => {
         client.connect({ port: 3400, host: '175.126.232.72' })
         console.log(client._destroyed)
         setTimeout(() => {
-          client.write(JSON.stringify(txt))
-          console.log('전송 : ' + JSON.stringify(txt))
+          client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
+          console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
         }, 1000);
       }, 1000);
     }
@@ -193,15 +218,39 @@ const Carcontroll = () => {
       setBootrest('00:00')
       setAtIsboot(false)
 
-      boot_0 = JSON.stringify(boot_0)
+     
       try {
-        client.write(boot_0)
-        console.log('전송 : ' + boot_0)
+        // client.write(JSON.stringify(boot_0))
+        // console.log('전송 : ' + JSON.stringify(boot_0))
+
+        client.once('data',(data)=>{
+      
+          var command = ''+data
+    
+          if(atmodemN == command.split('/')[0]){
+            if(command.split('/')[4][3] === 'i'){
+              console.log('원격 시동 on 상태 확인')
+              setAtIsboot(true)
+              setBoot(true)
+    
+              rrtime = new Date()
+      
+              rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
+              rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
+        
+              interval = setInterval(() => {
+                timecalcul()
+              }, 1000);
+    
+            }//차량 원격 시동 타이머 값 받아와서 설정해야함.
+          }
+        })
+
       } catch (error) {
         console.log(error)
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        client.write(boot_0)
-        console.log('전송 : ' + boot_0)
+        // client.connect({ port: 3400, host: '175.126.232.72' })
+        // client.write(JSON.stringify(boot_0))
+        // console.log('전송 : ' + JSON.stringify(boot_0))
       }
 
 
@@ -209,20 +258,20 @@ const Carcontroll = () => {
       lomofc('원격시동 끄기')
     } else {
       let tt = String((rrtime - new Date()) / 1000).split('.')[0];
-      console.log(tt)
+      // console.log(tt)
 
       if (tt.length === 1) {
         var time = parseInt(tt[0])
-        console.log(time)
+        // console.log(time)
       } else if (tt.length === 2) {
         var time = parseInt(tt[0] + tt[1])
-        console.log(time)
+        // console.log(time)
       } else if (tt.length === 3) {
         var time = parseInt(tt[0] + tt[1] + tt[2])
-        console.log(time)
+        // console.log(time)
       } else if (tt.length === 4) {
         var time = parseInt(tt[0] + tt[1] + tt[2] + tt[3])
-        console.log(time)
+        // console.log(time)
       }
 
       var min = parseInt((time % 3600) / 60);
@@ -486,6 +535,7 @@ const Carcontroll = () => {
       if (boot == false) {
         
         setBoot(true)
+        setAtIsboot(true)
   
         lomofc('원격시동 켜기')
   
@@ -498,7 +548,6 @@ const Carcontroll = () => {
           redirect('en')
         }
   
-        setAtIsboot(true)
   
         if (atActionSound === false) {
           bootOnSound()

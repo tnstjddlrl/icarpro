@@ -16,14 +16,6 @@ var client = TcpSocket.createConnection(
       Alert.alert('서버와 연결되었습니다.');
     }, 2000);
 
-    // client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
-    // console.log('전송 : ' + txt)
-
-    // setTimeout(()=>{
-    //   client.destroy()
-    //   console.log('서버 상황 : ' + client._destroyed)
-    // },100)
-    
   },
 );
 
