@@ -261,18 +261,18 @@ const Load = () => {
       }else if(modemm == command.split('/')[0]){
         setAtCertifyState('good')
         
-        if (command.split('/')[1][3] === 'i') {
+        if (command.split('/')[1][2] === 'i') {
           setAtStateCarAlert('ON')
           console.log('경계온ok')
-        } else if (command.split('/')[1][3] === 'o') {
+        } else if (command.split('/')[1][2] === 'o') {
           setAtStateCarAlert('OFF')
           console.log('경계오프ok')
         }
 
-        if (command.split('/')[1][2] === 'i') {
+        if (command.split('/')[1][3] === 'i') {
           setAtStateEngineState('ON')
           console.log('엔진온ok')
-        } else if (command.split('/')[1][2] === 'o') {
+        } else if (command.split('/')[1][3] === 'o') {
           setAtStateEngineState('OFF')
           console.log('엔진오프ok')
         }

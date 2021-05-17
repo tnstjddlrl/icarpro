@@ -98,7 +98,7 @@ const Settings = () => {
 
   function sendCommand(cc) {
 
-    let comm = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/S:' + cc, modem: atmodemN } }
+    let comm = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/S:' + cc, modem: atmodemN, token: pushToken } }
     
     comm = JSON.stringify(comm)
 

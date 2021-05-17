@@ -253,7 +253,7 @@ const CarRegister = () => {
 
   function registerDel() {
     
-    var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN } }
+    var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }
     txt = JSON.stringify(txt)
 
     setUserN('')
@@ -296,7 +296,7 @@ const CarRegister = () => {
         // setLoadModal(true)
         setDeleteFirstModal(true)
       } else {
-        console.log('??이상하게 넘어옴')
+        // console.log('??이상하게 넘어옴')
       }
       console.log('차량 등록 내에서 받기 ' + data);
     });

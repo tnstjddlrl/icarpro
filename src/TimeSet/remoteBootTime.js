@@ -110,7 +110,7 @@ const RemoteBootTime = () => {
     } else if (checkitem === '10') {
       cc = 're=2'
     }
-    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN } }
+    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN, token: pushToken } }
     comm = JSON.stringify(comm)
 
     client.write(comm)

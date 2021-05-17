@@ -141,11 +141,12 @@ const Carcontroll = () => {
   });
 
   useEffect(()=>{
+
     client.once('data',(data)=>{
       
       var command = ''+data
 
-      if(atmodemN == command.split('/')[0]){
+      if(atmodemN == command.split('/')[0] && boot != true){
         if(command.split('/')[4][3] === 'i'){
           
           console.log('원격 시동 on 상태 확인')
@@ -160,16 +161,20 @@ const Carcontroll = () => {
           rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
     
           interval = setInterval(() => {
-            remotetimecalcul()
+            timecalcul()
           }, 1000);
 
         }//차량 원격 시동 타이머 값 받아와서 설정해야함.
       }
+
     })
-  },[])
+
+  },[isRemote])
 
   function registerClick() {
+
     console.log('?')
+
     try {
 
       client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
@@ -189,17 +194,18 @@ const Carcontroll = () => {
         }, 1000);
       }, 1000);
     }
+
   }
 
-  let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:du', modem: atmodemN } }
-  let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:dl', modem: atmodemN } }
-  let panic_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:pf', modem: atmodemN } }
-  let panic_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:pn', modem: atmodemN } }
-  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:hf', modem: atmodemN } }
-  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:hn', modem: atmodemN } }
-  let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:tu', modem: atmodemN } }
-  let boot_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:ef', modem: atmodemN } }
-  let boot_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:en', modem: atmodemN } }
+  let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:du', modem: atmodemN, token: pushToken } }
+  let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:dl', modem: atmodemN, token: pushToken } }
+  let panic_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:pf', modem: atmodemN, token: pushToken } }
+  let panic_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:pn', modem: atmodemN, token: pushToken } }
+  let warn_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:hf', modem: atmodemN, token: pushToken } }
+  let warn_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:hn', modem: atmodemN, token: pushToken } }
+  let trunk_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:tu', modem: atmodemN, token: pushToken } }
+  let boot_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:ef', modem: atmodemN, token: pushToken } }
+  let boot_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:en', modem: atmodemN, token: pushToken } }
 
   //모뎀 유저 무슨상태 커맨드
   function lomofc(txt) {
@@ -215,83 +221,6 @@ const Carcontroll = () => {
     }, 1500);
   }
 
-  function remotetimecalcul() {
-
-    if (rrtime - new Date() <= 0) {
-      setBoot(false)
-      clearInterval(interval)
-      setBootrest('00:00')
-      setAtIsboot(false)
-
-     
-      try {
-        // client.write(JSON.stringify(boot_0))
-        // console.log('전송 : ' + JSON.stringify(boot_0))
-
-        client.once('data',(data)=>{
-      
-          var command = ''+data
-    
-          if(atmodemN == command.split('/')[0]){
-            if(command.split('/')[4][3] === 'i'){
-              console.log('원격 시동 on 상태 확인')
-              setAtIsboot(true)
-              setBoot(true)
-    
-              rrtime = new Date()
-      
-              rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
-              rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
-        
-              interval = setInterval(() => {
-                remotetimecalcul()
-              }, 1000);
-    
-            }//차량 원격 시동 타이머 값 받아와서 설정해야함.
-          }
-        })
-
-      } catch (error) {
-        console.log(error)
-        // client.connect({ port: 3400, host: '175.126.232.72' })
-        // client.write(JSON.stringify(boot_0))
-        // console.log('전송 : ' + JSON.stringify(boot_0))
-      }
-
-
-
-      lomofc('원격시동 끄기')
-    } else {
-      let tt = String((rrtime - new Date()) / 1000).split('.')[0];
-      // console.log(tt)
-
-      if (tt.length === 1) {
-        var time = parseInt(tt[0])
-        // console.log(time)
-      } else if (tt.length === 2) {
-        var time = parseInt(tt[0] + tt[1])
-        // console.log(time)
-      } else if (tt.length === 3) {
-        var time = parseInt(tt[0] + tt[1] + tt[2])
-        // console.log(time)
-      } else if (tt.length === 4) {
-        var time = parseInt(tt[0] + tt[1] + tt[2] + tt[3])
-        // console.log(time)
-      }
-
-      var min = parseInt((time % 3600) / 60);
-      var sec = time % 60;
-      if (String(sec).length == 1) {
-        console.log(String(sec).length)
-        setBootrest(min + ':0' + sec)
-      } else {
-        console.log(String(sec).length)
-        setBootrest(min + ':' + sec)
-      }
-
-      console.log(min + ':' + sec)
-    }
-  }
 
   function timecalcul() {
 
@@ -305,6 +234,10 @@ const Carcontroll = () => {
       try {
         // client.write(JSON.stringify(boot_0))
         // console.log('전송 : ' + JSON.stringify(boot_0))
+
+        if(isRemote==true){
+          setIsRemote(false)
+        }
 
       } catch (error) {
         console.log(error)
@@ -664,7 +597,7 @@ const Carcontroll = () => {
                 rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
           
                 interval = setInterval(() => {
-                  remotetimecalcul()
+                  timecalcul()
                 }, 1000);
       
               }//차량 원격 시동 타이머 값 받아와서 설정해야함.
@@ -693,7 +626,7 @@ const Carcontroll = () => {
       client.connect({ port: 3400, host: '175.126.232.72' })
       console.log(client._destroyed)
       setTimeout(() => {
-        client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:'+ccc, modem: atmodemN } }))
+        client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:'+ccc, modem: atmodemN, token: pushToken } }))
         console.log('전송 : ' + JSON.stringify(boot_0))
       }, 1000);
     }, 1000);

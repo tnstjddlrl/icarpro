@@ -114,7 +114,7 @@ const LastHeatTime = () => {
     } else if (checkitem === '5:00') {
       cc = 'ae=2'
     }
-    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN } }
+    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN, token: pushToken } }
     comm = JSON.stringify(comm)
 
     client.write(comm)
