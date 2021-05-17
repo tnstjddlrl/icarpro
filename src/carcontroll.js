@@ -121,6 +121,8 @@ const Carcontroll = () => {
 
   const [completeModal, setCompleteModal] = useState(false)
 
+  const [isRemote,setIsRemote] = useState(false)
+
   const unsubscribe = navigation.addListener('focus', () => {
     console.log('로컬포트 : '+atLocalClientPort)
     if (isicarswitch === false) {
@@ -145,7 +147,10 @@ const Carcontroll = () => {
 
       if(atmodemN == command.split('/')[0]){
         if(command.split('/')[4][3] === 'i'){
+          
           console.log('원격 시동 on 상태 확인')
+
+          setIsRemote(true)
           setAtIsboot(true)
           setBoot(true)
 
@@ -155,7 +160,7 @@ const Carcontroll = () => {
           rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
     
           interval = setInterval(() => {
-            timecalcul()
+            remotetimecalcul()
           }, 1000);
 
         }//차량 원격 시동 타이머 값 받아와서 설정해야함.
@@ -210,7 +215,7 @@ const Carcontroll = () => {
     }, 1500);
   }
 
-  function timecalcul() {
+  function remotetimecalcul() {
 
     if (rrtime - new Date() <= 0) {
       setBoot(false)
@@ -239,7 +244,7 @@ const Carcontroll = () => {
               rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
         
               interval = setInterval(() => {
-                timecalcul()
+                remotetimecalcul()
               }, 1000);
     
             }//차량 원격 시동 타이머 값 받아와서 설정해야함.
@@ -254,6 +259,59 @@ const Carcontroll = () => {
       }
 
 
+
+      lomofc('원격시동 끄기')
+    } else {
+      let tt = String((rrtime - new Date()) / 1000).split('.')[0];
+      // console.log(tt)
+
+      if (tt.length === 1) {
+        var time = parseInt(tt[0])
+        // console.log(time)
+      } else if (tt.length === 2) {
+        var time = parseInt(tt[0] + tt[1])
+        // console.log(time)
+      } else if (tt.length === 3) {
+        var time = parseInt(tt[0] + tt[1] + tt[2])
+        // console.log(time)
+      } else if (tt.length === 4) {
+        var time = parseInt(tt[0] + tt[1] + tt[2] + tt[3])
+        // console.log(time)
+      }
+
+      var min = parseInt((time % 3600) / 60);
+      var sec = time % 60;
+      if (String(sec).length == 1) {
+        console.log(String(sec).length)
+        setBootrest(min + ':0' + sec)
+      } else {
+        console.log(String(sec).length)
+        setBootrest(min + ':' + sec)
+      }
+
+      console.log(min + ':' + sec)
+    }
+  }
+
+  function timecalcul() {
+
+    if (rrtime - new Date() <= 0) {
+      setBoot(false)
+      clearInterval(interval)
+      setBootrest('00:00')
+      setAtIsboot(false)
+
+     
+      try {
+        // client.write(JSON.stringify(boot_0))
+        // console.log('전송 : ' + JSON.stringify(boot_0))
+
+      } catch (error) {
+        console.log(error)
+        // client.connect({ port: 3400, host: '175.126.232.72' })
+        // client.write(JSON.stringify(boot_0))
+        // console.log('전송 : ' + JSON.stringify(boot_0))
+      }
 
       lomofc('원격시동 끄기')
     } else {
@@ -568,7 +626,6 @@ const Carcontroll = () => {
   
         interval = setInterval(() => {
           timecalcul()
-          // bbtime -= 1
         }, 1000);
   
       } else {
@@ -588,6 +645,31 @@ const Carcontroll = () => {
         } catch (error) {
           console.log(error)
           redirect('ef')
+        }
+
+        if(isRemote===true){
+          setIsRemote(false)
+          client.once('data',(data)=>{
+            var command = ''+data
+      
+            if(atmodemN == command.split('/')[0]){
+              if(command.split('/')[4][3] === 'i'){
+                console.log('원격 시동 on 상태 확인')
+                setAtIsboot(true)
+                setBoot(true)
+      
+                rrtime = new Date()
+        
+                rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
+                rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
+          
+                interval = setInterval(() => {
+                  remotetimecalcul()
+                }, 1000);
+      
+              }//차량 원격 시동 타이머 값 받아와서 설정해야함.
+            }
+          })
         }
   
       }
