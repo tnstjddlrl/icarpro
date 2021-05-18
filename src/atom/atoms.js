@@ -47,6 +47,11 @@ export const AppLocalClientPort = atom({
   default: 0,
 })
 
+export const AppLocalClientAddress = atom({
+  key: 'AppLocalClientAddress',
+  default: '000',
+})
+
 //설정
 export const icarSwitch = atom({
   key: 'icarSwitch',

@@ -28,7 +28,7 @@ import TcpSocket from 'react-native-tcp-socket';
 var net = require('net');
 
 
-import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -67,6 +67,7 @@ const CarRegister = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
   const [atLocalClientPort, setatLocalClientPort] = useRecoilState(AppLocalClientPort)
+  const [atLocalClientAddress,setatLocalClientAddress] =useRecoilState(AppLocalClientAddress)
 
 
 
@@ -190,7 +191,7 @@ const CarRegister = () => {
 
       setTimeout(() => {
 
-        let vvs = client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+        let vvs = client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
         // let vvs = client.connect({ port: 3400, host: '175.126.232.72' })
 
         vvs.on('data', function (data) {

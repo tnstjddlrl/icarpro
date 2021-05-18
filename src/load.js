@@ -32,6 +32,7 @@ import {
   StateCarVolt,
   certifyState,
   AppLocalClientPort,
+  AppLocalClientAddress,
 } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
@@ -200,6 +201,7 @@ const Load = () => {
   const [, setAtalertSound] = useRecoilState(alertSound)
 
   const [atLocalClientPort , setatLocalClientPort] = useRecoilState(AppLocalClientPort)
+  const [atLocalClientAddress,setatLocalClientAddress] =useRecoilState(AppLocalClientAddress)
 
   const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
   const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
@@ -463,7 +465,9 @@ const Load = () => {
                     setLoadbarwd(160)
                     setTimeout(() => {
                       setatLocalClientPort(client.localPort)
-                      console.log('로컬포트 : '+atLocalClientPort)
+                      console.log('로컬포트 : '+client.localPort)
+                      setatLocalClientAddress(client.localAddress)
+                      console.log('로컬어드레스 : '+client.localAddress)
                       setLoadbarwd(183)
                       setTimeout(() => {
                         console.log('구사용자 : ' + res)
@@ -495,7 +499,9 @@ const Load = () => {
                     setLoadbarwd(160)
                     setTimeout(() => {
                       setatLocalClientPort(client.localPort)
-                      console.log('로컬포트 : '+atLocalClientPort)
+                      console.log('로컬포트 : '+client.localPort)
+                      setatLocalClientAddress(client.localAddress)
+                      console.log('로컬어드레스 : '+client.localAddress)
                       setLoadbarwd(183)
                       setTimeout(() => {
                         console.log('첫사용자 : ' + res)
