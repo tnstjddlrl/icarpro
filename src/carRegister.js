@@ -48,14 +48,8 @@ const radioSelect = require('../img/radioSelect.png')
 const sedan1img = require('../img/sedan1.png')
 const suv1img = require('../img/suv1.png')
 
-var newsocket = new net.Socket
-
 
 const CarRegister = () => {
-
-  newsocket.on('data',(data)=>{
-    console.log('데이터 실험 : ' +data)
-  }) 
 
 
   const [loadModal, setLoadModal] = useState(false)
@@ -220,19 +214,7 @@ const CarRegister = () => {
     }
   }
 
-  function newRegister (sub){
-    newsocket = net.createConnection({ port: 3400, host: '175.126.232.72' },()=>{
-      console.log('재연결됨!')
-      newsocket.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-      newsocket.destroy()
-    })
 
-    newsocket.on('data',(data)=>{
-      console.log(data)
-    })
-    
-    console.log('리스너 몇개?' + newsocket.listenerCount('data'))
-  }
 
   const asyncSave = async () => {
     try {
