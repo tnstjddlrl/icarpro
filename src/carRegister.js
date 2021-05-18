@@ -24,10 +24,6 @@ import {
 } from 'recoil';
 
 
-import TcpSocket from 'react-native-tcp-socket';
-var net = require('net');
-
-
 import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
