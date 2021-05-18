@@ -24,6 +24,7 @@ import RemoteBootTime from './src/TimeSet/remoteBootTime.js';
 import LastHeatTime from './src/TimeSet/lastHeatTime.js';
 import StartTime from './src/TimeSet/startTime.js';
 import LowVoltSetting from './src/TimeSet/lowVoltSetting.js';
+import Axiostest from './src/axiostt/axiostest.js';
 
 
 const Stack = createStackNavigator();
@@ -81,6 +82,9 @@ function App() {
           <Stack.Screen name="테스트" component={Test} />
           <Stack.Screen name="스와이프테스트" component={SwipeTest} />
           <Stack.Screen name="스크롤베이스" component={ScrollBase} />
+
+          <Stack.Screen name="악시오스" component={Axiostest} />
+
 
         </Stack.Navigator>
       </NavigationContainer>
