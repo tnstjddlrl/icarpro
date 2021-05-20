@@ -50,8 +50,6 @@ const CarState = () => {
 
   console.log('간편 : ' + pushToken)
 
-  var times
-
   useEffect(() => {
     inputRef.current.focus()
     client.on('data', function (data) {
