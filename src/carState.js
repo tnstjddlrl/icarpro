@@ -31,7 +31,8 @@ import {
   StateEngineState,
   StateCarVolt,
   voltValue,
-  stateWaitTime
+  stateWaitTime,
+  modemNumber
 } from './atom/atoms'
 
 import client from './Client'
@@ -107,9 +108,11 @@ const CarState = () => {
   const isbooton = useRecoilValue(isBootOn)
   const boottime = useRecoilValue(bootRestTime)
 
+  const [atModemn, setAtModemn] = useRecoilState(modemNumber)
+
   function registerClick() {
     try {
-      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
+      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken, modem: atModemn } }
 
       client.write(JSON.stringify(txt))
       console.log('전송 : ' + JSON.stringify(txt))

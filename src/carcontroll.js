@@ -108,6 +108,9 @@ const Carcontroll = () => {
   const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
   const isicarswitch = useRecoilValue(icarSwitch)
 
+  const [atModemn, setAtModemn] = useRecoilState(modemNumber)
+
+
   const [atCertifyState,setAtCertifyState] = useRecoilState(certifyState)
 
   const [atStateWaitTime,setAtStateWaitTime] = useRecoilState(stateWaitTime)
@@ -140,36 +143,45 @@ const Carcontroll = () => {
     return () => { unsubscribe() };
   });
 
+  console.log(isRemote)
+  
   useEffect(()=>{
 
-    client.once('data',(data)=>{
+
+    console.log('클라온스 추가됨!')
+    console.log('클라 온스 갯수 : ' + client.listenerCount('data'))
+
+    if(isRemote === false){
+      client.once('data',(data)=>{
       
-      var command = ''+data
-
-      if(atmodemN == command.split('/')[0] && boot != true){
-        if(command.split('/')[4][3] === 'i'){
-          
-          console.log('원격 시동 on 상태 확인')
-
-          setIsRemote(true)
-          setAtIsboot(true)
-          setBoot(true)
-
-          rrtime = new Date()
+        var command = ''+data
   
-          rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
-          rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
+        if(atmodemN == command.split('/')[0] && boot != true){
+          if(command.split('/')[4][3] === 'i'){
+            
+            console.log('원격 시동 on 상태 확인')
+  
+            setIsRemote(true)
+            setAtIsboot(true)
+            setBoot(true)
+  
+            rrtime = new Date()
     
-          interval = setInterval(() => {
-            timecalcul()
-          }, 1000);
-
-        }//차량 원격 시동 타이머 값 받아와서 설정해야함.
-      }
-
-    })
+            rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
+            rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
+      
+            interval = setInterval(() => {
+              timecalcul()
+            }, 1000);
+  
+          }//차량 원격 시동 타이머 값 받아와서 설정해야함.
+        }
+  
+      })
+    }
 
   },[isRemote])
+
 
   function registerClick() {
 
@@ -177,8 +189,8 @@ const Carcontroll = () => {
 
     try {
 
-      client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
-      console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
+      client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken, modem: atModemn } }))
+      console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken, modem: atModemn } }))
 
     } catch (e) {
       console.log(e)

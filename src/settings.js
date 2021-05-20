@@ -79,6 +79,8 @@ const Settings = () => {
 
   const [atStateWaitTime,setAtStateWaitTime] = useRecoilState(stateWaitTime)
 
+  
+
 
   const [icarswitch, seticarswitch] = useState(aticarswitch)
   const [idoorswitch, setidoorswitch] = useState(atidoorswitch)
@@ -108,7 +110,7 @@ const Settings = () => {
 
   function registerClick() {
     try {
-      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken } }
+      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken, modem: atmodemN } }
 
       client.write(JSON.stringify(txt))
       console.log('전송 : ' + JSON.stringify(txt))
