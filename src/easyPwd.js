@@ -24,7 +24,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken } from './atom/atoms'
+import { fcmToken, modemNumber } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -45,6 +45,7 @@ const CarState = () => {
   const inputRef = useRef()
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
+  const [atModemn, setAtModemn] = useRecoilState(modemNumber)
 
   const [saveModal, setSaveModal] = useState(false)
 
@@ -76,10 +77,17 @@ const CarState = () => {
 
 
   function registerClick() {
-    var txt = { type: "R", type_sub: "easy_pwd", data: { pwd: pwd, token: pushToken } }
+    var txt = { type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }
     txt = JSON.stringify(txt)
 
-    var res = client.write(txt)
+
+    try {
+      console.log(txt)
+      client.write(txt)
+    } catch (error) {
+      console.error(error)
+      //재접속 함수 제작해야함
+    }
 
   }
 
