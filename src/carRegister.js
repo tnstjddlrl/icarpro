@@ -28,6 +28,8 @@ import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLo
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import axios from 'axios'
+
 
 
 const chwidth = Dimensions.get('window').width
@@ -57,7 +59,7 @@ const CarRegister = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
   const [atLocalClientPort, setatLocalClientPort] = useRecoilState(AppLocalClientPort)
-  const [atLocalClientAddress,setatLocalClientAddress] =useRecoilState(AppLocalClientAddress)
+  const [atLocalClientAddress, setatLocalClientAddress] = useRecoilState(AppLocalClientAddress)
 
 
 
@@ -74,6 +76,8 @@ const CarRegister = () => {
 
   const [isRegister, setIsRegister] = useState(false)
 
+  const [axiReturn, setAxiReturn] = useState('nononono');
+
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('@is_first')
@@ -81,6 +85,26 @@ const CarRegister = () => {
     } catch (e) {
       console.log(e)
     }
+  }
+
+  const registerAxi = async () => {
+    await axios.get('http://175.126.232.72/proc.php', {
+      params: {
+        type: 'register',
+        modem: modemN
+      }
+    })
+      .then(async (response) => {
+        console.log('???  ' + response.data);
+        setAxiReturn(response.data)
+        return '' + response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .then(function () {
+        // Alert.alert('서버오류! 나중에 시도해주세요!')
+      });
   }
 
 
@@ -156,49 +180,72 @@ const CarRegister = () => {
     }
   }
 
-  function registerClick(sub) {
-    try {
-      var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
-      txt = JSON.stringify(txt)
+  async function registerClick(sub) {
 
-      client.write(txt)
-      console.log('전송 : ' + txt)
+    await axios.get('http://175.126.232.72/proc.php', {
+      params: {
+        type: 'register',
+        modem: modemN
+      }
+    })
+      .then((response) => {
+        if ('' + response.data == 'nothing') {
 
-      console.log('로컬 포트 : ')
-      console.log(client.localPort)
+          try {
+            var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
+            txt = JSON.stringify(txt)
 
-      asyncSave()
+            client.write(txt)
+            console.log('전송 : ' + txt)
 
-    } catch (error) {
-      console.log('등록 에러')
-      console.log(error)
-      client.destroy()
+            console.log('로컬 포트 : ')
+            console.log(client.localPort)
 
-      console.log(client._destroyed)
+            asyncSave()
 
-      setTimeout(() => {
+            usercancelff('등록이 완료되었습니다.')
 
-        client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
-        // let vvs = client.connect({ port: 3400, host: '175.126.232.72' })
+          } catch (error) {
+            console.log('등록 에러')
+            console.log(error)
+            client.destroy()
 
-        if(!client._destroyed){
+            console.log(client._destroyed)
 
-          console.log(client._destroyed)
+            setTimeout(() => {
 
-          setTimeout(() => {
-            client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-            console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+              client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
+              // let vvs = client.connect({ port: 3400, host: '175.126.232.72' })
 
+              if (!client._destroyed) {
 
-          }, 2000);
-        }else{
-          console.log('??')
-          
-          console.log(client._destroyed)
+                console.log(client._destroyed)
+
+                setTimeout(() => {
+                  client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+                  console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+
+                  usercancelff('등록이 완료되었습니다.')
+                }, 2000);
+              } else {
+                console.log('??')
+
+                console.log(client._destroyed)
+              }
+
+            }, 1000);
+          }
+
+        } else if ('' + response.data == 'later') {
+          setDeleteFirstModal(true)
+
+        } else {
+
+          Alert.alert('서버 오류입니다.')
+
         }
-        
-      }, 1000);
-    }
+      })
+
   }
 
 
@@ -222,7 +269,7 @@ const CarRegister = () => {
   }
 
   function registerDel() {
-    
+
     var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }
     txt = JSON.stringify(txt)
 
@@ -257,7 +304,7 @@ const CarRegister = () => {
 
         usercancelff('등록이 완료되었습니다.')
 
-      }else if ('' + data == 'reg_fail') {
+      } else if ('' + data == 'reg_fail') {
 
         setDeleteFirstModal(true)
 
@@ -295,7 +342,7 @@ const CarRegister = () => {
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>차량 등록</Text>
-          <TouchableWithoutFeedback onPress={() => { client.destroy(),Alert.alert('연결 끊기') }}>
+          <TouchableWithoutFeedback onPress={() => { registerAxi() }}>
             <View><Image source={close}></Image></View>
           </TouchableWithoutFeedback>
         </View>

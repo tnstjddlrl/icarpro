@@ -45,6 +45,8 @@ import AutoHeightImage from 'react-native-auto-height-image';
 
 import { Player } from '@react-native-community/audio-toolkit';
 
+import axios from 'axios'
+
 const doorOnSound = () => new Player('dooron.mp3').play(err => console.log(err))
 const panicOnSound = () => new Player('panicon.mp3').play(err => console.log(err))
 const WarnSound = () => new Player('warn.mp3').play(err => console.log(err))
@@ -126,13 +128,14 @@ const Carcontroll = () => {
 
   const [isRemote,setIsRemote] = useState(false)
 
-  const unsubscribe = navigation.addListener('focus', () => {
+  const unsubscribe = navigation.addListener('focus', async() => {
     console.log('로컬포트 : '+atLocalClientPort)
     if (isicarswitch === false) {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
     if(atStateWaitTime === false){
-      registerClick()
+      // registerClick()
+      await loadState()
       setAtStateWaitTime(true)
       setTimeout(() => {
         setAtStateWaitTime(false)
@@ -143,7 +146,25 @@ const Carcontroll = () => {
     return () => { unsubscribe() };
   });
 
-  // console.log(isRemote)
+
+  const loadState = async () => {
+    await axios.get('http://175.126.232.72/proc.php', {
+      params: {
+        type: 'state',
+        modem: 1234,
+        token : pushToken
+      }
+    })
+    .then(async (response) => {
+      console.log('???  ' + response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    .then(function () {
+      // Alert.alert('서버오류! 나중에 시도해주세요!')
+    });  
+  }
 
   useEffect(()=>{
     
