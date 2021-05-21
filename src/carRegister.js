@@ -172,6 +172,7 @@ const CarRegister = () => {
       console.log('리스너 갯수 : ')
       console.log(client.listenerCount('data'))
 
+
     } catch (error) {
       console.log('등록 에러')
       console.log(error)
@@ -199,6 +200,8 @@ const CarRegister = () => {
           setTimeout(() => {
             client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
             console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+
+
           }, 2000);
         }else{
           console.log('??')
@@ -253,6 +256,8 @@ const CarRegister = () => {
     client.write(txt)
     console.log('전송 : ' + txt)
 
+    usercancelff('삭제가 완료되었습니다.')
+
   }
 
 
@@ -261,26 +266,18 @@ const CarRegister = () => {
   useEffect(() => {
     client.on('data', function (data) {
       if ('' + data == 'reg_suc') {
-        // clearTimeout(serverCheck)
-        // Alert.alert('등록이 완료되었습니다')
-        // navigation.navigate('차량제어')
 
+      usercancelff('등록이 완료되었습니다.')
 
-        usercancelff('등록이 완료되었습니다.')
+      }else if ('' + data == 'reg_fail') {
 
-      } else if ('' + data == 'reg_delsuc') {
-
-        usercancelff('삭제가 완료되었습니다.')
-      } else if ('' + data == 'reg_fail') {
-        // setLoadModal(true)
         setDeleteFirstModal(true)
+
       } else {
         // console.log('??이상하게 넘어옴')
       }
       console.log('차량 등록 내에서 받기 ' + data);
     });
-
-    
 
   }, [])
 
