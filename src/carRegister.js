@@ -169,10 +169,6 @@ const CarRegister = () => {
 
       asyncSave()
 
-      console.log('리스너 갯수 : ')
-      console.log(client.listenerCount('data'))
-
-
     } catch (error) {
       console.log('등록 에러')
       console.log(error)
@@ -182,16 +178,8 @@ const CarRegister = () => {
 
       setTimeout(() => {
 
-        let vvs = client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
+        client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
         // let vvs = client.connect({ port: 3400, host: '175.126.232.72' })
-
-        vvs.on('data', function (data) {
-          console.log('안녕')
-          Alert.alert(data)
-        })
-
-        console.log('리스너 갯수 : ')
-        console.log(client.listenerCount('data'))
 
         if(!client._destroyed){
 
@@ -267,7 +255,7 @@ const CarRegister = () => {
     client.on('data', function (data) {
       if ('' + data == 'reg_suc') {
 
-      usercancelff('등록이 완료되었습니다.')
+        usercancelff('등록이 완료되었습니다.')
 
       }else if ('' + data == 'reg_fail') {
 

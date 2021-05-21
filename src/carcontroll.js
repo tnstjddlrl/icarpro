@@ -146,11 +146,7 @@ const Carcontroll = () => {
   // console.log(isRemote)
 
   useEffect(()=>{
-
-
-    console.log('클라온스 추가됨!')
-    console.log('클라 온스 갯수 : ' + client.listenerCount('data'))
-
+    
     if(isRemote === false){
       client.once('data',(data)=>{
       
