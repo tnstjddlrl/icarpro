@@ -199,13 +199,39 @@ const Carcontroll = () => {
       console.log(atModemn)
       if(''+response.data === 'no_certification'){
         setAtCertifyState('no_certification')
+
+        try {
+        client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+          
+        } catch (error) {
+          console.log(error)
+          Alert.alert(error)
+        }
+
         Alert.alert('미인증 상태입니다.','인증을 진행해주세요',
         [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
+
       }else if(''+response.data === 'no_state'){
         setAtCertifyState('no_state')
         Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
+        
+        try {
+          client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atModemn, user: atuserN, token: pushToken } }))  
+        } catch (error) {
+          console.log(error)
+          Alert.alert(error)
+        }
+        
+
       }else if(atModemn == command.split('/')[0]){
         setAtCertifyState('good')
+
+        try {
+          client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+        } catch (error) {
+          console.log(error)
+          Alert.alert(error)
+        }
         
         if (command.split('/')[1][2] === 'i') {
           setAtStateCarAlert('ON')
@@ -371,6 +397,7 @@ const Carcontroll = () => {
     })
     .catch(function (error) {
       console.log(error);
+      Alert.alert('서버오류! 나중에 시도해주세요!')
     })
     .then(function () {
       // Alert.alert('서버오류! 나중에 시도해주세요!')

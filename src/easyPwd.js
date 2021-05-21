@@ -26,6 +26,9 @@ import {
 } from 'recoil';
 import { fcmToken, modemNumber } from './atom/atoms'
 
+import axios from 'axios'
+
+
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
@@ -76,34 +79,58 @@ const CarState = () => {
 
 
 
-  function registerClick() {
+  async function registerClick() {
 
     // console.log(pwd.length)
 
-    if(pwd.length === 4){
 
-      var txt = { type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }
-      txt = JSON.stringify(txt)
-      
-      try {
-        console.log(txt)
-        client.write(txt)
-      } catch (error) {
-        console.error(error)
-        //재접속 함수 제작해야함
-      }
-      
-    } else{
-      
+    if (pwd.length === 4) {
+
+      await axios.get('http://175.126.232.72/proc.php', {
+        params: {
+          type: 'easy_pwd',
+          modem: atModemn,
+          pwdeasy: pwd
+        }
+      })
+        .then(async (response) => {
+          console.log('???  ' + response.data);
+
+          if ('' + response.data == 'easy_req') {
+            setSaveModal(true)
+            setTimeout(() => {
+              setSaveModal(false)
+            }, 2000);
+            try {
+              console.log(JSON.stringify({ type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }))
+              client.write(JSON.stringify({ type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }))
+            } catch (error) {
+              console.error(error)
+            }
+          } else if ('' + response.data == 'pwd_okay') {
+            Alert.alert('비밀번호 확인 완료!')
+          } else if ('' + response.data == 'pwd_fail') {
+            Alert.alert('비밀번호 틀림!')
+          } else {
+            Alert.alert('서버 오류!')
+          }
+
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+
+    } else {
+
       Alert.alert('4자리 모두 입력해주세요.')
       return;
-      
+
     }
-    
+
 
   }
 
-console.log(pwd)
+  console.log(pwd)
 
 
   return (
