@@ -205,6 +205,8 @@ const CarRegister = () => {
 
             usercancelff('등록이 완료되었습니다.')
 
+            setIsRegister(true)
+
           } catch (error) {
             console.log('등록 에러')
             console.log(error)
@@ -226,11 +228,16 @@ const CarRegister = () => {
                   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
 
                   usercancelff('등록이 완료되었습니다.')
+
+                  setIsRegister(true)
+
                 }, 2000);
               } else {
+
                 console.log('??')
 
                 console.log(client._destroyed)
+
               }
 
             }, 1000);
@@ -270,28 +277,64 @@ const CarRegister = () => {
 
   function registerDel() {
 
-    var txt = { type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }
-    txt = JSON.stringify(txt)
+    try {
 
-    setUserN('')
-    setCarRace('')
-    setSedan1(false)
-    setSuv1(false)
+      client.write(JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
+      console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
 
-    delFirst()
-    delUser()
-    delcarRace()
+      usercancelff('삭제가 완료되었습니다.')
 
-    setatUserNumber('')
-    setatIsCarRace('')
+      setUserN('')
+      setCarRace('')
+      setSedan1(false)
+      setSuv1(false)
 
-    setUserN('')
-    setCarRace('')
+      delFirst()
+      delUser()
+      delcarRace()
 
-    client.write(txt)
-    console.log('전송 : ' + txt)
+      setatUserNumber('')
+      setatIsCarRace('')
 
-    usercancelff('삭제가 완료되었습니다.')
+      setUserN('')
+      setCarRace('')
+
+      setIsRegister(false)
+
+    } catch (error) {
+
+      console.log(error)
+
+      client.destroy()
+      client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+
+      setTimeout(() => {
+        client.write(JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
+
+        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
+        usercancelff('삭제가 완료되었습니다.')
+
+        setUserN('')
+        setCarRace('')
+        setSedan1(false)
+        setSuv1(false)
+
+        delFirst()
+        delUser()
+        delcarRace()
+
+        setatUserNumber('')
+        setatIsCarRace('')
+
+        setUserN('')
+        setCarRace('')
+
+        setIsRegister(false)
+
+      }, 2000);
+
+    }
+
 
   }
 
