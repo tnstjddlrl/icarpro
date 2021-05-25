@@ -197,7 +197,7 @@ const Carcontroll = () => {
         var command = '' + response.data
         console.log(command.split('/')[0])
         console.log(atModemn)
-        if ('' + response.data === 'no_certification') {
+        if ('' + response.data === 'no_cer') {
           setAtCertifyState('no_certification')
 
           try {
