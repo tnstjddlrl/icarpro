@@ -38,11 +38,30 @@ import {
   settingLimit,
   modemNumber,
   userNumber,
-  stateWaitTime
+  stateWaitTime,
+  certifyState,
+  isBootOn,
+  bootRestTime,
+  voltValue,
+  bootTimeValue,
+  lastHeatTimeValue,
+  startTimeValue,
+  AppLocalClientPort,
+  AppLocalClientAddress,
+  StateCarAlert,
+  StateDoorLock,
+  StateDoor,
+  StateTrunk,
+  StateEngineHood,
+  StateEngineState,
+  StateCarVolt
 } from './atom/atoms'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
+
+import axios from 'axios';
+
 
 
 const back = require('../img/backbtn.png')
@@ -64,12 +83,12 @@ const Settings = () => {
 
   const [saveModal, setSaveModal] = useState(false)
 
-  const [aticarswitch, setaticarswitch] = useRecoilState(icarSwitch)
-  const [atidoorswitch, setatidoorswitch] = useRecoilState(idoorSwitch)
-  const [atlowboltBoot, setatlowboltBoot] = useRecoilState(lowvoltBoot)
-  const [atlowboltAlert, setatlowboltAlert] = useRecoilState(lowvoltAlert)
-  const [atactionsound, setatactionsound] = useRecoilState(actionSound)
-  const [atalertsound, setatalertsound] = useRecoilState(alertSound)
+  const [aticarswitch, setAticarswitch] = useRecoilState(icarSwitch)
+  const [atidoorswitch, setAtidoorswitch] = useRecoilState(idoorSwitch)
+  const [atlowboltBoot, setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
+  const [atlowboltAlert, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
+  const [atactionsound, setAtactionSound] = useRecoilState(actionSound)
+  const [atalertsound, setAtalertSound] = useRecoilState(alertSound)
 
   const pushToken = useRecoilValue(fcmToken)
   const atmodemN = useRecoilValue(modemNumber)
@@ -77,7 +96,31 @@ const Settings = () => {
 
   const [stLimit, setStLimit] = useRecoilState(settingLimit)
 
-  const [atStateWaitTime,setAtStateWaitTime] = useRecoilState(stateWaitTime)
+  // 
+
+  const [atCertifyState, setAtCertifyState] = useRecoilState(certifyState)
+
+  const [atStateWaitTime, setAtStateWaitTime] = useRecoilState(stateWaitTime)
+
+
+  const [, setLowVoltValue] = useRecoilState(voltValue)
+  const [atBootTime, setatBootTimeValue] = useRecoilState(bootTimeValue)
+  const [, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
+  const [, setAtStartTimeValue] = useRecoilState(startTimeValue)
+
+
+  const [atLocalClientPort, setatLocalClientPort] = useRecoilState(AppLocalClientPort)
+  const [atLocalClientAddress, setatLocalClientAddress] = useRecoilState(AppLocalClientAddress)
+
+  const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
+  const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
+  const [atStateDoor, setAtStateDoor] = useRecoilState(StateDoor)
+  const [atStateTrunk, setAtStateTrunk] = useRecoilState(StateTrunk)
+  const [atStateEngineHood, setAtStateEngineHood] = useRecoilState(StateEngineHood)
+  const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
+  const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
+
+  // 
 
   
 
@@ -131,9 +174,10 @@ const Settings = () => {
     }
   }
 
-  const reqState = navigation.addListener('focus', () => {
+  const reqState = navigation.addListener('focus', async() => {
     if(atStateWaitTime === false){
-      registerClick()
+      // registerClick()
+      await loadState()
       setAtStateWaitTime(true)
       setTimeout(() => {
         setAtStateWaitTime(false)
@@ -144,6 +188,251 @@ const Settings = () => {
   useEffect(() => {
     return () => reqState();
   });
+
+
+  const loadState = async () => {
+    await axios.get('http://175.126.232.72/proc.php', {
+      params: {
+        type: 'state',
+        modem: atmodemN,
+        token: pushToken
+      }
+    })
+      .then(async (response) => {
+
+        console.log('???  ' + response.data);
+
+        var command = '' + response.data
+        console.log(command.split('/')[0])
+        console.log(atmodemN)
+        if ('' + response.data === 'no_cer') {
+          setAtCertifyState('no_certification')
+
+          try {
+            client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+
+          } catch (error) {
+            console.log(error)
+            client.destroy()
+            client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+
+            setTimeout(() => {
+              client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+
+              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            }, 2000);
+          }
+
+          Alert.alert('미인증 상태입니다.', '인증을 진행해주세요',
+            [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
+
+        } else if ('' + response.data === 'no_state') {
+          setAtCertifyState('no_state')
+          Alert.alert('상태값이 없습니다.', '잠시후 진행해주세요')
+
+          try {
+            client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+          } catch (error) {
+            console.log(error)
+            client.destroy()
+            client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+
+            setTimeout(() => {
+              client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+
+              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            }, 2000);
+          }
+
+
+        } else if (atmodemN == command.split('/')[0]) {
+          setAtCertifyState('good')
+
+          try {
+            client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+          } catch (error) {
+            console.log(error)
+            client.destroy()
+            client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+
+            setTimeout(() => {
+              client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+
+              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            }, 2000);
+          }
+
+          if (command.split('/')[1][2] === 'i') {
+            setAtStateCarAlert('ON')
+            console.log('경계온ok')
+          } else if (command.split('/')[1][2] === 'o') {
+            setAtStateCarAlert('OFF')
+            console.log('경계오프ok')
+          }
+
+          if (command.split('/')[1][3] === 'i') {
+            setAtStateEngineState('ON')
+            console.log('엔진온ok')
+          } else if (command.split('/')[1][3] === 'o') {
+            setAtStateEngineState('OFF')
+            console.log('엔진오프ok')
+          }
+
+          //차량 전압
+          setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
+
+          //도어 열림 상태
+          if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
+            setAtStateDoor('OFF')
+            console.log('도어오프ok')
+          } else {
+            setAtStateDoor('ON')
+            console.log('도어온ok')
+          }
+
+          //트렁크 상태
+          if (command.split('/')[2][6] === 'i') {
+            setAtStateTrunk('ON')
+            console.log('트렁크온ok')
+          } else if (command.split('/')[2][6] === 'o') {
+            setAtStateTrunk('OFF')
+            console.log('트렁크오프ok')
+          }
+
+          //후드 상태
+          if (command.split('/')[2][7] === 'i') {
+            setAtStateEngineHood('ON')
+            console.log('후드온ok')
+          } else if (command.split('/')[2][7] === 'o') {
+            setAtStateEngineHood('OFF')
+            console.log('후드오프ok')
+          }
+
+          //도어락 상태
+          if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
+            setAtStateDoorLock('ON')
+            console.log('도어락온ok')
+          } else {
+            setAtStateDoorLock('OFF')
+            console.log('도어락오프ok')
+          }
+
+          if (command.split('/')[5][2] === 'i') {
+            setAticarswitch(true)
+            console.log('아이카온ok')
+          } else if (command.split('/')[5][2] === 'o') {
+            setAticarswitch(false)
+            console.log('아이카오프')
+          }
+
+          if (command.split('/')[5][3] === 'i') {
+            setAtidoorswitch(true)
+            console.log('아이도어온')
+          } else if (command.split('/')[5][3] === 'o') {
+            setAtidoorswitch(false)
+            console.log('아이도어오프')
+          }
+
+          if (command.split('/')[5][10] === 'i') {
+            setAtlowvoltAlert(true)
+            console.log('저전압알람온')
+          } else if (command.split('/')[5][10] === 'o') {
+            setAtlowvoltAlert(false)
+            console.log('저전압알람오프')
+          }
+
+          if (command.split('/')[5][11] === 'i') {
+            setAtlowvoltBoot(true)
+            console.log('저전압시동온')
+          } else if (command.split('/')[5][11] === 'o') {
+            setAtlowvoltBoot(false)
+            console.log('저전압시동오프')
+          }
+
+          if (command.split('/')[5][8] === 'i') {
+            setAtactionSound(true)
+            console.log('동작음온')
+          } else if (command.split('/')[5][8] === 'o') {
+            setAtactionSound(false)
+            console.log('동작음오프')
+          }
+
+          if (command.split('/')[5][9] === 'i') {
+            setAtalertSound(true)
+            console.log('경계음온')
+          } else if (command.split('/')[5][9] === 'o') {
+            setAtalertSound(false)
+            console.log('경계음오프')
+          }
+
+          if (command.split('/')[5][15] === '0') {
+            setatBootTimeValue('3')
+            console.log('원격시간0')
+          } else if (command.split('/')[5][15] === '1') {
+            setatBootTimeValue('5')
+            console.log('원격시간1')
+          } else if (command.split('/')[5][15] === '2') {
+            setatBootTimeValue('10')
+            console.log('원격시간2')
+          }
+
+          if (command.split('/')[5][16] === '0') {
+            setAtLastHeatValue('1')
+            console.log('후열시간0')
+          } else if (command.split('/')[5][16] === '1') {
+            setAtLastHeatValue('3')
+            console.log('후열시간1')
+          } else if (command.split('/')[5][16] === '2') {
+            setAtLastHeatValue('5')
+            console.log('후열시간2')
+          }
+
+          if (command.split('/')[5][17] === '0') {
+            setAtStartTimeValue('1')
+            console.log('스타트시간0')
+          } else if (command.split('/')[5][17] === '1') {
+            setAtStartTimeValue('2')
+            console.log('스타트시간1')
+          } else if (command.split('/')[5][17] === '2') {
+            setAtStartTimeValue('3')
+            console.log('스타트시간2')
+          }
+
+          setLowVoltValue(command.split('/')[5][12] + command.split('/')[5][13] + '.' + command.split('/')[5][14])
+
+          // if(atmodemN == command.split('/')[0] && boot != true){
+          //   if(command.split('/')[4][3] === 'i'){
+
+          //     console.log('원격 시동 on 상태 확인')
+
+          //     setIsRemote(true)
+          //     setAtIsboot(true)
+          //     setBoot(true)
+
+          //     rrtime = new Date()
+
+          //     rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
+          //     rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
+
+          //     interval = setInterval(() => {
+          //       timecalcul()
+          //     }, 1000);
+
+          //   }
+          // }
+
+
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+        Alert.alert('서버오류! 나중에 시도해주세요!')
+      })
+      .then(function () {
+        // Alert.alert('서버오류! 나중에 시도해주세요!')
+      });
+  }
+
 
 
   function savebtnclick() {
@@ -303,12 +592,12 @@ const Settings = () => {
       // AsyncStorage.setItem("@actionsound", JSON.stringify(actionsound))
       // AsyncStorage.setItem("@alertsound", JSON.stringify(alertsound))
 
-      setaticarswitch(icarswitch)
-      setatidoorswitch(idoorswitch)
-      setatlowboltBoot(lowboltBoot)
-      setatlowboltAlert(lowboltAlert)
-      setatactionsound(actionsound)
-      setatalertsound(alertsound)
+      setAticarswitch(icarswitch)
+      setAtidoorswitch(idoorswitch)
+      setAtlowvoltBoot(lowboltBoot)
+      setAtlowvoltAlert(lowboltAlert)
+      setAtactionSound(actionsound)
+      setAtalertSound(alertsound)
       setTimeout(() => {
         setSaveModal(false)
       }, 2000);

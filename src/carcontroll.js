@@ -25,15 +25,15 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { 
-  fcmToken, 
-  isCarRace, 
-  bootRestTime, 
-  isBootOn, 
-  icarSwitch, 
-  bootTimeValue, 
-  actionSound, 
-  modemNumber, 
+import {
+  fcmToken,
+  isCarRace,
+  bootRestTime,
+  isBootOn,
+  icarSwitch,
+  bootTimeValue,
+  actionSound,
+  modemNumber,
   userNumber,
   stateWaitTime,
   certifyState,
@@ -54,7 +54,7 @@ import {
   StateEngineHood,
   StateEngineState,
   StateCarVolt
- } from './atom/atoms'
+} from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
 
@@ -125,9 +125,9 @@ const Carcontroll = () => {
   const [atModemn, setAtModemn] = useRecoilState(modemNumber)
 
 
-  const [atCertifyState,setAtCertifyState] = useRecoilState(certifyState)
+  const [atCertifyState, setAtCertifyState] = useRecoilState(certifyState)
 
-  const [atStateWaitTime,setAtStateWaitTime] = useRecoilState(stateWaitTime)
+  const [atStateWaitTime, setAtStateWaitTime] = useRecoilState(stateWaitTime)
 
 
 
@@ -136,7 +136,7 @@ const Carcontroll = () => {
 
   const [completeModal, setCompleteModal] = useState(false)
 
-  const [isRemote,setIsRemote] = useState(false)
+  const [isRemote, setIsRemote] = useState(false)
 
 
   const [, setLowVoltValue] = useRecoilState(voltValue)
@@ -151,8 +151,8 @@ const Carcontroll = () => {
   const [atActionSound, setAtactionSound] = useRecoilState(actionSound)
   const [, setAtalertSound] = useRecoilState(alertSound)
 
-  const [atLocalClientPort , setatLocalClientPort] = useRecoilState(AppLocalClientPort)
-  const [atLocalClientAddress,setatLocalClientAddress] =useRecoilState(AppLocalClientAddress)
+  const [atLocalClientPort, setatLocalClientPort] = useRecoilState(AppLocalClientPort)
+  const [atLocalClientAddress, setatLocalClientAddress] = useRecoilState(AppLocalClientAddress)
 
   const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
   const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
@@ -163,12 +163,12 @@ const Carcontroll = () => {
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
 
-  const unsubscribe = navigation.addListener('focus', async() => {
-    console.log('로컬포트 : '+atLocalClientPort)
+  const unsubscribe = navigation.addListener('focus', async () => {
+    console.log('로컬포트 : ' + atLocalClientPort)
     if (isicarswitch === false) {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
-    if(atStateWaitTime === false){
+    if (atStateWaitTime === false) {
       // registerClick()
       await loadState()
       setAtStateWaitTime(true)
@@ -186,256 +186,277 @@ const Carcontroll = () => {
     await axios.get('http://175.126.232.72/proc.php', {
       params: {
         type: 'state',
-        modem: parseInt(atModemn),
-        token : pushToken
+        modem: atModemn,
+        token: pushToken
       }
     })
-    .then(async (response) => {
+      .then(async (response) => {
 
-      console.log('???  ' + response.data);
+        console.log('???  ' + response.data);
 
-      var command = ''+response.data
-      console.log(command.split('/')[0])
-      console.log(atModemn)
-      if(''+response.data === 'no_certification'){
-        setAtCertifyState('no_certification')
+        var command = '' + response.data
+        console.log(command.split('/')[0])
+        console.log(atModemn)
+        if ('' + response.data === 'no_certification') {
+          setAtCertifyState('no_certification')
 
-        try {
-        client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atModemn, user: atuserN, token: pushToken } }))
-          
-        } catch (error) {
-          console.log(error)
-          Alert.alert(error)
-        }
+          try {
+            client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atModemn, user: atuserN, token: pushToken } }))
 
-        Alert.alert('미인증 상태입니다.','인증을 진행해주세요',
-        [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
+          } catch (error) {
+            console.log(error)
+            client.destroy()
+            client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
 
-      }else if(''+response.data === 'no_state'){
-        setAtCertifyState('no_state')
-        Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
-        
-        try {
-          client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atModemn, user: atuserN, token: pushToken } }))  
-        } catch (error) {
-          console.log(error)
-          Alert.alert(error)
-        }
-        
+            setTimeout(() => {
+              client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
 
-      }else if(atModemn == command.split('/')[0]){
-        setAtCertifyState('good')
-
-        try {
-          client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
-        } catch (error) {
-          console.log(error)
-          Alert.alert(error)
-        }
-        
-        if (command.split('/')[1][2] === 'i') {
-          setAtStateCarAlert('ON')
-          console.log('경계온ok')
-        } else if (command.split('/')[1][2] === 'o') {
-          setAtStateCarAlert('OFF')
-          console.log('경계오프ok')
-        }
-
-        if (command.split('/')[1][3] === 'i') {
-          setAtStateEngineState('ON')
-          console.log('엔진온ok')
-        } else if (command.split('/')[1][3] === 'o') {
-          setAtStateEngineState('OFF')
-          console.log('엔진오프ok')
-        }
-    
-        //차량 전압
-        setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
-    
-        //도어 열림 상태
-        if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
-          setAtStateDoor('OFF')
-          console.log('도어오프ok')
-        } else {
-          setAtStateDoor('ON')
-          console.log('도어온ok')
-        }
-    
-        //트렁크 상태
-        if (command.split('/')[2][6] === 'i') {
-          setAtStateTrunk('ON')
-          console.log('트렁크온ok')
-        } else if (command.split('/')[2][6] === 'o') {
-          setAtStateTrunk('OFF')
-          console.log('트렁크오프ok')
-        }
-    
-        //후드 상태
-        if (command.split('/')[2][7] === 'i') {
-          setAtStateEngineHood('ON')
-          console.log('후드온ok')
-        } else if (command.split('/')[2][7] === 'o') {
-          setAtStateEngineHood('OFF')
-          console.log('후드오프ok')
-        }
-    
-        //도어락 상태
-        if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
-          setAtStateDoorLock('ON')
-          console.log('도어락온ok')
-        } else {
-          setAtStateDoorLock('OFF')
-          console.log('도어락오프ok')
-        }
-
-        if (command.split('/')[5][2] === 'i') {
-          setAticarswitch(true)
-          console.log('아이카온ok')
-        } else if (command.split('/')[5][2] === 'o') {
-          setAticarswitch(false)
-          console.log('아이카오프')
-        }
-
-        if (command.split('/')[5][3] === 'i') {
-          setAtidoorswitch(true)
-          console.log('아이도어온')
-        } else if (command.split('/')[5][3] === 'o') {
-          setAtidoorswitch(false)
-          console.log('아이도어오프')
-        }
-
-        if (command.split('/')[5][10] === 'i') {
-          setAtlowvoltAlert(true)
-          console.log('저전압알람온')
-        } else if (command.split('/')[5][10] === 'o') {
-          setAtlowvoltAlert(false)
-          console.log('저전압알람오프')
-        }
-
-        if (command.split('/')[5][11] === 'i') {
-          setAtlowvoltBoot(true)
-          console.log('저전압시동온')
-        } else if (command.split('/')[5][11] === 'o') {
-          setAtlowvoltBoot(false)
-          console.log('저전압시동오프')
-        }
-
-        if (command.split('/')[5][8] === 'i') {
-          setAtactionSound(true)
-          console.log('동작음온')
-        } else if (command.split('/')[5][8] === 'o') {
-          setAtactionSound(false)
-          console.log('동작음오프')
-        }
-
-        if (command.split('/')[5][9] === 'i') {
-          setAtalertSound(true)
-          console.log('경계음온')
-        } else if (command.split('/')[5][9] === 'o') {
-          setAtalertSound(false)
-          console.log('경계음오프')
-        }
-
-        if (command.split('/')[5][15] === '0') {
-          setatBootTimeValue('3')
-          console.log('원격시간0')
-        } else if (command.split('/')[5][15] === '1') {
-          setatBootTimeValue('5')
-          console.log('원격시간1')
-        } else if (command.split('/')[5][15] === '2') {
-          setatBootTimeValue('10')
-          console.log('원격시간2')
-        }
-
-        if (command.split('/')[5][16] === '0') {
-          setAtLastHeatValue('1')
-          console.log('후열시간0')
-        } else if (command.split('/')[5][16] === '1') {
-          setAtLastHeatValue('3')
-          console.log('후열시간1')
-        } else if (command.split('/')[5][16] === '2') {
-          setAtLastHeatValue('5')
-          console.log('후열시간2')
-        }
-
-        if (command.split('/')[5][17] === '0') {
-          setAtStartTimeValue('1')
-          console.log('스타트시간0')
-        } else if (command.split('/')[5][17] === '1') {
-          setAtStartTimeValue('2')
-          console.log('스타트시간1')
-        } else if (command.split('/')[5][17] === '2') {
-          setAtStartTimeValue('3')
-          console.log('스타트시간2')
-        }
-
-        setLowVoltValue(command.split('/')[5][12]+command.split('/')[5][13]+'.'+command.split('/')[5][14])
-
-        if(atmodemN == command.split('/')[0] && boot != true){
-          if(command.split('/')[4][3] === 'i'){
-            
-            console.log('원격 시동 on 상태 확인')
-  
-            setIsRemote(true)
-            setAtIsboot(true)
-            setBoot(true)
-  
-            rrtime = new Date()
-    
-            rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
-            rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
-      
-            interval = setInterval(() => {
-              timecalcul()
-            }, 1000);
-  
+              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            }, 2000);
           }
-        }
-        
 
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-      Alert.alert('서버오류! 나중에 시도해주세요!')
-    })
-    .then(function () {
-      // Alert.alert('서버오류! 나중에 시도해주세요!')
-    });  
+          Alert.alert('미인증 상태입니다.', '인증을 진행해주세요',
+            [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
+
+        } else if ('' + response.data === 'no_state') {
+          setAtCertifyState('no_state')
+          Alert.alert('상태값이 없습니다.', '잠시후 진행해주세요')
+
+          try {
+            client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+          } catch (error) {
+            console.log(error)
+            client.destroy()
+            client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+
+            setTimeout(() => {
+              client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+
+              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            }, 2000);
+          }
+
+
+        } else if (atModemn == command.split('/')[0]) {
+          setAtCertifyState('good')
+
+          try {
+            client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+          } catch (error) {
+            console.log(error)
+            client.destroy()
+            client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+
+            setTimeout(() => {
+              client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+
+              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            }, 2000);
+          }
+
+          if (command.split('/')[1][2] === 'i') {
+            setAtStateCarAlert('ON')
+            console.log('경계온ok')
+          } else if (command.split('/')[1][2] === 'o') {
+            setAtStateCarAlert('OFF')
+            console.log('경계오프ok')
+          }
+
+          if (command.split('/')[1][3] === 'i') {
+            setAtStateEngineState('ON')
+            console.log('엔진온ok')
+          } else if (command.split('/')[1][3] === 'o') {
+            setAtStateEngineState('OFF')
+            console.log('엔진오프ok')
+          }
+
+          //차량 전압
+          setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
+
+          //도어 열림 상태
+          if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
+            setAtStateDoor('OFF')
+            console.log('도어오프ok')
+          } else {
+            setAtStateDoor('ON')
+            console.log('도어온ok')
+          }
+
+          //트렁크 상태
+          if (command.split('/')[2][6] === 'i') {
+            setAtStateTrunk('ON')
+            console.log('트렁크온ok')
+          } else if (command.split('/')[2][6] === 'o') {
+            setAtStateTrunk('OFF')
+            console.log('트렁크오프ok')
+          }
+
+          //후드 상태
+          if (command.split('/')[2][7] === 'i') {
+            setAtStateEngineHood('ON')
+            console.log('후드온ok')
+          } else if (command.split('/')[2][7] === 'o') {
+            setAtStateEngineHood('OFF')
+            console.log('후드오프ok')
+          }
+
+          //도어락 상태
+          if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
+            setAtStateDoorLock('ON')
+            console.log('도어락온ok')
+          } else {
+            setAtStateDoorLock('OFF')
+            console.log('도어락오프ok')
+          }
+
+          if (command.split('/')[5][2] === 'i') {
+            setAticarswitch(true)
+            console.log('아이카온ok')
+          } else if (command.split('/')[5][2] === 'o') {
+            setAticarswitch(false)
+            console.log('아이카오프')
+          }
+
+          if (command.split('/')[5][3] === 'i') {
+            setAtidoorswitch(true)
+            console.log('아이도어온')
+          } else if (command.split('/')[5][3] === 'o') {
+            setAtidoorswitch(false)
+            console.log('아이도어오프')
+          }
+
+          if (command.split('/')[5][10] === 'i') {
+            setAtlowvoltAlert(true)
+            console.log('저전압알람온')
+          } else if (command.split('/')[5][10] === 'o') {
+            setAtlowvoltAlert(false)
+            console.log('저전압알람오프')
+          }
+
+          if (command.split('/')[5][11] === 'i') {
+            setAtlowvoltBoot(true)
+            console.log('저전압시동온')
+          } else if (command.split('/')[5][11] === 'o') {
+            setAtlowvoltBoot(false)
+            console.log('저전압시동오프')
+          }
+
+          if (command.split('/')[5][8] === 'i') {
+            setAtactionSound(true)
+            console.log('동작음온')
+          } else if (command.split('/')[5][8] === 'o') {
+            setAtactionSound(false)
+            console.log('동작음오프')
+          }
+
+          if (command.split('/')[5][9] === 'i') {
+            setAtalertSound(true)
+            console.log('경계음온')
+          } else if (command.split('/')[5][9] === 'o') {
+            setAtalertSound(false)
+            console.log('경계음오프')
+          }
+
+          if (command.split('/')[5][15] === '0') {
+            setatBootTimeValue('3')
+            console.log('원격시간0')
+          } else if (command.split('/')[5][15] === '1') {
+            setatBootTimeValue('5')
+            console.log('원격시간1')
+          } else if (command.split('/')[5][15] === '2') {
+            setatBootTimeValue('10')
+            console.log('원격시간2')
+          }
+
+          if (command.split('/')[5][16] === '0') {
+            setAtLastHeatValue('1')
+            console.log('후열시간0')
+          } else if (command.split('/')[5][16] === '1') {
+            setAtLastHeatValue('3')
+            console.log('후열시간1')
+          } else if (command.split('/')[5][16] === '2') {
+            setAtLastHeatValue('5')
+            console.log('후열시간2')
+          }
+
+          if (command.split('/')[5][17] === '0') {
+            setAtStartTimeValue('1')
+            console.log('스타트시간0')
+          } else if (command.split('/')[5][17] === '1') {
+            setAtStartTimeValue('2')
+            console.log('스타트시간1')
+          } else if (command.split('/')[5][17] === '2') {
+            setAtStartTimeValue('3')
+            console.log('스타트시간2')
+          }
+
+          setLowVoltValue(command.split('/')[5][12] + command.split('/')[5][13] + '.' + command.split('/')[5][14])
+
+          if (atmodemN == command.split('/')[0] && boot != true) {
+            if (command.split('/')[4][3] === 'i') {
+
+              console.log('원격 시동 on 상태 확인')
+
+              setIsRemote(true)
+              setAtIsboot(true)
+              setBoot(true)
+
+              rrtime = new Date()
+
+              rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4] + command.split('/')[4][5]))
+              rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6] + command.split('/')[4][7]))
+
+              interval = setInterval(() => {
+                timecalcul()
+              }, 1000);
+
+            }
+          }
+
+
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+        Alert.alert('서버오류! 나중에 시도해주세요!')
+      })
+      .then(function () {
+        // Alert.alert('서버오류! 나중에 시도해주세요!')
+      });
   }
 
-  useEffect(()=>{
-    
-    if(isRemote === false){
-      client.once('data',(data)=>{
-      
-        var command = ''+data
-  
-        if(atmodemN == command.split('/')[0] && boot != true){
-          if(command.split('/')[4][3] === 'i'){
-            
+  useEffect(() => {
+
+    if (isRemote === false) {
+      client.once('data', (data) => {
+
+        var command = '' + data
+
+        if (atmodemN == command.split('/')[0] && boot != true) {
+          if (command.split('/')[4][3] === 'i') {
+
             console.log('원격 시동 on 상태 확인')
-  
+
             setIsRemote(true)
             setAtIsboot(true)
             setBoot(true)
-  
+
             rrtime = new Date()
-    
-            rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
-            rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
-      
+
+            rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4] + command.split('/')[4][5]))
+            rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6] + command.split('/')[4][7]))
+
             interval = setInterval(() => {
               timecalcul()
             }, 1000);
-  
+
           }//차량 원격 시동 타이머 값 받아와서 설정해야함.
         }
-  
+
       })
     }
 
-  },[isRemote])
+  }, [isRemote])
 
 
   function registerClick() {
@@ -451,7 +472,7 @@ const Carcontroll = () => {
       console.log(e)
       client.destroy()
       console.log(client._destroyed)
-  
+
       setTimeout(() => {
         client.connect({ port: 3400, host: '175.126.232.72' })
         console.log(client._destroyed)
@@ -497,12 +518,12 @@ const Carcontroll = () => {
       setBootrest('00:00')
       setAtIsboot(false)
 
-     
+
       try {
         // client.write(JSON.stringify(boot_0))
         // console.log('전송 : ' + JSON.stringify(boot_0))
 
-        if(isRemote==true){
+        if (isRemote == true) {
           setIsRemote(false)
         }
 
@@ -556,24 +577,24 @@ const Carcontroll = () => {
 
   function doorClick(is) {
 
-    if(atCertifyState === 'good'){
+    if (atCertifyState === 'good') {
 
       if (is == 'lock') {
 
         setDoor('on')
         //Alert.alert('door_0')
-  
+
         lomofc('도어 LOCK')
-  
+
         if (atActionSound === false) {
           doorOnSound()
         }
-  
-  
+
+
         door_1 = JSON.stringify(door_1)
-  
+
         console.log(client._state)
-  
+
         try {
           client.write(door_1)
           console.log('전송 : ' + door_1)
@@ -581,25 +602,25 @@ const Carcontroll = () => {
           console.log(error)
           redirect('dl')
         }
-  
+
         setTimeout(() => {
           setDoor('no')
         }, 4000);
-  
+
       }
-  
-  
+
+
       if (is == 'unlock') {
 
         setDoor('off')
         // Alert.alert('door_1')
-  
+
         lomofc('도어 UNLOCK')
-  
+
         if (atActionSound === false) {
           doorOnSound()
         }
-  
+
         door_0 = JSON.stringify(door_0)
         try {
           client.write(door_0)
@@ -608,37 +629,37 @@ const Carcontroll = () => {
           console.log(error)
           redirect('du')
         }
-  
-  
+
+
         setTimeout(() => {
           setDoor('no')
         }, 4000);
       }
 
-    }else if(atCertifyState === 'no_certification'){
+    } else if (atCertifyState === 'no_certification') {
       Alert.alert('미인증 상태입니다.')
-    }else if(atCertifyState === 'no_state'){
+    } else if (atCertifyState === 'no_state') {
       Alert.alert('상태값이 없습니다.')
-    }else if(atCertifyState === 'nono'){
+    } else if (atCertifyState === 'nono') {
       Alert.alert('서버와 연동되지 않았습니다.')
     }
 
 
-    
+
   }//도어 제어
 
   function panicClick(is) {
 
-    if(atCertifyState === 'good'){
+    if (atCertifyState === 'good') {
 
       if (is == 'on') {
         setPanic('on')
         //Alert.alert('panic_0')
-  
-  
+
+
         lomofc('패닉 ON')
-  
-  
+
+
         panic_1 = JSON.stringify(panic_1)
         try {
           client.write(panic_1)
@@ -647,22 +668,22 @@ const Carcontroll = () => {
           console.log(error)
           redirect('pn')
         }
-  
+
         setTimeout(() => {
           setPanic('no')
         }, 4000);
-  
+
         if (atActionSound === false) {
           panicOnSound()
         }
-  
+
       }
-  
+
       if (is == 'off') {
         setPanic('off')
-  
+
         lomofc('패닉 OFF')
-  
+
         panic_0 = JSON.stringify(panic_0)
         try {
           client.write(panic_0)
@@ -671,17 +692,17 @@ const Carcontroll = () => {
           console.log(error)
           redirect('pf')
         }
-  
+
         setTimeout(() => {
           setPanic('no')
         }, 4000);
       }
 
-    }else if(atCertifyState === 'no_certification'){
+    } else if (atCertifyState === 'no_certification') {
       Alert.alert('미인증 상태입니다.')
-    }else if(atCertifyState === 'no_state'){
+    } else if (atCertifyState === 'no_state') {
       Alert.alert('상태값이 없습니다.')
-    }else if(atCertifyState === 'nono'){
+    } else if (atCertifyState === 'nono') {
       Alert.alert('서버와 연동되지 않았습니다.')
     }
 
@@ -690,25 +711,25 @@ const Carcontroll = () => {
 
   function warnClick(is) {
 
-    if(atCertifyState === 'good'){
+    if (atCertifyState === 'good') {
 
       if (is == 'on') {
         setWarnbim('on')
         //Alert.alert('emergency_0')
-  
+
         lomofc('비상등 ON')
-  
+
         warn_1 = JSON.stringify(warn_1)
         try {
           client.write(warn_1)
           console.log('전송 : ' + warn_1)
         } catch (error) {
           console.log(error)
-          
+
           redirect('hn')
         }
-  
-  
+
+
         setTimeout(() => {
           setWarnbim('no')
         }, 4000);
@@ -716,13 +737,13 @@ const Carcontroll = () => {
           WarnSound()
         }
       }
-  
+
       if (is == 'off') {
         setWarnbim('off')
         // Alert.alert('emergency_1')
-  
+
         lomofc('비상등 OFF')
-  
+
         warn_0 = JSON.stringify(warn_0)
         try {
           client.write(warn_0)
@@ -731,19 +752,19 @@ const Carcontroll = () => {
           console.log(error)
           redirect('hf')
         }
-  
-  
+
+
         setTimeout(() => {
           setWarnbim('no')
         }, 4000);
-  
+
       }
 
-    }else if(atCertifyState === 'no_certification'){
+    } else if (atCertifyState === 'no_certification') {
       Alert.alert('미인증 상태입니다.')
-    }else if(atCertifyState === 'no_state'){
+    } else if (atCertifyState === 'no_state') {
       Alert.alert('상태값이 없습니다.')
-    }else if(atCertifyState === 'nono'){
+    } else if (atCertifyState === 'nono') {
       Alert.alert('서버와 연동되지 않았습니다.')
     }
 
@@ -752,13 +773,13 @@ const Carcontroll = () => {
 
   function trunkClick() {
 
-    if(atCertifyState === 'good'){
+    if (atCertifyState === 'good') {
 
 
       setTrunk(true)
-  
+
       lomofc('트렁크 OPEN')
-  
+
       trunk_1 = JSON.stringify(trunk_1)
       try {
         client.write(trunk_1)
@@ -767,7 +788,7 @@ const Carcontroll = () => {
         console.log(error)
         redirect('tu')
       }
-  
+
       setTimeout(() => {
         setTrunk(false)
       }, 4000);
@@ -775,11 +796,11 @@ const Carcontroll = () => {
         TrunkOpenSound()
       }
 
-    }else if(atCertifyState === 'no_certification'){
+    } else if (atCertifyState === 'no_certification') {
       Alert.alert('미인증 상태입니다.')
-    }else if(atCertifyState === 'no_state'){
+    } else if (atCertifyState === 'no_state') {
       Alert.alert('상태값이 없습니다.')
-    }else if(atCertifyState === 'nono'){
+    } else if (atCertifyState === 'nono') {
       Alert.alert('서버와 연동되지 않았습니다.')
     }
 
@@ -788,15 +809,15 @@ const Carcontroll = () => {
 
   function bootClick() {
 
-    if(atCertifyState === 'good'){
+    if (atCertifyState === 'good') {
 
       if (boot == false) {
-        
+
         setBoot(true)
         setAtIsboot(true)
-  
+
         lomofc('원격시동 켜기')
-  
+
         boot_1 = JSON.stringify(boot_1)
         try {
           client.write(boot_1)
@@ -805,12 +826,12 @@ const Carcontroll = () => {
           console.log(error)
           redirect('en')
         }
-  
-  
+
+
         if (atActionSound === false) {
           bootOnSound()
         }
-  
+
         // let bbtime;
         // if (atBootTime === '3') {
         //   bbtime = 180
@@ -819,25 +840,25 @@ const Carcontroll = () => {
         // } else if (atBootTime === '10') {
         //   bbtime = 600
         // }
-  
+
         rrtime = new Date()
-  
+
         rrtime.setMinutes(rrtime.getMinutes() + parseInt(atBootTime))
-  
+
         interval = setInterval(() => {
           timecalcul()
         }, 1000);
-  
+
       } else {
-  
+
         lomofc('원격시동 끄기')
-  
+
         setBoot(false)
         clearInterval(interval)
         setBootrest('00:00')
         // rrtime = 600
         setAtIsboot(false)
-  
+
         boot_0 = JSON.stringify(boot_0)
         try {
           client.write(boot_0)
@@ -847,38 +868,38 @@ const Carcontroll = () => {
           redirect('ef')
         }
 
-        if(isRemote===true){
+        if (isRemote === true) {
           setIsRemote(false)
-          client.once('data',(data)=>{
-            var command = ''+data
-      
-            if(atmodemN == command.split('/')[0]){
-              if(command.split('/')[4][3] === 'i'){
+          client.once('data', (data) => {
+            var command = '' + data
+
+            if (atmodemN == command.split('/')[0]) {
+              if (command.split('/')[4][3] === 'i') {
                 console.log('원격 시동 on 상태 확인')
                 setAtIsboot(true)
                 setBoot(true)
-      
+
                 rrtime = new Date()
-        
-                rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4]+command.split('/')[4][5]))
-                rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6]+command.split('/')[4][7]))
-          
+
+                rrtime.setMinutes(rrtime.getMinutes() + parseInt(command.split('/')[4][4] + command.split('/')[4][5]))
+                rrtime.setSeconds(rrtime.getSeconds() + parseInt(command.split('/')[4][6] + command.split('/')[4][7]))
+
                 interval = setInterval(() => {
                   timecalcul()
                 }, 1000);
-      
+
               }//차량 원격 시동 타이머 값 받아와서 설정해야함.
             }
           })
         }
-  
+
       }
 
-    }else if(atCertifyState === 'no_certification'){
+    } else if (atCertifyState === 'no_certification') {
       Alert.alert('미인증 상태입니다.')
-    }else if(atCertifyState === 'no_state'){
+    } else if (atCertifyState === 'no_state') {
       Alert.alert('상태값이 없습니다.')
-    }else if(atCertifyState === 'nono'){
+    } else if (atCertifyState === 'nono') {
       Alert.alert('서버와 연동되지 않았습니다.')
     }
 
@@ -893,23 +914,23 @@ const Carcontroll = () => {
       client.connect({ port: 3400, host: '175.126.232.72' })
       console.log(client._destroyed)
       setTimeout(() => {
-        client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:'+ccc, modem: atmodemN, token: pushToken } }))
+        client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:' + ccc, modem: atmodemN, token: pushToken } }))
         console.log('전송 : ' + JSON.stringify(boot_0))
       }, 1000);
     }, 1000);
   }
 
-  function writeData(socket, data){
+  function writeData(socket, data) {
     console.log('전송!')
     try {
       socket.write(data);
     } catch (error) {
-      (function(socket, data){
-        socket.once('drain', function(){
+      (function (socket, data) {
+        socket.once('drain', function () {
           writeData(socket, data);
         });
       })(socket, data);
-      
+
     }
   }
 
@@ -955,55 +976,55 @@ const Carcontroll = () => {
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flex: 4 }}>
-                  <TouchableWithoutFeedback onPress={()=>writeData(client,'socket Test!')}>
-                  <Text style={styles.carnum}>12기 3456</Text>
+                  <TouchableWithoutFeedback onPress={() => writeData(client, 'socket Test!')}>
+                    <Text style={styles.carnum}>12기 3456</Text>
                   </TouchableWithoutFeedback>
                   {
                     carRace == "SUV1" &&
-                      <View style={{ justifyContent: "center", alignItems: "center" }}>
-                        {(door == 'no' && panic == 'no' && warnbim == 'no' && trunk != true && boot != true) &&
-                          <AutoHeightImage source={suv1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {(door == 'on' || door == 'off') &&
-                          <AutoHeightImage source={suvdooron} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {(panic == 'on' || panic == 'off') &&
-                          <AutoHeightImage source={suvpanicon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {(warnbim == 'on' || warnbim == 'off') &&
-                          <AutoHeightImage source={suvbimon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {(trunk == true) &&
-                          <AutoHeightImage source={suvtrunkon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
-                          <AutoHeightImage source={suvbooton} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                      </View>
+                    <View style={{ justifyContent: "center", alignItems: "center" }}>
+                      {(door == 'no' && panic == 'no' && warnbim == 'no' && trunk != true && boot != true) &&
+                        <AutoHeightImage source={suv1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {(door == 'on' || door == 'off') &&
+                        <AutoHeightImage source={suvdooron} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {(panic == 'on' || panic == 'off') &&
+                        <AutoHeightImage source={suvpanicon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {(warnbim == 'on' || warnbim == 'off') &&
+                        <AutoHeightImage source={suvbimon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {(trunk == true) &&
+                        <AutoHeightImage source={suvtrunkon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {(boot == true && door != 'on' && panic != 'on' && warnbim != 'on' && trunk != true) &&
+                        <AutoHeightImage source={suvbooton} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                    </View>
                   }
 
                   {
                     carRace == "SEDAN1" &&
-                      <View style={{ justifyContent: "center", alignItems: "center" }}>
-                        {(door == 'no' && panic == 'no' && warnbim == 'no' && trunk != true && boot != true) &&
-                          <AutoHeightImage source={sedan1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {(door == 'on' || door == 'off') &&
-                          <AutoHeightImage source={dooron} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {(panic == 'on' || panic == 'off') &&
-                          <AutoHeightImage source={panicon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {(warnbim == 'on' || warnbim == 'off') &&
-                          <AutoHeightImage source={bimon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {trunk == true &&
-                          <AutoHeightImage source={trunkon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                        {(boot == true && door == 'no' && panic == 'no' && warnbim == 'no' && trunk == false) &&
-                          <AutoHeightImage source={booton} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
-                        }
-                      </View>
+                    <View style={{ justifyContent: "center", alignItems: "center" }}>
+                      {(door == 'no' && panic == 'no' && warnbim == 'no' && trunk != true && boot != true) &&
+                        <AutoHeightImage source={sedan1_big} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {(door == 'on' || door == 'off') &&
+                        <AutoHeightImage source={dooron} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {(panic == 'on' || panic == 'off') &&
+                        <AutoHeightImage source={panicon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {(warnbim == 'on' || warnbim == 'off') &&
+                        <AutoHeightImage source={bimon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {trunk == true &&
+                        <AutoHeightImage source={trunkon} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                      {(boot == true && door == 'no' && panic == 'no' && warnbim == 'no' && trunk == false) &&
+                        <AutoHeightImage source={booton} width={chwidth - 40} style={{ marginTop: -30 }}></AutoHeightImage>
+                      }
+                    </View>
                   }
 
                   {
