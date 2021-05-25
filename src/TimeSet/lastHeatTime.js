@@ -76,6 +76,7 @@ const LastHeatTime = () => {
         sendCommand()
       } catch (error) {
         console.log(error)
+        client.destroy()
         client.connect({ port: 3400, host: '175.126.232.72' })
         sendCommand()
         return
