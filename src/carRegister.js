@@ -52,6 +52,9 @@ const CarRegister = () => {
 
   const [loadModal, setLoadModal] = useState(false)
   const [delModal, setDelModal] = useState(false)
+
+  const [idoorModal,setIdoorModal] = useState(false)
+
   const [userCancelModal, setUserCancelModal] = useState(false)
   const [DeleteFirstModal, setDeleteFirstModal] = useState(false)
   const [cancelMss, setCancelMss] = useState('')
@@ -341,23 +344,6 @@ const CarRegister = () => {
 
   console.log('모뎀 : ' + modemN + '유저:' + userN)
 
-  useEffect(() => {
-    client.on('data', function (data) {
-      if ('' + data == 'reg_suc') {
-
-        usercancelff('등록이 완료되었습니다.')
-
-      } else if ('' + data == 'reg_fail') {
-
-        setDeleteFirstModal(true)
-
-      } else {
-        // console.log('??이상하게 넘어옴')
-      }
-      console.log('차량 등록 내에서 받기 ' + data);
-    });
-
-  }, [])
 
   function usercancelff(mss) {
 
@@ -367,7 +353,8 @@ const CarRegister = () => {
         setUserCancelModal(false)
         console.log(cancelMss)
         if (mss == '등록이 완료되었습니다.') {
-          navigation.navigate('차량제어')
+          // navigation.navigate('차량제어')
+          setIdoorModal(true)
         }
       }, 1500);
   }
@@ -384,10 +371,10 @@ const CarRegister = () => {
           <TouchableWithoutFeedback onPress={() => { if (isRegister === true) navigation.navigate('차량제어'); else Alert.alert('먼저 차량을 등록해주세요') }}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={()=>setIdoorModal(true)}>
           <Text style={styles.maintxt}>차량 등록</Text>
-          <TouchableWithoutFeedback onPress={() => { registerAxi() }}>
-            <View><Image source={close}></Image></View>
           </TouchableWithoutFeedback>
+          <View style={{width:20}}></View>
         </View>
         {/* 헤더 */}
 
@@ -681,6 +668,38 @@ const CarRegister = () => {
             </View>
           </SafeAreaView>
         </Modal>
+
+        {/*  */}
+        <Modal visible={idoorModal} transparent={true} animationType={'fade'}>
+          <SafeAreaView style={{ width: chwidth, height: chheight, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ width: chwidth - 80, height: 160, backgroundColor: 'white', marginTop: -150, borderRadius: 10 }}>
+              <View style={{ marginTop: 20, alignItems: 'center' }}>
+                <Text style={styles.modalTitle}>i도어 비밀번호</Text>
+                <Text style={styles.modaltxt}>i도어 비밀번호를 설정하시겠습니까?</Text>
+                <Text style={styles.modaltxt}></Text>
+              </View>
+              <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
+                <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
+                  <TouchableWithoutFeedback onPress={() => { setIdoorModal(false),navigation.navigate('차량제어')}}>
+                    <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Text>취소</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                  <View style={{ height: 50, borderWidth: 0.5 }}></View>
+                  <TouchableWithoutFeedback onPress={() => { setIdoorModal(false),navigation.navigate('간편비밀번호',{whocall:'register'}) }}>
+                    <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Text>확인</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+
+                </View>
+              </View>
+            </View>
+
+          </SafeAreaView>
+        </Modal>
+        {/*  */}
 
       </View>
     </SafeAreaView>
