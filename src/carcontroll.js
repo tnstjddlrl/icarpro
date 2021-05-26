@@ -189,8 +189,7 @@ const Carcontroll = () => {
         modem: atModemn,
         token: pushToken
       }
-    })
-      .then(async (response) => {
+    }).then(async (response) => {
 
         console.log('???  ' + response.data);
 
@@ -230,9 +229,9 @@ const Carcontroll = () => {
             client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
 
             setTimeout(() => {
-              client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+              client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
 
-              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
             }, 2000);
           }
 
@@ -248,9 +247,9 @@ const Carcontroll = () => {
             client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
 
             setTimeout(() => {
-              client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+              client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
 
-              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
             }, 2000);
           }
 
