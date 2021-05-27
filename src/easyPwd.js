@@ -110,7 +110,7 @@ const CarState = ({route}) => {
               client.destroy()
 
               setTimeout(() => {
-                client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+                client.connect({ port: 3400, host: '175.126.232.72'})
 
                 setTimeout(() => {
                   client.write(JSON.stringify({ type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }))
