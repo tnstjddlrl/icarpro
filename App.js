@@ -67,7 +67,7 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="home" headerMode={'none'} screenOptions={{ gestureEnabled: false }}>
 
-          <Stack.Screen name="인트로" component={Load} />
+          <Stack.Screen name="인트로" component={Load} /> 
           <Stack.Screen name="차량제어" component={Carcontroll} />
           <Stack.Screen name="간편비밀번호" component={EasyPwd} />
           <Stack.Screen name="차량등록" component={CarRegister} />

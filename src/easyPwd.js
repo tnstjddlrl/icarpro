@@ -92,8 +92,8 @@ const CarState = ({route}) => {
           modem: atModemn,
           pwdeasy: pwd
         }
-      })
-        .then(async (response) => {
+      }
+      ).then(async (response) => {
           console.log('???  ' + response.data);
 
           if ('' + response.data == 'easy_req') {
@@ -146,8 +146,6 @@ const CarState = ({route}) => {
 
 
   }
-
-  console.log(pwd)
 
 
   return (
