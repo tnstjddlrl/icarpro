@@ -963,14 +963,14 @@ const Carcontroll = () => {
                 <View style={{ flex: 0.2 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
                   <TouchableWithoutFeedback onPress={() => {
-                    loadState()
+                    // loadState()
                   }
                   }>
                     <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flex: 4 }}>
-                  <TouchableWithoutFeedback onPress={() => writeData(client, 'socket Test!')}>
+                  <TouchableWithoutFeedback onPress={() => {}}>
                     <Text style={styles.carnum}>12기 3456</Text>
                   </TouchableWithoutFeedback>
                   {

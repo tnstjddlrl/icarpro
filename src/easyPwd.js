@@ -118,7 +118,7 @@ const CarState = ({route}) => {
                 }, 1000);
               }, 1000);
 
-              Alert.alert('비밀번호 등록이 완료되었습니다!')
+              // Alert.alert('비밀번호 등록이 완료되었습니다!')
 
               console.log(error)
             }
