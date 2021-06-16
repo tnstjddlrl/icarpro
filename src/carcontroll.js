@@ -169,7 +169,6 @@ const Carcontroll = () => {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
     if (atStateWaitTime === false) {
-      // registerClick()
       await loadState()
       setAtStateWaitTime(true)
       setTimeout(() => {
@@ -391,8 +390,8 @@ const Carcontroll = () => {
 
         setLowVoltValue(command.split('/')[5][12] + command.split('/')[5][13] + '.' + command.split('/')[5][14])
 
-        if (atmodemN == command.split('/')[0] && boot != true) {
-          if (command.split('/')[4][3] === 'i') {
+        if (atmodemN == command.split('/')[0] ) {
+          if (command.split('/')[4][3] === 'i' && boot != true ) {
 
             console.log('원격 시동 on 상태 확인')
 
@@ -409,6 +408,11 @@ const Carcontroll = () => {
               timecalcul()
             }, 1000);
 
+          } else if (command.split('/')[4][3] === 'o') {
+            setBoot(false)
+            clearInterval(interval)
+            setBootrest('00:00')
+            setAtIsboot(false)
           }
         }
 
@@ -456,33 +460,6 @@ const Carcontroll = () => {
     }
 
   }, [isRemote])
-
-
-  function registerClick() {
-
-    console.log('?')
-
-    try {
-
-      client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken, modem: atModemn } }))
-      console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken, modem: atModemn } }))
-
-    } catch (e) {
-      console.log(e)
-      client.destroy()
-      console.log(client._destroyed)
-
-      setTimeout(() => {
-        client.connect({ port: 3400, host: '175.126.232.72' })
-        console.log(client._destroyed)
-        setTimeout(() => {
-          client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
-          console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { token: pushToken } }))
-        }, 1000);
-      }, 1000);
-    }
-
-  }
 
   let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:du', modem: atmodemN, token: pushToken } }
   let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:dl', modem: atmodemN, token: pushToken } }
