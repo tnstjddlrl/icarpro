@@ -8,7 +8,7 @@ import RNExitApp from 'react-native-kill-app';
 // var nc = new net.Socket({allowHalfOpen:false})
 
 var client = TcpSocket.createConnection(
-  { port: 3400, host: '175.126.232.72' },
+  { port: 3600, host: '175.126.232.72' },
   () => {
 
     console.log('연결됨');
