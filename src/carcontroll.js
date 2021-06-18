@@ -204,7 +204,7 @@ const Carcontroll = () => {
         } catch (error) {
           console.log(error)
           client.destroy()
-          client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+          client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
           setTimeout(() => {
             client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
@@ -225,7 +225,7 @@ const Carcontroll = () => {
         } catch (error) {
           console.log(error)
           client.destroy()
-          client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+          client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
           setTimeout(() => {
             client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
@@ -243,7 +243,7 @@ const Carcontroll = () => {
         } catch (error) {
           console.log(error)
           client.destroy()
-          client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+          client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
           setTimeout(() => {
             client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
@@ -882,7 +882,7 @@ const Carcontroll = () => {
     console.log(client._destroyed)
 
     setTimeout(() => {
-      client.connect({ port: 3400, host: '175.126.232.72' })
+      client.connect({ port: 3600, host: '175.126.232.72' })
       console.log(client._destroyed)
       setTimeout(() => {
         client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:' + ccc, modem: atmodemN, token: pushToken } }))

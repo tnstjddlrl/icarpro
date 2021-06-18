@@ -219,8 +219,8 @@ const CarRegister = () => {
 
             setTimeout(() => {
 
-              client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
-              // let vvs = client.connect({ port: 3400, host: '175.126.232.72' })
+              client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
+              // let vvs = client.connect({ port: 3600, host: '175.126.232.72' })
 
               if (!client._destroyed) {
 
@@ -309,7 +309,7 @@ const CarRegister = () => {
       console.log(error)
 
       client.destroy()
-      client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+      client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
       setTimeout(() => {
         client.write(JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))

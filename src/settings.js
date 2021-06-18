@@ -164,7 +164,7 @@ const Settings = () => {
       console.log(client._destroyed)
   
       setTimeout(() => {
-        client.connect({ port: 3400, host: '175.126.232.72' })
+        client.connect({ port: 3600, host: '175.126.232.72' })
         console.log(client._destroyed)
         setTimeout(() => {
           client.write(JSON.stringify(txt))
@@ -214,7 +214,7 @@ const Settings = () => {
           } catch (error) {
             console.log(error)
             client.destroy()
-            client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+            client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
             setTimeout(() => {
               client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
@@ -235,7 +235,7 @@ const Settings = () => {
           } catch (error) {
             console.log(error)
             client.destroy()
-            client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+            client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
             setTimeout(() => {
               client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
@@ -253,7 +253,7 @@ const Settings = () => {
           } catch (error) {
             console.log(error)
             client.destroy()
-            client.connect({ port: 3400, host: '175.126.232.72', localPort: atLocalClientPort })
+            client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
             setTimeout(() => {
               client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
@@ -447,7 +447,7 @@ const Settings = () => {
       //       sendCommand('mn')
       //     } catch (e) {
       //       console.log(e)
-      //       client.connect({ port: 3400, host: '175.126.232.72' })
+      //       client.connect({ port: 3600, host: '175.126.232.72' })
       //       sendCommand('mn')
 
       //     }
@@ -456,7 +456,7 @@ const Settings = () => {
       //       sendCommand('mf')
       //     } catch (e) {
       //       console.log(e)
-      //       client.connect({ port: 3400, host: '175.126.232.72' })
+      //       client.connect({ port: 3600, host: '175.126.232.72' })
 
       //       sendCommand('mf')
 
@@ -472,7 +472,7 @@ const Settings = () => {
       //       try {
       //         sendCommand('dn')
       //       } catch (e) {
-      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         client.connect({ port: 3600, host: '175.126.232.72' })
       //         console.log(e)
       //         sendCommand('dn')
 
@@ -482,7 +482,7 @@ const Settings = () => {
       //       try {
       //         sendCommand('df')
       //       } catch (e) {
-      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         client.connect({ port: 3600, host: '175.126.232.72' })
       //         console.log(e)
       //         sendCommand('df')
 
@@ -499,7 +499,7 @@ const Settings = () => {
       //       try {
       //         sendCommand('le')
       //       } catch (e) {
-      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         client.connect({ port: 3600, host: '175.126.232.72' })
       //         console.log(e)
       //         sendCommand('le')
 
@@ -509,7 +509,7 @@ const Settings = () => {
       //       try {
       //         sendCommand('la')
       //       } catch (e) {
-      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         client.connect({ port: 3600, host: '175.126.232.72' })
       //         console.log(e)
       //         sendCommand('la')
 
@@ -519,7 +519,7 @@ const Settings = () => {
       //       try {
       //         sendCommand('lf')
       //       } catch (e) {
-      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         client.connect({ port: 3600, host: '175.126.232.72' })
       //         console.log(e)
       //         sendCommand('lf')
 
@@ -537,7 +537,7 @@ const Settings = () => {
       //         sendCommand('1n')
       //       } catch (e) {
 
-      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         client.connect({ port: 3600, host: '175.126.232.72' })
       //         console.log(e)
       //         sendCommand('1n')
 
@@ -547,7 +547,7 @@ const Settings = () => {
       //         sendCommand('1f')
       //       } catch (e) {
 
-      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         client.connect({ port: 3600, host: '175.126.232.72' })
       //         console.log(e)
       //         sendCommand('1f')
 
@@ -564,7 +564,7 @@ const Settings = () => {
       //       try {
       //         sendCommand('2n')
       //       } catch (e) {
-      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         client.connect({ port: 3600, host: '175.126.232.72' })
       //         console.log(e)
       //         sendCommand('2n')
 
@@ -573,7 +573,7 @@ const Settings = () => {
       //       try {
       //         sendCommand('2f')
       //       } catch (e) {
-      //         client.connect({ port: 3400, host: '175.126.232.72' })
+      //         client.connect({ port: 3600, host: '175.126.232.72' })
       //         console.log(e)
       //         sendCommand('2f')
 
