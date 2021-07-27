@@ -26,6 +26,8 @@ import {
 } from 'recoil';
 import { fcmToken, modemNumber } from './atom/atoms'
 
+import RNRestart from 'react-native-restart';
+
 import axios from 'axios'
 
 

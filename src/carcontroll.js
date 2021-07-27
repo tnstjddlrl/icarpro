@@ -60,6 +60,10 @@ import AutoHeightImage from 'react-native-auto-height-image';
 
 import { Player } from '@react-native-community/audio-toolkit';
 
+import RNExitApp from 'react-native-kill-app';
+import RNRestart from 'react-native-restart';
+
+
 import axios from 'axios'
 
 const doorOnSound = () => new Player('dooron.mp3').play(err => console.log(err))
@@ -203,14 +207,16 @@ const Carcontroll = () => {
 
         } catch (error) {
           console.log(error)
-          client.destroy()
-          client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
+          // client.destroy()
+          // client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
-          setTimeout(() => {
-            client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+          // setTimeout(() => {
+          //   client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
 
-            console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-          }, 2000);
+          //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+          // }, 2000);
+          exitAppAlert()
+
         }
 
         Alert.alert('미인증 상태입니다.', '인증을 진행해주세요',
@@ -224,14 +230,16 @@ const Carcontroll = () => {
           client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atModemn, user: atuserN, token: pushToken } }))
         } catch (error) {
           console.log(error)
-          client.destroy()
-          client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
+          // client.destroy()
+          // client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
-          setTimeout(() => {
-            client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+          // setTimeout(() => {
+          //   client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
 
-            console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-          }, 2000);
+          //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+          // }, 2000);
+          exitAppAlert()
+
         }
 
 
@@ -545,6 +553,16 @@ const Carcontroll = () => {
   const [warnbim, setWarnbim] = useState('no')
   const [trunk, setTrunk] = useState(false)
 
+  function exitAppAlert () {
+    Alert.alert(
+      "서버 오류",
+      "서버 오류가 지속되면 고객센터로 문의해주세요.",
+      [
+        { text: "OK", onPress: () => RNRestart.Restart()}
+      ]
+    )
+  }
+
 
   function doorClick(is) {
 
@@ -571,7 +589,8 @@ const Carcontroll = () => {
           console.log('전송 : ' + door_1)
         } catch (error) {
           console.log(error)
-          redirect('dl')
+          // redirect('dl')
+          exitAppAlert()
         }
 
         setTimeout(() => {
@@ -598,7 +617,9 @@ const Carcontroll = () => {
           console.log('전송 : ' + door_0)
         } catch (error) {
           console.log(error)
-          redirect('du')
+          // redirect('du')
+          exitAppAlert()
+
         }
 
 
@@ -637,7 +658,9 @@ const Carcontroll = () => {
           console.log('전송 : ' + panic_1)
         } catch (error) {
           console.log(error)
-          redirect('pn')
+          // redirect('pn')
+          exitAppAlert()
+
         }
 
         setTimeout(() => {
@@ -661,7 +684,9 @@ const Carcontroll = () => {
           console.log('전송 : ' + panic_0)
         } catch (error) {
           console.log(error)
-          redirect('pf')
+          // redirect('pf')
+          exitAppAlert()
+
         }
 
         setTimeout(() => {
@@ -697,7 +722,9 @@ const Carcontroll = () => {
         } catch (error) {
           console.log(error)
 
-          redirect('hn')
+          // redirect('hn')
+          exitAppAlert()
+
         }
 
 
@@ -721,7 +748,9 @@ const Carcontroll = () => {
           console.log('전송 : ' + warn_0)
         } catch (error) {
           console.log(error)
-          redirect('hf')
+          // redirect('hf')
+          exitAppAlert()
+
         }
 
 
@@ -757,7 +786,9 @@ const Carcontroll = () => {
         console.log('전송 : ' + trunk_1)
       } catch (error) {
         console.log(error)
-        redirect('tu')
+        // redirect('tu')
+        exitAppAlert()
+
       }
 
       setTimeout(() => {
@@ -795,7 +826,9 @@ const Carcontroll = () => {
           console.log('전송 : ' + boot_1)
         } catch (error) {
           console.log(error)
-          redirect('en')
+          // redirect('en')
+          exitAppAlert()
+
         }
 
 
@@ -836,7 +869,9 @@ const Carcontroll = () => {
           console.log('전송 : ' + boot_0)
         } catch (error) {
           console.log(error)
-          redirect('ef')
+          // redirect('ef')
+          exitAppAlert()
+
         }
 
         if (isRemote === true) {

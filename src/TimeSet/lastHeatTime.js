@@ -27,6 +27,19 @@ import client from '../Client';
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
+import RNExitApp from 'react-native-kill-app';
+
+
+function exitAppAlert () {
+  Alert.alert(
+    "서버 오류",
+    "서버 오류가 지속되면 고객센터로 문의해주세요.",
+    [
+      { text: "OK", onPress: () => RNExitApp.exitApp()}
+    ]
+  )
+}
+
 
 const LastHeatTime = () => {
   const navigation = useNavigation()
@@ -107,19 +120,25 @@ const LastHeatTime = () => {
   }
 
   function sendCommand() {
-    let cc = '0'
-    if (checkitem === '1:30') {
-      cc = 'ae=0'
-    } else if (checkitem === '3:00') {
-      cc = 'ae=1'
-    } else if (checkitem === '5:00') {
-      cc = 'ae=2'
+    
+    try {
+      let cc = '0'
+      if (checkitem === '1:30') {
+        cc = 'ae=0'
+      } else if (checkitem === '3:00') {
+        cc = 'ae=1'
+      } else if (checkitem === '5:00') {
+        cc = 'ae=2'
+      }
+      let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN, token: pushToken } }
+      comm = JSON.stringify(comm)
+  
+      client.write(comm)
+      console.log('전송 : ' + comm)
+      
+    } catch (error) {
+      exitAppAlert()
     }
-    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN, token: pushToken } }
-    comm = JSON.stringify(comm)
-
-    client.write(comm)
-    console.log('전송 : ' + comm)
   }
 
 

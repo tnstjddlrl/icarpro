@@ -3,6 +3,9 @@ import { Alert } from 'react-native';
 
 import RNExitApp from 'react-native-kill-app';
 
+
+import RNRestart from 'react-native-restart';
+
 // var net = require('net');
 
 // var nc = new net.Socket({allowHalfOpen:false})
@@ -13,7 +16,7 @@ var client = TcpSocket.createConnection(
 
     console.log('연결됨');
     setTimeout(() => {
-      Alert.alert('서버와 연결되었습니다.');
+      // Alert.alert('서버와 연결되었습니다.');
     }, 2000);
 
   },
@@ -24,7 +27,7 @@ client.on('error', function (error) {
   Alert.alert('서버와의 통신을 실패하였습니다.', '앱을 다시 시작해주세요.');
   console.error(error);
   setTimeout(() => {
-    RNExitApp.exitApp()
+    RNRestart.Restart()
   }, 1500);
 });
 

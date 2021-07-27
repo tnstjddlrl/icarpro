@@ -23,6 +23,9 @@ import {
   useRecoilState,
 } from 'recoil';
 
+import RNExitApp from 'react-native-kill-app';
+import RNRestart from 'react-native-restart';
+
 
 import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress } from './atom/atoms'
 
@@ -63,6 +66,16 @@ const CarRegister = () => {
 
   const [atLocalClientPort, setatLocalClientPort] = useRecoilState(AppLocalClientPort)
   const [atLocalClientAddress, setatLocalClientAddress] = useRecoilState(AppLocalClientAddress)
+
+  function exitAppAlert () {
+    Alert.alert(
+      "서버 오류",
+      "서버 오류가 지속되면 고객센터로 문의해주세요.",
+      [
+        { text: "OK", onPress: () => RNRestart.Restart()}
+      ]
+    )
+  }
 
 
 
@@ -213,37 +226,39 @@ const CarRegister = () => {
           } catch (error) {
             console.log('등록 에러')
             console.log(error)
-            client.destroy()
+            // client.destroy()
 
-            console.log(client._destroyed)
+            // console.log(client._destroyed)
 
-            setTimeout(() => {
+            // setTimeout(() => {
 
-              client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
-              // let vvs = client.connect({ port: 3600, host: '175.126.232.72' })
+            //   client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
+            //   // let vvs = client.connect({ port: 3600, host: '175.126.232.72' })
 
-              if (!client._destroyed) {
+            //   if (!client._destroyed) {
 
-                console.log(client._destroyed)
+            //     console.log(client._destroyed)
 
-                setTimeout(() => {
-                  client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-                  console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+            //     setTimeout(() => {
+            //       client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+            //       console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
 
-                  usercancelff('등록이 완료되었습니다.')
+            //       usercancelff('등록이 완료되었습니다.')
 
-                  setIsRegister(true)
+            //       setIsRegister(true)
 
-                }, 2000);
-              } else {
+            //     }, 2000);
+            //   } else {
 
-                console.log('??')
+            //     console.log('??')
 
-                console.log(client._destroyed)
+            //     console.log(client._destroyed)
 
-              }
+            //   }
 
-            }, 1000);
+            // }, 1000);
+          exitAppAlert()
+
           }
 
         } else if ('' + response.data == 'later') {
@@ -308,33 +323,36 @@ const CarRegister = () => {
 
       console.log(error)
 
-      client.destroy()
-      client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
+      // client.destroy()
+      // client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
-      setTimeout(() => {
-        client.write(JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
+      // setTimeout(() => {
+      //   client.write(JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
 
-        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
-        usercancelff('삭제가 완료되었습니다.')
+      //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
+      //   usercancelff('삭제가 완료되었습니다.')
 
-        setUserN('')
-        setCarRace('')
-        setSedan1(false)
-        setSuv1(false)
+      //   setUserN('')
+      //   setCarRace('')
+      //   setSedan1(false)
+      //   setSuv1(false)
 
-        delFirst()
-        delUser()
-        delcarRace()
+      //   delFirst()
+      //   delUser()
+      //   delcarRace()
 
-        setatUserNumber('')
-        setatIsCarRace('')
+      //   setatUserNumber('')
+      //   setatIsCarRace('')
 
-        setUserN('')
-        setCarRace('')
+      //   setUserN('')
+      //   setCarRace('')
 
-        setIsRegister(false)
+      //   setIsRegister(false)
 
-      }, 2000);
+      // }, 2000);
+
+      exitAppAlert()
+
 
     }
 

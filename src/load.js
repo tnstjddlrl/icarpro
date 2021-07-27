@@ -46,6 +46,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNExitApp from 'react-native-kill-app';
+import RNRestart from 'react-native-restart';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height

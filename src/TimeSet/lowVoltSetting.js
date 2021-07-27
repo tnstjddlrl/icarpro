@@ -27,6 +27,16 @@ import client from '../Client';
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
+import RNExitApp from 'react-native-kill-app';
+function exitAppAlert () {
+  Alert.alert(
+    "서버 오류",
+    "서버 오류가 지속되면 고객센터로 문의해주세요.",
+    [
+      { text: "OK", onPress: () => RNExitApp.exitApp()}
+    ]
+  )
+}
 
 const LowVoltSetting = () => {
   const navigation = useNavigation()
@@ -117,23 +127,28 @@ const LowVoltSetting = () => {
   }
 
   function sendCommand() {
-    let cc = '0'
-    if (checkitem === '11.8') {
-      cc = 'lb=118'
-    } else if (checkitem === '11.9') {
-      cc = 'lb=119'
-    } else if (checkitem === '12.0') {
-      cc = 'lb=120'
-    } else if (checkitem === '12.1') {
-      cc = 'lb=121'
-    } else if (checkitem === '12.2') {
-      cc = 'lb=122'
+    try {
+      let cc = '0'
+      if (checkitem === '11.8') {
+        cc = 'lb=118'
+      } else if (checkitem === '11.9') {
+        cc = 'lb=119'
+      } else if (checkitem === '12.0') {
+        cc = 'lb=120'
+      } else if (checkitem === '12.1') {
+        cc = 'lb=121'
+      } else if (checkitem === '12.2') {
+        cc = 'lb=122'
+      }
+      let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN, token: pushToken } }
+      comm = JSON.stringify(comm)
+  
+      client.write(comm)
+      console.log('전송 : ' + comm)
+      
+    } catch (error) {
+      exitAppAlert()
     }
-    let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN, token: pushToken } }
-    comm = JSON.stringify(comm)
-
-    client.write(comm)
-    console.log('전송 : ' + comm)
   }
 
   return (

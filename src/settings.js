@@ -20,6 +20,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ToggleSwitch from 'toggle-switch-react-native'
 
+import RNExitApp from 'react-native-kill-app';
+import RNRestart from 'react-native-restart';
+
 
 import client from './Client';
 
@@ -61,7 +64,6 @@ const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
 import axios from 'axios';
-
 
 
 const back = require('../img/backbtn.png')
@@ -122,6 +124,16 @@ const Settings = () => {
 
   // 
 
+  function exitAppAlert () {
+    Alert.alert(
+      "서버 오류",
+      "서버 오류가 지속되면 고객센터로 문의해주세요.",
+      [
+        { text: "OK", onPress: () => RNRestart.Restart()}
+      ]
+    )
+  }
+
   
 
 
@@ -142,37 +154,41 @@ const Settings = () => {
   },[aticarswitch,atidoorswitch,atlowboltBoot,atlowboltAlert,atactionsound,atalertsound])
 
   function sendCommand(cc) {
-
-    let comm = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/S:' + cc, modem: atmodemN, token: pushToken } }
-    
-    comm = JSON.stringify(comm)
-
-    client.write(comm)
-    console.log('전송 : ' + comm)
-  }
-
-  function registerClick() {
     try {
-      var txt = { type: "R", type_sub: "req_state", data: { token: pushToken, modem: atmodemN } }
-
-      client.write(JSON.stringify(txt))
-      console.log('전송 : ' + JSON.stringify(txt))
-
-    } catch (e) {
-      console.log(e)
-      client.destroy()
-      console.log(client._destroyed)
+      let comm = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/S:' + cc, modem: atmodemN, token: pushToken } }
+      
+      comm = JSON.stringify(comm)
   
-      setTimeout(() => {
-        client.connect({ port: 3600, host: '175.126.232.72' })
-        console.log(client._destroyed)
-        setTimeout(() => {
-          client.write(JSON.stringify(txt))
-          console.log('전송 : ' + JSON.stringify(txt))
-        }, 1000);
-      }, 1000);
+      client.write(comm)
+      console.log('전송 : ' + comm)
+      
+    } catch (error) {
+      exitAppAlert()
     }
   }
+
+  // function registerClick() {
+  //   try {
+  //     var txt = { type: "R", type_sub: "req_state", data: { token: pushToken, modem: atmodemN } }
+
+  //     client.write(JSON.stringify(txt))
+  //     console.log('전송 : ' + JSON.stringify(txt))
+
+  //   } catch (e) {
+  //     console.log(e)
+  //     client.destroy()
+  //     console.log(client._destroyed)
+  
+  //     setTimeout(() => {
+  //       client.connect({ port: 3600, host: '175.126.232.72' })
+  //       console.log(client._destroyed)
+  //       setTimeout(() => {
+  //         client.write(JSON.stringify(txt))
+  //         console.log('전송 : ' + JSON.stringify(txt))
+  //       }, 1000);
+  //     }, 1000);
+  //   }
+  // }
 
   const reqState = navigation.addListener('focus', async() => {
     if(atStateWaitTime === false){
@@ -213,14 +229,17 @@ const Settings = () => {
 
           } catch (error) {
             console.log(error)
-            client.destroy()
-            client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
+            // client.destroy()
+            // client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
-            setTimeout(() => {
-              client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            // setTimeout(() => {
+            //   client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
 
-              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-            }, 2000);
+            //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            // }, 2000);
+
+          exitAppAlert()
+
           }
 
           Alert.alert('미인증 상태입니다.', '인증을 진행해주세요',
@@ -234,14 +253,17 @@ const Settings = () => {
             client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
           } catch (error) {
             console.log(error)
-            client.destroy()
-            client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
+            // client.destroy()
+            // client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
-            setTimeout(() => {
-              client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            // setTimeout(() => {
+            //   client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
 
-              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-            }, 2000);
+            //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            // }, 2000);
+
+          exitAppAlert()
+
           }
 
 
@@ -252,14 +274,17 @@ const Settings = () => {
             client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
           } catch (error) {
             console.log(error)
-            client.destroy()
-            client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
+            // client.destroy()
+            // client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
-            setTimeout(() => {
-              client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            // setTimeout(() => {
+            //   client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
 
-              console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-            }, 2000);
+            //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+            // }, 2000);
+
+          exitAppAlert()
+
           }
 
           if (command.split('/')[1][2] === 'i') {
