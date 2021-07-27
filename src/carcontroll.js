@@ -154,9 +154,7 @@ const Carcontroll = () => {
   const [, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
   const [atActionSound, setAtactionSound] = useRecoilState(actionSound)
   const [, setAtalertSound] = useRecoilState(alertSound)
-
-  const [atLocalClientPort, setatLocalClientPort] = useRecoilState(AppLocalClientPort)
-  const [atLocalClientAddress, setatLocalClientAddress] = useRecoilState(AppLocalClientAddress)
+  
 
   const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
   const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
@@ -168,7 +166,6 @@ const Carcontroll = () => {
 
 
   const unsubscribe = navigation.addListener('focus', async () => {
-    console.log('로컬포트 : ' + atLocalClientPort)
     if (isicarswitch === false) {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
@@ -207,16 +204,8 @@ const Carcontroll = () => {
 
         } catch (error) {
           console.log(error)
-          // client.destroy()
-          // client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
-          // setTimeout(() => {
-          //   client.write(JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-
-          //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-          // }, 2000);
           exitAppAlert()
-
         }
 
         Alert.alert('미인증 상태입니다.', '인증을 진행해주세요',
@@ -230,14 +219,7 @@ const Carcontroll = () => {
           client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atModemn, user: atuserN, token: pushToken } }))
         } catch (error) {
           console.log(error)
-          // client.destroy()
-          // client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
-          // setTimeout(() => {
-          //   client.write(JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-
-          //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-          // }, 2000);
           exitAppAlert()
 
         }
@@ -250,14 +232,8 @@ const Carcontroll = () => {
           client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
         } catch (error) {
           console.log(error)
-          client.destroy()
-          client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
 
-          setTimeout(() => {
-            client.write(JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-
-            console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-          }, 2000);
+          exitAppAlert()
         }
 
         if (command.split('/')[1][2] === 'i') {
