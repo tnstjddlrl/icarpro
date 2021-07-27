@@ -207,50 +207,6 @@ const CarRegister = () => {
       return
     }
 
-    await axios.get('http://175.126.232.72/proc.php', {
-      params: {
-        type: 'register',
-        modem: modemN
-      }
-    })
-      .then((response) => {
-        if ('' + response.data == 'nothing') {
-
-          try {
-            var txt = { type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }
-            txt = JSON.stringify(txt)
-
-            client.write(txt)
-            console.log('전송 : ' + txt)
-
-            console.log('로컬 포트 : ')
-            console.log(client.localPort)
-
-            asyncSave()
-
-            usercancelff('등록이 완료되었습니다.')
-
-            setIsRegister(true)
-
-          } catch (error) {
-
-            console.log('등록 에러')
-            console.log(error)
-
-            exitAppAlert()
-
-          }
-
-        } else if ('' + response.data == 'later') {
-          setDeleteFirstModal(true)
-
-        } else {
-
-          Alert.alert('서버 오류입니다.')
-
-        }
-      })
-
   }
 
 
