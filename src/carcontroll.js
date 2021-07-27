@@ -182,6 +182,7 @@ const Carcontroll = () => {
   });
 
 
+  //현재 php로 받아오던 부분 다 삭제할 예정
   const loadState = async () => {
     await axios.get('http://175.126.232.72/proc.php', {
       params: {
@@ -402,8 +403,7 @@ const Carcontroll = () => {
 
 
       }
-    })
-      .catch(function (error) {
+    }).catch(function (error) {
         console.log(error);
         Alert.alert('서버오류! 나중에 시도해주세요!')
       })
@@ -545,7 +545,6 @@ const Carcontroll = () => {
       if (is == 'lock') {
 
         setDoor('on')
-        //Alert.alert('door_0')
 
         lomofc('도어 LOCK')
 
@@ -577,7 +576,6 @@ const Carcontroll = () => {
       if (is == 'unlock') {
 
         setDoor('off')
-        // Alert.alert('door_1')
 
         lomofc('도어 UNLOCK')
 
@@ -620,8 +618,6 @@ const Carcontroll = () => {
 
       if (is == 'on') {
         setPanic('on')
-        //Alert.alert('panic_0')
-
 
         lomofc('패닉 ON')
 
@@ -685,7 +681,6 @@ const Carcontroll = () => {
 
       if (is == 'on') {
         setWarnbim('on')
-        //Alert.alert('emergency_0')
 
         lomofc('비상등 ON')
 
@@ -712,7 +707,6 @@ const Carcontroll = () => {
 
       if (is == 'off') {
         setWarnbim('off')
-        // Alert.alert('emergency_1')
 
         lomofc('비상등 OFF')
 
@@ -914,6 +908,17 @@ const Carcontroll = () => {
     }
   }
 
+  // useEffect(()=>{
+  //   client.on('data',(data)=>{
+
+  //     var command = '' + data
+
+  //     console.log(command)
+  //     Alert.alert(command)
+
+  //   })
+  // },[])
+
 
 
   return (
@@ -949,14 +954,30 @@ const Carcontroll = () => {
                 <View style={{ flex: 0.2 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
                   <TouchableWithoutFeedback onPress={() => {
-                    // loadState()
+                    try {
+                      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+                      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+                    } catch (error) {
+                      console.log(error)
+
+                      exitAppAlert()
+                    }
                   }
                   }>
                     <Image source={smallLogo} style={{ marginLeft: 15 }}></Image>
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flex: 4 }}>
-                  <TouchableWithoutFeedback onPress={() => {}}>
+                  <TouchableWithoutFeedback onPress={() => {
+                    try {
+                      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+                      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+                    } catch (error) {
+                      console.log(error)
+
+                      exitAppAlert()
+                    }
+                  }}>
                     <Text style={styles.carnum}>12기 3456</Text>
                   </TouchableWithoutFeedback>
                   {

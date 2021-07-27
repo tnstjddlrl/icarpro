@@ -251,16 +251,22 @@ const Load = () => {
     let modemm
     getmodem().then(res=>modemm = res)
     client.on('data', function (data) {
+
       var command = ''+data
       console.log(command.split('/')[0])
       console.log(modemm)
-      if(''+data === 'no_certification'){
+
+      if(''+data === 'no_cer'){
         setAtCertifyState('no_certification')
+
         Alert.alert('미인증 상태입니다.','인증을 진행해주세요',
         [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
       }else if(''+data === 'no_state'){
+
         setAtCertifyState('no_state')
+
         Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
+
       }else if(modemm == command.split('/')[0]){
         setAtCertifyState('good')
         
@@ -406,7 +412,6 @@ const Load = () => {
       }
       console.log('로드 상태에서 데이터 받기 :'+data)
     })
-
 
   }, [])
 
