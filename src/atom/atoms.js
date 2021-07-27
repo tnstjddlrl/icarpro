@@ -2,6 +2,12 @@ import {
   atom
 } from 'recoil';
 
+
+export const AllState_app = atom({
+  key: 'AllState_app',
+  default: '',
+});
+
 export const modemNumber = atom({
   key: 'modemNumber',
   default: '',

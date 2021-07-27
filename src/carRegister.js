@@ -27,7 +27,7 @@ import RNExitApp from 'react-native-kill-app';
 import RNRestart from 'react-native-restart';
 
 
-import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress, certifyState } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -102,27 +102,6 @@ const CarRegister = () => {
       console.log(e)
     }
   }
-
-  const registerAxi = async () => {
-    await axios.get('http://175.126.232.72/proc.php', {
-      params: {
-        type: 'register',
-        modem: modemN
-      }
-    })
-      .then(async (response) => {
-        console.log('???  ' + response.data);
-        setAxiReturn(response.data)
-        return '' + response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .then(function () {
-        // Alert.alert('서버오류! 나중에 시도해주세요!')
-      });
-  }
-
 
   useEffect(() => {
     setModemN(atModemn)
@@ -224,40 +203,11 @@ const CarRegister = () => {
             setIsRegister(true)
 
           } catch (error) {
+
             console.log('등록 에러')
             console.log(error)
-            // client.destroy()
 
-            // console.log(client._destroyed)
-
-            // setTimeout(() => {
-
-            //   client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort, localAddress: atLocalClientAddress })
-            //   // let vvs = client.connect({ port: 3600, host: '175.126.232.72' })
-
-            //   if (!client._destroyed) {
-
-            //     console.log(client._destroyed)
-
-            //     setTimeout(() => {
-            //       client.write(JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-            //       console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: sub, data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-
-            //       usercancelff('등록이 완료되었습니다.')
-
-            //       setIsRegister(true)
-
-            //     }, 2000);
-            //   } else {
-
-            //     console.log('??')
-
-            //     console.log(client._destroyed)
-
-            //   }
-
-            // }, 1000);
-          exitAppAlert()
+            exitAppAlert()
 
           }
 
@@ -323,37 +273,7 @@ const CarRegister = () => {
 
       console.log(error)
 
-      // client.destroy()
-      // client.connect({ port: 3600, host: '175.126.232.72', localPort: atLocalClientPort })
-
-      // setTimeout(() => {
-      //   client.write(JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
-
-      //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
-      //   usercancelff('삭제가 완료되었습니다.')
-
-      //   setUserN('')
-      //   setCarRace('')
-      //   setSedan1(false)
-      //   setSuv1(false)
-
-      //   delFirst()
-      //   delUser()
-      //   delcarRace()
-
-      //   setatUserNumber('')
-      //   setatIsCarRace('')
-
-      //   setUserN('')
-      //   setCarRace('')
-
-      //   setIsRegister(false)
-
-      // }, 2000);
-
       exitAppAlert()
-
-
     }
 
 
@@ -376,6 +296,17 @@ const CarRegister = () => {
         }
       }, 1500);
   }
+
+  const [atCertifyState,setAtCertifyState] = useRecoilState(certifyState)
+
+  const unsubscribe = navigation.addListener('focus', async () => {
+    if (atCertifyState=='no_certification') {
+      Alert.alert('재인증 유저.')
+    }
+  });
+  useEffect(() => {
+    return () => { unsubscribe() };
+  });
 
 
 

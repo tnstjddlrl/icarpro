@@ -33,6 +33,7 @@ import {
   certifyState,
   AppLocalClientPort,
   AppLocalClientAddress,
+  AllState_app,
 } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
@@ -212,6 +213,8 @@ const Load = () => {
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
+  const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
+
   const handlePushToken = useCallback(async () => {
     const enabled = await messaging().hasPermission()
     if (enabled) {
@@ -252,9 +255,12 @@ const Load = () => {
     getmodem().then(res=>modemm = res)
     client.on('data', function (data) {
 
+      
       var command = ''+data
       console.log(command.split('/')[0])
       console.log(modemm)
+      
+      setAllStateApp(command)
 
       if(''+data === 'no_cer'){
         setAtCertifyState('no_certification')
