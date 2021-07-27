@@ -154,7 +154,7 @@ const Carcontroll = () => {
   const [, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
   const [atActionSound, setAtactionSound] = useRecoilState(actionSound)
   const [, setAtalertSound] = useRecoilState(alertSound)
-  
+
 
   const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
   const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
@@ -489,9 +489,7 @@ const Carcontroll = () => {
 
       } catch (error) {
         console.log(error)
-        // client.connect({ port: 3400, host: '175.126.232.72' })
-        // client.write(JSON.stringify(boot_0))
-        // console.log('전송 : ' + JSON.stringify(boot_0))
+        exitAppAlert()
       }
 
       lomofc('원격시동 끄기')
