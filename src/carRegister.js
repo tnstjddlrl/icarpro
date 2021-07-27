@@ -27,13 +27,13 @@ import RNExitApp from 'react-native-kill-app';
 import RNRestart from 'react-native-restart';
 
 
-import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress, certifyState } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress, certifyState, AllState_app } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from 'axios'
 
-
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
@@ -61,6 +61,8 @@ const CarRegister = () => {
   const [userCancelModal, setUserCancelModal] = useState(false)
   const [DeleteFirstModal, setDeleteFirstModal] = useState(false)
   const [cancelMss, setCancelMss] = useState('')
+
+  const [spinner,setSpinner] =useState(false)
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
@@ -175,7 +177,35 @@ const CarRegister = () => {
     }
   }
 
+  const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
+
+  useEffect(()=>{
+    console.log('현재 상태 : ' + AllStateApp)
+
+    if(spinner == true){
+      setSpinner(false)
+      console.log('로딩 끝!')
+    }else{
+
+    }
+
+  },[AllStateApp])
+
   async function registerClick(sub) {
+
+    if (atCertifyState=='no_certification') {
+      setSpinner(true)
+
+      try {
+        client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+      } catch (error) {
+        console.log(error)
+        RNRestart.Restart()
+      }
+
+      return
+    }
 
     await axios.get('http://175.126.232.72/proc.php', {
       params: {
@@ -301,7 +331,7 @@ const CarRegister = () => {
 
   const unsubscribe = navigation.addListener('focus', async () => {
     if (atCertifyState=='no_certification') {
-      Alert.alert('재인증 유저.')
+      // Alert.alert('재인증 유저.')
     }
   });
   useEffect(() => {
@@ -378,7 +408,7 @@ const CarRegister = () => {
 
               <TouchableWithoutFeedback onPress={() => registerClick('register')}>
                 <View style={{ borderRadius: 6, backgroundColor: "#f75929", height: 54, flex: 1, justifyContent: "center", alignItems: "center" }}>
-                  <Text style={styles.registertxt}>등록</Text>
+                  <Text style={styles.registertxt}>{atCertifyState=='no_certification' ? '재인증' : '등록'}</Text>
                 </View>
               </TouchableWithoutFeedback>
 
@@ -394,7 +424,7 @@ const CarRegister = () => {
               <View style={{ flex: 0.05 }}></View>
 
               <View style={{ borderRadius: 6, backgroundColor: "#e1e1e3", height: 54, flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <Text style={styles.registertxt}>등록</Text>
+                <Text style={styles.registertxt}>{atCertifyState=='no_certification' ? '재인증' : '등록'}</Text>
               </View>
 
             </View>
@@ -649,6 +679,12 @@ const CarRegister = () => {
           </SafeAreaView>
         </Modal>
         {/*  */}
+
+        <Spinner
+          visible={spinner}
+          textContent={'Loading...'}
+          textStyle={{color:'white'}}
+        />
 
       </View>
     </SafeAreaView>
