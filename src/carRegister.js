@@ -177,6 +177,8 @@ const CarRegister = () => {
     }
   }
 
+  //01227094107
+
   const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
 
   useEffect(()=>{
@@ -185,11 +187,51 @@ const CarRegister = () => {
     if(spinner == true){
       setSpinner(false)
       console.log('로딩 끝!')
+
+      if(AllStateApp=='no_modem'){
+        // Alert.alert('인증에 실패하였습니다!')
+        usercancelff('모뎀 번호를 확인해주세요.')
+      }
+
+      if(AllStateApp=='certification_fail'){
+        // Alert.alert('인증에 실패하였습니다!')
+        usercancelff('인증에 실패하였습니다!')
+      }
+      
+      if(AllStateApp=='certification_suc'){
+        // Alert.alert('인증에 성공하였습니다!')
+        
+        asyncSave()
+        usercancelff('등록이 완료되었습니다.')
+        
+
+        setTimeout(() => {
+
+          navigation.navigate('차량제어')
+        }, 1500);
+      }
+
+      if(AllStateApp=='certification_del_suc'){
+        // Alert.alert('인증에 성공하였습니다!')
+        usercancelff('삭제에 성공하였습니다!')
+      }
+
+      if(AllStateApp=='certification_del_fail'){
+        // Alert.alert('인증에 성공하였습니다!')
+        usercancelff('삭제에 실패하였습니다.')
+      }
+
+
+
     }else{
 
     }
 
   },[AllStateApp])
+
+  //certification_fail
+
+
 
   async function registerClick(sub) {
 
@@ -205,6 +247,18 @@ const CarRegister = () => {
       }
 
       return
+    }else if(atCertifyState=='no_user'){
+      setSpinner(true)
+
+      try {
+        client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+      } catch (error) {
+        console.log(error)
+        RNRestart.Restart()
+      }
+    }else{
+      usercancelff('삭제를 먼저 진행해주세요!')
     }
 
   }
@@ -233,10 +287,12 @@ const CarRegister = () => {
 
     try {
 
+      setSpinner(true)
+
       client.write(JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
       console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register_delete", data: { modem: modemN, token: pushToken } }))
 
-      usercancelff('삭제가 완료되었습니다.')
+      // usercancelff('삭제가 완료되었습니다.')
 
       setUserN('')
       setCarRace('')
@@ -276,16 +332,17 @@ const CarRegister = () => {
       setTimeout(() => {
         setUserCancelModal(false)
         console.log(cancelMss)
-        if (mss == '등록이 완료되었습니다.') {
-          // navigation.navigate('차량제어')
-          setIdoorModal(true)
-        }
+        // if (mss == '등록이 완료되었습니다.') {
+        //   // navigation.navigate('차량제어')
+        //   setIdoorModal(true)
+        // }
       }, 1500);
   }
 
   const [atCertifyState,setAtCertifyState] = useRecoilState(certifyState)
 
   const unsubscribe = navigation.addListener('focus', async () => {
+    console.log(atCertifyState)
     if (atCertifyState=='no_certification') {
       // Alert.alert('재인증 유저.')
     }

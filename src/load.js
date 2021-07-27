@@ -273,6 +273,10 @@ const Load = () => {
 
         Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
 
+      }else if(''+data === 'no_user'){
+
+        setAtCertifyState('no_user')
+
       }else if(modemm == command.split('/')[0]){
         setAtCertifyState('good')
         

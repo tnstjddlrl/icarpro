@@ -45,7 +45,7 @@ export const stateWaitTime = atom({
 
 export const certifyState = atom({
   key: 'certifyState',
-  default: 'nono',
+  default: 'no_user',
 })//인증상태 저장 아톰
 
 export const AppLocalClientPort = atom({
