@@ -53,7 +53,8 @@ import {
   StateTrunk,
   StateEngineHood,
   StateEngineState,
-  StateCarVolt
+  StateCarVolt,
+  usercarNum
 } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
@@ -163,6 +164,9 @@ const Carcontroll = () => {
   const [atStateEngineHood, setAtStateEngineHood] = useRecoilState(StateEngineHood)
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
+
+  const [atUserCarNum,setAtUserCarNum] = useRecoilState(usercarNum)
+
 
 
   const unsubscribe = navigation.addListener('focus', async () => {
@@ -760,7 +764,7 @@ const Carcontroll = () => {
                       exitAppAlert()
                     }
                   }}>
-                    <Text style={styles.carnum}>12기 3456</Text>
+                    <Text style={styles.carnum}>{atUserCarNum}</Text>
                   </TouchableWithoutFeedback>
                   {
                     carRace == "SUV1" &&

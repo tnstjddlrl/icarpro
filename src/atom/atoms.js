@@ -18,6 +18,11 @@ export const userNumber = atom({
   default: '',
 })
 
+export const usercarNum = atom({
+  key: 'usercarNum',
+  default: '',
+})
+
 export const fcmToken = atom({
   key: 'fcmToken',
   default: 'notoken',

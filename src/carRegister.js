@@ -27,7 +27,7 @@ import RNExitApp from 'react-native-kill-app';
 import RNRestart from 'react-native-restart';
 
 
-import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress, certifyState, AllState_app } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress, certifyState, AllState_app,usercarNum } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -66,6 +66,8 @@ const CarRegister = () => {
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
+  const [atUserCarNum,setAtUserCarNum] = useRecoilState(usercarNum)
+
   const [atLocalClientPort, setatLocalClientPort] = useRecoilState(AppLocalClientPort)
   const [atLocalClientAddress, setatLocalClientAddress] = useRecoilState(AppLocalClientAddress)
 
@@ -89,6 +91,8 @@ const CarRegister = () => {
 
   const [modemN, setModemN] = useState('')
   const [userN, setUserN] = useState('')
+  const [carnum,setCarnum]=useState('')
+
   const [carRace, setCarRace] = useState('')
   const [raceModal, setRaceModal] = useState(false)
 
@@ -109,6 +113,8 @@ const CarRegister = () => {
     setModemN(atModemn)
     setUserN(atUserNumber)
     setCarRace(atIsCarRace)
+    setCarnum(atUserCarNum)
+
     if (atIsCarRace == 'SEDAN1') {
       setSedan1(true)
     } else if (atIsCarRace == 'SUV1') {
@@ -188,6 +194,11 @@ const CarRegister = () => {
       setSpinner(false)
       console.log('로딩 끝!')
 
+      
+      if(AllStateApp=='no_modem_conn'){
+        usercancelff('모뎀 연결중입니다. 잠시후 시도해주세요.')
+      }
+
       if(AllStateApp=='no_modem'){
         // Alert.alert('인증에 실패하였습니다!')
         usercancelff('모뎀 번호를 확인해주세요.')
@@ -214,11 +225,17 @@ const CarRegister = () => {
       if(AllStateApp=='certification_del_suc'){
         // Alert.alert('인증에 성공하였습니다!')
         usercancelff('삭제에 성공하였습니다!')
+        setAtCertifyState('no_user')
       }
 
       if(AllStateApp=='certification_del_fail'){
         // Alert.alert('인증에 성공하였습니다!')
         usercancelff('삭제에 실패하였습니다.')
+      }
+
+      if(AllStateApp=='overlap_user'){
+        // Alert.alert('인증에 성공하였습니다!')
+        usercancelff('이미 등록되어있습니다.먼저 삭제를 진행해주세요.')
       }
 
 
@@ -231,35 +248,53 @@ const CarRegister = () => {
 
   //certification_fail
 
+  const loadState = () => {
+    try {
+      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: modemN, user: userN, token: pushToken } }))
+      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: modemN, user: userN, token: pushToken } }))
+    } catch (error) {
+      console.log(error)
+
+      exitAppAlert()
+    }
+  }
 
 
   async function registerClick(sub) {
+    // loadState()
 
-    if (atCertifyState=='no_certification') {
-      setSpinner(true)
-
-      try {
-        client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-      } catch (error) {
-        console.log(error)
-        RNRestart.Restart()
+      if (atCertifyState=='no_certification') {
+        setSpinner(true)
+  
+        try {
+          client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+          console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+        } catch (error) {
+          console.log(error)
+          RNRestart.Restart()
+        }
+  
+        return
+      }else if(atCertifyState=='no_user'){
+        setSpinner(true)
+  
+        try {
+          client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+          console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+        } catch (error) {
+          console.log(error)
+          RNRestart.Restart()
+        }
+      }else if(atCertifyState=='good' || atCertifyState=='no_state'){
+        userCancelModal('삭제를 먼저 진행해주세요!')
       }
 
-      return
-    }else if(atCertifyState=='no_user'){
-      setSpinner(true)
 
-      try {
-        client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-      } catch (error) {
-        console.log(error)
-        RNRestart.Restart()
-      }
-    }else{
-      usercancelff('삭제를 먼저 진행해주세요!')
-    }
+
+
+    // else{
+    //   usercancelff('삭제를 먼저 진행해주세요!')
+    // }
 
   }
 
@@ -270,11 +305,13 @@ const CarRegister = () => {
       await AsyncStorage.setItem("@modem_N", modemN)
       await AsyncStorage.setItem("@user_N", userN)
       await AsyncStorage.setItem("@car_Race", carRace)
+      await AsyncStorage.setItem("@car_Number", carnum)
       await AsyncStorage.setItem("@is_first", 'notfirst')
 
       setAtModemn(modemN)
       setatUserNumber(userN)
       setatIsCarRace(carRace)
+      setAtUserCarNum(carnum)
       console.log('어싱크 세이브 완료')
     } catch (error) {
       console.error(error)
@@ -342,6 +379,9 @@ const CarRegister = () => {
   const [atCertifyState,setAtCertifyState] = useRecoilState(certifyState)
 
   const unsubscribe = navigation.addListener('focus', async () => {
+
+    getData().then(res => { if (res != null) setIsRegister(true) })
+
     console.log(atCertifyState)
     if (atCertifyState=='no_certification') {
       // Alert.alert('재인증 유저.')
@@ -360,7 +400,12 @@ const CarRegister = () => {
 
         {/* 헤더 */}
         <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={() => { if (isRegister === true) navigation.navigate('차량제어'); else Alert.alert('먼저 차량을 등록해주세요') }}>
+          <TouchableWithoutFeedback onPress={() => {
+            if (AllStateApp === 'no_user' ||AllStateApp === 'no_cer')
+              Alert.alert('먼저 차량을 등록해주세요')
+            else
+              navigation.navigate('차량제어');
+          }}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={()=>setIdoorModal(true)}>
@@ -392,6 +437,18 @@ const CarRegister = () => {
               }
             </View>
           </View>
+
+          <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16 }}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TextInput placeholder='차량 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setCarnum(txt)} value={carnum} keyboardType={"number-pad"}></TextInput>
+              {carnum != '' &&
+                <TouchableOpacity onPress={() => setCarnum('')}>
+                  <Image source={inputcls}></Image>
+                </TouchableOpacity>
+              }
+            </View>
+          </View>
+
           <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(), setRaceModal(true) }}>
             <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16, justifyContent: "center" }}>
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: chwidth - 48 }}>

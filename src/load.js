@@ -34,6 +34,7 @@ import {
   AppLocalClientPort,
   AppLocalClientAddress,
   AllState_app,
+  usercarNum,
 } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
@@ -87,6 +88,15 @@ const Load = () => {
   const getcar = async () => {
     try {
       const value = await AsyncStorage.getItem('@car_Race')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const getcarnum = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@car_Number')
       return value
     } catch (e) {
       console.log(e)
@@ -212,6 +222,7 @@ const Load = () => {
   const [atStateEngineHood, setAtStateEngineHood] = useRecoilState(StateEngineHood)
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
+  const [atUserCarNum,setAtUserCarNum] = useRecoilState(usercarNum)
 
   const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
 
@@ -267,17 +278,19 @@ const Load = () => {
 
         Alert.alert('미인증 상태입니다.','인증을 진행해주세요',
         [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
-      }else if(''+data === 'no_state'){
+      }else if(''+data === 'no_modem_conn'){
 
-        setAtCertifyState('no_state')
-
-        Alert.alert('상태값이 없습니다.','잠시후 진행해주세요')
+        Alert.alert('모뎀 접속중입니다.','잠시후 진행해주세요')
 
       }else if(''+data === 'no_user'){
 
         setAtCertifyState('no_user')
 
-      }else if(modemm == command.split('/')[0]){
+      }else if(''+data === 'no_state'){
+
+        setAtCertifyState('no_state')
+
+      }else if(modemm == command.split('/')[0] || atmodemn== command.split('/')[0] || command.split('/')[0].length === 11){
         setAtCertifyState('good')
         
         if (command.split('/')[1][2] === 'i') {
@@ -442,6 +455,7 @@ const Load = () => {
           getmodem().then(res => {setAtModemn(res),console.log('모뎀번호 가져오기:'+atmodemn==null)})
           getuser().then(res => setatUserNumber(res))
           getcar().then(res => setatIsCarRace(res))
+          getcarnum().then(res => setAtUserCarNum(res))
 
           // getLowVoltValue().then(res => {
           //   if (res !== null) {
@@ -519,6 +533,7 @@ const Load = () => {
                       setatLocalClientAddress(client.localAddress)
                       console.log('로컬어드레스 : '+client.localAddress)
                       setLoadbarwd(183)
+                      setAtCertifyState('no_user')
                       setTimeout(() => {
                         console.log('첫사용자 : ' + res)
                         navigation.navigate('차량등록')
