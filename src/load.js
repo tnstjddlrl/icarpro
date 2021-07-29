@@ -289,6 +289,7 @@ const Load = () => {
     let modemm
     getmodem().then(res => modemm = res)
     client.on('data', function (data) {
+      console.log('로드 클라온 작동')
       console.log('로드 상태에서 데이터 받기 :' + data)
 
       var command = '' + data
@@ -597,7 +598,6 @@ const Load = () => {
 
           setLowVoltValue(command.split('/')[5][12] + command.split('/')[5][13] + '.' + command.split('/')[5][14])
         }
-
 
       }
     })
