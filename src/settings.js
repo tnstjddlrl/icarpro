@@ -124,17 +124,17 @@ const Settings = () => {
 
   // 
 
-  function exitAppAlert () {
+  function exitAppAlert() {
     Alert.alert(
       "서버 오류",
       "서버 오류가 지속되면 고객센터로 문의해주세요.",
       [
-        { text: "OK", onPress: () => RNRestart.Restart()}
+        { text: "OK", onPress: () => RNRestart.Restart() }
       ]
     )
   }
 
-  
+
 
 
   const [icarswitch, seticarswitch] = useState(aticarswitch)
@@ -144,24 +144,24 @@ const Settings = () => {
   const [actionsound, setactionsound] = useState(atactionsound)
   const [alertsound, setalertsound] = useState(atalertsound)
 
-  useEffect(()=>{
+  useEffect(() => {
     seticarswitch(aticarswitch)
     setidoorswitch(atidoorswitch)
     setlowboltBoot(atlowboltBoot)
     setlowboltAlert(atlowboltAlert)
     setactionsound(atactionsound)
     setalertsound(atalertsound)
-  },[aticarswitch,atidoorswitch,atlowboltBoot,atlowboltAlert,atactionsound,atalertsound])
+  }, [aticarswitch, atidoorswitch, atlowboltBoot, atlowboltAlert, atactionsound, atalertsound])
 
   function sendCommand(cc) {
     try {
       let comm = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/S:' + cc, modem: atmodemN, token: pushToken } }
-      
+
       comm = JSON.stringify(comm)
-  
+
       client.write(comm)
       console.log('전송 : ' + comm)
-      
+
     } catch (error) {
       exitAppAlert()
     }
@@ -178,7 +178,7 @@ const Settings = () => {
   //     console.log(e)
   //     client.destroy()
   //     console.log(client._destroyed)
-  
+
   //     setTimeout(() => {
   //       client.connect({ port: 3600, host: '175.126.232.72' })
   //       console.log(client._destroyed)
@@ -190,8 +190,8 @@ const Settings = () => {
   //   }
   // }
 
-  const reqState = navigation.addListener('focus', async() => {
-    if(atStateWaitTime === false){
+  const reqState = navigation.addListener('focus', async () => {
+    if (atStateWaitTime === false) {
       // registerClick()
       await loadState()
       setAtStateWaitTime(true)
@@ -238,7 +238,7 @@ const Settings = () => {
             //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_certification", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
             // }, 2000);
 
-          exitAppAlert()
+            exitAppAlert()
 
           }
 
@@ -262,7 +262,7 @@ const Settings = () => {
             //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state_no", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
             // }, 2000);
 
-          exitAppAlert()
+            exitAppAlert()
 
           }
 
@@ -283,7 +283,7 @@ const Settings = () => {
             //   console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "req_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
             // }, 2000);
 
-          exitAppAlert()
+            exitAppAlert()
 
           }
 
@@ -673,12 +673,12 @@ const Settings = () => {
                   offColor="#d1d2d6"
                   onToggle={isOn => {
                     seticarswitch(isOn)
-                    if(isOn === true){
+                    if (isOn === true) {
                       sendCommand('mn')
-                    }else{
+                    } else {
                       sendCommand('mf')
                     }
-                    }}
+                  }}
                 />
               </View>
             </View>
@@ -698,13 +698,14 @@ const Settings = () => {
                   isOn={idoorswitch}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => {setidoorswitch(isOn)
-                    if(isOn === true){
+                  onToggle={isOn => {
+                    setidoorswitch(isOn)
+                    if (isOn === true) {
                       sendCommand('dn')
-                    }else{
+                    } else {
                       sendCommand('df')
                     }
-                  
+
                   }}
                 />
               </View>
@@ -735,16 +736,17 @@ const Settings = () => {
                   isOn={lowboltBoot}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => { setlowboltAlert(false)
+                  onToggle={isOn => {
+                    setlowboltAlert(false)
                     setlowboltBoot(isOn)
-                    if(isOn === true){
+                    if (isOn === true) {
                       sendCommand('le')
-                    }else{
-                      if(lowboltAlert === isOn){
+                    } else {
+                      if (lowboltAlert === isOn) {
                         sendCommand('lf')
                       }
                     }
-                   }}
+                  }}
                 />
               </View>
               <View style={{ width: chwidth - 32, flexDirection: "row", justifyContent: 'flex-end' }}>
@@ -760,16 +762,17 @@ const Settings = () => {
                   isOn={lowboltAlert}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => { setlowboltAlert(isOn)
+                  onToggle={isOn => {
+                    setlowboltAlert(isOn)
                     setlowboltBoot(false)
-                    if(isOn === true){
+                    if (isOn === true) {
                       sendCommand('la')
-                    }else{
-                      if(lowboltBoot === false){
+                    } else {
+                      if (lowboltBoot === false) {
                         sendCommand('lf')
                       }
                     }
-                   }}
+                  }}
                 />
               </View>
               <View style={{ width: chwidth - 32, flexDirection: "row", justifyContent: 'flex-end' }}>
@@ -814,10 +817,11 @@ const Settings = () => {
                   isOn={actionsound}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => {setactionsound(isOn)
-                    if(isOn === true){
+                  onToggle={isOn => {
+                    setactionsound(isOn)
+                    if (isOn === true) {
                       sendCommand('1n')
-                    }else{
+                    } else {
                       sendCommand('1f')
                     }
                   }}
@@ -836,12 +840,14 @@ const Settings = () => {
                   isOn={alertsound}
                   onColor="#f75929"
                   offColor="#d1d2d6"
-                  onToggle={isOn => {setalertsound(isOn)
-                    if(isOn === true){
+                  onToggle={isOn => {
+                    setalertsound(isOn)
+                    if (isOn === true) {
                       sendCommand('2n')
-                    }else{
+                    } else {
                       sendCommand('2f')
-                    }}}
+                    }
+                  }}
                 />
               </View>
 
@@ -911,7 +917,8 @@ const Settings = () => {
 
             {/* i도어 비밀번호설정 */}
             <View style={{ marginTop: 8 }}></View>
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('간편비밀번호',{whocall:'setting'})}>
+
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('간편비밀번호', { whocall: 'setting' })}>
               <View style={styles.oneFrame}>
                 <View style={{ marginLeft: 11, marginRight: 16, flexDirection: "row", justifyContent: "space-between" }}>
                   <View style={{ flexDirection: "row" }}>
@@ -922,6 +929,8 @@ const Settings = () => {
                 </View>
               </View>
             </TouchableWithoutFeedback>
+
+
           </View>
 
           <View style={{ marginTop: 60, marginBottom: 20 }}></View>

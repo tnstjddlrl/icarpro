@@ -43,7 +43,7 @@ const off = require('../img/pwd/off.png')
 
 
 
-const CarState = ({route}) => {
+const CarState = ({ route }) => {
   const navigation = useNavigation()
 
   const [pwd, setpwd] = useState('')
@@ -96,43 +96,43 @@ const CarState = ({route}) => {
         }
       }
       ).then(async (response) => {
-          console.log('???  ' + response.data);
+        console.log('???  ' + response.data);
 
-          if ('' + response.data == 'easy_req') {
-            setSaveModal(true)
+        if ('' + response.data == 'easy_req') {
+          setSaveModal(true)
+          setTimeout(() => {
+            setSaveModal(false)
+          }, 2000);
+          try {
+            console.log(JSON.stringify({ type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }))
+            client.write(JSON.stringify({ type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }))
+
+            Alert.alert('비밀번호 등록이 완료되었습니다!')
+          } catch (error) {
+            client.destroy()
+
             setTimeout(() => {
-              setSaveModal(false)
-            }, 2000);
-            try {
-              console.log(JSON.stringify({ type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }))
-              client.write(JSON.stringify({ type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }))
-
-              Alert.alert('비밀번호 등록이 완료되었습니다!')
-            } catch (error) {
-              client.destroy()
+              client.connect({ port: 3600, host: '175.126.232.72' })
 
               setTimeout(() => {
-                client.connect({ port: 3600, host: '175.126.232.72'})
+                client.write(JSON.stringify({ type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }))
 
-                setTimeout(() => {
-                  client.write(JSON.stringify({ type: "R", type_sub: "easy_pwd", data: { pwd: pwd, modem: atModemn, token: pushToken } }))
-
-                }, 1000);
               }, 1000);
+            }, 1000);
 
-              // Alert.alert('비밀번호 등록이 완료되었습니다!')
+            // Alert.alert('비밀번호 등록이 완료되었습니다!')
 
-              console.log(error)
-            }
-          } else if ('' + response.data == 'pwd_okay') {
-            Alert.alert('비밀번호 확인 완료!')
-          } else if ('' + response.data == 'pwd_fail') {
-            Alert.alert('비밀번호 틀림!')
-          } else {
-            Alert.alert('서버 오류!')
+            console.log(error)
           }
+        } else if ('' + response.data == 'pwd_okay') {
+          Alert.alert('비밀번호 확인 완료!')
+        } else if ('' + response.data == 'pwd_fail') {
+          Alert.alert('비밀번호 틀림!')
+        } else {
+          Alert.alert('서버 오류!')
+        }
 
-        })
+      })
         .catch(function (error) {
           Alert.alert('서버 오류!')
 
@@ -155,7 +155,7 @@ const CarState = ({route}) => {
       <View style={{ width: chwidth, height: chheight }}>
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={() => {if(route.params.whocall == 'register')navigation.navigate('차량제어');else navigation.goBack()}}>
+          <TouchableWithoutFeedback onPress={() => { if (route.params.whocall == 'register') navigation.navigate('차량제어'); else navigation.goBack() }}>
             <View>
               <Image source={back}></Image>
             </View>

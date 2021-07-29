@@ -165,7 +165,7 @@ const Carcontroll = () => {
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
-  const [atUserCarNum,setAtUserCarNum] = useRecoilState(usercarNum)
+  const [atUserCarNum, setAtUserCarNum] = useRecoilState(usercarNum)
 
 
 
@@ -313,12 +313,12 @@ const Carcontroll = () => {
   const [warnbim, setWarnbim] = useState('no')
   const [trunk, setTrunk] = useState(false)
 
-  function exitAppAlert () {
+  function exitAppAlert() {
     Alert.alert(
       "서버 오류",
       "서버 오류가 지속되면 고객센터로 문의해주세요.",
       [
-        { text: "OK", onPress: () => RNRestart.Restart()}
+        { text: "OK", onPress: () => RNRestart.Restart() }
       ]
     )
   }

@@ -27,7 +27,7 @@ import RNExitApp from 'react-native-kill-app';
 import RNRestart from 'react-native-restart';
 
 
-import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress, certifyState, AllState_app,usercarNum } from './atom/atoms'
+import { modemNumber, userNumber, fcmToken, isCarRace, AppLocalClientPort, AppLocalClientAddress, certifyState, AllState_app, usercarNum } from './atom/atoms'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -56,27 +56,27 @@ const CarRegister = () => {
   const [loadModal, setLoadModal] = useState(false)
   const [delModal, setDelModal] = useState(false)
 
-  const [idoorModal,setIdoorModal] = useState(false)
+  const [idoorModal, setIdoorModal] = useState(false)
 
   const [userCancelModal, setUserCancelModal] = useState(false)
   const [DeleteFirstModal, setDeleteFirstModal] = useState(false)
   const [cancelMss, setCancelMss] = useState('')
 
-  const [spinner,setSpinner] =useState(false)
+  const [spinner, setSpinner] = useState(false)
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
 
-  const [atUserCarNum,setAtUserCarNum] = useRecoilState(usercarNum)
+  const [atUserCarNum, setAtUserCarNum] = useRecoilState(usercarNum)
 
   const [atLocalClientPort, setatLocalClientPort] = useRecoilState(AppLocalClientPort)
   const [atLocalClientAddress, setatLocalClientAddress] = useRecoilState(AppLocalClientAddress)
 
-  function exitAppAlert () {
+  function exitAppAlert() {
     Alert.alert(
       "서버 오류",
       "서버 오류가 지속되면 고객센터로 문의해주세요.",
       [
-        { text: "OK", onPress: () => RNRestart.Restart()}
+        { text: "OK", onPress: () => RNRestart.Restart() }
       ]
     )
   }
@@ -91,7 +91,7 @@ const CarRegister = () => {
 
   const [modemN, setModemN] = useState('')
   const [userN, setUserN] = useState('')
-  const [carnum,setCarnum]=useState('')
+  const [carnum, setCarnum] = useState('')
 
   const [carRace, setCarRace] = useState('')
   const [raceModal, setRaceModal] = useState(false)
@@ -187,34 +187,34 @@ const CarRegister = () => {
 
   const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log('현재 상태 : ' + AllStateApp)
 
-    if(spinner == true){
+    if (spinner == true) {
       setSpinner(false)
       console.log('로딩 끝!')
 
-      
-      if(AllStateApp=='no_modem_conn'){
+
+      if (AllStateApp == 'no_modem_conn') {
         usercancelff('모뎀 연결중입니다. 잠시후 시도해주세요.')
       }
 
-      if(AllStateApp=='no_modem'){
+      if (AllStateApp == 'no_modem') {
         // Alert.alert('인증에 실패하였습니다!')
         usercancelff('모뎀 번호를 확인해주세요.')
       }
 
-      if(AllStateApp=='certification_fail'){
+      if (AllStateApp == 'certification_fail') {
         // Alert.alert('인증에 실패하였습니다!')
         usercancelff('인증에 실패하였습니다!')
       }
-      
-      if(AllStateApp=='certification_suc'){
+
+      if (AllStateApp == 'certification_suc') {
         // Alert.alert('인증에 성공하였습니다!')
-        
+
         asyncSave()
         usercancelff('등록이 완료되었습니다.')
-        
+
 
         setTimeout(() => {
 
@@ -222,29 +222,29 @@ const CarRegister = () => {
         }, 1500);
       }
 
-      if(AllStateApp=='certification_del_suc'){
+      if (AllStateApp == 'certification_del_suc') {
         // Alert.alert('인증에 성공하였습니다!')
         usercancelff('삭제에 성공하였습니다!')
         setAtCertifyState('no_user')
       }
 
-      if(AllStateApp=='certification_del_fail'){
+      if (AllStateApp == 'certification_del_fail') {
         // Alert.alert('인증에 성공하였습니다!')
         usercancelff('삭제에 실패하였습니다.')
       }
 
-      if(AllStateApp=='overlap_user'){
+      if (AllStateApp == 'overlap_user') {
         // Alert.alert('인증에 성공하였습니다!')
-        usercancelff('이미 등록되어있습니다.먼저 삭제를 진행해주세요.')
+        usercancelff('이미 등록되어있습니다.{"\n"}먼저 삭제를 진행해주세요.')
       }
 
 
 
-    }else{
+    } else {
 
     }
 
-  },[AllStateApp])
+  }, [AllStateApp])
 
   //certification_fail
 
@@ -263,31 +263,31 @@ const CarRegister = () => {
   async function registerClick(sub) {
     // loadState()
 
-      if (atCertifyState=='no_certification') {
-        setSpinner(true)
-  
-        try {
-          client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-          console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-        } catch (error) {
-          console.log(error)
-          RNRestart.Restart()
-        }
-  
-        return
-      }else if(atCertifyState=='no_user'){
-        setSpinner(true)
-  
-        try {
-          client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-          console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
-        } catch (error) {
-          console.log(error)
-          RNRestart.Restart()
-        }
-      }else if(atCertifyState=='good' || atCertifyState=='no_state'){
-        userCancelModal('삭제를 먼저 진행해주세요!')
+    if (atCertifyState == 'no_certification') {
+      setSpinner(true)
+
+      try {
+        client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+      } catch (error) {
+        console.log(error)
+        RNRestart.Restart()
       }
+
+      return
+    } else if (atCertifyState == 'no_user') {
+      setSpinner(true)
+
+      try {
+        client.write(JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+        console.log('전송 : ' + JSON.stringify({ type: "R", type_sub: "register", data: { modem: modemN, user: userN, carRace: carRace, token: pushToken } }))
+      } catch (error) {
+        console.log(error)
+        RNRestart.Restart()
+      }
+    } else if (atCertifyState == 'good' || atCertifyState == 'no_state') {
+      userCancelModal('삭제를 먼저 진행해주세요!')
+    }
 
 
 
@@ -376,14 +376,14 @@ const CarRegister = () => {
       }, 1500);
   }
 
-  const [atCertifyState,setAtCertifyState] = useRecoilState(certifyState)
+  const [atCertifyState, setAtCertifyState] = useRecoilState(certifyState)
 
   const unsubscribe = navigation.addListener('focus', async () => {
 
     getData().then(res => { if (res != null) setIsRegister(true) })
 
     console.log(atCertifyState)
-    if (atCertifyState=='no_certification') {
+    if (atCertifyState == 'no_certification') {
       // Alert.alert('재인증 유저.')
     }
   });
@@ -401,17 +401,17 @@ const CarRegister = () => {
         {/* 헤더 */}
         <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
           <TouchableWithoutFeedback onPress={() => {
-            if (AllStateApp === 'no_user' ||AllStateApp === 'no_cer')
-              Alert.alert('먼저 차량을 등록해주세요')
+            if (AllStateApp === 'no_user' || AllStateApp === 'no_cer')
+              Alert.alert('먼저 등록 및 인증을 해주세요')
             else
               navigation.navigate('차량제어');
           }}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={()=>setIdoorModal(true)}>
-          <Text style={styles.maintxt}>차량 등록</Text>
+          <TouchableWithoutFeedback onPress={() => { }}>
+            <Text style={styles.maintxt}>차량 등록</Text>
           </TouchableWithoutFeedback>
-          <View style={{width:20}}></View>
+          <View style={{ width: 20 }}></View>
         </View>
         {/* 헤더 */}
 
@@ -478,7 +478,7 @@ const CarRegister = () => {
 
               <TouchableWithoutFeedback onPress={() => registerClick('register')}>
                 <View style={{ borderRadius: 6, backgroundColor: "#f75929", height: 54, flex: 1, justifyContent: "center", alignItems: "center" }}>
-                  <Text style={styles.registertxt}>{atCertifyState=='no_certification' ? '재인증' : '등록'}</Text>
+                  <Text style={styles.registertxt}>{atCertifyState == 'no_certification' ? '재인증' : '등록'}</Text>
                 </View>
               </TouchableWithoutFeedback>
 
@@ -494,7 +494,7 @@ const CarRegister = () => {
               <View style={{ flex: 0.05 }}></View>
 
               <View style={{ borderRadius: 6, backgroundColor: "#e1e1e3", height: 54, flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <Text style={styles.registertxt}>{atCertifyState=='no_certification' ? '재인증' : '등록'}</Text>
+                <Text style={styles.registertxt}>{atCertifyState == 'no_certification' ? '재인증' : '등록'}</Text>
               </View>
 
             </View>
@@ -730,13 +730,13 @@ const CarRegister = () => {
               <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{ width: chwidth - 80, borderWidth: 0.5 }}></View>
                 <View style={{ flexDirection: 'row', width: chwidth - 80, height: 50 }}>
-                  <TouchableWithoutFeedback onPress={() => { setIdoorModal(false),navigation.navigate('차량제어')}}>
+                  <TouchableWithoutFeedback onPress={() => { setIdoorModal(false), navigation.navigate('차량제어') }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>취소</Text>
                     </View>
                   </TouchableWithoutFeedback>
                   <View style={{ height: 50, borderWidth: 0.5 }}></View>
-                  <TouchableWithoutFeedback onPress={() => { setIdoorModal(false),navigation.navigate('간편비밀번호',{whocall:'register'}) }}>
+                  <TouchableWithoutFeedback onPress={() => { setIdoorModal(false), navigation.navigate('간편비밀번호', { whocall: 'register' }) }}>
                     <View style={{ flex: 1, borderBottomLeftRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                       <Text>확인</Text>
                     </View>
@@ -753,7 +753,7 @@ const CarRegister = () => {
         <Spinner
           visible={spinner}
           textContent={'Loading...'}
-          textStyle={{color:'white'}}
+          textStyle={{ color: 'white' }}
         />
 
       </View>

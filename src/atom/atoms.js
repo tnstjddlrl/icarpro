@@ -170,3 +170,8 @@ export const StateCarVolt = atom({
   key: 'StateCarVolt',
   default: '00.0',
 })
+
+export const easyPWD = atom({
+  key: 'easyPWD',
+  default: '',
+})

@@ -35,6 +35,7 @@ import {
   AppLocalClientAddress,
   AllState_app,
   usercarNum,
+  easyPWD,
 } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
@@ -97,6 +98,15 @@ const Load = () => {
   const getcarnum = async () => {
     try {
       const value = await AsyncStorage.getItem('@car_Number')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const geteasyPWD = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@easy_PWD')
       return value
     } catch (e) {
       console.log(e)
@@ -191,13 +201,13 @@ const Load = () => {
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [isAuthorized, setIsAuthorized] = useState(false)
-  
+
   const [atmodemn, setAtModemn] = useRecoilState(modemNumber)
   const [, setatUserNumber] = useRecoilState(userNumber)
   const [, setatIsCarRace] = useRecoilState(isCarRace)
 
-  const [atCertifyState,setAtCertifyState] = useRecoilState(certifyState)
-  
+  const [atCertifyState, setAtCertifyState] = useRecoilState(certifyState)
+
 
 
   const [, setLowVoltValue] = useRecoilState(voltValue)
@@ -212,8 +222,8 @@ const Load = () => {
   const [, setAtactionSound] = useRecoilState(actionSound)
   const [, setAtalertSound] = useRecoilState(alertSound)
 
-  const [atLocalClientPort , setatLocalClientPort] = useRecoilState(AppLocalClientPort)
-  const [atLocalClientAddress,setatLocalClientAddress] =useRecoilState(AppLocalClientAddress)
+  const [atLocalClientPort, setatLocalClientPort] = useRecoilState(AppLocalClientPort)
+  const [atLocalClientAddress, setatLocalClientAddress] = useRecoilState(AppLocalClientAddress)
 
   const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
   const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
@@ -222,7 +232,8 @@ const Load = () => {
   const [atStateEngineHood, setAtStateEngineHood] = useRecoilState(StateEngineHood)
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
-  const [atUserCarNum,setAtUserCarNum] = useRecoilState(usercarNum)
+  const [atUserCarNum, setAtUserCarNum] = useRecoilState(usercarNum)
+  const [atEasyPWD, setAtEasyPWD] = useRecoilState(easyPWD)
 
   const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
 
@@ -263,36 +274,36 @@ const Load = () => {
     } // 토큰 받아오기
 
     let modemm
-    getmodem().then(res=>modemm = res)
+    getmodem().then(res => modemm = res)
     client.on('data', function (data) {
 
-      
-      var command = ''+data
+
+      var command = '' + data
       console.log(command.split('/')[0])
       console.log(modemm)
-      
+
       setAllStateApp(command)
 
-      if(''+data === 'no_cer'){
+      if ('' + data === 'no_cer') {
         setAtCertifyState('no_certification')
 
-        Alert.alert('미인증 상태입니다.','인증을 진행해주세요',
-        [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
-      }else if(''+data === 'no_modem_conn'){
+        Alert.alert('미인증 상태입니다.', '인증을 진행해주세요',
+          [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
+      } else if ('' + data === 'no_modem_conn') {
 
-        Alert.alert('모뎀 접속중입니다.','잠시후 진행해주세요')
+        Alert.alert('모뎀 접속중입니다.', '잠시후 진행해주세요')
 
-      }else if(''+data === 'no_user'){
+      } else if ('' + data === 'no_user') {
 
         setAtCertifyState('no_user')
 
-      }else if(''+data === 'no_state'){
+      } else if ('' + data === 'no_state') {
 
         setAtCertifyState('no_state')
 
-      }else if(modemm == command.split('/')[0] || atmodemn== command.split('/')[0] || command.split('/')[0].length === 11){
+      } else if (modemm == command.split('/')[0] || atmodemn == command.split('/')[0] || command.split('/')[0].length === 11) {
         setAtCertifyState('good')
-        
+
         if (command.split('/')[1][2] === 'i') {
           setAtStateCarAlert('ON')
           console.log('경계온ok')
@@ -308,10 +319,10 @@ const Load = () => {
           setAtStateEngineState('OFF')
           console.log('엔진오프ok')
         }
-    
+
         //차량 전압
         setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
-    
+
         //도어 열림 상태
         if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
           setAtStateDoor('OFF')
@@ -320,7 +331,7 @@ const Load = () => {
           setAtStateDoor('ON')
           console.log('도어온ok')
         }
-    
+
         //트렁크 상태
         if (command.split('/')[2][6] === 'i') {
           setAtStateTrunk('ON')
@@ -329,7 +340,7 @@ const Load = () => {
           setAtStateTrunk('OFF')
           console.log('트렁크오프ok')
         }
-    
+
         //후드 상태
         if (command.split('/')[2][7] === 'i') {
           setAtStateEngineHood('ON')
@@ -338,7 +349,7 @@ const Load = () => {
           setAtStateEngineHood('OFF')
           console.log('후드오프ok')
         }
-    
+
         //도어락 상태
         if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
           setAtStateDoorLock('ON')
@@ -429,11 +440,11 @@ const Load = () => {
           console.log('스타트시간2')
         }
 
-        setLowVoltValue(command.split('/')[5][12]+command.split('/')[5][13]+'.'+command.split('/')[5][14])
-        
+        setLowVoltValue(command.split('/')[5][12] + command.split('/')[5][13] + '.' + command.split('/')[5][14])
+
 
       }
-      console.log('로드 상태에서 데이터 받기 :'+data)
+      console.log('로드 상태에서 데이터 받기 :' + data)
     })
 
   }, [])
@@ -452,10 +463,11 @@ const Load = () => {
           // getalertsound().then(res => { if (res !== null) setAtalertSound(JSON.parse(res)) })
 
 
-          getmodem().then(res => {setAtModemn(res),console.log('모뎀번호 가져오기:'+atmodemn==null)})
+          getmodem().then(res => { setAtModemn(res), console.log('모뎀번호 가져오기:' + atmodemn == null) })
           getuser().then(res => setatUserNumber(res))
           getcar().then(res => setatIsCarRace(res))
           getcarnum().then(res => setAtUserCarNum(res))
+          geteasyPWD().then(res => setAtEasyPWD(res))
 
           // getLowVoltValue().then(res => {
           //   if (res !== null) {
@@ -484,7 +496,7 @@ const Load = () => {
             setLoadbarwd(30)
             setTimeout(() => {
               setLoadbarwd(60)
-              getmodem().then(res => {setAtModemn(res),console.log('모뎀번호 가져오기:'+atmodemn==null)})
+              getmodem().then(res => { setAtModemn(res), console.log('모뎀번호 가져오기:' + atmodemn == null) })
               getuser().then(res => setatUserNumber(res))
               getcar().then(res => setatIsCarRace(res))
               setTimeout(() => {
@@ -495,9 +507,9 @@ const Load = () => {
                     setLoadbarwd(160)
                     setTimeout(() => {
                       setatLocalClientPort(client.localPort)
-                      console.log('로컬포트 : '+client.localPort)
+                      console.log('로컬포트 : ' + client.localPort)
                       setatLocalClientAddress(client.localAddress)
-                      console.log('로컬어드레스 : '+client.localAddress)
+                      console.log('로컬어드레스 : ' + client.localAddress)
                       setLoadbarwd(183)
                       setTimeout(() => {
                         console.log('구사용자 : ' + res)
@@ -529,9 +541,9 @@ const Load = () => {
                     setLoadbarwd(160)
                     setTimeout(() => {
                       setatLocalClientPort(client.localPort)
-                      console.log('로컬포트 : '+client.localPort)
+                      console.log('로컬포트 : ' + client.localPort)
                       setatLocalClientAddress(client.localAddress)
-                      console.log('로컬어드레스 : '+client.localAddress)
+                      console.log('로컬어드레스 : ' + client.localAddress)
                       setLoadbarwd(183)
                       setAtCertifyState('no_user')
                       setTimeout(() => {

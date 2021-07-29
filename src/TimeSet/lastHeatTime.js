@@ -21,7 +21,7 @@ import {
   useRecoilState,
   useRecoilValue
 } from 'recoil';
-import { lastHeatTimeValue, lastHeatTimeValueLimit, fcmToken,modemNumber,userNumber } from '../atom/atoms';
+import { lastHeatTimeValue, lastHeatTimeValueLimit, fcmToken, modemNumber, userNumber } from '../atom/atoms';
 import client from '../Client';
 
 const chwidth = Dimensions.get('window').width
@@ -30,12 +30,12 @@ const chheight = Dimensions.get('window').height
 import RNExitApp from 'react-native-kill-app';
 
 
-function exitAppAlert () {
+function exitAppAlert() {
   Alert.alert(
     "서버 오류",
     "서버 오류가 지속되면 고객센터로 문의해주세요.",
     [
-      { text: "OK", onPress: () => RNExitApp.exitApp()}
+      { text: "OK", onPress: () => RNExitApp.exitApp() }
     ]
   )
 }
@@ -120,7 +120,7 @@ const LastHeatTime = () => {
   }
 
   function sendCommand() {
-    
+
     try {
       let cc = '0'
       if (checkitem === '1:30') {
@@ -130,12 +130,12 @@ const LastHeatTime = () => {
       } else if (checkitem === '5:00') {
         cc = 'ae=2'
       }
-      let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN, token: pushToken } }
+      let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/S:' + cc, modem: atmodemN, token: pushToken } }
       comm = JSON.stringify(comm)
-  
+
       client.write(comm)
       console.log('전송 : ' + comm)
-      
+
     } catch (error) {
       exitAppAlert()
     }
