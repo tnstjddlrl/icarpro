@@ -175,3 +175,8 @@ export const easyPWD = atom({
   key: 'easyPWD',
   default: '',
 })
+
+export const easyPWDIsOn = atom({
+  key: 'easyPWDIsOn',
+  default: false,
+})

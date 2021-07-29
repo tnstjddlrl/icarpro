@@ -36,6 +36,7 @@ import {
   AllState_app,
   usercarNum,
   easyPWD,
+  easyPWDIsOn,
 } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
@@ -107,6 +108,15 @@ const Load = () => {
   const geteasyPWD = async () => {
     try {
       const value = await AsyncStorage.getItem('@easy_PWD')
+      return value
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const geteasyPWDIsOn = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@easy_PWD_IsOn')
       return value
     } catch (e) {
       console.log(e)
@@ -234,6 +244,7 @@ const Load = () => {
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
   const [atUserCarNum, setAtUserCarNum] = useRecoilState(usercarNum)
   const [atEasyPWD, setAtEasyPWD] = useRecoilState(easyPWD)
+  const [atEasyPWDIsOn, setAtEasyPWDIsOn] = useRecoilState(easyPWDIsOn)
 
   const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
 
@@ -468,6 +479,7 @@ const Load = () => {
           getcar().then(res => setatIsCarRace(res))
           getcarnum().then(res => setAtUserCarNum(res))
           geteasyPWD().then(res => setAtEasyPWD(res))
+          geteasyPWDIsOn().then(res => { if (res !== null) setAtEasyPWDIsOn(JSON.parse(res)) })
 
           // getLowVoltValue().then(res => {
           //   if (res !== null) {
