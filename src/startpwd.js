@@ -60,24 +60,17 @@ const Startpwd = ({ route }) => {
 
   useEffect(() => {
     inputRef.current.focus()
-    client.on('data', function (data) {
-      if ('' + data == 'pwd_suc') {
-        setSaveModal(true)
-        setTimeout(() => {
-          setSaveModal(false)
-        }, 2000);
-      } else {
-        //Alert.alert('비밀번호가 틀렸습니다.')
-      }
-      console.log('간편 비밀번호 내에서 받기 ' + data);
-      // Alert.alert('서버에서 보내온 메시지 ', '' + data)
-    });
+
   }, [])
 
   useEffect(() => {
     if (pwd.match(/^[0-9]+$/) == null && pwd != '') {
       Alert.alert('숫자만 입력가능합니다!')
       setpwd('')
+    }
+
+    if (atEasyPWD === pwd) {
+      navigation.navigate('차량제어')
     }
   }, [pwd])
 
@@ -114,7 +107,6 @@ const Startpwd = ({ route }) => {
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
           <TouchableWithoutFeedback onPress={() => { }}>
             <View style={{ width: 30 }}>
-
             </View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>i도어 비밀번호</Text>
