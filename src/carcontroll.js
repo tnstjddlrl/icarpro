@@ -54,7 +54,8 @@ import {
   StateEngineHood,
   StateEngineState,
   StateCarVolt,
-  usercarNum
+  usercarNum,
+  AllState_app
 } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
@@ -64,8 +65,7 @@ import { Player } from '@react-native-community/audio-toolkit';
 import RNExitApp from 'react-native-kill-app';
 import RNRestart from 'react-native-restart';
 
-
-import axios from 'axios'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const doorOnSound = () => new Player('dooron.mp3').play(err => console.log(err))
 const panicOnSound = () => new Player('panicon.mp3').play(err => console.log(err))
@@ -118,6 +118,8 @@ var rrtime;
 const Carcontroll = () => {
   const navigation = useNavigation()
 
+  const [spinner, setSpinner] = useState(false)
+
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const atmodemN = useRecoilValue(modemNumber)
   const atuserN = useRecoilValue(userNumber)
@@ -166,6 +168,9 @@ const Carcontroll = () => {
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
   const [atUserCarNum, setAtUserCarNum] = useRecoilState(usercarNum)
+
+  const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
+
 
 
 
@@ -230,6 +235,11 @@ const Carcontroll = () => {
     }
 
   }, [isRemote])
+
+  useEffect(() => {
+    console.log('카 컨트롤에서 상태값 변경 확인 ' + AllStateApp)
+    setSpinner(false)
+  }, [AllStateApp])
 
   let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:du', modem: atmodemN, token: pushToken } }
   let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:dl', modem: atmodemN, token: pushToken } }
@@ -341,7 +351,7 @@ const Carcontroll = () => {
 
         door_1 = JSON.stringify(door_1)
 
-        console.log(client._state)
+        console.log('클라이언트 스테이트?' + client._state)
 
         try {
           client.write(door_1)
@@ -666,19 +676,19 @@ const Carcontroll = () => {
 
   }
 
-  function redirect(ccc) {
-    client.destroy()
-    console.log(client._destroyed)
+  // function redirect(ccc) {
+  //   client.destroy()
+  //   console.log(client._destroyed)
 
-    setTimeout(() => {
-      client.connect({ port: 3600, host: '175.126.232.72' })
-      console.log(client._destroyed)
-      setTimeout(() => {
-        client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:' + ccc, modem: atmodemN, token: pushToken } }))
-        console.log('전송 : ' + JSON.stringify(boot_0))
-      }, 1000);
-    }, 1000);
-  }
+  //   setTimeout(() => {
+  //     client.connect({ port: 3600, host: '175.126.232.72' })
+  //     console.log(client._destroyed)
+  //     setTimeout(() => {
+  //       client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:' + ccc, modem: atmodemN, token: pushToken } }))
+  //       console.log('전송 : ' + JSON.stringify(boot_0))
+  //     }, 1000);
+  //   }, 1000);
+  // }
 
   function writeData(socket, data) {
     console.log('전송!')
@@ -1113,6 +1123,12 @@ const Carcontroll = () => {
           </View>
         </SafeAreaView>
       </Modal>
+
+      <Spinner
+        visible={spinner}
+        textContent={'Loading...'}
+        textStyle={{ color: 'white' }}
+      />
 
     </SafeAreaView>
   )

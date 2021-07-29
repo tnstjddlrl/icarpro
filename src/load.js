@@ -290,7 +290,6 @@ const Load = () => {
     getmodem().then(res => modemm = res)
     client.on('data', function (data) {
 
-
       var command = '' + data
       console.log(command.split('/')[0])
       console.log(modemm)
@@ -316,144 +315,287 @@ const Load = () => {
 
       } else if (modemm == command.split('/')[0] || atmodemn == command.split('/')[0] || command.split('/')[0].length === 11) {
         setAtCertifyState('good')
+        if (command.split('/').length === 7) {
+          console.log('길이 7')
+          if (command.split('/')[1][2] === 'i') {
+            setAtStateCarAlert('ON')
+            console.log('경계온ok')
+          } else if (command.split('/')[1][2] === 'o') {
+            setAtStateCarAlert('OFF')
+            console.log('경계오프ok')
+          }
 
-        if (command.split('/')[1][2] === 'i') {
-          setAtStateCarAlert('ON')
-          console.log('경계온ok')
-        } else if (command.split('/')[1][2] === 'o') {
-          setAtStateCarAlert('OFF')
-          console.log('경계오프ok')
-        }
+          if (command.split('/')[1][3] === 'i') {
+            setAtStateEngineState('ON')
+            console.log('엔진온ok')
+          } else if (command.split('/')[1][3] === 'o') {
+            setAtStateEngineState('OFF')
+            console.log('엔진오프ok')
+          }
 
-        if (command.split('/')[1][3] === 'i') {
-          setAtStateEngineState('ON')
-          console.log('엔진온ok')
-        } else if (command.split('/')[1][3] === 'o') {
-          setAtStateEngineState('OFF')
-          console.log('엔진오프ok')
-        }
+          //차량 전압
+          setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
 
-        //차량 전압
-        setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
+          //도어 열림 상태
+          if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
+            setAtStateDoor('OFF')
+            console.log('도어오프ok')
+          } else {
+            setAtStateDoor('ON')
+            console.log('도어온ok')
+          }
 
-        //도어 열림 상태
-        if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
-          setAtStateDoor('OFF')
-          console.log('도어오프ok')
+          //트렁크 상태
+          if (command.split('/')[2][6] === 'i') {
+            setAtStateTrunk('ON')
+            console.log('트렁크온ok')
+          } else if (command.split('/')[2][6] === 'o') {
+            setAtStateTrunk('OFF')
+            console.log('트렁크오프ok')
+          }
+
+          //후드 상태
+          if (command.split('/')[2][7] === 'i') {
+            setAtStateEngineHood('ON')
+            console.log('후드온ok')
+          } else if (command.split('/')[2][7] === 'o') {
+            setAtStateEngineHood('OFF')
+            console.log('후드오프ok')
+          }
+
+          //도어락 상태
+          if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
+            setAtStateDoorLock('ON')
+            console.log('도어락온ok')
+          } else {
+            setAtStateDoorLock('OFF')
+            console.log('도어락오프ok')
+          }
+
+          if (command.split('/')[5][2] === 'i') {
+            setAticarswitch(true)
+            console.log('아이카온ok')
+          } else if (command.split('/')[5][2] === 'o') {
+            setAticarswitch(false)
+            console.log('아이카오프')
+          }
+
+          if (command.split('/')[5][3] === 'i') {
+            setAtidoorswitch(true)
+            console.log('아이도어온')
+          } else if (command.split('/')[5][3] === 'o') {
+            setAtidoorswitch(false)
+            console.log('아이도어오프')
+          }
+
+          if (command.split('/')[5][10] === 'i') {
+            setAtlowvoltAlert(true)
+            console.log('저전압알람온')
+          } else if (command.split('/')[5][10] === 'o') {
+            setAtlowvoltAlert(false)
+            console.log('저전압알람오프')
+          }
+
+          if (command.split('/')[5][11] === 'i') {
+            setAtlowvoltBoot(true)
+            console.log('저전압시동온')
+          } else if (command.split('/')[5][11] === 'o') {
+            setAtlowvoltBoot(false)
+            console.log('저전압시동오프')
+          }
+
+          if (command.split('/')[5][8] === 'i') {
+            setAtactionSound(true)
+            console.log('동작음온')
+          } else if (command.split('/')[5][8] === 'o') {
+            setAtactionSound(false)
+            console.log('동작음오프')
+          }
+
+          if (command.split('/')[5][9] === 'i') {
+            setAtalertSound(true)
+            console.log('경계음온')
+          } else if (command.split('/')[5][9] === 'o') {
+            setAtalertSound(false)
+            console.log('경계음오프')
+          }
+
+          if (command.split('/')[5][15] === '0') {
+            setatBootTimeValue('3')
+            console.log('원격시간0')
+          } else if (command.split('/')[5][15] === '1') {
+            setatBootTimeValue('5')
+            console.log('원격시간1')
+          } else if (command.split('/')[5][15] === '2') {
+            setatBootTimeValue('10')
+            console.log('원격시간2')
+          }
+
+          if (command.split('/')[5][16] === '0') {
+            setAtLastHeatValue('1')
+            console.log('후열시간0')
+          } else if (command.split('/')[5][16] === '1') {
+            setAtLastHeatValue('3')
+            console.log('후열시간1')
+          } else if (command.split('/')[5][16] === '2') {
+            setAtLastHeatValue('5')
+            console.log('후열시간2')
+          }
+
+          if (command.split('/')[5][17] === '0') {
+            setAtStartTimeValue('1')
+            console.log('스타트시간0')
+          } else if (command.split('/')[5][17] === '1') {
+            setAtStartTimeValue('2')
+            console.log('스타트시간1')
+          } else if (command.split('/')[5][17] === '2') {
+            setAtStartTimeValue('3')
+            console.log('스타트시간2')
+          }
+
+          setLowVoltValue(command.split('/')[5][12] + command.split('/')[5][13] + '.' + command.split('/')[5][14])
+
         } else {
-          setAtStateDoor('ON')
-          console.log('도어온ok')
-        }
+          console.log('길이 6')
 
-        //트렁크 상태
-        if (command.split('/')[2][6] === 'i') {
-          setAtStateTrunk('ON')
-          console.log('트렁크온ok')
-        } else if (command.split('/')[2][6] === 'o') {
-          setAtStateTrunk('OFF')
-          console.log('트렁크오프ok')
-        }
+          if (command.split('/')[1][2] === 'i') {
+            setAtStateCarAlert('ON')
+            console.log('경계온ok')
+          } else if (command.split('/')[1][2] === 'o') {
+            setAtStateCarAlert('OFF')
+            console.log('경계오프ok')
+          }
 
-        //후드 상태
-        if (command.split('/')[2][7] === 'i') {
-          setAtStateEngineHood('ON')
-          console.log('후드온ok')
-        } else if (command.split('/')[2][7] === 'o') {
-          setAtStateEngineHood('OFF')
-          console.log('후드오프ok')
-        }
+          if (command.split('/')[1][3] === 'i') {
+            setAtStateEngineState('ON')
+            console.log('엔진온ok')
+          } else if (command.split('/')[1][3] === 'o') {
+            setAtStateEngineState('OFF')
+            console.log('엔진오프ok')
+          }
 
-        //도어락 상태
-        if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
-          setAtStateDoorLock('ON')
-          console.log('도어락온ok')
-        } else {
-          setAtStateDoorLock('OFF')
-          console.log('도어락오프ok')
-        }
+          //차량 전압
+          setAtStateCarVolt(command.split('/')[1][7] + command.split('/')[1][8] + '.' + command.split('/')[1][9])
 
-        if (command.split('/')[5][2] === 'i') {
-          setAticarswitch(true)
-          console.log('아이카온ok')
-        } else if (command.split('/')[5][2] === 'o') {
-          setAticarswitch(false)
-          console.log('아이카오프')
-        }
+          //도어 열림 상태
+          if (command.split('/')[2][2] === 'o' && command.split('/')[2][3] === 'o' && command.split('/')[2][4] === 'o' && command.split('/')[2][5] === 'o') {
+            setAtStateDoor('OFF')
+            console.log('도어오프ok')
+          } else {
+            setAtStateDoor('ON')
+            console.log('도어온ok')
+          }
 
-        if (command.split('/')[5][3] === 'i') {
-          setAtidoorswitch(true)
-          console.log('아이도어온')
-        } else if (command.split('/')[5][3] === 'o') {
-          setAtidoorswitch(false)
-          console.log('아이도어오프')
-        }
+          //트렁크 상태
+          if (command.split('/')[2][6] === 'i') {
+            setAtStateTrunk('ON')
+            console.log('트렁크온ok')
+          } else if (command.split('/')[2][6] === 'o') {
+            setAtStateTrunk('OFF')
+            console.log('트렁크오프ok')
+          }
 
-        if (command.split('/')[5][10] === 'i') {
-          setAtlowvoltAlert(true)
-          console.log('저전압알람온')
-        } else if (command.split('/')[5][10] === 'o') {
-          setAtlowvoltAlert(false)
-          console.log('저전압알람오프')
-        }
+          //후드 상태
+          if (command.split('/')[2][7] === 'i') {
+            setAtStateEngineHood('ON')
+            console.log('후드온ok')
+          } else if (command.split('/')[2][7] === 'o') {
+            setAtStateEngineHood('OFF')
+            console.log('후드오프ok')
+          }
 
-        if (command.split('/')[5][11] === 'i') {
-          setAtlowvoltBoot(true)
-          console.log('저전압시동온')
-        } else if (command.split('/')[5][11] === 'o') {
-          setAtlowvoltBoot(false)
-          console.log('저전압시동오프')
-        }
+          //도어락 상태
+          if (command.split('/')[3][2] === 'i' && command.split('/')[3][3] === 'i' && command.split('/')[3][4] === 'i' && command.split('/')[3][5] === 'i') {
+            setAtStateDoorLock('ON')
+            console.log('도어락온ok')
+          } else {
+            setAtStateDoorLock('OFF')
+            console.log('도어락오프ok')
+          }
 
-        if (command.split('/')[5][8] === 'i') {
-          setAtactionSound(true)
-          console.log('동작음온')
-        } else if (command.split('/')[5][8] === 'o') {
-          setAtactionSound(false)
-          console.log('동작음오프')
-        }
+          if (command.split('/')[5][2] === 'i') {
+            setAticarswitch(true)
+            console.log('아이카온ok')
+          } else if (command.split('/')[5][2] === 'o') {
+            setAticarswitch(false)
+            console.log('아이카오프')
+          }
 
-        if (command.split('/')[5][9] === 'i') {
-          setAtalertSound(true)
-          console.log('경계음온')
-        } else if (command.split('/')[5][9] === 'o') {
-          setAtalertSound(false)
-          console.log('경계음오프')
-        }
+          if (command.split('/')[5][3] === 'i') {
+            setAtidoorswitch(true)
+            console.log('아이도어온')
+          } else if (command.split('/')[5][3] === 'o') {
+            setAtidoorswitch(false)
+            console.log('아이도어오프')
+          }
 
-        if (command.split('/')[5][15] === '0') {
-          setatBootTimeValue('3')
-          console.log('원격시간0')
-        } else if (command.split('/')[5][15] === '1') {
-          setatBootTimeValue('5')
-          console.log('원격시간1')
-        } else if (command.split('/')[5][15] === '2') {
-          setatBootTimeValue('10')
-          console.log('원격시간2')
-        }
+          if (command.split('/')[5][10] === 'i') {
+            setAtlowvoltAlert(true)
+            console.log('저전압알람온')
+          } else if (command.split('/')[5][10] === 'o') {
+            setAtlowvoltAlert(false)
+            console.log('저전압알람오프')
+          }
 
-        if (command.split('/')[5][16] === '0') {
-          setAtLastHeatValue('1')
-          console.log('후열시간0')
-        } else if (command.split('/')[5][16] === '1') {
-          setAtLastHeatValue('3')
-          console.log('후열시간1')
-        } else if (command.split('/')[5][16] === '2') {
-          setAtLastHeatValue('5')
-          console.log('후열시간2')
-        }
+          if (command.split('/')[5][11] === 'i') {
+            setAtlowvoltBoot(true)
+            console.log('저전압시동온')
+          } else if (command.split('/')[5][11] === 'o') {
+            setAtlowvoltBoot(false)
+            console.log('저전압시동오프')
+          }
 
-        if (command.split('/')[5][17] === '0') {
-          setAtStartTimeValue('1')
-          console.log('스타트시간0')
-        } else if (command.split('/')[5][17] === '1') {
-          setAtStartTimeValue('2')
-          console.log('스타트시간1')
-        } else if (command.split('/')[5][17] === '2') {
-          setAtStartTimeValue('3')
-          console.log('스타트시간2')
-        }
+          if (command.split('/')[5][8] === 'i') {
+            setAtactionSound(true)
+            console.log('동작음온')
+          } else if (command.split('/')[5][8] === 'o') {
+            setAtactionSound(false)
+            console.log('동작음오프')
+          }
 
-        setLowVoltValue(command.split('/')[5][12] + command.split('/')[5][13] + '.' + command.split('/')[5][14])
+          if (command.split('/')[5][9] === 'i') {
+            setAtalertSound(true)
+            console.log('경계음온')
+          } else if (command.split('/')[5][9] === 'o') {
+            setAtalertSound(false)
+            console.log('경계음오프')
+          }
+
+          if (command.split('/')[5][15] === '0') {
+            setatBootTimeValue('3')
+            console.log('원격시간0')
+          } else if (command.split('/')[5][15] === '1') {
+            setatBootTimeValue('5')
+            console.log('원격시간1')
+          } else if (command.split('/')[5][15] === '2') {
+            setatBootTimeValue('10')
+            console.log('원격시간2')
+          }
+
+          if (command.split('/')[5][16] === '0') {
+            setAtLastHeatValue('1')
+            console.log('후열시간0')
+          } else if (command.split('/')[5][16] === '1') {
+            setAtLastHeatValue('3')
+            console.log('후열시간1')
+          } else if (command.split('/')[5][16] === '2') {
+            setAtLastHeatValue('5')
+            console.log('후열시간2')
+          }
+
+          if (command.split('/')[5][17] === '0') {
+            setAtStartTimeValue('1')
+            console.log('스타트시간0')
+          } else if (command.split('/')[5][17] === '1') {
+            setAtStartTimeValue('2')
+            console.log('스타트시간1')
+          } else if (command.split('/')[5][17] === '2') {
+            setAtStartTimeValue('3')
+            console.log('스타트시간2')
+          }
+
+          setLowVoltValue(command.split('/')[5][12] + command.split('/')[5][13] + '.' + command.split('/')[5][14])
+        }
 
 
       }
@@ -594,7 +736,7 @@ const Load = () => {
         }
       })
     } catch (error) {
-      console.log(error)
+      console.log('에러?' + error)
       Alert.alert('async stroage error')
       RNExitApp()
     }

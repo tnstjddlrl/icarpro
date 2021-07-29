@@ -183,8 +183,6 @@ const CarRegister = () => {
     }
   }
 
-  //01227094107
-
   const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
 
   useEffect(() => {
