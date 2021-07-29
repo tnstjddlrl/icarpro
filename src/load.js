@@ -57,6 +57,8 @@ const chheight = Dimensions.get('window').height
 
 const logo = require('../img/icarlogo.png')
 
+var ispwd = false
+
 const Load = () => {
   const navigation = useNavigation()
 
@@ -479,7 +481,16 @@ const Load = () => {
           getcar().then(res => setatIsCarRace(res))
           getcarnum().then(res => setAtUserCarNum(res))
           geteasyPWD().then(res => setAtEasyPWD(res))
-          geteasyPWDIsOn().then(res => { if (res !== null) setAtEasyPWDIsOn(JSON.parse(res)) })
+          geteasyPWDIsOn().then(res => {
+            if (res !== null) {
+              setAtEasyPWDIsOn(JSON.parse(res));
+              ispwd = JSON.parse(res)
+            }
+            else {
+              setAtEasyPWDIsOn(false)
+              ispwd = false
+            }
+          })
 
           // getLowVoltValue().then(res => {
           //   if (res !== null) {
@@ -525,7 +536,13 @@ const Load = () => {
                       setLoadbarwd(183)
                       setTimeout(() => {
                         console.log('구사용자 : ' + res)
-                        navigation.navigate('차량제어')
+
+                        if (ispwd === true) {
+                          navigation.navigate('비밀번호인증')
+                        } else {
+                          console.log('?????????? ' + ispwd)
+                          navigation.navigate('차량제어')
+                        }
                       }, 500);
                     }, 250);
                   }, 250);

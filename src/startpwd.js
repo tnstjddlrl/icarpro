@@ -24,12 +24,11 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import { fcmToken, modemNumber } from './atom/atoms'
+import { fcmToken, modemNumber, easyPWD } from './atom/atoms'
 
 import RNRestart from 'react-native-restart';
 
 import axios from 'axios'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const chwidth = Dimensions.get('window').width
@@ -44,7 +43,7 @@ const off = require('../img/pwd/off.png')
 
 
 
-const CarState = () => {
+const Startpwd = ({ route }) => {
   const navigation = useNavigation()
 
   const [pwd, setpwd] = useState('')
@@ -52,6 +51,8 @@ const CarState = () => {
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [atModemn, setAtModemn] = useRecoilState(modemNumber)
+
+  const [atEasyPWD, setAtEasyPWD] = useRecoilState(easyPWD)
 
   const [saveModal, setSaveModal] = useState(false)
 
@@ -88,11 +89,13 @@ const CarState = () => {
 
 
     if (pwd.length === 4) {
-      AsyncStorage.setItem("@easy_PWD", pwd)
-      // AsyncStorage.setItem("@alertsound", JSON.stringify(alertsound))
-      console.log(pwd)
-      Alert.alert('저장완료!')
-      navigation.goBack()
+      if (atEasyPWD === pwd) {
+        // Alert.alert('맞음!')
+        navigation.navigate('차량제어')
+      } else {
+        Alert.alert('비밀번호 오류!')
+      }
+
     } else {
 
       Alert.alert('4자리 모두 입력해주세요.')
@@ -109,14 +112,14 @@ const CarState = () => {
       <View style={{ width: chwidth, height: chheight }}>
         {/* 헤더 */}
         <View style={{ flex: 0.8, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
-          <TouchableWithoutFeedback onPress={() => { navigation.goBack() }}>
-            <View>
-              <Image source={back}></Image>
+          <TouchableWithoutFeedback onPress={() => { }}>
+            <View style={{ width: 30 }}>
+
             </View>
           </TouchableWithoutFeedback>
           <Text style={styles.maintxt}>i도어 비밀번호</Text>
           <TouchableWithoutFeedback onPress={() => registerClick()}>
-            <Text style={styles.savetxt}>저장</Text>
+            <Text style={styles.savetxt}>인증</Text>
           </TouchableWithoutFeedback>
         </View>
         {/* 헤더 끝 */}
@@ -125,7 +128,7 @@ const CarState = () => {
         <View style={{ flex: 10 }}>
 
           <View style={{ flex: 2.5, justifyContent: 'flex-end', alignItems: "center" }}>
-            <Text style={styles.title}>비밀번호 등록</Text>
+            <Text style={styles.title}>비밀번호 인증</Text>
             <Text style={styles.sub}>비밀번호 네자리를 입력하세요</Text>
           </View>
 
@@ -220,4 +223,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CarState
+export default Startpwd

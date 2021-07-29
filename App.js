@@ -25,6 +25,7 @@ import LastHeatTime from './src/TimeSet/lastHeatTime.js';
 import StartTime from './src/TimeSet/startTime.js';
 import LowVoltSetting from './src/TimeSet/lowVoltSetting.js';
 import Axiostest from './src/axiostt/axiostest.js';
+import Startpwd from './src/startpwd.js';
 
 
 const Stack = createStackNavigator();
@@ -67,9 +68,11 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="home" headerMode={'none'} screenOptions={{ gestureEnabled: false }}>
 
-          <Stack.Screen name="인트로" component={Load} /> 
+          <Stack.Screen name="인트로" component={Load} />
           <Stack.Screen name="차량제어" component={Carcontroll} />
           <Stack.Screen name="간편비밀번호" component={EasyPwd} />
+          <Stack.Screen name="비밀번호인증" component={Startpwd} />
+
           <Stack.Screen name="차량등록" component={CarRegister} />
           <Stack.Screen name="설정" component={Settings} />
           <Stack.Screen name="차량상태" component={CarState} />
