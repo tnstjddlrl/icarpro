@@ -112,6 +112,18 @@ const suvtrunkon = require('../img/controll/carstate/suvtrunkon.png')
 const suvbimon = require('../img/controll/carstate/suvbimon.png')
 const suvbooton = require('../img/controll/carstate/suvbooton.png')
 
+
+//푸터 아이콘
+const bb1 = require('../bottombtn/bb1.png')
+const bb2 = require('../bottombtn/bb2.png')
+const bb3 = require('../bottombtn/bb3.png')
+const bb4 = require('../bottombtn/bb4.png')
+const bb1r = require('../bottombtn/bb1r.png')
+const bb2r = require('../bottombtn/bb2r.png')
+const bb3r = require('../bottombtn/bb3r.png')
+const bb4r = require('../bottombtn/bb4r.png')
+
+
 var interval;
 var rrtime;
 
@@ -746,6 +758,7 @@ const Carcontroll = () => {
 
 
             <View style={{ width: '100%', height: '100%' }}>
+
               <View style={{ flex: 3 }}>
                 <View style={{ flex: 0.2 }}></View>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
@@ -989,7 +1002,7 @@ const Carcontroll = () => {
 
               <View style={{ flex: 0.2 }}></View>
 
-              <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16, marginBottom: 40 }}>
+              <View style={{ flex: 2, flexDirection: 'row', marginLeft: 16, marginBottom: 10 }}>
                 <View style={{ width: chwidth / 2 - 21, backgroundColor: "#f0f1f5", borderRadius: 10 }}>
                   <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}>
                     {warnbim == 'no' && <Image source={warngray}></Image>}
@@ -1074,6 +1087,46 @@ const Carcontroll = () => {
                   </View>
                 </View>
               </View>
+
+
+              {/* 푸터 시작 */}
+              <View style={{ width: '100%' }}>
+                <View style={{ width: chwidth - 30, marginLeft: 15, marginBottom: 10, borderRadius: 10, backgroundColor: 'rgb(237,239,243)', }}>
+
+                  <View style={{ width: chwidth - 100, marginLeft: 30, flexDirection: "row", justifyContent: "space-between", marginTop: 8, marginBottom: 6 }}>
+
+                    <TouchableWithoutFeedback onPress={() => { }}>
+                      <View style={{ alignItems: "center", justifyContent: "center" }}>
+                        <AutoHeightImage source={bb1} width={30}></AutoHeightImage>
+                        <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>인증</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+
+                    <TouchableWithoutFeedback onPress={() => { }}>
+                      <View style={{ alignItems: "center", justifyContent: "center" }}>
+                        <AutoHeightImage source={bb2} width={30}></AutoHeightImage>
+                        <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>제어</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+
+                    <TouchableWithoutFeedback onPress={() => { }}>
+                      <View style={{ alignItems: "center", justifyContent: "center" }}>
+                        <AutoHeightImage source={bb3} width={30}></AutoHeightImage>
+                        <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>상태</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+
+                    <TouchableWithoutFeedback onPress={() => { }}>
+                      <View style={{ alignItems: "center", justifyContent: "center" }}>
+                        <AutoHeightImage source={bb4} width={30}></AutoHeightImage>
+                        <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>설정</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+
+                  </View>
+                </View>
+              </View>
+              {/* 푸터 끝 */}
 
             </View>
 
