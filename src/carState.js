@@ -96,6 +96,16 @@ const stateIcon = require('../img/state/stateIcon.png')
 const bootIcon = require('../img/state/bootIcon.png')
 const voltIcon = require('../img/state/voltIcon.png')
 
+//푸터 아이콘
+const bb1 = require('../bottombtn/bb1.png')
+const bb2 = require('../bottombtn/bb2.png')
+const bb3 = require('../bottombtn/bb3.png')
+const bb4 = require('../bottombtn/bb4.png')
+const bb1r = require('../bottombtn/bb1r.png')
+const bb2r = require('../bottombtn/bb2r.png')
+const bb3r = require('../bottombtn/bb3r.png')
+const bb4r = require('../bottombtn/bb4r.png')
+
 const CarState = () => {
   const navigation = useNavigation()
 
@@ -454,9 +464,46 @@ const CarState = () => {
 
         <View style={{ flex: 0.1 }}></View>
 
-
-
         {/* 상태 부분 끝 */}
+
+        {/* 푸터 시작 */}
+        <View style={{ width: '100%' }}>
+          <View style={{ width: chwidth - 30, marginLeft: 15, marginBottom: 10, borderRadius: 10, backgroundColor: 'rgb(237,239,243)', }}>
+
+            <View style={{ width: chwidth - 100, marginLeft: 30, flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 8, marginBottom: 6 }}>
+
+              <TouchableWithoutFeedback onPress={() => { navigation.navigate('차량등록') }}>
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <AutoHeightImage source={bb1} width={30}></AutoHeightImage>
+                  <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>인증</Text>
+                </View>
+              </TouchableWithoutFeedback>
+
+              <TouchableWithoutFeedback onPress={() => { navigation.navigate('차량제어') }}>
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <AutoHeightImage source={bb2} width={30}></AutoHeightImage>
+                  <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>제어</Text>
+                </View>
+              </TouchableWithoutFeedback>
+
+              <TouchableWithoutFeedback onPress={() => { navigation.navigate('차량상태') }}>
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <AutoHeightImage source={bb3r} width={30}></AutoHeightImage>
+                  <Text style={{ fontSize: 11.5, color: 'rgb(247, 89, 41)', letterSpacing: -1.38, }}>상태</Text>
+                </View>
+              </TouchableWithoutFeedback>
+
+              <TouchableWithoutFeedback onPress={() => { navigation.navigate('설정') }}>
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <AutoHeightImage source={bb4} width={30}></AutoHeightImage>
+                  <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>설정</Text>
+                </View>
+              </TouchableWithoutFeedback>
+
+            </View>
+          </View>
+        </View>
+        {/* 푸터 끝 */}
 
       </View>
       {/* 본문 끝 */}

@@ -29,13 +29,13 @@ const chheight = Dimensions.get('window').height
 
 import RNExitApp from 'react-native-kill-app';
 
-
+import RNRestart from 'react-native-restart';
 function exitAppAlert() {
   Alert.alert(
     "서버 오류",
     "서버 오류가 지속되면 고객센터로 문의해주세요.",
     [
-      { text: "OK", onPress: () => RNExitApp.exitApp() }
+      { text: "OK", onPress: () => RNRestart.Restart() }
     ]
   )
 }
@@ -130,7 +130,7 @@ const LastHeatTime = () => {
       } else if (checkitem === '5:00') {
         cc = 'ae=2'
       }
-      let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/S:' + cc, modem: atmodemN, token: pushToken } }
+      let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/V:' + cc, modem: atmodemN, token: pushToken } }
       comm = JSON.stringify(comm)
 
       client.write(comm)

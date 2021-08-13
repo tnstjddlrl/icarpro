@@ -1093,30 +1093,30 @@ const Carcontroll = () => {
               <View style={{ width: '100%' }}>
                 <View style={{ width: chwidth - 30, marginLeft: 15, marginBottom: 10, borderRadius: 10, backgroundColor: 'rgb(237,239,243)', }}>
 
-                  <View style={{ width: chwidth - 100, marginLeft: 30, flexDirection: "row", justifyContent: "space-between", marginTop: 8, marginBottom: 6 }}>
+                  <View style={{ width: chwidth - 100, marginLeft: 30, flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 8, marginBottom: 6 }}>
 
-                    <TouchableWithoutFeedback onPress={() => { }}>
+                    <TouchableWithoutFeedback onPress={() => { navigation.navigate('차량등록') }}>
                       <View style={{ alignItems: "center", justifyContent: "center" }}>
                         <AutoHeightImage source={bb1} width={30}></AutoHeightImage>
                         <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>인증</Text>
                       </View>
                     </TouchableWithoutFeedback>
 
-                    <TouchableWithoutFeedback onPress={() => { }}>
+                    <TouchableWithoutFeedback onPress={() => { navigation.navigate('차량제어') }}>
                       <View style={{ alignItems: "center", justifyContent: "center" }}>
-                        <AutoHeightImage source={bb2} width={30}></AutoHeightImage>
-                        <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>제어</Text>
+                        <AutoHeightImage source={bb2r} width={30}></AutoHeightImage>
+                        <Text style={{ fontSize: 11.5, color: 'rgb(247, 89, 41)', letterSpacing: -1.38, }}>제어</Text>
                       </View>
                     </TouchableWithoutFeedback>
 
-                    <TouchableWithoutFeedback onPress={() => { }}>
+                    <TouchableWithoutFeedback onPress={() => { navigation.navigate('차량상태') }}>
                       <View style={{ alignItems: "center", justifyContent: "center" }}>
                         <AutoHeightImage source={bb3} width={30}></AutoHeightImage>
                         <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>상태</Text>
                       </View>
                     </TouchableWithoutFeedback>
 
-                    <TouchableWithoutFeedback onPress={() => { }}>
+                    <TouchableWithoutFeedback onPress={() => { navigation.navigate('설정') }}>
                       <View style={{ alignItems: "center", justifyContent: "center" }}>
                         <AutoHeightImage source={bb4} width={30}></AutoHeightImage>
                         <Text style={{ fontSize: 11.5, color: 'rgb( 78, 83, 90)', letterSpacing: -1.38, }}>설정</Text>

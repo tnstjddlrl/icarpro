@@ -21,19 +21,19 @@ import {
   useRecoilState,
   useRecoilValue
 } from 'recoil';
-import { voltValue, voltValueLimit, fcmToken,modemNumber,userNumber } from '../atom/atoms'
+import { voltValue, voltValueLimit, fcmToken, modemNumber, userNumber } from '../atom/atoms'
 import client from '../Client';
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
 
-import RNExitApp from 'react-native-kill-app';
-function exitAppAlert () {
+import RNRestart from 'react-native-restart';
+function exitAppAlert() {
   Alert.alert(
     "서버 오류",
     "서버 오류가 지속되면 고객센터로 문의해주세요.",
     [
-      { text: "OK", onPress: () => RNExitApp.exitApp()}
+      { text: "OK", onPress: () => RNRestart.Restart() }
     ]
   )
 }
@@ -50,7 +50,7 @@ const LowVoltSetting = () => {
   const atuserN = useRecoilValue(userNumber)
 
   const [checkitem, setChechkitem] = useState(lowvoltValue)
-    
+
   const [isy, setisy] = useState(0)
 
   const ii = useRef()
@@ -117,7 +117,7 @@ const LowVoltSetting = () => {
 
       setTimeout(() => {
         setLowvoltValueLimit(false)
-        
+
       }, 1000);
     } else {
       Alert.alert('설정 변경 유휴시간은 10초입니다.', '10초 후 시도해주세요')
@@ -130,22 +130,22 @@ const LowVoltSetting = () => {
     try {
       let cc = '0'
       if (checkitem === '11.8') {
-        cc = 'lb=118'
+        cc = 'lb=0'
       } else if (checkitem === '11.9') {
-        cc = 'lb=119'
+        cc = 'lb=1'
       } else if (checkitem === '12.0') {
-        cc = 'lb=120'
+        cc = 'lb=2'
       } else if (checkitem === '12.1') {
-        cc = 'lb=121'
+        cc = 'lb=3'
       } else if (checkitem === '12.2') {
-        cc = 'lb=122'
+        cc = 'lb=4'
       }
-      let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD='+atmodemN+'/S:'+cc, modem: atmodemN, token: pushToken } }
+      let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/V:' + cc, modem: atmodemN, token: pushToken } }
       comm = JSON.stringify(comm)
-  
+
       client.write(comm)
       console.log('전송 : ' + comm)
-      
+
     } catch (error) {
       exitAppAlert()
     }
@@ -195,7 +195,7 @@ const LowVoltSetting = () => {
                   <Text style={(195 < isy && isy < 270) ? styles.selecttxt : styles.noselecttxt}>12.1</Text>
 
                   <Text style={270 < isy ? styles.selecttxt : styles.noselecttxt}>12.2</Text>
-                  
+
                   <View style={{ height: 160 }}></View>
                 </ScrollView>
               </View>
