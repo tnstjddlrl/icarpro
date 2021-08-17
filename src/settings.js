@@ -183,28 +183,42 @@ const Settings = () => {
     }
   }
 
-  // function registerClick() {
-  //   try {
-  //     var txt = { type: "R", type_sub: "req_state", data: { token: pushToken, modem: atmodemN } }
+  function lowbat() {
+    if (lowboltBoot == true) {
+      console.log('완료')
+      return '11'
+    } else if (lowboltAlert == true) {
+      console.log('완료')
 
-  //     client.write(JSON.stringify(txt))
-  //     console.log('전송 : ' + JSON.stringify(txt))
+      return '21'
+    } else {
+      console.log('완료')
 
-  //   } catch (e) {
-  //     console.log(e)
-  //     client.destroy()
-  //     console.log(client._destroyed)
+      return '01'
+    }
+  }
 
-  //     setTimeout(() => {
-  //       client.connect({ port: 3600, host: '175.126.232.72' })
-  //       console.log(client._destroyed)
-  //       setTimeout(() => {
-  //         client.write(JSON.stringify(txt))
-  //         console.log('전송 : ' + JSON.stringify(txt))
-  //       }, 1000);
-  //     }, 1000);
-  //   }
-  // }
+  function sendAllCommand() {
+    let cc = (icarswitch == true ? 'id' : 'od') + (idoorswitch == true ? 'il' : 'ol') + lowbat() + (actionsound == true ? 'i2' : 'o2') + (alertsound == true ? 'i' : 'o')
+
+
+    try {
+      let comm = {
+        type: "R", type_sub: "car_controll", data: {
+          command: '+SCMD=' + atmodemN + '/S:m' + cc, modem: atmodemN, token: pushToken
+        }
+      }
+
+      comm = JSON.stringify(comm)
+
+      client.write(comm)
+      console.log('전송 : ' + comm)
+
+      // Alert.alert('설정', '저장이 완료되었습니다!')
+    } catch (error) {
+      exitAppAlert()
+    }
+  }
 
   const reqState = navigation.addListener('focus', async () => {
     if (atStateWaitTime === false) {
@@ -237,6 +251,8 @@ const Settings = () => {
 
   function savebtnclick() {
     if (stLimit === false) {
+      sendAllCommand()
+
       setStLimit(true)
 
       setSaveModal(true)
@@ -255,6 +271,8 @@ const Settings = () => {
       setTimeout(() => {
         setStLimit(false)
       }, 1000);
+
+
     }
     else {
       Alert.alert('설정 변경 유휴시간은 10초입니다.', '10초 후 시도해주세요')
@@ -299,9 +317,9 @@ const Settings = () => {
                     onToggle={isOn => {
                       seticarswitch(isOn)
                       if (isOn === true) {
-                        sendCommand('mn')
+                        // sendCommand('mn')
                       } else {
-                        sendCommand('mf')
+                        // sendCommand('mf')
                       }
                     }}
                   />
@@ -326,9 +344,9 @@ const Settings = () => {
                     onToggle={isOn => {
                       setidoorswitch(isOn)
                       if (isOn === true) {
-                        sendCommand('dn')
+                        // sendCommand('dn')
                       } else {
-                        sendCommand('df')
+                        // sendCommand('df')
                       }
 
                     }}
@@ -365,10 +383,10 @@ const Settings = () => {
                       setlowboltAlert(false)
                       setlowboltBoot(isOn)
                       if (isOn === true) {
-                        sendCommand('le')
+                        // sendCommand('le')
                       } else {
                         if (lowboltAlert === isOn) {
-                          sendCommand('lf')
+                          // sendCommand('lf')
                         }
                       }
                     }}
@@ -391,10 +409,10 @@ const Settings = () => {
                       setlowboltAlert(isOn)
                       setlowboltBoot(false)
                       if (isOn === true) {
-                        sendCommand('la')
+                        // sendCommand('la')
                       } else {
                         if (lowboltBoot === false) {
-                          sendCommand('lf')
+                          // sendCommand('lf')
                         }
                       }
                     }}
@@ -445,9 +463,9 @@ const Settings = () => {
                     onToggle={isOn => {
                       setactionsound(isOn)
                       if (isOn === true) {
-                        sendCommand('1n')
+                        // sendCommand('1n')
                       } else {
-                        sendCommand('1f')
+                        // sendCommand('1f')
                       }
                     }}
                   />
@@ -468,9 +486,9 @@ const Settings = () => {
                     onToggle={isOn => {
                       setalertsound(isOn)
                       if (isOn === true) {
-                        sendCommand('2n')
+                        // sendCommand('2n')
                       } else {
-                        sendCommand('2f')
+                        // sendCommand('2f')
                       }
                     }}
                   />
