@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Image,
   StyleSheet,
+  BackHandler,
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -54,6 +55,7 @@ const chheight = Dimensions.get('window').height
 
 
 import RNRestart from 'react-native-restart';
+import RNExitApp from 'react-native-kill-app';
 function exitAppAlert() {
   Alert.alert(
     "서버 오류",
@@ -155,31 +157,22 @@ const CarState = () => {
   const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
   const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
+  useEffect(() => {
+    const backAction = () => {
 
+      navigation.goBack()
 
+      return true;
+    };
 
-  // function registerClick() {
-  //   try {
-  //     var txt = { type: "R", type_sub: "req_state", data: { token: pushToken, modem: atmodemN } }
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
 
-  //     client.write(JSON.stringify(txt))
-  //     console.log('전송 : ' + JSON.stringify(txt))
+    return () => backHandler.remove();
+  }, []);
 
-  //   } catch (e) {
-  //     console.log(e)
-  //     client.destroy()
-  //     console.log(client._destroyed)
-
-  //     setTimeout(() => {
-  //       client.connect({ port: 3600, host: '175.126.232.72' })
-  //       console.log(client._destroyed)
-  //       setTimeout(() => {
-  //         client.write(JSON.stringify(txt))
-  //         console.log('전송 : ' + JSON.stringify(txt))
-  //       }, 1000);
-  //     }, 1000);
-  //   }
-  // }
 
   const reqState = navigation.addListener('focus', async () => {
     if (atStateWaitTime === false) {

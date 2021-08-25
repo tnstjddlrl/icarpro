@@ -11,7 +11,8 @@ import {
   StyleSheet,
   Platform,
   Modal,
-  Vibration
+  Vibration,
+  BackHandler
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -128,8 +129,32 @@ const bb4r = require('../bottombtn/bb4r.png')
 var interval;
 var rrtime;
 
+var startonce = 0;
+
+
 const Carcontroll = () => {
   const navigation = useNavigation()
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("종료", "앱을 종료하시겠습니까?", [
+        {
+          text: "아니요",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "예", onPress: () => { RNExitApp.exitApp() } }
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   const [spinner, setSpinner] = useState(false)
 
@@ -193,7 +218,12 @@ const Carcontroll = () => {
       Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
     }
     if (atStateWaitTime === false) {
-      loadState()
+      if (startonce === 0) {
+        loadState()
+        startonce++
+      } else {
+        stateready()
+      }
       setAtStateWaitTime(true)
       setTimeout(() => {
         setAtStateWaitTime(false)
@@ -210,6 +240,17 @@ const Carcontroll = () => {
     try {
       client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
       console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
+    } catch (error) {
+      console.log(error)
+
+      exitAppAlert()
+    }
+  }
+
+  const stateready = () => {
+    try {
+      client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
+      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
     } catch (error) {
       console.log(error)
 

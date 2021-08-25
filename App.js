@@ -58,28 +58,6 @@ function App() {
     return unsubscribe;
   }, []);
 
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert("종료", "앱을 종료하시겠습니까?", [
-        {
-          text: "아니요",
-          onPress: () => null,
-          style: "cancel"
-        },
-        { text: "예", onPress: () => { RNExitApp.exitApp() } }
-      ]);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-
-    return () => backHandler.remove();
-  }, []);
-
-
   return (
     <RecoilRoot>
       <NavigationContainer>

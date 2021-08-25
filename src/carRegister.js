@@ -12,7 +12,8 @@ import {
   StyleSheet,
   Modal,
   ScrollView,
-  Keyboard
+  Keyboard,
+  BackHandler
 } from 'react-native';
 
 import client from './Client'
@@ -48,6 +49,7 @@ const radioSelect = require('../img/radioSelect.png')
 
 const sedan1img = require('../img/sedan1.png')
 const suv1img = require('../img/suv1.png')
+
 
 
 const CarRegister = () => {
@@ -285,13 +287,6 @@ const CarRegister = () => {
       userCancelModal('삭제를 먼저 진행해주세요!')
     }
 
-
-
-
-    // else{
-    //   usercancelff('삭제를 먼저 진행해주세요!')
-    // }
-
   }
 
 
@@ -388,6 +383,24 @@ const CarRegister = () => {
     return () => { unsubscribe() };
   });
 
+  useEffect(() => {
+    const backAction = () => {
+
+      if (atCertifyState == 'good' || atCertifyState == 'no_state') {
+        navigation.goBack()
+      }
+
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
 
 
   return (
@@ -405,7 +418,9 @@ const CarRegister = () => {
           }}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => { asyncSave() }}>
+          <TouchableWithoutFeedback onPress={() => {
+            // asyncSave()
+          }}>
             <Text style={styles.maintxt}>차량 등록</Text>
           </TouchableWithoutFeedback>
           <View style={{ width: 20 }}></View>

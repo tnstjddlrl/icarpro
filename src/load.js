@@ -320,6 +320,9 @@ const Load = () => {
 
         setAtCertifyState('no_user')
 
+        Alert.alert('유저등록을 해주세요.', '유저 등록을 먼저 해주세요',
+          [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
+
       } else if ('' + data === 'no_state') {
 
         setAtCertifyState('no_state')
