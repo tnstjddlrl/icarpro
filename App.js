@@ -5,6 +5,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import messaging from '@react-native-firebase/messaging';
 
+import { Linking } from 'react-native';
+import VersionCheck from 'react-native-version-check';
+
 import {
   RecoilRoot
 } from 'recoil';
@@ -32,6 +35,20 @@ const Stack = createStackNavigator();
 
 
 function App() {
+
+  VersionCheck.getCountry()
+    .then(country => console.log(country));          // KR
+  console.log(VersionCheck.getPackageName());        // com.reactnative.app
+  console.log(VersionCheck.getCurrentBuildNumber()); // 10
+  console.log(VersionCheck.getCurrentVersion());     // 0.1.1
+
+  VersionCheck.needUpdate()
+    .then(async res => {
+      console.log(res.isNeeded);    // true
+      if (res.isNeeded) {
+        Linking.openURL(res.storeUrl);  // open store if update is needed.
+      }
+    });
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {

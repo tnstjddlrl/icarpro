@@ -53,6 +53,9 @@ const CarState = () => {
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const [atModemn, setAtModemn] = useRecoilState(modemNumber)
 
+  const atmodemN = useRecoilValue(modemNumber)
+
+
   const [saveModal, setSaveModal] = useState(false)
 
   console.log('간편 : ' + pushToken)
@@ -68,7 +71,7 @@ const CarState = () => {
       } else {
         //Alert.alert('비밀번호가 틀렸습니다.')
       }
-      console.log('간편 비밀번호 내에서 받기 ' + data);
+      // console.log('간편 비밀번호 내에서 받기 ' + data);
       // Alert.alert('서버에서 보내온 메시지 ', '' + data)
     });
   }, [])
@@ -81,6 +84,21 @@ const CarState = () => {
   }, [pwd])
 
 
+  function sendCommand() {
+    try {
+
+      let comm = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/V:pw=' + pwd, modem: atmodemN, token: pushToken } }
+      comm = JSON.stringify(comm)
+
+      client.write(comm)
+      console.log('전송 : ' + comm)
+
+    } catch (error) {
+      exitAppAlert()
+    }
+  }
+
+
 
   async function registerClick() {
 
@@ -91,6 +109,7 @@ const CarState = () => {
       AsyncStorage.setItem("@easy_PWD", pwd)
       // AsyncStorage.setItem("@alertsound", JSON.stringify(alertsound))
       console.log(pwd)
+      sendCommand()
       Alert.alert('저장완료!')
       navigation.goBack()
     } else {

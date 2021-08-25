@@ -186,26 +186,26 @@ const Settings = () => {
   function lowbat() {
     if (lowboltBoot == true) {
       console.log('완료')
-      return '11'
+      return 'l1'
     } else if (lowboltAlert == true) {
       console.log('완료')
 
-      return '21'
+      return 'l2'
     } else {
       console.log('완료')
 
-      return '01'
+      return 'l0'
     }
   }
 
   function sendAllCommand() {
-    let cc = (icarswitch == true ? 'id' : 'od') + (idoorswitch == true ? 'il' : 'ol') + lowbat() + (actionsound == true ? 'i2' : 'o2') + (alertsound == true ? 'i' : 'o')
+    let cc = (icarswitch == true ? 'mi' : 'mo') + (idoorswitch == true ? 'di' : 'do') + 'tihisiri' + lowbat() + (actionsound == true ? '1i' : '1o') + (alertsound == true ? '2i' : '2o')
 
 
     try {
       let comm = {
         type: "R", type_sub: "car_controll", data: {
-          command: '+SCMD=' + atmodemN + '/S:m' + cc, modem: atmodemN, token: pushToken
+          command: '+SCMD=' + atmodemN + '/S:' + cc, modem: atmodemN, token: pushToken
         }
       }
 
@@ -222,7 +222,6 @@ const Settings = () => {
 
   const reqState = navigation.addListener('focus', async () => {
     if (atStateWaitTime === false) {
-      // registerClick()
       await loadState()
       setAtStateWaitTime(true)
       setTimeout(() => {
@@ -238,15 +237,14 @@ const Settings = () => {
 
   const loadState = async () => {
     try {
-      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+      client.write(JSON.stringify({ type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atmodemN, user: atuserN, token: pushToken } }))
+      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atmodemN, user: atuserN, token: pushToken } }))
     } catch (error) {
       console.log(error)
 
       exitAppAlert()
     }
   }
-
 
 
   function savebtnclick() {
@@ -256,7 +254,6 @@ const Settings = () => {
       setStLimit(true)
 
       setSaveModal(true)
-
 
       setAticarswitch(icarswitch)
       setAtidoorswitch(idoorswitch)

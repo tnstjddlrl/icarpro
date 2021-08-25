@@ -55,7 +55,8 @@ import {
   StateEngineState,
   StateCarVolt,
   usercarNum,
-  AllState_app
+  AllState_app,
+  Change_detect
 } from './atom/atoms'
 
 import AutoHeightImage from 'react-native-auto-height-image';
@@ -134,7 +135,7 @@ const Carcontroll = () => {
 
   const [pushToken, setPushToken] = useRecoilState(fcmToken)
   const atmodemN = useRecoilValue(modemNumber)
-  const atuserN = useRecoilValue(userNumber)
+  const [atuserN, setAtuserN] = useRecoilState(userNumber)
 
 
   const [carRace, setcarRace] = useRecoilState(isCarRace)
@@ -182,6 +183,7 @@ const Carcontroll = () => {
   const [atUserCarNum, setAtUserCarNum] = useRecoilState(usercarNum)
 
   const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
+  const [ChangeDetectApp, setChangeDetectApp] = useRecoilState(Change_detect)
 
 
 
@@ -206,8 +208,8 @@ const Carcontroll = () => {
   //현재 php로 받아오던 부분 다 삭제할 예정
   const loadState = () => {
     try {
-      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
-      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
+      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
     } catch (error) {
       console.log(error)
 
@@ -249,9 +251,11 @@ const Carcontroll = () => {
   }, [isRemote])
 
   useEffect(() => {
-    console.log('카 컨트롤에서 상태값 변경 확인 ' + AllStateApp)
-    setSpinner(false)
-  }, [AllStateApp])
+    console.log('카 컨트롤에서 상태값 변경 확인 ' + AllStateApp + ':' + ChangeDetectApp)
+    setTimeout(() => {
+      setSpinner(false)
+    }, 300);
+  }, [ChangeDetectApp])
 
   let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:du', modem: atmodemN, token: pushToken } }
   let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:dl', modem: atmodemN, token: pushToken } }
@@ -349,6 +353,7 @@ const Carcontroll = () => {
   function doorClick(is) {
 
     if (atCertifyState === 'good') {
+      setSpinner(true)
 
       if (is == 'lock') {
 
@@ -408,7 +413,7 @@ const Carcontroll = () => {
         }, 4000);
       }
 
-    } else if (atCertifyState === 'no_certification') {
+    } else if (atCertifyState === 'no_cer') {
       Alert.alert('미인증 상태입니다.')
     } else if (atCertifyState === 'no_state') {
       Alert.alert('상태값이 없습니다.')
@@ -416,13 +421,12 @@ const Carcontroll = () => {
       Alert.alert('서버와 연동되지 않았습니다.')
     }
 
-
-
   }//도어 제어
 
   function panicClick(is) {
 
     if (atCertifyState === 'good') {
+      setSpinner(true)
 
       if (is == 'on') {
         setPanic('on')
@@ -486,6 +490,7 @@ const Carcontroll = () => {
   function warnClick(is) {
 
     if (atCertifyState === 'good') {
+      setSpinner(true)
 
       if (is == 'on') {
         setWarnbim('on')
@@ -550,6 +555,7 @@ const Carcontroll = () => {
   function trunkClick() {
 
     if (atCertifyState === 'good') {
+      setSpinner(true)
 
 
       setTrunk(true)
@@ -588,6 +594,7 @@ const Carcontroll = () => {
   function bootClick() {
 
     if (atCertifyState === 'good') {
+      setSpinner(true)
 
       if (boot == false) {
 
@@ -688,46 +695,6 @@ const Carcontroll = () => {
 
   }
 
-  // function redirect(ccc) {
-  //   client.destroy()
-  //   console.log(client._destroyed)
-
-  //   setTimeout(() => {
-  //     client.connect({ port: 3600, host: '175.126.232.72' })
-  //     console.log(client._destroyed)
-  //     setTimeout(() => {
-  //       client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:' + ccc, modem: atmodemN, token: pushToken } }))
-  //       console.log('전송 : ' + JSON.stringify(boot_0))
-  //     }, 1000);
-  //   }, 1000);
-  // }
-
-  function writeData(socket, data) {
-    console.log('전송!')
-    try {
-      socket.write(data);
-    } catch (error) {
-      (function (socket, data) {
-        socket.once('drain', function () {
-          writeData(socket, data);
-        });
-      })(socket, data);
-
-    }
-  }
-
-  // useEffect(()=>{
-  //   client.on('data',(data)=>{
-
-  //     var command = '' + data
-
-  //     console.log(command)
-  //     Alert.alert(command)
-
-  //   })
-  // },[])
-
-
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }}>
@@ -764,8 +731,8 @@ const Carcontroll = () => {
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start" }}>
                   <TouchableWithoutFeedback onPress={() => {
                     try {
-                      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
-                      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+                      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
+                      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
                     } catch (error) {
                       console.log(error)
 
@@ -779,8 +746,8 @@ const Carcontroll = () => {
                 <View style={{ flex: 4 }}>
                   <TouchableWithoutFeedback onPress={() => {
                     try {
-                      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
-                      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+                      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
+                      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
                     } catch (error) {
                       console.log(error)
 

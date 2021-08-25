@@ -5,7 +5,12 @@ import {
 
 export const AllState_app = atom({
   key: 'AllState_app',
-  default: '',
+  default: 'first_state',
+});
+
+export const Change_detect = atom({
+  key: 'Change_detect',
+  default: 0,
 });
 
 export const modemNumber = atom({

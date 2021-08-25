@@ -140,7 +140,7 @@ const LowVoltSetting = () => {
       } else if (checkitem === '12.2') {
         cc = 'lb=4'
       }
-      let comm = { type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/V:' + cc, modem: atmodemN, token: pushToken } }
+      let comm = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/V:' + cc, modem: atmodemN, token: pushToken } }
       comm = JSON.stringify(comm)
 
       client.write(comm)

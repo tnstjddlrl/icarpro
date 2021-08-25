@@ -128,9 +128,7 @@ const CarRegister = () => {
       console.log('등록 현황 : ' + isRegister)
     }, 200);
 
-
   }, [])
-
 
   const [sedan1, setSedan1] = useState(false)
   const [suv1, setSuv1] = useState(false)
@@ -233,12 +231,12 @@ const CarRegister = () => {
 
       if (AllStateApp == 'overlap_user') {
         // Alert.alert('인증에 성공하였습니다!')
-        usercancelff('이미 등록되어있습니다.{"\n"}먼저 삭제를 진행해주세요.')
+        usercancelff('이미 등록되어있습니다.\n먼저 삭제를 진행해주세요.')
       }
 
+      setSpinner(false)
 
 
-    } else {
 
     }
 
@@ -248,8 +246,8 @@ const CarRegister = () => {
 
   const loadState = () => {
     try {
-      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: modemN, user: userN, token: pushToken } }))
-      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: modemN, user: userN, token: pushToken } }))
+      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: modemN, user: userN, token: pushToken } }))
+      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: modemN, user: userN, token: pushToken } }))
     } catch (error) {
       console.log(error)
 
@@ -313,6 +311,7 @@ const CarRegister = () => {
       console.log('어싱크 세이브 완료')
     } catch (error) {
       console.error(error)
+      Alert.alert(error)
     }
 
 
@@ -399,14 +398,14 @@ const CarRegister = () => {
         {/* 헤더 */}
         <View style={{ height: 60, flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: chwidth - 24, marginLeft: 12 }}>
           <TouchableWithoutFeedback onPress={() => {
-            if (AllStateApp === 'no_user' || AllStateApp === 'no_cer')
+            if (AllStateApp === 'no_user' || AllStateApp === 'no_certification' || AllStateApp === 'first_state')
               Alert.alert('먼저 등록 및 인증을 해주세요')
             else
               navigation.navigate('차량제어');
           }}>
             <View><Image source={back}></Image></View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => { }}>
+          <TouchableWithoutFeedback onPress={() => { asyncSave() }}>
             <Text style={styles.maintxt}>차량 등록</Text>
           </TouchableWithoutFeedback>
           <View style={{ width: 20 }}></View>
@@ -438,7 +437,7 @@ const CarRegister = () => {
 
           <View style={{ width: chwidth - 32, height: 56, backgroundColor: "#f0f1f5", borderRadius: 6, marginTop: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput placeholder='차량 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setCarnum(txt)} value={carnum} keyboardType={"number-pad"}></TextInput>
+              <TextInput placeholder='차량 번호' placeholderTextColor="gray" style={styles.inputtxt} onChangeText={txt => setCarnum(txt)} value={carnum}></TextInput>
               {carnum != '' &&
                 <TouchableOpacity onPress={() => setCarnum('')}>
                   <Image source={inputcls}></Image>

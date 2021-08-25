@@ -37,6 +37,7 @@ import {
   usercarNum,
   easyPWD,
   easyPWDIsOn,
+  Change_detect,
 } from './atom/atoms'
 
 import messaging from '@react-native-firebase/messaging';
@@ -249,6 +250,9 @@ const Load = () => {
   const [atEasyPWDIsOn, setAtEasyPWDIsOn] = useRecoilState(easyPWDIsOn)
 
   const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
+  const [ChangeDetectApp, setChangeDetectApp] = useRecoilState(Change_detect)
+
+
 
   const handlePushToken = useCallback(async () => {
     const enabled = await messaging().hasPermission()
@@ -288,9 +292,12 @@ const Load = () => {
 
     let modemm
     getmodem().then(res => modemm = res)
+
+
     client.on('data', function (data) {
       console.log('로드 클라온 작동')
       console.log('로드 상태에서 데이터 받기 :' + data)
+      setChangeDetectApp((rr) => rr + 1)
 
       var command = '' + data
       console.log(command.split('/')[0])
@@ -299,10 +306,12 @@ const Load = () => {
       setAllStateApp(command)
 
       if ('' + data === 'no_cer') {
+
         setAtCertifyState('no_certification')
 
         Alert.alert('미인증 상태입니다.', '인증을 진행해주세요',
           [{ text: "OK", onPress: () => navigation.navigate('차량등록') }])
+
       } else if ('' + data === 'no_modem_conn') {
 
         Alert.alert('모뎀 접속중입니다.', '잠시후 진행해주세요')
@@ -314,6 +323,8 @@ const Load = () => {
       } else if ('' + data === 'no_state') {
 
         setAtCertifyState('no_state')
+
+        Alert.alert('차량 상태 수집중입니다.', '잠시후 진행해주세요')
 
       } else if (modemm == command.split('/')[0] || atmodemn == command.split('/')[0] || command.split('/')[0].length === 11) {
         setAtCertifyState('good')

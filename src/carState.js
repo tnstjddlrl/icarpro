@@ -11,10 +11,8 @@ import {
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AutoHeightImage from 'react-native-auto-height-image';
-import axios from 'axios';
 
 import {
   useRecoilState,
@@ -53,6 +51,18 @@ import client from './Client'
 
 const chwidth = Dimensions.get('window').width
 const chheight = Dimensions.get('window').height
+
+
+import RNRestart from 'react-native-restart';
+function exitAppAlert() {
+  Alert.alert(
+    "서버 오류",
+    "서버 오류가 지속되면 고객센터로 문의해주세요.",
+    [
+      { text: "OK", onPress: () => RNRestart.Restart() }
+    ]
+  )
+}
 
 
 const back = require('../img/backbtn.png')
@@ -147,6 +157,7 @@ const CarState = () => {
 
 
 
+
   // function registerClick() {
   //   try {
   //     var txt = { type: "R", type_sub: "req_state", data: { token: pushToken, modem: atmodemN } }
@@ -187,8 +198,8 @@ const CarState = () => {
 
   const loadState = async () => {
     try {
-      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
-      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atmodemN, user: atuserN, token: pushToken } }))
+      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atmodemN, user: atuserN, token: pushToken } }))
+      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atmodemN, user: atuserN, token: pushToken } }))
     } catch (error) {
       console.log(error)
 
@@ -219,77 +230,62 @@ const CarState = () => {
 
         <TouchableWithoutFeedback onPress={() => { }}>
           <View style={{ justifyContent: "center", alignItems: "center", flex: 5 }}>
-            {/* <Image style={{ position: "absolute" }} source={mainframe}></Image> */}
             <AutoHeightImage source={mainframe} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
             {(atStateDoorLock === 'OFF' && atStateDoor == 'OFF') &&
-              // <Image style={{ position: "absolute" }} source={doorcloseblack}></Image>
               <AutoHeightImage source={doorcloseblack} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
             {(atStateDoorLock === 'ON' && atStateDoor === 'OFF') &&
-              // <Image style={{ position: "absolute" }} source={doorcloseorange}></Image>
               <AutoHeightImage source={doorcloseorange} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
             {atStateDoor === 'ON' &&
-              // <Image style={{ position: "absolute" }} source={dooropen}></Image>
               <AutoHeightImage source={dooropen} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
 
             {(atStateEngineHood === 'ON' || atStateEngineState === 'ON') &&
-              // <Image style={{ position: "absolute" }} source={hoodorange}></Image>
               <AutoHeightImage source={hoodorange} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
             {atStateTrunk === 'ON' &&
-              // <Image style={{ position: "absolute" }} source={trunkorange}></Image>
               <AutoHeightImage source={trunkorange} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
             {atStateCarAlert === 'ON' &&
-              // <Image style={{ position: "absolute" }} source={lightorange}></Image>
               <AutoHeightImage source={lightorange} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
             {isbooton &&
-              // <Image style={{ position: "absolute" }} source={bootorange}></Image>
               <AutoHeightImage source={bootorange} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
 
             {atStateEngineHood === 'ON' &&
-              // <Image style={{ position: "absolute" }} source={hoodsticon}></Image>
               <AutoHeightImage source={hoodsticon} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
             {atStateEngineState === 'ON' &&
-              // <Image style={{ position: "absolute" }} source={enginesticon}></Image>
               <AutoHeightImage source={enginesticon} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
             }
             {atStateTrunk === 'ON' &&
-              // <Image style={{ position: "absolute" }} source={trunksticon}></Image>
               <AutoHeightImage source={trunksticon} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
 
             {atStateDoorLock === 'ON' &&
-              // <Image style={{ position: "absolute" }} source={doorlocksticon}></Image>
               <AutoHeightImage source={doorlocksticon} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
             {(atStateDoor === 'ON') &&
-              // <Image style={{ position: "absolute" }} source={dooropensticon}></Image>
               <AutoHeightImage source={dooropensticon} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
             {atStateCarAlert === 'ON' &&
-              // <Image style={{ position: "absolute" }} source={lightsticon}></Image>
               <AutoHeightImage source={lightsticon} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
             {isbooton &&
-              // <Image style={{ position: "absolute" }} source={bootsticon}></Image>
               <AutoHeightImage source={bootsticon} width={chwidth - 110} style={{ position: "absolute" }}></AutoHeightImage>
 
             }
@@ -460,15 +456,14 @@ const CarState = () => {
           </View>
         </View>
 
-        <View style={{ flex: 0.4 }}></View>
-
-        <View style={{ flex: 0.1 }}></View>
-
+        <View style={{ flex: 0.2 }}></View>
         {/* 상태 부분 끝 */}
+
+
 
         {/* 푸터 시작 */}
         <View style={{ width: '100%' }}>
-          <View style={{ width: chwidth - 30, marginLeft: 15, marginBottom: 10, borderRadius: 10, backgroundColor: 'rgb(237,239,243)', }}>
+          <View style={{ width: chwidth - 30, marginLeft: 15, marginBottom: 8, borderRadius: 10, backgroundColor: 'rgb(237,239,243)', }}>
 
             <View style={{ width: chwidth - 100, marginLeft: 30, flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 8, marginBottom: 6 }}>
 
