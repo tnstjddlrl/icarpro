@@ -156,77 +156,80 @@ const Carcontroll = () => {
     return () => backHandler.remove();
   }, []);
 
-  const [spinner, setSpinner] = useState(false)
+  const [spinner, setSpinner] = useState(false);
 
-  const [pushToken, setPushToken] = useRecoilState(fcmToken)
-  const atmodemN = useRecoilValue(modemNumber)
-  const [atuserN, setAtuserN] = useRecoilState(userNumber)
-
-
-  const [carRace, setcarRace] = useRecoilState(isCarRace)
-  const [bootrest, setBootrest] = useRecoilState(bootRestTime)
-  const [atIsboot, setAtIsboot] = useRecoilState(isBootOn)
-
-  const [atModemn, setAtModemn] = useRecoilState(modemNumber)
+  const [pushToken, setPushToken] = useRecoilState(fcmToken);
+  const atmodemN = useRecoilValue(modemNumber);
+  const [atuserN, setAtuserN] = useRecoilState(userNumber);
 
 
-  const [atCertifyState, setAtCertifyState] = useRecoilState(certifyState)
+  const [carRace, setcarRace] = useRecoilState(isCarRace);
+  const [bootrest, setBootrest] = useRecoilState(bootRestTime);
+  const [atIsboot, setAtIsboot] = useRecoilState(isBootOn);
 
-  const [atStateWaitTime, setAtStateWaitTime] = useRecoilState(stateWaitTime)
-
-
-
-  const [loadModal, setLoadModal] = useState(false)
-  const [commandtxt, setCommandtxt] = useState('')
-
-  const [completeModal, setCompleteModal] = useState(false)
-
-  const [isRemote, setIsRemote] = useState(false)
+  const [atModemn, setAtModemn] = useRecoilState(modemNumber);
 
 
-  const [, setLowVoltValue] = useRecoilState(voltValue)
-  const [atBootTime, setatBootTimeValue] = useRecoilState(bootTimeValue)
-  const [, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue)
-  const [, setAtStartTimeValue] = useRecoilState(startTimeValue)
+  const [atCertifyState, setAtCertifyState] = useRecoilState(certifyState);
 
-  const [isicarswitch, setAticarswitch] = useRecoilState(icarSwitch)
-  const [, setAtidoorswitch] = useRecoilState(idoorSwitch)
-  const [, setAtlowvoltBoot] = useRecoilState(lowvoltBoot)
-  const [, setAtlowvoltAlert] = useRecoilState(lowvoltAlert)
-  const [atActionSound, setAtactionSound] = useRecoilState(actionSound)
-  const [, setAtalertSound] = useRecoilState(alertSound)
+  const [atStateWaitTime, setAtStateWaitTime] = useRecoilState(stateWaitTime);
 
 
-  const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert)
-  const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock)
-  const [atStateDoor, setAtStateDoor] = useRecoilState(StateDoor)
-  const [atStateTrunk, setAtStateTrunk] = useRecoilState(StateTrunk)
-  const [atStateEngineHood, setAtStateEngineHood] = useRecoilState(StateEngineHood)
-  const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState)
-  const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt)
 
-  const [atUserCarNum, setAtUserCarNum] = useRecoilState(usercarNum)
+  const [loadModal, setLoadModal] = useState(false);
+  const [commandtxt, setCommandtxt] = useState('');
 
-  const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app)
-  const [ChangeDetectApp, setChangeDetectApp] = useRecoilState(Change_detect)
+  const [completeModal, setCompleteModal] = useState(false);
+
+  const [isRemote, setIsRemote] = useState(false);
+
+
+  const [, setLowVoltValue] = useRecoilState(voltValue);
+  const [atBootTime, setatBootTimeValue] = useRecoilState(bootTimeValue);
+  const [, setAtLastHeatValue] = useRecoilState(lastHeatTimeValue);
+  const [, setAtStartTimeValue] = useRecoilState(startTimeValue);
+
+  const [isicarswitch, setAticarswitch] = useRecoilState(icarSwitch);
+  const [, setAtidoorswitch] = useRecoilState(idoorSwitch);
+  const [, setAtlowvoltBoot] = useRecoilState(lowvoltBoot);
+  const [, setAtlowvoltAlert] = useRecoilState(lowvoltAlert);
+  const [atActionSound, setAtactionSound] = useRecoilState(actionSound);
+  const [, setAtalertSound] = useRecoilState(alertSound);
+
+
+  const [atStateCarAlert, setAtStateCarAlert] = useRecoilState(StateCarAlert);
+  const [atStateDoorLock, setAtStateDoorLock] = useRecoilState(StateDoorLock);
+  const [atStateDoor, setAtStateDoor] = useRecoilState(StateDoor);
+  const [atStateTrunk, setAtStateTrunk] = useRecoilState(StateTrunk);
+  const [atStateEngineHood, setAtStateEngineHood] = useRecoilState(StateEngineHood);
+  const [atStateEngineState, setAtStateEngineState] = useRecoilState(StateEngineState);
+  const [atStateCarVolt, setAtStateCarVolt] = useRecoilState(StateCarVolt);
+
+  const [atUserCarNum, setAtUserCarNum] = useRecoilState(usercarNum);
+
+  const [AllStateApp, setAllStateApp] = useRecoilState(AllState_app);
+  const [ChangeDetectApp, setChangeDetectApp] = useRecoilState(Change_detect);
 
 
 
 
   const unsubscribe = navigation.addListener('focus', async () => {
     if (isicarswitch === false) {
-      Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.')
+      Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.');
     }
     if (atStateWaitTime === false) {
       if (startonce === 0) {
-        loadState()
-        startonce++
+        loadState();
+        startonce++;
+        setTimeout(() => {
+          stateready();
+        }, 3000);
       } else {
-        stateready()
+        stateready();
       }
-      setAtStateWaitTime(true)
+      setAtStateWaitTime(true);
       setTimeout(() => {
-        setAtStateWaitTime(false)
+        setAtStateWaitTime(false);
       }, 1000);
     }
   });

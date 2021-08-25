@@ -284,7 +284,7 @@ const CarRegister = () => {
         RNRestart.Restart()
       }
     } else if (atCertifyState == 'good' || atCertifyState == 'no_state') {
-      userCancelModal('삭제를 먼저 진행해주세요!')
+      usercancelff('삭제를 먼저 진행해주세요!')
     }
 
   }

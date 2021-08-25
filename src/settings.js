@@ -252,8 +252,8 @@ const Settings = () => {
 
   const loadState = async () => {
     try {
-      client.write(JSON.stringify({ type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atmodemN, user: atuserN, token: pushToken } }))
-      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "settings", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atmodemN, user: atuserN, token: pushToken } }))
+      client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atmodemN, user: atuserN, token: pushToken } }))
+      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atmodemN, user: atuserN, token: pushToken } }))
     } catch (error) {
       console.log(error)
 
