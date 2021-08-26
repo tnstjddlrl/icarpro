@@ -130,7 +130,7 @@ var interval;
 var rrtime;
 
 var startonce = 0;
-
+var subcurrent = 0;
 
 const Carcontroll = () => {
   const navigation = useNavigation()
@@ -211,38 +211,40 @@ const Carcontroll = () => {
   const [ChangeDetectApp, setChangeDetectApp] = useRecoilState(Change_detect);
 
 
-
-
-  const unsubscribe = navigation.addListener('focus', async () => {
-    if (isicarswitch === false) {
-      Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.');
-    }
-    if (atStateWaitTime === false) {
-      if (startonce === 0) {
-        loadState();
-        startonce++;
-        setTimeout(() => {
-          stateready();
-        }, 3000);
-      } else {
-        stateready();
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (isicarswitch === false) {
+        Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.');
       }
-      setAtStateWaitTime(true);
-      setTimeout(() => {
-        setAtStateWaitTime(false);
-      }, 1000);
-    }
-  });
-  useEffect(() => {
-    return () => { unsubscribe() };
-  });
+      if (atStateWaitTime === false) {
+        if (startonce === 0) {
+          loadState();
+          startonce++;
+          setTimeout(() => {
+            stateready();
+          }, 3000);
+        } else {
+          stateready();
 
+        }
+        setAtStateWaitTime(true);
+        setTimeout(() => {
+          setAtStateWaitTime(false);
+        }, 1000);
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+
+  }, [])
 
   //현재 php로 받아오던 부분 다 삭제할 예정
   const loadState = () => {
     try {
-      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
-      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
+      client.write(JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
+      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "start_state", data: { modem: atModemn, user: atuserN, token: pushToken } }))
     } catch (error) {
       console.log(error)
 
@@ -1113,7 +1115,7 @@ const Carcontroll = () => {
                       </View>
                     </TouchableWithoutFeedback>
 
-                    <TouchableWithoutFeedback onPress={() => { navigation.navigate('차량제어') }}>
+                    <TouchableWithoutFeedback onPress={() => { }}>
                       <View style={{ alignItems: "center", justifyContent: "center" }}>
                         <AutoHeightImage source={bb2r} width={30}></AutoHeightImage>
                         <Text style={{ fontSize: 11.5, color: 'rgb(247, 89, 41)', letterSpacing: -1.38, }}>제어</Text>

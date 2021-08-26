@@ -174,20 +174,20 @@ const CarState = () => {
   }, []);
 
 
-  const reqState = navigation.addListener('focus', async () => {
-    if (atStateWaitTime === false) {
-      await loadState()
-      setAtStateWaitTime(true)
-      setTimeout(() => {
-        setAtStateWaitTime(false)
-      }, 1000);
-    }
-  });
+  React.useEffect(() => {
 
-  useEffect(() => {
-    return () => reqState();
-  });
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (atStateWaitTime === false) {
+        loadState()
+        setAtStateWaitTime(true)
+        setTimeout(() => {
+          setAtStateWaitTime(false)
+        }, 1000);
+      }
+    });
 
+    return unsubscribe;
+  }, [navigation]);
 
   const loadState = async () => {
     try {

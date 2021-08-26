@@ -235,19 +235,20 @@ const Settings = () => {
     }
   }
 
-  const reqState = navigation.addListener('focus', async () => {
-    if (atStateWaitTime === false) {
-      await loadState()
-      setAtStateWaitTime(true)
-      setTimeout(() => {
-        setAtStateWaitTime(false)
-      }, 1000);
-    }
-  });
 
-  useEffect(() => {
-    return () => reqState();
-  });
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (atStateWaitTime === false) {
+        loadState()
+        setAtStateWaitTime(true)
+        setTimeout(() => {
+          setAtStateWaitTime(false)
+        }, 1000);
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
 
   const loadState = async () => {

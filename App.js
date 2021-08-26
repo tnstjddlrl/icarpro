@@ -58,6 +58,7 @@ function App() {
     return unsubscribe;
   }, []);
 
+
   return (
     <RecoilRoot>
       <NavigationContainer>
@@ -80,9 +81,6 @@ function App() {
           <Stack.Screen name="테스트" component={Test} />
           <Stack.Screen name="스와이프테스트" component={SwipeTest} />
           <Stack.Screen name="스크롤베이스" component={ScrollBase} />
-
-          {/* <Stack.Screen name="악시오스" component={Axiostest} /> */}
-
 
         </Stack.Navigator>
       </NavigationContainer>
