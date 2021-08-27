@@ -129,6 +129,8 @@ const bb4r = require('../bottombtn/bb4r.png')
 var interval;
 var rrtime;
 
+var rebootTimeOut;
+
 var startonce = 0;
 var subcurrent = 0;
 
@@ -212,33 +214,34 @@ const Carcontroll = () => {
 
 
   React.useEffect(() => {
+
     const unsubscribe = navigation.addListener('focus', () => {
+
       if (isicarswitch === false) {
         Alert.alert('현재 icar 설정이 꺼져있습니다.', '차량제어 기능을 사용할 수 없습니다.');
       }
+
       if (atStateWaitTime === false) {
         if (startonce === 0) {
           loadState();
-          startonce++;
           setTimeout(() => {
             stateready();
           }, 3000);
         } else {
           stateready();
-
         }
         setAtStateWaitTime(true);
         setTimeout(() => {
           setAtStateWaitTime(false);
         }, 1000);
+        startonce++;
       }
+
     });
+
     return unsubscribe;
+
   }, [navigation]);
-
-  useEffect(() => {
-
-  }, [])
 
   //현재 php로 받아오던 부분 다 삭제할 예정
   const loadState = () => {
@@ -254,8 +257,8 @@ const Carcontroll = () => {
 
   const stateready = () => {
     try {
-      client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
-      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:st', modem: atModemn, user: atuserN, token: pushToken } }))
+      client.write(JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:se', modem: atModemn, user: atuserN, token: pushToken } }))
+      console.log('전송 ' + JSON.stringify({ type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:se', modem: atModemn, user: atuserN, token: pushToken } }))
     } catch (error) {
       console.log(error)
 
@@ -264,10 +267,8 @@ const Carcontroll = () => {
   }
 
   useEffect(() => {
-
     if (isRemote === false) {
       client.once('data', (data) => {
-
         var command = '' + data
 
         if (atmodemN == command.split('/')[0] && boot != true) {
@@ -287,21 +288,44 @@ const Carcontroll = () => {
             interval = setInterval(() => {
               timecalcul()
             }, 1000);
-
           }//차량 원격 시동 타이머 값 받아와서 설정해야함.
         }
-
       })
     }
-
   }, [isRemote])
 
   useEffect(() => {
     console.log('카 컨트롤에서 상태값 변경 확인 ' + AllStateApp + ':' + ChangeDetectApp)
-    setTimeout(() => {
-      setSpinner(false)
-    }, 300);
+
+    if (spinner) {
+      if (rebootTimeOut) {
+        if (AllStateApp.split('/')[1][2] == 's') {
+          setSpinner(false)
+          clearTimeout(rebootTimeOut)
+          rebootTimeOut = null;
+
+          if (okmodalText !== '') {
+            lomofc(okmodalText)
+          }
+        }
+      }
+    }
   }, [ChangeDetectApp])
+
+
+  useEffect(() => {
+    if (spinner) {
+      rebootTimeOut = setTimeout(() => {
+        exitAppAlert()
+      }, 5000);
+    } else {
+      if (rebootTimeOut) {
+        setSpinner(false)
+        clearTimeout(rebootTimeOut)
+        rebootTimeOut = null;
+      }
+    }
+  }, [spinner])
 
   let door_0 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:du', modem: atmodemN, token: pushToken } }
   let door_1 = { type: "R", type_sub: "car_controll", data: { command: '+SCMD=' + atmodemN + '/C:dl', modem: atmodemN, token: pushToken } }
@@ -338,8 +362,6 @@ const Carcontroll = () => {
 
 
       try {
-        // client.write(JSON.stringify(boot_0))
-        // console.log('전송 : ' + JSON.stringify(boot_0))
 
         if (isRemote == true) {
           setIsRemote(false)
@@ -367,14 +389,11 @@ const Carcontroll = () => {
       var min = parseInt((time % 3600) / 60);
       var sec = time % 60;
       if (String(sec).length == 1) {
-        console.log(String(sec).length)
         setBootrest(min + ':0' + sec)
       } else {
-        console.log(String(sec).length)
         setBootrest(min + ':' + sec)
       }
 
-      console.log(min + ':' + sec)
     }
   }
 
@@ -384,6 +403,8 @@ const Carcontroll = () => {
   const [panic, setPanic] = useState('no')
   const [warnbim, setWarnbim] = useState('no')
   const [trunk, setTrunk] = useState(false)
+
+  const [okmodalText, setOkmodalText] = useState('')
 
   function exitAppAlert() {
     Alert.alert(
@@ -398,74 +419,79 @@ const Carcontroll = () => {
 
   function doorClick(is) {
 
-    if (atCertifyState === 'good') {
-      setSpinner(true)
+    setSpinner(true)
 
-      if (is == 'lock') {
+    if (is == 'lock') {
 
-        setDoor('on')
+      setDoor('on')
+      setOkmodalText('도어 LOCK')
 
-        lomofc('도어 LOCK')
+      setTimeout(() => {
+        setOkmodalText('')
+      }, 2500);
 
-        if (atActionSound === false) {
-          doorOnSound()
-        }
-
-
-        door_1 = JSON.stringify(door_1)
-
-        console.log('클라이언트 스테이트?' + client._state)
-
-        try {
-          client.write(door_1)
-          console.log('전송 : ' + door_1)
-        } catch (error) {
-          console.log(error)
-          // redirect('dl')
-          exitAppAlert()
-        }
-
-        setTimeout(() => {
-          setDoor('no')
-        }, 4000);
-
+      if (atActionSound === false) {
+        doorOnSound()
       }
 
 
-      if (is == 'unlock') {
+      door_1 = JSON.stringify(door_1)
 
-        setDoor('off')
+      console.log('클라이언트 스테이트?' + client._state)
 
-        lomofc('도어 UNLOCK')
-
-        if (atActionSound === false) {
-          doorOnSound()
-        }
-
-        door_0 = JSON.stringify(door_0)
-        try {
-          client.write(door_0)
-          console.log('전송 : ' + door_0)
-        } catch (error) {
-          console.log(error)
-          // redirect('du')
-          exitAppAlert()
-
-        }
-
-
-        setTimeout(() => {
-          setDoor('no')
-        }, 4000);
+      try {
+        client.write(door_1)
+        console.log('전송 : ' + door_1)
+      } catch (error) {
+        console.log(error)
+        // redirect('dl')
+        exitAppAlert()
       }
 
-    } else if (atCertifyState === 'no_cer') {
-      Alert.alert('미인증 상태입니다.')
-    } else if (atCertifyState === 'no_state') {
-      Alert.alert('상태값이 없습니다.')
-    } else if (atCertifyState === 'nono') {
-      Alert.alert('서버와 연동되지 않았습니다.')
+      setTimeout(() => {
+        setDoor('no')
+      }, 4000);
+
     }
+
+
+    if (is == 'unlock') {
+
+      setDoor('off')
+
+      setOkmodalText('도어 UNLOCK')
+      setTimeout(() => {
+        setOkmodalText('')
+      }, 2500);
+      if (atActionSound === false) {
+        doorOnSound()
+      }
+
+      door_0 = JSON.stringify(door_0)
+      try {
+        client.write(door_0)
+        console.log('전송 : ' + door_0)
+      } catch (error) {
+        console.log(error)
+        // redirect('du')
+        exitAppAlert()
+
+      }
+
+
+      setTimeout(() => {
+        setDoor('no')
+      }, 4000);
+    }
+
+    // if (atCertifyState === 'good') {
+    // } else if (atCertifyState === 'no_cer') {
+    //   Alert.alert('미인증 상태입니다.')
+    // } else if (atCertifyState === 'no_state') {
+    //   Alert.alert('상태값이 없습니다.')
+    // } else if (atCertifyState === 'nono') {
+    //   Alert.alert('서버와 연동되지 않았습니다.')
+    // }
 
   }//도어 제어
 
@@ -477,8 +503,10 @@ const Carcontroll = () => {
       if (is == 'on') {
         setPanic('on')
 
-        lomofc('패닉 ON')
-
+        setOkmodalText('패닉 ON')
+        setTimeout(() => {
+          setOkmodalText('')
+        }, 2500);
 
         panic_1 = JSON.stringify(panic_1)
         try {
@@ -504,8 +532,10 @@ const Carcontroll = () => {
       if (is == 'off') {
         setPanic('off')
 
-        lomofc('패닉 OFF')
-
+        setOkmodalText('패닉 OFF')
+        setTimeout(() => {
+          setOkmodalText('')
+        }, 2500);
         panic_0 = JSON.stringify(panic_0)
         try {
           client.write(panic_0)
@@ -541,8 +571,10 @@ const Carcontroll = () => {
       if (is == 'on') {
         setWarnbim('on')
 
-        lomofc('비상등 ON')
-
+        setOkmodalText('비상등 ON')
+        setTimeout(() => {
+          setOkmodalText('')
+        }, 2500);
         warn_1 = JSON.stringify(warn_1)
         try {
           client.write(warn_1)
@@ -567,8 +599,10 @@ const Carcontroll = () => {
       if (is == 'off') {
         setWarnbim('off')
 
-        lomofc('비상등 OFF')
-
+        setOkmodalText('비상등 OFF')
+        setTimeout(() => {
+          setOkmodalText('')
+        }, 2500);
         warn_0 = JSON.stringify(warn_0)
         try {
           client.write(warn_0)
@@ -606,8 +640,10 @@ const Carcontroll = () => {
 
       setTrunk(true)
 
-      lomofc('트렁크 OPEN')
-
+      setOkmodalText('트렁크 OPEN')
+      setTimeout(() => {
+        setOkmodalText('')
+      }, 2000);
       trunk_1 = JSON.stringify(trunk_1)
       try {
         client.write(trunk_1)
@@ -647,8 +683,10 @@ const Carcontroll = () => {
         setBoot(true)
         setAtIsboot(true)
 
-        lomofc('원격시동 켜기')
-
+        setOkmodalText('원격시동 켜기')
+        setTimeout(() => {
+          setOkmodalText('')
+        }, 2500);
         boot_1 = JSON.stringify(boot_1)
         try {
           client.write(boot_1)
@@ -684,8 +722,10 @@ const Carcontroll = () => {
 
       } else {
 
-        lomofc('원격시동 끄기')
-
+        setOkmodalText('원격시동 끄기')
+        setTimeout(() => {
+          setOkmodalText('')
+        }, 2500);
         setBoot(false)
         clearInterval(interval)
         setBootrest('00:00')
